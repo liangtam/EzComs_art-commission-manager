@@ -1,0 +1,82 @@
+/* font */
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sora:wght@300&display=swap');
+
+:root {
+  --sora: 'Sora', sans-serif;
+  --bg-color: rgb(244, 244, 244);
+  --roboto: 'Roboto', sans-serif;
+  --iceblue: rgb(0, 183, 255);
+  --bluegrey: rgb(59, 91, 112);
+}
+
+*{
+  margin: 0;
+}
+.app {
+  height: 100vh;
+  width: 100vw;
+}
+
+.header {
+  height: 20px;
+  width: 100%;
+
+  padding: 15px;
+  margin: 0, auto;
+  justify-content: center;
+  background: red;
+  border-bottom: solid var(--iceblue) 4px;
+}
+.header a {
+  color: var(--bluegrey);
+  font-family: sora;
+  text-decoration: none;
+
+}
+
+.header .container {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+body {
+  font-family: roboto;
+  font-size: 15px;
+  margin: 0, auto;
+  background: var(--bg-color);
+  padding: 10px
+}
+
+/* Home/Orders page*/
+.orders {
+  display: grid;
+  grid-template-rows: auto;
+  align-items: center;
+  gap: 50px;
+  padding: 15px;
+}
+
+/*Order details*/
+.order-details {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 200px;
+  box-shadow: 1px 2px 4px 0px darkgrey;
+  justify-content: space-between;
+}
+
+.order-details:hover{
+  background:rgb(246, 253, 255);
+}
+
+.order-details p {
+  padding: 5px;
+}
+
+.order-details h4 {
+  color: var(--iceblue);
+}

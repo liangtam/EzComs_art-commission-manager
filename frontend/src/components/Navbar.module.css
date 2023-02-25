@@ -1,0 +1,7 @@
+.container {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 15px;
+    padding-top: 10px;
+    border-bottom: solid blue 2px;
+}
