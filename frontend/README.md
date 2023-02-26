@@ -6,3 +6,6 @@
 - As an artist, I want to also be able to see orders I've made
 - As an artist, I want to be able to log in
 
+## Note to self's
+- Question components have a lot of repeated code. Consider hiearchy and have them extend a common question class?
+

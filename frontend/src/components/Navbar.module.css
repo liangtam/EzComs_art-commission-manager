@@ -22,3 +22,7 @@
 .navbar_links a:hover{
     background-color: rgb(148, 199, 244);
 }
+
+.website-title a {
+    text-decoration: none;
+}

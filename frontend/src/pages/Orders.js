@@ -20,13 +20,12 @@ const Orders = () => {
     }, [])
 
     return (
-            <div className="orders">
-                {orders && orders.map((order) => {
-                    return <OrderDetails key={order._id} order={order}/>
-                
+        <div className="orders">
+            {orders && orders.map((order) => {
+                return <OrderDetails key={order._id} order={order}/>  
             }
-                )}
-            </div>
+            )}
+         </div>
     )
 };
 

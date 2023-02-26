@@ -1,39 +1,25 @@
 import { useState } from "react";
-import CreateMCOption from './MCOption';
 
-const CreateQuestion = ({isMCQuestion}) => {
-    
-    const [questionLabel, setQuestionLabel] = useState('');
-    const [optList, setOptList] = useState([]);
+const ShortAnswerQField = ({setQuestionInputs, questionInputs}) => {
 
-    const handleOptionClick = (e) => {
-        e.preventDefault();
-        const option = CreateMCOption();
-        const updatedOptList = [...optList];
-        updatedOptList.push(option);
-        setOptList(updatedOptList);
-        return optList;
+
+    const saveInput = (input) => {
+        // adds input into the array questionInputs
+        const copyQuestionInputs = [...questionInputs];
+        copyQuestionInputs.push(input);
+        setQuestionInputs(copyQuestionInputs);
     }
 
     return (
-    <div className="shortanswer-question-component">
-        <input key='shortanswer-question' type='text' placeholder="Question"
+    <div className="shortanswer-question-field-component">
+        <input key='shortanswer-question-field' type='text' placeholder="Question"
         onChange={(e) => {
-            setQuestionLabel(e.target.value);
+            saveInput(e.target.value);
         }}></input>
-        <button>Add</button>
-        
-        {/* Only show the "add options button" if this question is a MC question */}
-        {isMCQuestion && <button onClick={handleOptionClick}>Add Option</button>}
-
-        {/* Displaying MC options, if there are any*/}
-        {((optList.length >=1) && optList.map((option) => {
-                return option;
-        }))}
-        
+        <button>Remove</button>        
     </div>
     
     );
 }
 
-export default CreateQuestion;
+export default ShortAnswerQField;

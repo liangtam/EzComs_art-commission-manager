@@ -1,14 +1,15 @@
 // only artist account can see this
-import CreateQuestion from '../components/QuestionField';
+import ShortAnswerQField from '../components/QuestionField';
+import MCQuestionField from '../components/MCQuestionField';
 import { useEffect, useState } from 'react';
 
 const FormBuilder = () => {
-    const [questionFieldsList, setQuestionFieldsList] = useState([]);  
+    const [questionFieldsList, setQuestionFieldsList] = useState([]);
+    const [questionInputs, setQuestionInputs] = useState([]); 
 
     const handleShortAnswerClick = (e) => {
         e.preventDefault();
-        const question = <CreateQuestion isMCQuestion={false}/>;
-        // const  {render, questionLabel, optList} = CreateQuestion(false);
+        const question = <ShortAnswerQField setQuestionInputs = {setQuestionInputs} questionInputs = {questionInputs}/>;
         //clone current shortAnsList array because you can't setShortAnsList(originalarray.push(smt)) since there
         //is a pointer that points to the original array, and updating it points to the same array, so u must
         //replace with entirely new array
@@ -19,11 +20,10 @@ const FormBuilder = () => {
 
     const handleMCClick = (e) => {
         e.preventDefault();
-        const question = <CreateQuestion isMCQuestion={true}/>
-        // const  {render, questionLabel, optList} = CreateQuestion(true);
+        const mcQuestion = <MCQuestionField setQuestionInputs = {setQuestionInputs} questionInputs = {questionInputs}/>;
 
         const updatedQList = [...questionFieldsList];
-        updatedQList.push(question);
+        updatedQList.push(mcQuestion);
         setQuestionFieldsList(updatedQList);
     }
 
@@ -42,6 +42,10 @@ const FormBuilder = () => {
         e.preventDefault();
 
     }
+
+    useEffect(() => {
+        console.log(questionInputs);
+    }, [questionInputs])
 
     return (
         <div className="form-maker">
