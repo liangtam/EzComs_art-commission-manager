@@ -5,3 +5,20 @@
     padding-top: 10px;
     border-bottom: solid blue 2px;
 }
+
+
+.navbar_links li {
+    float: left;
+}
+
+.navbar_links a{
+    text-decoration: none;
+    display: block;
+    padding: 5px;
+    background-color: #e0edff;
+    border-radius: 5px;
+}
+
+.navbar_links a:hover{
+    background-color: rgb(148, 199, 244);
+}

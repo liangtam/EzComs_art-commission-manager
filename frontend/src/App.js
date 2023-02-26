@@ -19,7 +19,7 @@ function App() {
           exact path="/"
           element={ < Orders />}/>
           <Route
-          exact path="/form/create"
+          exact path="/form-builder"
           element={ < FormBuilder /> }/>
           <Route
           exact path="/form"

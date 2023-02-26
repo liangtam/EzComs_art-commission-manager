@@ -16,8 +16,17 @@ const Navbar = () => {
                             <Link to="/manage-forms">
                             <h4>Manage Forms</h4>
                             </Link>
-                            <Link to="/form">
+                        </ul>
+                        <ul> <Link to="/form">
                                 <h4>Form</h4>
+                            </Link>
+                        </ul>
+                        <ul> <Link to="/form-builder">
+                                <h4>Form Builder</h4>
+                            </Link>
+                        </ul>
+                        <ul> <Link to="/orders">
+                                <h4>Orders</h4>
                             </Link>
                         </ul>
                     </li>

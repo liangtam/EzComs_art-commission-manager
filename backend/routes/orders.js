@@ -20,7 +20,7 @@ router.post('/', createOrder);
 // DELETE an order
 router.delete('/:id', deleteOrder);
 
-// UPDATE a workout
+// UPDATE an order
 router.patch('/:id', updateOrder);
 
 module.exports = router;

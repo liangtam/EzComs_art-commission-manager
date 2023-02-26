@@ -20,7 +20,11 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
-    orderFormFillouts: {
+    questions: {
+        type: Array,
+        required: true
+    },
+    orderFormAnswers: {
         type: Array,
         required: true
     },

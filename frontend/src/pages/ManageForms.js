@@ -4,7 +4,7 @@ const Forms = () => {
     const [forms, setForms] = useState(null);
 
     const fetchAllForms = async () => {
-        const response = await fetch('./api/manage-forms');
+        const response = await fetch('./api/forms');
 
         const json = await response.json();
 

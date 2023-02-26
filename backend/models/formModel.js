@@ -7,14 +7,7 @@ const formSchema = new Schema({
     shortAnswerQuestions: {
         type: Array
     },
-    shortAnswerAnswers: {
-        type: Array
-    },
     mcQuestions: {
-        type: Array
-    },
-
-    mcAnswers: {
         type: Array
     }
 });

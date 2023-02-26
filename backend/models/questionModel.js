@@ -17,6 +17,11 @@ const questionSchema = new Schema({
     options: {
         type: Array,
         required: false
+    },
+
+    optionAnswers: {
+        type: Array,
+        required: false
     }
 });
 
