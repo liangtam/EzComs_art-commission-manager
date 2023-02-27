@@ -16,10 +16,6 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
-    requestSnippet: {
-        type: String,
-        required: true
-    },
     questions: {
         type: Array,
         required: true

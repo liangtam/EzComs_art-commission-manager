@@ -1,14 +1,14 @@
 import { useState } from "react";
 import CreateMCOption from './MCOption';
 
-const MCQuestionField = ({setQuestionInputs, questionInputs}) => {
+const MCQuestionField = ({getDataFromQuestionField}) => {
     
     const [optList, setOptList] = useState([]);
-    const saveInput = (input) => {
+    const [questionLabel, setQuestionLabel] = useState("");
+    const saveInputToForm = (e) => {
         // adds input into the array questionInputs
-        const copyQuestionInputs = [...questionInputs];
-        copyQuestionInputs.push(input);
-        setQuestionInputs(copyQuestionInputs);
+        setQuestionLabel(e.target.value);
+        getDataFromQuestionField(questionLabel);
     }
 
     const handleOptionClick = (e) => {
@@ -23,9 +23,7 @@ const MCQuestionField = ({setQuestionInputs, questionInputs}) => {
     return (
     <div className="mc-question-field-component">
         <input key='mc-question-field' type='text' placeholder="MC Question"
-        onChange={(e) => {
-            saveInput(e.target.value);
-        }}
+        onChange={saveInputToForm}
         ></input>
         
         <button onClick={handleOptionClick}>Add Option</button>
@@ -33,9 +31,7 @@ const MCQuestionField = ({setQuestionInputs, questionInputs}) => {
         {/* Displaying MC options, if there are any*/}
         {((optList.length >= 1) && optList.map((option) => {
                 return option;
-        }))}
-        <button>Remove</button>
-        
+        }))}        
     </div>
     
     );

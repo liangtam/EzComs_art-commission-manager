@@ -1,15 +1,16 @@
 // only artist account can see this
-import ShortAnswerQField from '../components/QuestionField';
+import ShortAnswerQField from '../components/ShortAnsQ';
 import MCQuestionField from '../components/MCQuestionField';
 import { useEffect, useState } from 'react';
 
 const FormBuilder = () => {
     const [questionFieldsList, setQuestionFieldsList] = useState([]);
-    const [questionInputs, setQuestionInputs] = useState([]); 
+    const [questionInputs, setQuestionInputs] = useState([]);
+    const [saveButtonIsClicked, setSaveButtonIsClicked] = useState(false);
 
     const handleShortAnswerClick = (e) => {
         e.preventDefault();
-        const question = <ShortAnswerQField setQuestionInputs = {setQuestionInputs} questionInputs = {questionInputs}/>;
+        const question = <ShortAnswerQField saveButtonIsClicked = {saveButtonIsClicked} setQuestionInputs = {setQuestionInputs} questionInputs = {questionInputs}/>;
         //clone current shortAnsList array because you can't setShortAnsList(originalarray.push(smt)) since there
         //is a pointer that points to the original array, and updating it points to the same array, so u must
         //replace with entirely new array
@@ -29,13 +30,10 @@ const FormBuilder = () => {
 
     const handleSaveFormClick = (e) => {
         e.preventDefault();
-        // const questions = [];
-        // for (let i = 0; i < shortAnsList.length; i++) {
-        //     const {questionLabel, optList, render} = shortAnsList.at[i];
-        //     questions.push[questionLabel];
-        //     console.log(questions.at[i]);
-        // }
-        // const newForm = {};
+        setSaveButtonIsClicked(true);
+        questionFieldsList.map((qfield) => {
+        })
+
     }
 
     const saveForm = (e) => {
