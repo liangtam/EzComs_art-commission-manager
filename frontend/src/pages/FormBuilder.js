@@ -4,7 +4,7 @@ import MCQuestionField from '../components/MCQuestionField';
 import { useEffect, useState } from 'react';
 
 const FormBuilder = () => {
-    const [questionFieldsList, setQuestionFieldsList] = useState([]);
+    //const [questionFieldsList, setQuestionFieldsList] = useState([]);
     const [questionFieldIds, setQuestionFieldIds] = useState([]);
 
     const handleFieldChange = (e, fieldId) => {
