@@ -5,34 +5,52 @@ import { useEffect, useState } from 'react';
 
 const FormBuilder = () => {
     const [questionFieldsList, setQuestionFieldsList] = useState([]);
-    const [questionInputs, setQuestionInputs] = useState([]);
-    const [saveButtonIsClicked, setSaveButtonIsClicked] = useState(false);
+    const [questionFieldIds, setQuestionFieldIds] = useState([]);
+
+    const handleFieldChange = (e, fieldId) => {
+        let newList = [...questionFieldIds];
+        newList.map((question) => {
+            if (question.id === fieldId) {
+                question.questionLabel = e.target.value;
+            }
+        })
+        setQuestionFieldIds(newList);
+    }
+
+    const handleRemoveField = (e, fieldId) => {
+        let newList = [...questionFieldIds];
+        newList.filter((question) => question.id !== fieldId);
+        setQuestionFieldIds(newList);
+    }
 
     const handleShortAnswerClick = (e) => {
         e.preventDefault();
-        const question = <ShortAnswerQField saveButtonIsClicked = {saveButtonIsClicked} setQuestionInputs = {setQuestionInputs} questionInputs = {questionInputs}/>;
-        //clone current shortAnsList array because you can't setShortAnsList(originalarray.push(smt)) since there
-        //is a pointer that points to the original array, and updating it points to the same array, so u must
-        //replace with entirely new array
-        const updatedShortAnsList = [...questionFieldsList];
-        updatedShortAnsList.push(question);
-        setQuestionFieldsList(updatedShortAnsList);
+        const newShortAnsId = "shortAnsId: " + questionFieldIds.length;
+        const newQObj = {
+            id: newShortAnsId,
+            questionLabel: "",
+            questionAns: ""
+        }
+        setQuestionFieldIds([...questionFieldIds, newQObj]);
+        // const shortAnsQ = <ShortAnswerQField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={newShortAnsId} fieldId = {newShortAnsId}/>
+        // setQuestionFieldsList([...questionFieldsList, shortAnsQ]);
     }
 
     const handleMCClick = (e) => {
         e.preventDefault();
-        const mcQuestion = <MCQuestionField setQuestionInputs = {setQuestionInputs} questionInputs = {questionInputs}/>;
-
-        const updatedQList = [...questionFieldsList];
-        updatedQList.push(mcQuestion);
-        setQuestionFieldsList(updatedQList);
+        const newMcQId = "mcQId: " + questionFieldIds.length;
+        const newQObj = {
+            id: newMcQId,
+            questionLabel: "",
+            questionAns: ""
+        }
+        setQuestionFieldIds([...questionFieldIds, newQObj]);
+        // const mcQ = <MCQuestionField handleFieldChange={handleFieldChange} key={newMcQId} fieldId = {newMcQId}/>
+        // setQuestionFieldsList([...questionFieldsList, mcQ]);
     }
 
     const handleSaveFormClick = (e) => {
         e.preventDefault();
-        setSaveButtonIsClicked(true);
-        questionFieldsList.map((qfield) => {
-        })
 
     }
 
@@ -42,8 +60,9 @@ const FormBuilder = () => {
     }
 
     useEffect(() => {
-        console.log(questionInputs);
-    }, [questionInputs])
+        //console.log("Question Fields List: " + questionFieldsList);
+        console.log("Question Field IDs: " + questionFieldIds);
+    }, [questionFieldIds])
 
     return (
         <div className="form-maker">
@@ -63,8 +82,11 @@ const FormBuilder = () => {
                 <div className="create_qs">
                     <button onClick={handleShortAnswerClick}>Add Short Answer</button>
                     <button onClick={handleMCClick}>Add Multiple Choice</button>
-                    {(questionFieldsList.length >= 1) && questionFieldsList.map((questionField) => {
-                        return questionField;
+                    {(questionFieldIds.length >= 1) && questionFieldIds.map((questionField) => {
+                        if (questionField.id.includes("shortAnsId: ")) {
+                            return <ShortAnswerQField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>;
+                        }
+                        return <MCQuestionField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>
                     })}
                     <button onClick={handleSaveFormClick}>Save Form</button>
 
