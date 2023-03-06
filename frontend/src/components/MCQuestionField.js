@@ -19,13 +19,14 @@ const MCQuestionField = ({fieldId, handleFieldChange, handleRemoveField}) => {
         <input key='mc-question-field' type='text' placeholder="MC Question"
         onChange={(e) => handleFieldChange(e, fieldId)}
         ></input>
-        
-        <button onClick={handleOptionClick}>Add Option</button>
 
+        <button onClick={(e) => handleRemoveField(e, fieldId)}>Remove</button>  
+        <button onClick={handleOptionClick}>Add Option</button>
         {/* Displaying MC options, if there are any*/}
         {((optList.length >= 1) && optList.map((option) => {
                 return option;
-        }))}        
+        }))}
+
     </div>
     
     );

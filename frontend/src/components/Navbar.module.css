@@ -1,15 +1,20 @@
-.container {
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
+
+.nav_container {
     display: table;
     padding-left: 20px;
     padding-right: 20px;
-    padding-bottom: 15px;
+    padding-bottom: 25px;
     padding-top: 10px;
-    border-bottom: solid blue 2px;
+    width: 90%;
+    background-color: white;
 }
 
-.website-title a {
+.website_title a{
     display: block;
+    font-family: 'Tilt Warp', cursive;
     text-decoration: none;
+    color: rgb(39, 39, 39);
     padding-bottom: 20px;
 }
 
@@ -25,6 +30,7 @@
 
 .navbar_links a{
     text-decoration: none;
+    color:rgb(43, 43, 43);
     display: block;
     padding: 5px;
     background-color: #e0edff;
@@ -32,5 +38,6 @@
 }
 
 .navbar_links a:hover{
-    background-color: rgb(148, 199, 244);
+    color: white;
+    background-color: rgb(63, 143, 213);
 }

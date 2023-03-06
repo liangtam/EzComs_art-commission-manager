@@ -1,7 +1,8 @@
+import styles from './OrderDetails.module.css'
 const OrderDetails = ({order}) => {
     console.log('in here, ', order)
     return (
-        <div className="order-details">
+        <div className={styles.order_details}>
             <h4>{order.clientName}</h4>
             <p><strong>Client contact: </strong>  {order.clientContact}</p>
             <p><strong>Request: </strong> {order.requestSnippet}</p>

@@ -4,7 +4,6 @@ import MCQuestionField from '../components/MCQuestionField';
 import { useEffect, useState } from 'react';
 
 const FormBuilder = () => {
-    //const [questionFieldsList, setQuestionFieldsList] = useState([]);
     const [questionFieldIds, setQuestionFieldIds] = useState([]);
 
     const handleFieldChange = (e, fieldId) => {
@@ -18,22 +17,27 @@ const FormBuilder = () => {
     }
 
     const handleRemoveField = (e, fieldId) => {
+        e.preventDefault();
         let newList = [...questionFieldIds];
-        newList.filter((question) => question.id !== fieldId);
-        setQuestionFieldIds(newList);
+        
+        console.log('Field id: ' + fieldId);
+        
+        const newFilteredList = newList.filter((question) => question.id !== fieldId);
+
+        setQuestionFieldIds(newFilteredList);
+        console.log('Set new list');
     }
 
     const handleShortAnswerClick = (e) => {
         e.preventDefault();
-        const newShortAnsId = "shortAnsId: " + questionFieldIds.length;
+        const newShortAnsId = questionFieldIds.length;
         const newQObj = {
             id: newShortAnsId,
+            type: "shortAns",
             questionLabel: "",
             questionAns: ""
         }
         setQuestionFieldIds([...questionFieldIds, newQObj]);
-        // const shortAnsQ = <ShortAnswerQField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={newShortAnsId} fieldId = {newShortAnsId}/>
-        // setQuestionFieldsList([...questionFieldsList, shortAnsQ]);
     }
 
     const handleMCClick = (e) => {
@@ -41,12 +45,15 @@ const FormBuilder = () => {
         const newMcQId = "mcQId: " + questionFieldIds.length;
         const newQObj = {
             id: newMcQId,
+            type: "mc",
             questionLabel: "",
-            questionAns: ""
+            questionAns: "",
+            optionList: [],
+            optionAns: []
         }
+
         setQuestionFieldIds([...questionFieldIds, newQObj]);
-        // const mcQ = <MCQuestionField handleFieldChange={handleFieldChange} key={newMcQId} fieldId = {newMcQId}/>
-        // setQuestionFieldsList([...questionFieldsList, mcQ]);
+
     }
 
     const handleSaveFormClick = (e) => {
@@ -61,7 +68,7 @@ const FormBuilder = () => {
 
     useEffect(() => {
         //console.log("Question Fields List: " + questionFieldsList);
-        console.log("Question Field IDs: " + questionFieldIds);
+        console.log(questionFieldIds);
     }, [questionFieldIds])
 
     return (
@@ -83,7 +90,7 @@ const FormBuilder = () => {
                     <button onClick={handleShortAnswerClick}>Add Short Answer</button>
                     <button onClick={handleMCClick}>Add Multiple Choice</button>
                     {(questionFieldIds.length >= 1) && questionFieldIds.map((questionField) => {
-                        if (questionField.id.includes("shortAnsId: ")) {
+                        if (questionField.type === "shortAns") {
                             return <ShortAnswerQField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>;
                         }
                         return <MCQuestionField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>

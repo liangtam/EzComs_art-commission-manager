@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 import styles from './Navbar.module.css'
 const Navbar = () => {
     return (
-        <div className={styles.header}>
-            <div className={styles.container}>
+        <div className={styles.nav_header}>
+            <div className={styles.nav_container}>
                 <div className={styles.website_title}>
                     <Link to="/">
                         <h1><strong>CommissionMe</strong></h1>
