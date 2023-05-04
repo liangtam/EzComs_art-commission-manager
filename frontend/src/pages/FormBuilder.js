@@ -4,45 +4,51 @@ import MCQuestionField from '../components/MCQuestionField';
 import { useEffect, useState } from 'react';
 
 const FormBuilder = () => {
-    const [questionFieldIds, setQuestionFieldIds] = useState([]);
+    const [formName, setName] = useState("");
+    const [questionFieldList, setQuestionFieldList] = useState([]);
+    const [error, setError] = useState(null);
 
+    const handleNameFieldChange = (e) => {
+        setName(e.target.value);
+    }
+    // to pass as prop for child components 
     const handleFieldChange = (e, fieldId) => {
-        let newList = [...questionFieldIds];
+        let newList = [...questionFieldList];
         newList.map((question) => {
             if (question.id === fieldId) {
                 question.questionLabel = e.target.value;
             }
         })
-        setQuestionFieldIds(newList);
+        setQuestionFieldList(newList);
     }
 
     const handleRemoveField = (e, fieldId) => {
         e.preventDefault();
-        let newList = [...questionFieldIds];
+        let newList = [...questionFieldList];
         
         console.log('Field id: ' + fieldId);
-        
+
         const newFilteredList = newList.filter((question) => question.id !== fieldId);
 
-        setQuestionFieldIds(newFilteredList);
+        setQuestionFieldList(newFilteredList);
         console.log('Set new list');
     }
 
     const handleShortAnswerClick = (e) => {
         e.preventDefault();
-        const newShortAnsId = questionFieldIds.length;
+        const newShortAnsId = questionFieldList.length;
         const newQObj = {
             id: newShortAnsId,
             type: "shortAns",
             questionLabel: "",
             questionAns: ""
         }
-        setQuestionFieldIds([...questionFieldIds, newQObj]);
+        setQuestionFieldList([...questionFieldList, newQObj]);
     }
 
     const handleMCClick = (e) => {
         e.preventDefault();
-        const newMcQId = "mcQId: " + questionFieldIds.length;
+        const newMcQId = "mcQId: " + questionFieldList.length;
         const newQObj = {
             id: newMcQId,
             type: "mc",
@@ -52,52 +58,82 @@ const FormBuilder = () => {
             optionAns: []
         }
 
-        setQuestionFieldIds([...questionFieldIds, newQObj]);
-
-    }
-
-    const handleSaveFormClick = (e) => {
-        e.preventDefault();
+        setQuestionFieldList([...questionFieldList, newQObj]);
 
     }
 
     const saveForm = (e) => {
         e.preventDefault();
+    }
+
+    const handleSaveFormClick = async (e) => {
+        e.preventDefault();
+        const questions = [];
+        // if (questionFieldList.length === 0) {
+        //     return;
+        // }
+        // for (let i = 0; i < questionFieldList.length; i++) {
+        //     if (questionFieldList[i].questionLabel !== "") {
+        //         questions.push(questionFieldList[i]);
+        //     }
+        // }
+        const form = {formName, questions};
+
+        // first arg: where we're sending the post request to
+        const response = await fetch('http://localhost:4000/api/forms', {
+            method: 'POST',
+            body: JSON.stringify(form),
+            // to specify that the content type is json
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // parsing our response to json
+        const json = await response.json();
+
+        if (response.ok) {
+            console.log('New form added!', json);
+            setQuestionFieldList([]);
+            setName("");
+        } else {
+            setError(json.error);
+        }
 
     }
 
     useEffect(() => {
         //console.log("Question Fields List: " + questionFieldsList);
-        console.log(questionFieldIds);
-    }, [questionFieldIds])
+        console.log(questionFieldList);
+    }, [questionFieldList])
 
     return (
         <div className="form-maker">
             <h3>Create an order form for your clients</h3>
-            <form onSubmit={saveForm}>
+            <form onSubmit={handleSaveFormClick}>
                 <h4>Default questions included in form:</h4>
                 <li>
                     <ul>Client Name: </ul>
                     <ul>Client Email: </ul>
                     <ul>Order Details: </ul>
                 </li>
-                <div className="shortanswer_qs">
-                    <h4>Your added questions:</h4>
+                <div className="form_name">
+                    <h4>Name of form:</h4>
+                    <input type='text' onChange={handleNameFieldChange}></input>
 
                 </div>
                 <h2>------------------------------------------------------------</h2>
                 <div className="create_qs">
                     <button onClick={handleShortAnswerClick}>Add Short Answer</button>
                     <button onClick={handleMCClick}>Add Multiple Choice</button>
-                    {(questionFieldIds.length >= 1) && questionFieldIds.map((questionField) => {
+                    {(questionFieldList.length >= 1) && questionFieldList.map((questionField) => {
                         if (questionField.type === "shortAns") {
                             return <ShortAnswerQField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>;
                         }
                         return <MCQuestionField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>
                     })}
-                    <button onClick={handleSaveFormClick}>Save Form</button>
-
                 </div>
+                <button>Submit</button>
             </form>
         </div>
 

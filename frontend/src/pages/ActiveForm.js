@@ -1,4 +1,4 @@
-const Form = () => {
+const ActiveForm = () => {
     return (
         <form>
             <div className="default-questions">
@@ -13,4 +13,4 @@ const Form = () => {
     )
 }
 
-export default Form;
+export default ActiveForm;

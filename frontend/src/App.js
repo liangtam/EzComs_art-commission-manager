@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Orders from './pages/Orders';
 import FormBuilder from './pages/FormBuilder';
 import Navbar from './components/Navbar';
-import Form from "./pages/Form";
+import ActiveForm from "./pages/ActiveForm";
 
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
           element={ < FormBuilder /> }/>
           <Route
           exact path="/form"
-          element={ < Form /> } />
+          element={ < ActiveForm /> } />
 
         </Routes>
       </div>

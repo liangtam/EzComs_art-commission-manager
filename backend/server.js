@@ -15,7 +15,7 @@ app.use(express.json());
 // routes
 app.use('/api/orders', ordersRoutes);
 
-app.use('/api/form', formRoutes);
+app.use('/api/forms', formRoutes);
 
 // connect to MongoDB(it's async)
 mongoose.connect(process.env.MONGO_URI)

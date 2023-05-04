@@ -6,17 +6,21 @@ const mongoose = require('mongoose');
 const getForm = async(req, res) => {
     const {id} = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({error: 'Form does not exist. Invalid ID!'});
+    }
+
     const form = await Form.findById(id);
 
     if (!form) {
         return res.status(404).json({error: 'Form does not exist.'});
     }
-    res.json({mssg: 'got form'});
+    res.status(200).json(form);
 };
 
 // GET all forms
 const getForms = async(req, res) => {
-    // the crea
+    // the finds all forms, starting from most recent one
     const forms = await Form.find({}).sort({createdAt: -1});
 
     // this means signal everything is ok, and the "forms" is
@@ -25,7 +29,16 @@ const getForms = async(req, res) => {
 };
 
 const postForm = async(req, res) => {
-    res.json({mssg: 'posted form'});
+    const {formName, questions} = req.body;
+    try {
+        const formT = await Form.create({formName, questions});
+        res.status(200).json(formT);
+    } catch {
+        res.status(400).json({error: error.message});
+    }
+
+    //res.json({mssg: 'posted form'});
 };
+
 
 module.exports = {getForm, postForm, getForms};
