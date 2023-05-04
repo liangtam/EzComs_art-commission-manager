@@ -68,25 +68,26 @@ const FormBuilder = () => {
 
     const handleSaveFormClick = async (e) => {
         e.preventDefault();
-        const questions = [];
-        // if (questionFieldList.length === 0) {
-        //     return;
-        // }
-        // for (let i = 0; i < questionFieldList.length; i++) {
-        //     if (questionFieldList[i].questionLabel !== "") {
-        //         questions.push(questionFieldList[i]);
-        //     }
-        // }
+        let questions = [];
+        if (questionFieldList.length === 0) {
+            return;
+        }
+        for (let i = 0; i < questionFieldList.length; i++) {
+            if (questionFieldList[i].questionLabel !== "") {
+                questions.push(questionFieldList[i]);
+            }
+        }
         const form = {formName, questions};
 
         // first arg: where we're sending the post request to
         const response = await fetch('http://localhost:4000/api/forms', {
             method: 'POST',
-            body: JSON.stringify(form),
+            body: JSON.stringify(form), 
             // to specify that the content type is json
             headers: {
                 'Content-Type': 'application/json'
             }
+
         });
 
         // parsing our response to json
@@ -108,7 +109,7 @@ const FormBuilder = () => {
     }, [questionFieldList])
 
     return (
-        <div className="form-maker">
+        <div className="form_maker">
             <h3>Create an order form for your clients</h3>
             <form onSubmit={handleSaveFormClick}>
                 <h4>Default questions included in form:</h4>
