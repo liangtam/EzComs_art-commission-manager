@@ -62,10 +62,6 @@ const FormBuilder = () => {
 
     }
 
-    const saveForm = (e) => {
-        e.preventDefault();
-    }
-
     const handleSaveFormClick = async (e) => {
         e.preventDefault();
         let questions = [];
@@ -95,6 +91,9 @@ const FormBuilder = () => {
 
         if (response.ok) {
             console.log('New form added!', json);
+            // jquery -- find an element with id formName_field and set its value to ''.
+            //          So, we're clearing the name field here.
+            document.getElementById('formName_field').value='';
             setQuestionFieldList([]);
             setName("");
         } else {
@@ -120,7 +119,7 @@ const FormBuilder = () => {
                 </li>
                 <div className="form_name">
                     <h4>Name of form:</h4>
-                    <input type='text' onChange={handleNameFieldChange}></input>
+                    <input id="formName_field" type='text' onChange={handleNameFieldChange}></input>
 
                 </div>
                 <h2>------------------------------------------------------------</h2>
