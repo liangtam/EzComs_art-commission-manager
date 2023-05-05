@@ -26,12 +26,12 @@ const FormBuilder = () => {
         e.preventDefault();
         let newList = [...questionFieldList];
         
-        console.log('Field id: ' + fieldId);
+        //console.log('Field id: ' + fieldId);
 
         const newFilteredList = newList.filter((question) => question.id !== fieldId);
 
         setQuestionFieldList(newFilteredList);
-        console.log('Set new list');
+        //console.log('Set new list');
     }
 
     const handleShortAnswerClick = (e) => {
@@ -48,7 +48,7 @@ const FormBuilder = () => {
 
     const handleMCClick = (e) => {
         e.preventDefault();
-        const newMcQId = "mcQId: " + questionFieldList.length;
+        const newMcQId = questionFieldList.length;
         const newQObj = {
             id: newMcQId,
             type: "mc",

@@ -5,18 +5,27 @@ const MCQuestionField = ({fieldId, handleFieldChange, handleRemoveField}) => {
     
     const [optList, setOptList] = useState([]);
 
+    // params: event, id of option field
+    // effect: changes the value of the option field with that id
     const handleOptionFieldChange = (e, optionFieldId) => {
+        e.preventDefault();
         let newOptList = [...optList];
         newOptList.map((option) => {
             if (option.optionId === optionFieldId) {
                 option.optionLabel = e.target.value;
             }
         })
+        setOptList(newOptList);
     };
 
+    // params: e: event,  optionFieldId: id of option field
+    // effect: deletes the option field with that id
     const handleRemoveOptionField = (e, optionFieldId) => {
         e.preventDefault();
-        let newOptList = optList.filter((option) => option.optionFieldId !== optionFieldId);
+        console.log(optionFieldId);
+        let newOptList = [...optList];
+        newOptList = newOptList.filter((option) => option.optionId !== optionFieldId);
+        console.log(newOptList);
         setOptList(newOptList);
     };
 
@@ -43,10 +52,11 @@ const MCQuestionField = ({fieldId, handleFieldChange, handleRemoveField}) => {
         <button onClick={(e) => handleRemoveField(e, fieldId)}>Remove</button>  
         <button onClick={handleOptionClick}>Add Option</button>
         {/* Displaying MC options, if there are any*/}
-        {((optList.length >= 1) && optList.map((option) => {
-                return <MCOptionField handleOptionFieldChange={handleOptionFieldChange}
+        {((optList.length >= 1) && optList.map((optionField) => {
+                return <MCOptionField optionFieldId={optionField.optionId}
+                                      handleOptionFieldChange={handleOptionFieldChange}
                                       handleRemoveOptionField={handleRemoveOptionField}
-                                      optionFieldId={option.optionFieldId}/>;
+                                      />;
         }))}
 
     </div>

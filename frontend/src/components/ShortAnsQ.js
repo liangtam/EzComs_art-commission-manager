@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from './ShortAnsQ.module.css'
 
-const ShortAnswerQField = ({handleRemoveField, fieldId, handleFieldChange}) => {
+const ShortAnswerQField = ({fieldId, handleRemoveField, handleFieldChange}) => {
 
     return (
     <div className="shortanswer_question_field_component">
