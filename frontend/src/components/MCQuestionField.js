@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import MCOptionField from './MCOption';
 
-const MCQuestionField = ({fieldId, handleFieldChange, handleRemoveField}) => {
+const MCQuestionField = ({fieldId, handleOptionClick, handleFieldChange, handleRemoveField}) => {
     
     const [optList, setOptList] = useState([]);
 
@@ -29,28 +29,28 @@ const MCQuestionField = ({fieldId, handleFieldChange, handleRemoveField}) => {
         setOptList(newOptList);
     };
 
-    const handleOptionClick = (e) => {
-        e.preventDefault();
-        const newOptionObj = {
-            optionId: optList.length,
-            optionLabel: "",
-            optionAns: ""
-        }
-        setOptList([...optList, newOptionObj]);
-    };
+    // const handleOptionClick = (e) => {
+    //     e.preventDefault();
+    //     const newOptionObj = {
+    //         optionId: optList.length,
+    //         optionLabel: "",
+    //         optionAns: ""
+    //     }
+    //     setOptList([...optList, newOptionObj]);
+    // };
 
     useEffect(() => {
         console.log(optList);
     }, [optList]);
 
     return (
-    <div className="mc-question-field-component">
-        <input key='mc-question-field' type='text' placeholder="MC Question"
+    <div className="mc_question_field_component">
+        <input key='mc_question_field' type='text' placeholder="MC Question"
         onChange={(e) => handleFieldChange(e, fieldId)}
         ></input>
 
         <button onClick={(e) => handleRemoveField(e, fieldId)}>Remove</button>  
-        <button onClick={handleOptionClick}>Add Option</button>
+        <button onClick={(e) => handleOptionClick(e, fieldId)}>Add Option</button>
         {/* Displaying MC options, if there are any*/}
         {((optList.length >= 1) && optList.map((optionField) => {
                 return <MCOptionField optionFieldId={optionField.optionId}

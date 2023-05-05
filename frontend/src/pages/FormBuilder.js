@@ -8,10 +8,17 @@ const FormBuilder = () => {
     const [questionFieldList, setQuestionFieldList] = useState([]);
     const [error, setError] = useState(null);
 
+    /*
+    EFFECT: sets the name of the form to what is entered in the form name field
+    */
     const handleNameFieldChange = (e) => {
         setName(e.target.value);
     }
-    // to pass as prop for child components 
+
+    /* To be passed into children components: ShortAnsQ and MCQuestionField
+    PARAMS: e: event, fieldId: id of the field
+    EFFECT: changes the question label of the question field with id fieldId in questionFieldList
+    */
     const handleFieldChange = (e, fieldId) => {
         let newList = [...questionFieldList];
         newList.map((question) => {
@@ -22,6 +29,10 @@ const FormBuilder = () => {
         setQuestionFieldList(newList);
     }
 
+    /* To be passed into children components: ShortAnsQ and MCQuestionField
+    PARAMS: e: event, fieldId: id of the field
+    EFFECT: removes the question field with id fieldId from questionFieldList
+    */
     const handleRemoveField = (e, fieldId) => {
         e.preventDefault();
         let newList = [...questionFieldList];
@@ -33,7 +44,9 @@ const FormBuilder = () => {
         setQuestionFieldList(newFilteredList);
         //console.log('Set new list');
     }
-
+    /* 
+    EFFECT: creates a new short ans question object and adds it to questionFieldList
+    */
     const handleShortAnswerClick = (e) => {
         e.preventDefault();
         const newShortAnsId = questionFieldList.length;
@@ -46,10 +59,13 @@ const FormBuilder = () => {
         setQuestionFieldList([...questionFieldList, newQObj]);
     }
 
+    /* 
+    EFFECT: creates a new multiple choice question object and adds it to questionFieldList
+    */
     const handleMCClick = (e) => {
         e.preventDefault();
         const newMcQId = questionFieldList.length;
-        const newQObj = {
+        let newQObj = {
             id: newMcQId,
             type: "mc",
             questionLabel: "",
@@ -62,12 +78,49 @@ const FormBuilder = () => {
 
     }
 
+    /*
+    PARAMS: event, id of option field
+    EFFECT: changes the value of the option field with that id
+    */
+    // const handleOptionFieldChange = (e, mcQuestionFieldId, optionFieldId) => {
+
+
+    // };
+
+    // const handleRemoveOptionField = (e, mcQuestionFieldId, optionFieldId) => {
+
+    // };
+
+    const handleOptionClick = (e, mcQuestionFieldId) => {
+        e.preventDefault();
+        let newList = [...questionFieldList];
+        //console.log("here :3", mcQuestionFieldId);
+        for (let i = 0; i < newList.length; i++) {
+            if (newList[i].type === "mc" && newList[i].id === mcQuestionFieldId) {
+                //console.log("hereee");
+                let newOptionObj = {
+                    optionId: newList[i].optionList.length,
+                    optionLabel: "",
+                    optionAns: ""
+                }
+                //console.log("here");
+                newList[i].optionList.push(newOptionObj);
+            }
+        }
+        setQuestionFieldList(newList);
+    }
+
+    /* 
+    EFFECT: saves the form into database, if valid. Else, throw an error.
+    */
     const handleSaveFormClick = async (e) => {
         e.preventDefault();
         let questions = [];
-        if (questionFieldList.length === 0) {
-            return;
+        if (formName === '') {
+            setError({error: 'Please provide a name for this form.'});
+            <div><text>{error.message}</text></div>
         }
+
         for (let i = 0; i < questionFieldList.length; i++) {
             if (questionFieldList[i].questionLabel !== "") {
                 questions.push(questionFieldList[i]);
@@ -129,8 +182,9 @@ const FormBuilder = () => {
                     {(questionFieldList.length >= 1) && questionFieldList.map((questionField) => {
                         if (questionField.type === "shortAns") {
                             return <ShortAnswerQField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>;
+                        } else if (questionField.type === "mc") {
+                            return <MCQuestionField handleOptionClick = {handleOptionClick} handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>;
                         }
-                        return <MCQuestionField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>
                     })}
                 </div>
                 <button>Submit</button>
