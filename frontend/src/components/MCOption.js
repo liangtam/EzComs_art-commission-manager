@@ -1,8 +1,8 @@
-const MCOptionField = ({optionFieldId, handleOptionFieldChange, handleRemoveOptionField}) => {
+const MCOptionField = ({optionFieldId, mcQuestionFieldId, handleOptionFieldChange, handleRemoveOptionField}) => {
     return (
         <div className="mcoption_component">
-            <input key="mc_option" type="text" placeholder="Option" onChange={(e) => handleOptionFieldChange(e, optionFieldId)}></input>
-            <button onClick={(e) => handleRemoveOptionField(e, optionFieldId)}>Remove Option</button>
+            <input key="mc_option" type="text" placeholder="Option" onChange={(e) => handleOptionFieldChange(e, mcQuestionFieldId, optionFieldId)}></input>
+            <button onClick={(e) => handleRemoveOptionField(e, mcQuestionFieldId, optionFieldId)}>Remove Option</button>
         </div>
     )
 }

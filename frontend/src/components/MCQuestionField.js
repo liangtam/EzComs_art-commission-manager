@@ -1,33 +1,33 @@
 import { useState, useEffect } from "react";
 import MCOptionField from './MCOption';
 
-const MCQuestionField = ({fieldId, handleOptionClick, handleFieldChange, handleRemoveField}) => {
+const MCQuestionField = ({fieldId, handleOptionClick, handleOptionFieldChange, handleRemoveOptionField, handleRemoveField, handleFieldChange, optList}) => {
     
-    const [optList, setOptList] = useState([]);
+    //const [optList, setOptList] = useState([]);
 
     // params: event, id of option field
     // effect: changes the value of the option field with that id
-    const handleOptionFieldChange = (e, optionFieldId) => {
-        e.preventDefault();
-        let newOptList = [...optList];
-        newOptList.map((option) => {
-            if (option.optionId === optionFieldId) {
-                option.optionLabel = e.target.value;
-            }
-        })
-        setOptList(newOptList);
-    };
+    // const handleOptionFieldChange = (e, optionFieldId) => {
+    //     e.preventDefault();
+    //     let newOptList = [...optList];
+    //     newOptList.map((option) => {
+    //         if (option.optionId === optionFieldId) {
+    //             option.optionLabel = e.target.value;
+    //         }
+    //     })
+    //     setOptList(newOptList);
+    // };
 
     // params: e: event,  optionFieldId: id of option field
     // effect: deletes the option field with that id
-    const handleRemoveOptionField = (e, optionFieldId) => {
-        e.preventDefault();
-        console.log(optionFieldId);
-        let newOptList = [...optList];
-        newOptList = newOptList.filter((option) => option.optionId !== optionFieldId);
-        console.log(newOptList);
-        setOptList(newOptList);
-    };
+    // const handleRemoveOptionField = (e, optionFieldId) => {
+    //     e.preventDefault();
+    //     console.log(optionFieldId);
+    //     let newOptList = [...optList];
+    //     newOptList = newOptList.filter((option) => option.optionId !== optionFieldId);
+    //     console.log(newOptList);
+    //     setOptList(newOptList);
+    // };
 
     // const handleOptionClick = (e) => {
     //     e.preventDefault();
@@ -40,7 +40,8 @@ const MCQuestionField = ({fieldId, handleOptionClick, handleFieldChange, handleR
     // };
 
     useEffect(() => {
-        console.log(optList);
+        console.log(optList.length);
+        //forceUpdate();
     }, [optList]);
 
     return (
@@ -54,8 +55,12 @@ const MCQuestionField = ({fieldId, handleOptionClick, handleFieldChange, handleR
         {/* Displaying MC options, if there are any*/}
         {((optList.length >= 1) && optList.map((optionField) => {
                 return <MCOptionField optionFieldId={optionField.optionId}
+                                      mcQuestionFieldId={fieldId}
                                       handleOptionFieldChange={handleOptionFieldChange}
                                       handleRemoveOptionField={handleRemoveOptionField}
+                                      //optList = {optList}
+                                      //setOptList = {setOptList}
+                                      key = {"option" + optionField.optionId}
                                       />;
         }))}
 

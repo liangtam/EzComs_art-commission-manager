@@ -1,11 +1,14 @@
 // only artist account can see this
 import ShortAnswerQField from '../components/ShortAnsQ';
 import MCQuestionField from '../components/MCQuestionField';
+//import MCOptionField from './MCOption';
 import { useEffect, useState } from 'react';
 
 const FormBuilder = () => {
     const [formName, setName] = useState("");
     const [questionFieldList, setQuestionFieldList] = useState([]);
+    // list of list of options, each list of options correspond to a multiple choice question in questionFieldList
+    //const [optionListsList, setOptionListsList] = useState([]);
     const [error, setError] = useState(null);
 
     /*
@@ -21,11 +24,11 @@ const FormBuilder = () => {
     */
     const handleFieldChange = (e, fieldId) => {
         let newList = [...questionFieldList];
-        newList.map((question) => {
-            if (question.id === fieldId) {
-                question.questionLabel = e.target.value;
+        for (let i = 0; i < questionFieldList.length; i++) {
+            if (questionFieldList[i].id === fieldId) {
+                questionFieldList[i].questionLabel = e.target.value;
             }
-        })
+        }
         setQuestionFieldList(newList);
     }
 
@@ -78,19 +81,10 @@ const FormBuilder = () => {
 
     }
 
-    /*
-    PARAMS: event, id of option field
+    /* To be passed into child components: MCQuestionField
+    PARAMS: e: event, mcQuestionFieldId: id of of the multiple choice question, setOptList: function to set option list of that mc question's component
     EFFECT: changes the value of the option field with that id
     */
-    // const handleOptionFieldChange = (e, mcQuestionFieldId, optionFieldId) => {
-
-
-    // };
-
-    // const handleRemoveOptionField = (e, mcQuestionFieldId, optionFieldId) => {
-
-    // };
-
     const handleOptionClick = (e, mcQuestionFieldId) => {
         e.preventDefault();
         let newList = [...questionFieldList];
@@ -100,15 +94,62 @@ const FormBuilder = () => {
                 //console.log("hereee");
                 let newOptionObj = {
                     optionId: newList[i].optionList.length,
+                    mcQuestionId: mcQuestionFieldId,
                     optionLabel: "",
                     optionAns: ""
                 }
                 //console.log("here");
                 newList[i].optionList.push(newOptionObj);
+                //setOptList(newList[i].optionList);
+
             }
         }
         setQuestionFieldList(newList);
     }
+
+    /* To be passed into child components: MCQuestionField, but is called in MCOptionField
+    PARAMS: event, id of option field
+    EFFECT: changes the value of the option field with that id
+    */
+    const handleOptionFieldChange = (e, mcQuestionFieldId, optionFieldId) => {
+        e.preventDefault();
+        let newList = [...questionFieldList];
+        for (let i = 0; i < questionFieldList.length; i++) {
+
+            if (questionFieldList[i].type === "mc" && questionFieldList[i].id === mcQuestionFieldId) {
+
+                for (let j = 0; j < questionFieldList[i].optionList.length; j++) {
+                    if (questionFieldList[i].optionList[j].optionId === optionFieldId) {
+                        questionFieldList[i].optionList[j].optionLabel = e.target.value;
+                        break;
+                    }
+                }
+
+                break;
+            }
+
+        }
+
+        setQuestionFieldList(newList);
+    };
+
+    /* To be passed into child components: MCQuestionField
+    PARAMS: event, id of option field
+    EFFECT: changes the value of the option field with that id
+    */
+    const handleRemoveOptionField = (e, mcQuestionFieldId, optionFieldId) => {
+        e.preventDefault();
+        let newQuestionFieldList = [...questionFieldList];
+        newQuestionFieldList.map((questionField) => {
+            if (questionField.type === "mc" && questionField.id === mcQuestionFieldId) {
+                console.log("here")
+                questionField.optionList = questionField.optionList.filter((option) => option.optionId !== optionFieldId);
+
+            }
+        })
+        setQuestionFieldList(newQuestionFieldList);
+
+    };
 
     /* 
     EFFECT: saves the form into database, if valid. Else, throw an error.
@@ -163,7 +204,7 @@ const FormBuilder = () => {
     return (
         <div className="form_maker">
             <h3>Create an order form for your clients</h3>
-            <form onSubmit={handleSaveFormClick}>
+            <form>
                 <h4>Default questions included in form:</h4>
                 <li>
                     <ul>Client Name: </ul>
@@ -181,13 +222,24 @@ const FormBuilder = () => {
                     <button onClick={handleMCClick}>Add Multiple Choice</button>
                     {(questionFieldList.length >= 1) && questionFieldList.map((questionField) => {
                         if (questionField.type === "shortAns") {
-                            return <ShortAnswerQField handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>;
+                            return <ShortAnswerQField fieldId = {questionField.id}
+                                                      handleRemoveField={handleRemoveField}
+                                                      handleFieldChange={handleFieldChange}
+                                                      key={questionField.id}/>;
                         } else if (questionField.type === "mc") {
-                            return <MCQuestionField handleOptionClick = {handleOptionClick} handleRemoveField={handleRemoveField} handleFieldChange={handleFieldChange} key={questionField.id} fieldId = {questionField.id}/>;
+                            return (<MCQuestionField fieldId = {questionField.id}
+                                                    handleOptionClick = {handleOptionClick}
+                                                    handleOptionFieldChange = {handleOptionFieldChange}
+                                                    handleRemoveOptionField = {handleRemoveOptionField}
+                                                    handleRemoveField={handleRemoveField}
+                                                    handleFieldChange={handleFieldChange}
+                                                    optList={questionField.optionList}
+                                                    key={questionField.id}/>
+                                    );
                         }
                     })}
                 </div>
-                <button>Submit</button>
+                <button onClick={handleSaveFormClick}>Submit</button>
             </form>
         </div>
 
