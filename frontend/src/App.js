@@ -5,6 +5,7 @@ import Orders from './pages/Orders';
 import FormBuilder from './pages/FormBuilder';
 import Navbar from './components/Navbar';
 import ActiveForm from "./pages/ActiveForm";
+import { FormContextProvider } from './context/FormContext';
 
 
 function App() {
