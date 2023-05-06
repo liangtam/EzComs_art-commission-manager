@@ -20,7 +20,7 @@ const Forms = () => {
     return (
         <div className="forms">
             {forms && forms.map((form) => {
-                return <Forms.js key={form.id} form={form}/>
+                return <FormSnippet key={form.id} form={form}/>
             })}
         </div>
     )

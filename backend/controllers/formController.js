@@ -29,10 +29,10 @@ const getForms = async(req, res) => {
 };
 
 const postForm = async(req, res) => {
-    const {formName, questions} = req.body;
+    const {formName, questions, activeStatus} = req.body;
     try {
-        const formT = await Form.create({formName, questions});
-        res.status(200).json(formT);
+        const form = await Form.create({formName, questions, activeStatus});
+        res.status(200).json(form);
     } catch {
         res.status(400).json({error: error.message});
     }

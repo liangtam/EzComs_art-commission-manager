@@ -11,6 +11,10 @@ const formSchema = new Schema({
     questions: {
         type: Array,
         required: true
+    },
+    activeStatus: {
+        type: Boolean,
+        required: true
     }
 }, { timestamps: true });
 

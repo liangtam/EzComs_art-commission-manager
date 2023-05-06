@@ -9,6 +9,7 @@ import { FormContext } from '../context/FormContext';
 const FormBuilder = () => {
     const [formName, setName] = useState("");
     const [questionFieldList, setQuestionFieldList] = useState([]);
+    const [activeStatus, setActiveStatus] = useState(false);
     // list of list of options, each list of options correspond to a multiple choice question in questionFieldList
     //const [optionListsList, setOptionListsList] = useState([]);
     const [error, setError] = useState(null);
@@ -18,6 +19,11 @@ const FormBuilder = () => {
     */
     const handleNameFieldChange = (e) => {
         setName(e.target.value);
+    }
+
+    const toggleActive = (e) => {
+        e.preventDefault();
+        setActiveStatus(!activeStatus);
     }
 
     /* 
@@ -62,7 +68,7 @@ const FormBuilder = () => {
         let questions = [];
         if (formName === '') {
             setError({error: 'Please provide a name for this form.'});
-            <div><text>{error.message}</text></div>
+            return <div><text>{error.message}</text></div>;
         }
 
         for (let i = 0; i < questionFieldList.length; i++) {
@@ -70,7 +76,7 @@ const FormBuilder = () => {
                 questions.push(questionFieldList[i]);
             }
         }
-        const form = {formName, questions};
+        const form = {formName, questions, activeStatus};
 
         // first arg: where we're sending the post request to
         const response = await fetch('http://localhost:4000/api/forms', {
@@ -93,6 +99,7 @@ const FormBuilder = () => {
             document.getElementById('formName_field').value='';
             setQuestionFieldList([]);
             setName("");
+            setActiveStatus(false);
         } else {
             setError(json.error);
         }
@@ -125,25 +132,26 @@ const FormBuilder = () => {
                     <button onClick={handleMCClick}>Add Multiple Choice</button>
                     <FormContext.Provider value={{questionFieldList, setQuestionFieldList}}>
                         {(questionFieldList.length >= 1) && questionFieldList.map((questionField) => {
-                        if (questionField.type === "shortAns") {
-                            return <ShortAnswerQField fieldId = {questionField.id}
-                                                      //handleRemoveField={handleRemoveField}
-                                                      //handleFieldChange={handleFieldChange}
-                                                      key={"saq" + questionField.id}/>;
-                        } else if (questionField.type === "mc") {
-                            return (<MCQuestionField fieldId = {questionField.id}
-                                                    //handleOptionClick = {handleOptionClick}
-                                                    //handleOptionFieldChange = {handleOptionFieldChange}
-                                                    //handleRemoveOptionField = {handleRemoveOptionField}
-                                                    //handleRemoveField={handleRemoveField}
-                                                    //handleFieldChange={handleFieldChange}
-                                                    optList={questionField.optionList}
-                                                    key={"mcq" + questionField.id}/>
-                                    );
-                        }
-                    })}
+                            if (questionField.type === "shortAns") {
+                                return <ShortAnswerQField fieldId = {questionField.id}
+                                                        //handleRemoveField={handleRemoveField}
+                                                        //handleFieldChange={handleFieldChange}
+                                                        key={"saq" + questionField.id}/>;
+                            } else if (questionField.type === "mc") {
+                                return (<MCQuestionField fieldId = {questionField.id}
+                                                        //handleOptionClick = {handleOptionClick}
+                                                        //handleOptionFieldChange = {handleOptionFieldChange}
+                                                        //handleRemoveOptionField = {handleRemoveOptionField}
+                                                        //handleRemoveField={handleRemoveField}
+                                                        //handleFieldChange={handleFieldChange}
+                                                        optList={questionField.optionList}
+                                                        key={"mcq" + questionField.id}/>
+                                        );
+                            }
+                        })}
                     </FormContext.Provider>
                 </div>
+                <button onClick={toggleActive}>Set Active</button>
                 <button onClick={handleSaveFormClick}>Submit</button>
             </form>
         </div>
