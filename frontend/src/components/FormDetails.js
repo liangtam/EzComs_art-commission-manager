@@ -62,7 +62,7 @@ const FormDetails = () => {
     const handleMCClick = (e) => {
         e.preventDefault();
         const newMcQId = questionFieldList.length;
-        let newQObj = {
+        const newQObj = {
             id: newMcQId,
             type: "mc",
             questionLabel: "",
@@ -103,7 +103,10 @@ const FormDetails = () => {
         const json = await response.json();
 
         if (response.ok) {
-            console.log('Form updated!', json)
+            console.log('Form updated!', json);
+            setQuestionFieldList(updatedForm.questions);
+            setFormName(updatedForm.formName);
+            setActiveStatus(updatedForm.activeStatus);
         } else {
             setError(json.error);
         }
@@ -133,9 +136,9 @@ const FormDetails = () => {
                     if (question.type === 'shortAns') {
                         return <ShortAnswerQField fieldId = {question.id}
                                                   labelValue = {question.questionLabel}
-                                                  key={question.id}/>;
+                                                  key={"saq" + question.id}/>;
                     } else if (question.type === 'mc') {
-                        return <MCQuestionField fieldId = {"saq"+ question.id}
+                        return <MCQuestionField fieldId = {question.id}
                                                 labelValue = {question.questionLabel}
                                                 optList = {question.optionList}
                                                 key={"mcq" + question.id}/>

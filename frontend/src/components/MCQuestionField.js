@@ -33,41 +33,6 @@ const MCQuestionField = ({fieldId, labelValue, optList}) => {
         setQuestionFieldList(newList);
     }
 
-    //const [optList, setOptList] = useState([]);
-
-    // params: event, id of option field
-    // effect: changes the value of the option field with that id
-    // const handleOptionFieldChange = (e, optionFieldId) => {
-    //     e.preventDefault();
-    //     let newOptList = [...optList];
-    //     newOptList.map((option) => {
-    //         if (option.optionId === optionFieldId) {
-    //             option.optionLabel = e.target.value;
-    //         }
-    //     })
-    //     setOptList(newOptList);
-    // };
-
-    // params: e: event,  optionFieldId: id of option field
-    // effect: deletes the option field with that id
-    // const handleRemoveOptionField = (e, optionFieldId) => {
-    //     e.preventDefault();
-    //     console.log(optionFieldId);
-    //     let newOptList = [...optList];
-    //     newOptList = newOptList.filter((option) => option.optionId !== optionFieldId);
-    //     console.log(newOptList);
-    //     setOptList(newOptList);
-    // };
-
-    // const handleOptionClick = (e) => {
-    //     e.preventDefault();
-    //     const newOptionObj = {
-    //         optionId: optList.length,
-    //         optionLabel: "",
-    //         optionAns: ""
-    //     }
-    //     setOptList([...optList, newOptionObj]);
-    // };
      /*
     PARAMS: e: event, fieldId: id of the field
     EFFECT: changes the question label of the question field with id fieldId in questionFieldList
@@ -91,9 +56,9 @@ const MCQuestionField = ({fieldId, labelValue, optList}) => {
         let newList = [...questionFieldList];
         
         //console.log('Field id: ' + fieldId);
-
+        console.log(fieldId);
         const newFilteredList = newList.filter((question) => question.id !== fieldId);
-
+        console.log("here");
         setQuestionFieldList(newFilteredList);
         //console.log('Set new list');
     }
