@@ -2,7 +2,7 @@ import { useEffect, useContext } from "react";
 import MCOptionField from './MCOption';
 import { FormContext } from "../context/FormContext";
 
-const MCQuestionField = ({fieldId, handleOptionFieldChange, handleRemoveOptionField, optList}) => {
+const MCQuestionField = ({fieldId, labelValue, optList}) => {
     
     const { questionFieldList, setQuestionFieldList } = useContext(FormContext);
 
@@ -107,7 +107,7 @@ const MCQuestionField = ({fieldId, handleOptionFieldChange, handleRemoveOptionFi
     <div className="mc_question_field_component">
         <input key='mc_question_field' type='text' placeholder="MC Question"
         onChange={(e) => handleFieldChange(e, fieldId)}
-        ></input>
+        value={labelValue}></input>
 
         <button onClick={(e) => handleRemoveField(e, fieldId)}>Remove</button>  
         <button onClick={(e) => handleOptionClick(e, fieldId)}>Add Option</button>
@@ -119,6 +119,7 @@ const MCQuestionField = ({fieldId, handleOptionFieldChange, handleRemoveOptionFi
                                       //handleRemoveOptionField={handleRemoveOptionField}
                                       //optList = {optList}
                                       //setOptList = {setOptList}
+                                      labelValue={optionField.optionLabel}
                                       key = {"option" + optionField.optionId}
                                       />;
         }))}

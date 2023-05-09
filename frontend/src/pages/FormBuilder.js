@@ -1,14 +1,14 @@
 // only artist account can see this
 import ShortAnswerQField from '../components/ShortAnsQ';
 import MCQuestionField from '../components/MCQuestionField';
-//import MCOptionField from './MCOption';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FormContext } from '../context/FormContext';
 
 
 const FormBuilder = () => {
     const [formName, setName] = useState("");
-    const [questionFieldList, setQuestionFieldList] = useState([]);
+    const {questionFieldList, setQuestionFieldList} = useContext(FormContext);
+    //const [questionFieldList, setQuestionFieldList] = useState([]);
     const [activeStatus, setActiveStatus] = useState(false);
     // list of list of options, each list of options correspond to a multiple choice question in questionFieldList
     //const [optionListsList, setOptionListsList] = useState([]);
@@ -111,6 +111,10 @@ const FormBuilder = () => {
         console.log(questionFieldList);
     }, [questionFieldList])
 
+    useEffect(() => {
+        setQuestionFieldList([]);
+    }, [])
+
     return (
         <div className="form_maker">
             <h3>Create an order form for your clients</h3>
@@ -130,7 +134,7 @@ const FormBuilder = () => {
                 <div className="create_qs">
                     <button onClick={handleShortAnswerClick}>Add Short Answer</button>
                     <button onClick={handleMCClick}>Add Multiple Choice</button>
-                    <FormContext.Provider value={{questionFieldList, setQuestionFieldList}}>
+                    {/* <FormContext.Provider value={{questionFieldList, setQuestionFieldList}}> */}
                         {(questionFieldList.length >= 1) && questionFieldList.map((questionField) => {
                             if (questionField.type === "shortAns") {
                                 return <ShortAnswerQField fieldId = {questionField.id}
@@ -149,7 +153,7 @@ const FormBuilder = () => {
                                         );
                             }
                         })}
-                    </FormContext.Provider>
+                    {/* </FormContext.Provider> */}
                 </div>
                 <button onClick={toggleActive}>Set Active</button>
                 <button onClick={handleSaveFormClick}>Submit</button>

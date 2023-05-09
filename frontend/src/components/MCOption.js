@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { FormContext } from "../context/FormContext";
-const MCOptionField = ({optionFieldId, mcQuestionFieldId}) => {
+const MCOptionField = ({optionFieldId, mcQuestionFieldId, labelValue}) => {
     const { questionFieldList, setQuestionFieldList } = useContext(FormContext);
 
      /* To be passed into child components: MCQuestionField, but is called in MCOptionField
@@ -49,7 +49,7 @@ const MCOptionField = ({optionFieldId, mcQuestionFieldId}) => {
 
     return (
         <div className="mcoption_component">
-            <input key="mc_option" type="text" placeholder="Option" onChange={(e) => handleOptionFieldChange(e, mcQuestionFieldId)}></input>
+            <input key="mc_option" type="text" placeholder="Option" onChange={(e) => handleOptionFieldChange(e, mcQuestionFieldId)}value={labelValue}></input>
             <button onClick={(e) => handleRemoveOptionField(e, mcQuestionFieldId)}>Remove Option</button>
         </div>
     )

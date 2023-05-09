@@ -13,7 +13,7 @@ const Navbar = () => {
                 <div className={styles.navbar_links}>
                     <li>
                         <ul>
-                            <Link to="/manage-forms">
+                            <Link to="/forms">
                             <h4>Manage Forms</h4>
                             </Link>
                         </ul>

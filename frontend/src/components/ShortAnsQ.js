@@ -3,7 +3,7 @@ import styles from './ShortAnsQ.module.css'
 import { FormContext } from "../context/FormContext";
 
 
-const ShortAnswerQField = ({fieldId}) => {
+const ShortAnswerQField = ({fieldId, labelValue}) => {
 
     const {questionFieldList, setQuestionFieldList} = useContext(FormContext);
 
@@ -36,7 +36,7 @@ const ShortAnswerQField = ({fieldId}) => {
 
     return (
     <div className="shortanswer_question_field_component">
-        <input key='shortanswer_question_field' type='text' placeholder="Question"
+        <input key='shortanswer_question_field' type='text' placeholder="Question" value={labelValue}
         onChange={(e) => handleFieldChange(e, fieldId)}></input>
         <button onClick={(e) => handleRemoveField(e, fieldId)}>Remove</button>        
     </div>
