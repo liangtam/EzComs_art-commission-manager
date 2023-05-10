@@ -16,15 +16,26 @@ const Forms = () => {
         }
     }
 
+    const handleDelete = async (e, formId) => {
+        e.preventDefault();
+        const response = await fetch('http://localhost:4000/api/forms/' + formId, {
+            method: 'DELETE'
+        })
+
+        if (response.ok) {
+            console.log('Form deleted!');
+        }
+    }
+
     useEffect(() => {
         fetchAllForms();
-    }, [])
+    }, [forms])
 
     return (
         <div className="forms">
-            {isLoading && "Loading"}
+            {isLoading && "Loading..."}
             {forms && forms.map((form) => {
-                return <FormSnippet formId={form._id} key={form._id} form={form}/>
+                return <FormSnippet formId={form._id} form={form} handleDelete = {handleDelete} key={form._id}/>
             })}
         </div>
     )

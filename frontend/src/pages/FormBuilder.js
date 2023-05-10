@@ -68,7 +68,7 @@ const FormBuilder = () => {
         let questions = [];
         if (formName === '') {
             setError({error: 'Please provide a name for this form.'});
-            return <div><text>{error.message}</text></div>;
+            return <div><text>{error && error.message}</text></div>;
         }
 
         for (let i = 0; i < questionFieldList.length; i++) {
