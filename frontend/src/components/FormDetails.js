@@ -1,6 +1,6 @@
 import {useState, useEffect, useContext} from 'react';
 import ShortAnswerQField from './ShortAnsQ';
-import {Link, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import { FormContext } from '../context/FormContext';
 
 import styles from './FormDetails.module.css';
@@ -10,6 +10,9 @@ const FormDetails = () => {
 
     const {id} = useParams();
     const {questionFieldList, setQuestionFieldList} = useContext(FormContext);
+
+    const navigate = useNavigate();
+
     const [formName, setFormName] = useState('');
     const [activeStatus, setActiveStatus] = useState(false);
     const [form, setForm] = useState(null);
@@ -110,12 +113,19 @@ const FormDetails = () => {
         } else {
             setError(json.error);
         }
-
-        
     }
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        const response = await fetch('http://localhost:4000/api/forms/' + id, {
+            method: 'DELETE',
+            'Content-Type': 'application/json'
+        })
 
+        if (response.ok) {
+            console.log('Form deleted!');
+            navigate('/forms');
+        }
     }
 
     useEffect(() => {
