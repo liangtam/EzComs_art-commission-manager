@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import styles from './ShortAnsQ.module.css'
-import { FormContext } from "../context/FormContext";
+import { QuestionFieldsContext } from "../context/QuestionFieldsContext";
 
 
 const ShortAnswerQField = ({fieldId, labelValue}) => {
 
-    const {questionFieldList, setQuestionFieldList} = useContext(FormContext);
+    const {questionFieldList, setQuestionFieldList} = useContext(QuestionFieldsContext);
 
         /* To be passed into children components: ShortAnsQ and MCQuestionField
     PARAMS: e: event, fieldId: id of the field

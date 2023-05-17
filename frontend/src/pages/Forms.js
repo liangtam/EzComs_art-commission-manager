@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import FormSnippet from '../components/FormSnippet';
+import { FormsContext } from "../context/FormsContext";
 
 const Forms = () => {
-    const [forms, setForms] = useState(null);
+    const {forms, setForms} = useContext(FormsContext);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchAllForms = async () => {

@@ -7,7 +7,7 @@ const Navbar = () => {
             <div className={styles.nav_container}>
                 <div className={styles.website_title}>
                     <Link to="/">
-                        <h1><strong>CommissionMe</strong></h1>
+                        <h1><strong>EzCom</strong></h1>
                     </Link>
                 </div>
                 <div className={styles.navbar_links}>

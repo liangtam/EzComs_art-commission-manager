@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { FormContext } from "../context/FormContext";
+import { QuestionFieldsContext } from "../context/QuestionFieldsContext";
 const MCOptionField = ({optionFieldId, mcQuestionFieldId, labelValue}) => {
-    const { questionFieldList, setQuestionFieldList } = useContext(FormContext);
+    const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
      /* To be passed into child components: MCQuestionField, but is called in MCOptionField
     PARAMS: event, id of option field

@@ -20,10 +20,7 @@ const orderSchema = new Schema({
         type: Array,
         required: true
     },
-    orderFormAnswers: {
-        type: Array,
-        required: true
-    },
+
     price: {
         type: Number,
         required: true

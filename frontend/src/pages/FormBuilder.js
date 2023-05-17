@@ -2,12 +2,13 @@
 import ShortAnswerQField from '../components/ShortAnsQ';
 import MCQuestionField from '../components/MCQuestionField';
 import { useContext, useEffect, useState } from 'react';
-import { FormContext } from '../context/FormContext';
-
+import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
+import { FormsContext } from '../context/FormsContext';
 
 const FormBuilder = () => {
     const [formName, setName] = useState("");
-    const {questionFieldList, setQuestionFieldList} = useContext(FormContext);
+    const {forms, setForms} = useContext(FormsContext);
+    const {questionFieldList, setQuestionFieldList} = useContext(QuestionFieldsContext);
     //const [questionFieldList, setQuestionFieldList] = useState([]);
     const [activeStatus, setActiveStatus] = useState(false);
     // list of list of options, each list of options correspond to a multiple choice question in questionFieldList
@@ -31,7 +32,7 @@ const FormBuilder = () => {
     */
     const handleShortAnswerClick = (e) => {
         e.preventDefault();
-        const newShortAnsId = questionFieldList.length;
+        const newShortAnsId = "saq" + questionFieldList.length;
         const newQObj = {
             id: newShortAnsId,
             type: "shortAns",
@@ -46,7 +47,7 @@ const FormBuilder = () => {
     */
     const handleMCClick = (e) => {
         e.preventDefault();
-        const newMcQId = questionFieldList.length;
+        const newMcQId = "mcq" + questionFieldList.length;
         let newQObj = {
             id: newMcQId,
             type: "mc",
@@ -76,7 +77,35 @@ const FormBuilder = () => {
                 questions.push(questionFieldList[i]);
             }
         }
-        const form = {formName, questions, activeStatus};
+
+        let form = {formName, questions, activeStatus};
+
+        // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
+        if (activeStatus === true) {
+            console.log("boop")
+            if (forms.length > 0) {
+                const activeForm = findActiveForm();
+
+                if (activeForm.activeStatus === true) {
+                    const confirmBox = window.confirm("Setting this form as active makes your current active form inactive. Would you like to set this form to be active instead of the current active form?");
+
+                    let formsCopy = [... forms];
+
+                    if (confirmBox === true) {
+                        formsCopy[0].activeStatus = false;
+                        console.log("HERE");
+                        replaceActiveForm(activeForm);
+                        formsCopy.unshift(form); // pushes our form to the front of list of form
+                        console.log("got hereee ", form.activeStatus)
+                    } else {
+                        form = {formName, questions, activeStatus:false};
+                        formsCopy.push(form);
+                        setForms(formsCopy);
+                        console.log("got here :000 ", form)
+                    }
+                }
+            }
+        }
 
         // first arg: where we're sending the post request to
         const response = await fetch('http://localhost:4000/api/forms', {
@@ -104,6 +133,43 @@ const FormBuilder = () => {
             setError(json.error);
         }
 
+    }
+
+    const replaceActiveForm = async (activeForm) => {
+        console.log("currActiveForm's status", activeForm.activeStatus);
+        const idOfCurrActiveForm = activeForm._id;
+
+        activeForm.activeStatus = false;
+        console.log("forms[0]'s status after replaced: ", forms[0].activeStatus, activeForm.activeStatus);
+
+        const response = await fetch('http://localhost:4000/api/forms/' + idOfCurrActiveForm, {
+            method: 'PATCH',
+            body: JSON.stringify(activeForm),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const json = await response.json();
+
+        if (response.ok) {
+            console.log("Made the original active form inactive!", json);
+        } else {
+            setError(json.error);
+        }
+
+
+    }
+
+    const findActiveForm = () => {
+        let form = forms[0];
+        for (let i = 0; i < forms.length; i++) {
+            if (forms[i].activeStatus === true) {
+                form = forms[i];
+            } 
+        }
+
+        return form;
     }
 
     useEffect(() => {
@@ -134,7 +200,7 @@ const FormBuilder = () => {
                 <div className="create_qs">
                     <button onClick={handleShortAnswerClick}>Add Short Answer</button>
                     <button onClick={handleMCClick}>Add Multiple Choice</button>
-                    {/* <FormContext.Provider value={{questionFieldList, setQuestionFieldList}}> */}
+                    {/* <QuestionFieldsContext.Provider value={{questionFieldList, setQuestionFieldList}}> */}
                         {(questionFieldList.length >= 1) && questionFieldList.map((questionField) => {
                             if (questionField.type === "shortAns") {
                                 return <ShortAnswerQField fieldId = {questionField.id}
@@ -153,9 +219,10 @@ const FormBuilder = () => {
                                         );
                             }
                         })}
-                    {/* </FormContext.Provider> */}
+                    {/* </QuestionFieldsContext.Provider> */}
                 </div>
                 <button onClick={toggleActive}>Set Active</button>
+                <div>{activeStatus? "active" : "inactive"}</div>
                 <button onClick={handleSaveFormClick}>Submit</button>
             </form>
         </div>

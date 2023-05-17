@@ -1,10 +1,10 @@
 import { useEffect, useContext } from "react";
 import MCOptionField from './MCOption';
-import { FormContext } from "../context/FormContext";
+import { QuestionFieldsContext } from "../context/QuestionFieldsContext";
 
 const MCQuestionField = ({fieldId, labelValue, optList}) => {
     
-    const { questionFieldList, setQuestionFieldList } = useContext(FormContext);
+    const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
         /* To be passed into child components: MCQuestionField
     PARAMS: e: event, mcQuestionFieldId: id of of the multiple choice question, setOptList: function to set option list of that mc question's component

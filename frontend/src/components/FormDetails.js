@@ -1,7 +1,7 @@
 import {useState, useEffect, useContext} from 'react';
 import ShortAnswerQField from './ShortAnsQ';
 import {useNavigate, useParams} from 'react-router-dom';
-import { FormContext } from '../context/FormContext';
+import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 
 import styles from './FormDetails.module.css';
 import MCQuestionField from './MCQuestionField';
@@ -9,7 +9,7 @@ import MCQuestionField from './MCQuestionField';
 const FormDetails = () => {
 
     const {id} = useParams();
-    const {questionFieldList, setQuestionFieldList} = useContext(FormContext);
+    const {questionFieldList, setQuestionFieldList} = useContext(QuestionFieldsContext);
 
     const navigate = useNavigate();
 
@@ -28,6 +28,7 @@ const FormDetails = () => {
             setForm(json);
             setQuestionFieldList(json.questions);
             setFormName(json.formName);
+            setActiveStatus(json.activeStatus);
         }
         // if (form !== null) {
         //     console.log("here");
@@ -87,6 +88,10 @@ const FormDetails = () => {
             return <div><text>{error.message}</text></div>;
         }
 
+        // Making sure there is only one active form at a time
+        if (activeStatus === true) {
+            
+        }
         for (let i = 0; i < questionFieldList.length; i++) {
             if (questionFieldList[i].questionLabel !== "") {
                 questions.push(questionFieldList[i]);
@@ -159,6 +164,7 @@ const FormDetails = () => {
             <button onClick={handleMCClick}>Add Multiple Choice</button>
             <button onClick={handleDelete}>Delete</button>
             <button onClick={toggleActiveStatus}>Set Active</button>
+            <div>{activeStatus? "active" : "inactive"}</div>
             <button className={styles.saveBtn} onClick={handleSaveClick}>Save</button>
         </div>
     )
