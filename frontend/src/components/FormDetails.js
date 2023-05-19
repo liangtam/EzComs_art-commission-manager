@@ -2,6 +2,7 @@ import {useState, useEffect, useContext} from 'react';
 import ShortAnswerQField from './ShortAnsQ';
 import {useNavigate, useParams} from 'react-router-dom';
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
+import { FormsContext } from '../context/FormsContext';
 
 import styles from './FormDetails.module.css';
 import MCQuestionField from './MCQuestionField';
@@ -10,6 +11,8 @@ const FormDetails = () => {
 
     const {id} = useParams();
     const {questionFieldList, setQuestionFieldList} = useContext(QuestionFieldsContext);
+
+    const {forms, setForms} = useContext(FormsContext);
 
     const navigate = useNavigate();
 
@@ -98,7 +101,34 @@ const FormDetails = () => {
             }
         }
 
-        const updatedForm = {formName, questions:questions, activeStatus};
+        let updatedForm = {formName, questions:questions, activeStatus};
+
+        // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
+        if (activeStatus === true) {
+            console.log("boop")
+            if (forms.length > 0) {
+                const activeForm = findActiveForm();
+
+                if (activeForm.activeStatus === true) {
+                    const confirmBox = window.confirm("Setting this form as active makes your current active form inactive. Would you like to set this form to be active instead of the current active form?");
+
+                    let formsCopy = [...forms];
+
+                    if (confirmBox === true) {
+                        formsCopy[0].activeStatus = false;
+                        console.log("HERE");
+                        replaceActiveForm(activeForm);
+                        //formsCopy.unshift(updatedForm); // pushes our form to the front of list of form
+                        console.log("got hereee ", form.activeStatus)
+                    } else {
+                        updatedForm = {formName, questions, activeStatus:false};
+                       // formsCopy.push(updatedForm);
+                        setForms(formsCopy);
+                        console.log("got here :000 ", updatedForm)
+                    }
+                }
+            }
+        }
 
         const response = await fetch('http://localhost:4000/api/forms/' + id, {
             method: 'PATCH',
@@ -120,6 +150,43 @@ const FormDetails = () => {
         }
     }
 
+    const replaceActiveForm = async (activeForm) => {
+        console.log("currActiveForm's status", activeForm.activeStatus);
+        const idOfCurrActiveForm = activeForm._id;
+
+        activeForm.activeStatus = false;
+        console.log("forms[0]'s status after replaced: ", forms[0].activeStatus, activeForm.activeStatus);
+
+        const response = await fetch('http://localhost:4000/api/forms/' + idOfCurrActiveForm, {
+            method: 'PATCH',
+            body: JSON.stringify(activeForm),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const json = await response.json();
+
+        if (response.ok) {
+            console.log("Made the original active form inactive!", json);
+        } else {
+            setError(json.error);
+        }
+
+
+    }
+
+    const findActiveForm = () => {
+        let form = forms[0];
+        for (let i = 0; i < forms.length; i++) {
+            if (forms[i].activeStatus === true) {
+                form = forms[i];
+            } 
+        }
+
+        return form;
+    }
+
     const handleDelete = async (e) => {
         e.preventDefault();
         const response = await fetch('http://localhost:4000/api/forms/' + id, {
@@ -132,6 +199,8 @@ const FormDetails = () => {
             navigate('/forms');
         }
     }
+
+
 
     useEffect(() => {
         fetchForm();
