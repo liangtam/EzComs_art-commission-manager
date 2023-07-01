@@ -13,6 +13,7 @@ const Forms = () => {
 
         if (response.ok) {
             setForms(json);
+            console.log('forms in all forms pg: ', forms);
             setIsLoading(false);
         }
     }
@@ -25,12 +26,14 @@ const Forms = () => {
 
         if (response.ok) {
             console.log('Form deleted!');
+            fetchAllForms();
         }
     }
 
     useEffect(() => {
         fetchAllForms();
-    }, [forms])
+        console.log('fetched');
+    }, [])
 
     return (
         <div className="forms">

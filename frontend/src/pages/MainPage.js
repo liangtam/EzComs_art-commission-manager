@@ -12,6 +12,7 @@ import { FormsContext } from '../context/FormsContext';
 
 function MainPage() {
     const [forms, setForms] = useState([]);
+    //const [activeForm, setActiveForm] = useState(null);
     // the current list of questions of the CURRENT form the user is on
     const [questionFieldList, setQuestionFieldList] = useState([]);
 
@@ -22,12 +23,14 @@ function MainPage() {
 
         if (response.ok) {
             setForms(json);
+            console.log("fetched all forms in main page ", forms)
+            //findActiveForm();
         }
     };
-
+    
     useEffect(() => {
         fetchAllForms();
-    }, [forms]);
+    }, []);
 
     return (
         <div className="App">
@@ -69,7 +72,13 @@ function MainPage() {
                             }
                         />
 
-                        <Route exact path="/form" element={<ActiveForm />} />
+                        <Route exact path="/form" element={
+                        <FormsContext.Provider value={{forms, setForms}}>
+                            <QuestionFieldsContext.Provider value={{ questionFieldList, setQuestionFieldList }}>
+                                <ActiveForm />
+                            </QuestionFieldsContext.Provider>
+                        </FormsContext.Provider>
+                        } />
                     </Routes>
                 </div>
             </BrowserRouter>

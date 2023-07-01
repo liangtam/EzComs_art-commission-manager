@@ -1,0 +1,22 @@
+.link {
+    text-decoration: none;
+    padding:10px;
+}
+
+.link .title {
+    font-size: 16px;
+    padding: 5px;
+}
+
+.link .numOfQuestions {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.deleteBtn {
+    color: white;
+    border:none;
+    padding:10px;
+    border-radius: 3px;
+    background-color: rgb(255, 121, 159);
+}
