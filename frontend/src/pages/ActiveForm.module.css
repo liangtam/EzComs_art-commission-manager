@@ -1,0 +1,12 @@
+.submitBtn {
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 3px;
+    background-color: rgb(35, 112, 255);
+}
+
+.submitBtn:hover {
+    background-color: rgb(14, 92, 238);
+    cursor: pointer;
+}

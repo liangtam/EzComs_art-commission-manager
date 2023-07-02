@@ -18,6 +18,7 @@ const FormDetails = () => {
 
     const [formName, setFormName] = useState('');
     const [activeStatus, setActiveStatus] = useState(false);
+    const [wasAlreadyActive, setWasAlreadyActive] = useState(false);
     const [form, setForm] = useState(null);
     const [error, setError] = useState(null);
 
@@ -32,6 +33,9 @@ const FormDetails = () => {
             setQuestionFieldList(json.questions);
             setFormName(json.formName);
             setActiveStatus(json.activeStatus);
+            if (json.activeStatus) {
+                setWasAlreadyActive(true);
+            }
         }
         // if (form !== null) {
         //     console.log("here");
@@ -92,9 +96,7 @@ const FormDetails = () => {
         }
 
         // Making sure there is only one active form at a time
-        if (activeStatus === true) {
-            
-        }
+
         for (let i = 0; i < questionFieldList.length; i++) {
             if (questionFieldList[i].questionLabel !== "") {
                 questions.push(questionFieldList[i]);
@@ -104,7 +106,9 @@ const FormDetails = () => {
         let updatedForm = {formName, questions:questions, activeStatus};
 
         // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
-        if (activeStatus === true) {
+        if (wasAlreadyActive) {
+            console.log("was already active");
+        } else if (activeStatus === true) {
             console.log("boop")
             if (forms.length > 0) {
                 const activeForm = findActiveForm();
@@ -129,6 +133,7 @@ const FormDetails = () => {
                 }
             }
         }
+        
 
         const response = await fetch('http://localhost:4000/api/forms/' + id, {
             method: 'PATCH',
@@ -178,11 +183,11 @@ const FormDetails = () => {
 
     const findActiveForm = () => {
         let form = forms[0];
-        for (let i = 0; i < forms.length; i++) {
-            if (forms[i].activeStatus === true) {
-                form = forms[i];
-            } 
-        }
+        // for (let i = 0; i < forms.length; i++) {
+        //     if (forms[i].activeStatus === true) {
+        //         form = forms[i];
+        //     } 
+        // }
 
         return form;
     }

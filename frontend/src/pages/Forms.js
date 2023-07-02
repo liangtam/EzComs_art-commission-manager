@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import FormSnippet from '../components/FormSnippet';
 import { FormsContext } from "../context/FormsContext";
+import styles from './Forms.module.css'
+
 
 const Forms = () => {
     const {forms, setForms} = useContext(FormsContext);
@@ -36,7 +38,7 @@ const Forms = () => {
     }, [])
 
     return (
-        <div className="forms">
+        <div className={styles.forms}>
             {isLoading && "Loading..."}
             {forms && forms.map((form) => {
                 return <FormSnippet formId={form._id} form={form} handleDelete = {handleDelete} key={form._id}/>

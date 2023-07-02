@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const getForm = async(req, res) => {
     const {id} = req.params;
 
+    
     if (!mongoose.isValidObjectId(id)){
         return res.status(404).json({error: 'Form does not exist. Invalid ID!'});
     }
@@ -21,7 +22,7 @@ const getForm = async(req, res) => {
 // GET all forms
 const getForms = async(req, res) => {
     // the finds all forms, starting from most recent one
-    const forms = await Form.find({}).sort({createdAt: -1});
+    const forms = await Form.find({}).sort({activeStatus: -1, createdAt: -1});
 
     // this means signal everything is ok, and the "forms" is
     //      sending the array as json back to client 

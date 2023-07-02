@@ -1,6 +1,8 @@
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from "../context/FormsContext";
 import { useContext, useEffect, useState } from 'react';
+import styles from './ActiveForm.module.css'
+
 
 const ActiveForm = () => {
     //const {activeForm, setActiveForm} = useContext(ActiveFormContext);
@@ -25,12 +27,12 @@ const ActiveForm = () => {
             //fetchAllForms();
         }
         let form = forms[0];
-        console.log("Form is: ", form)
-        for (let i = 0; i < forms.length; i++) {
-            if (forms[i].activeStatus === true) {
-                form = forms[i];
-            }
-        }
+        // console.log("Form is: ", form)
+        // for (let i = 0; i < forms.length; i++) {
+        //     if (forms[i].activeStatus === true) {
+        //         form = forms[i];
+        //     }
+        // }
 
         setActiveForm(form);
 
@@ -61,6 +63,7 @@ const ActiveForm = () => {
 
     return (
         <form className='activeForm'>
+            <div className="formName">{activeForm && <h2>{activeForm.formName}</h2>}</div>
             <div className="default-questions">
                 <label> Client name: </label>
                 <input type="text" placeholder="Name"></input>
@@ -85,20 +88,23 @@ const ActiveForm = () => {
                                 <div>
                                     <label>{question.questionLabel}: </label>
                                     <input type="text"></input>
-                                    {question.optionList.length >= 1 &&
+                                    <div className="options">
+                                        {question.optionList.length >= 1 &&
                                         question.optionList.map((option) => {
                                             return (
                                                 <label>
                                                     {option.optionLabel}
-                                                    <input type="checkbox"></input>
+                                                    <input type="radio" name= {question.id}></input>
                                                 </label>
                                             );
                                         })}
+                                        </div>
                                 </div>
                             );
                         }
                     })}
             </div>
+            <button className={styles.submitBtn}>Submit</button>
         </form>
     );
 };

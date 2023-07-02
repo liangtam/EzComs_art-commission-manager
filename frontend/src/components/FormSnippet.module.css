@@ -1,16 +1,31 @@
+.formSnippet {
+    background-color: rgb(255, 255, 255);
+    display: flexbox;
+    width: 50%;
+
+}
 .link {
     text-decoration: none;
     padding:10px;
 }
 
+.link .formStats {
+    padding: 8px;
+}
+
 .link .title {
+    padding-top: 8px;
+    padding-bottom: 8px;
     font-size: 16px;
-    padding: 5px;
 }
 
 .link .numOfQuestions {
-    padding: 5px;
+
     font-size: 14px;
+}
+
+.link .activeStatus {
+    color: rgb(0, 193, 55);
 }
 
 .deleteBtn {
@@ -19,4 +34,9 @@
     padding:10px;
     border-radius: 3px;
     background-color: rgb(255, 121, 159);
+}
+
+.deleteBtn:hover {
+    background-color: rgb(246, 88, 133);
+    cursor: pointer;
 }
