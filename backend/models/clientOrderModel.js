@@ -21,6 +21,11 @@ const orderSchema = new Schema({
         required: true
     },
 
+    referenceImages: {
+        type: Array,
+        required: false
+    },
+
     price: {
         type: Number,
         required: true

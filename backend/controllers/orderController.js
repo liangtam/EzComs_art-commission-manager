@@ -1,6 +1,10 @@
 const express = require('express');
 const Order = require('../models/clientOrderModel');
 const mongoose = require('mongoose');
+const multer = require('multer');
+const path = require ('path');
+//const ImageModel = require('./models/imageModel');
+
 
 //redirect to orders page
 const redirectToOrders = (req, res) => {
@@ -30,7 +34,7 @@ const getOrder = async(req, res) => {
     res.status(200).json(order);
 }
 // add a new order
-const createOrder = async (req, res) => {
+const postOrder = async (req, res) => {
     const { clientName, clientContact, requestDetail, requestSnippet, orderFormFillouts, price, dateReqqed, datePaid, deadline, status } = req.body;
     
         try {
@@ -76,4 +80,5 @@ const updateOrder = async (req, res) => {
 
     res.status(200).json(order);
 }
-module.exports = { createOrder, getOrders, getOrder, deleteOrder, updateOrder };
+
+module.exports = { postOrder, getOrders, getOrder, deleteOrder, updateOrder };

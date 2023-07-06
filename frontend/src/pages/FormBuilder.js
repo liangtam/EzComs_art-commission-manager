@@ -66,17 +66,21 @@ const FormBuilder = () => {
     */
     const handleSaveFormClick = async (e) => {
         e.preventDefault();
-        let questions = [];
-        if (formName === '') {
+        let questions = questionFieldList.filter((question) =>
+            question.questionLabel !== "" || (question.type == "mc" && question.optionList.length == 0));
+        if (formName === "") {
             setError({error: 'Please provide a name for this form.'});
             return <div><text>{error && error.message}</text></div>;
         }
 
-        for (let i = 0; i < questionFieldList.length; i++) {
-            if (questionFieldList[i].questionLabel !== "") {
-                questions.push(questionFieldList[i]);
+        for (let i = 0; i < questions.length; i++) {
+            if (questions[i].type == "mc") {
+                let validOptionList = questionFieldList[i].optionList.filter((option) => option.optionLabel !== "");
+                questionFieldList[i].optionList = validOptionList;
             }
         }
+
+        questions = questions.filter((question) => question.type == "mc" && question.optionList.length == 0);
 
         let form = {formName, questions, activeStatus};
 
@@ -96,12 +100,12 @@ const FormBuilder = () => {
                         console.log("HERE");
                         replaceActiveForm(activeForm);
                         formsCopy.unshift(form); // pushes our form to the front of list of form
-                        console.log("got hereee ", form.activeStatus)
+                        //console.log("got hereee ", form.activeStatus)
                     } else {
-                        form = {formName, questions, activeStatus:false};
+                        form = {formName, questions, activeStatus: false};
                         formsCopy.push(form);
                         setForms(formsCopy);
-                        console.log("got here :000 ", form)
+                        //console.log("got here :000 ", form)
                     }
                 }
             }
@@ -136,11 +140,11 @@ const FormBuilder = () => {
     }
 
     const replaceActiveForm = async (activeForm) => {
-        console.log("currActiveForm's status", activeForm.activeStatus);
+        //console.log("currActiveForm's status", activeForm.activeStatus);
         const idOfCurrActiveForm = activeForm._id;
 
         activeForm.activeStatus = false;
-        console.log("forms[0]'s status after replaced: ", forms[0].activeStatus, activeForm.activeStatus);
+        //console.log("forms[0]'s status after replaced: ", forms[0].activeStatus, activeForm.activeStatus);
 
         const response = await fetch('http://localhost:4000/api/forms/' + idOfCurrActiveForm, {
             method: 'PATCH',
