@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import OrderDetails from '../components/OrderDetails';
+import { useEffect, useState, useContext } from "react";
+import OrderSnippet from '../components/order_components/OrderSnippet';
+import { OrdersContext } from "../context/OrdersContext";
 
 const Orders = () => {
-    const [orders, setOrders] = useState(null);
+    const {orders, setOrders} = useContext(OrdersContext);
     // [] makes it only fire once
     const fetchOrders = async () => {
         const response = await fetch('/api/orders');
@@ -11,7 +12,21 @@ const Orders = () => {
 
         if (response.ok) {
             setOrders(json);
+            console.log('Fetched all forms in orders page! ', json);
         }
+    }
+
+    const handleOrderDelete = async (e, orderId) => {
+        e.preventDefault();
+        const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
+            method: 'DELETE',
+        })
+
+        if (response.ok) {
+            console.log("Order deleted!");
+            fetchOrders();
+        }
+        
     }
 
     // the empty array is dependency array. when it's empty, it means this only fires once
@@ -22,7 +37,7 @@ const Orders = () => {
     return (
         <div className="orders">
             {orders && orders.map((order) => {
-                return <OrderDetails key={order._id} order={order}/>  
+                return <OrderSnippet key={order._id} orderId={order._id} order={order} handleOrderDelete={handleOrderDelete}/>  
             }
             )}
          </div>

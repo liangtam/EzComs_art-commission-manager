@@ -6,12 +6,14 @@ import Forms from './Forms';
 import Navbar from '../components/Navbar';
 import ActiveForm from './ActiveForm';
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
-import { useState, useContext } from 'react';
-import FormDetails from '../components/FormDetails';
+import { useState } from 'react';
+import FormDetails from '../components/form_components/FormDetails';
 import { FormsContext } from '../context/FormsContext';
+import { OrdersContext } from '../context/OrdersContext';
 
 function MainPage() {
     const [forms, setForms] = useState([]);
+    const [orders, setOrders] = useState([]);
     //const [activeForm, setActiveForm] = useState(null);
     // the current list of questions of the CURRENT form the user is on
     const [questionFieldList, setQuestionFieldList] = useState([]);
@@ -23,13 +25,25 @@ function MainPage() {
 
         if (response.ok) {
             setForms(json);
-            console.log("fetched all forms in main page ", forms)
+            console.log("Fetched all forms in main page! ", json)
             //findActiveForm();
         }
     };
+
+    const fetchAllOrders = async () => {
+        const response = await fetch('http://localhost:4000/api/orders');
+
+        const json = await response.json();
+
+        if (response.ok) {
+            setOrders(json);
+            console.log("Fetched all orders in main page! ", json);
+        }
+    }
     
     useEffect(() => {
         fetchAllForms();
+        fetchAllOrders();
     }, []);
 
     return (
@@ -38,7 +52,11 @@ function MainPage() {
                 <Navbar />
                 <div className="pages">
                     <Routes>
-                        <Route exact path="/" element={<Orders />} />
+                        <Route exact path="/" element={
+                            <OrdersContext.Provider value={{orders, setOrders}}>
+                                    <Orders/>
+                            </OrdersContext.Provider>
+                        } />
                         <Route
                             exact
                             path="/forms"
@@ -82,11 +100,13 @@ function MainPage() {
 
                         
                         <Route exact path="/orders" element={
-                            <QuestionFieldsContext.Provider value={{questionFieldList, setQuestionFieldList}}>
-                                <Orders/>
-                            </QuestionFieldsContext.Provider>
+                            <OrdersContext.Provider value={{orders, setOrders}}>
+                                <QuestionFieldsContext.Provider value={{questionFieldList, setQuestionFieldList}}>
+                                    <Orders/>
+                                </QuestionFieldsContext.Provider>
+                            </OrdersContext.Provider>
                         } />
-                        
+
                     </Routes>
                 </div>
             </BrowserRouter>

@@ -1,6 +1,6 @@
 import { useEffect, useContext } from "react";
 import MCOptionField from './MCOption';
-import { QuestionFieldsContext } from "../context/QuestionFieldsContext";
+import { QuestionFieldsContext } from "../../context/QuestionFieldsContext";
 
 const MCQuestionField = ({fieldId, labelValue, optList}) => {
     

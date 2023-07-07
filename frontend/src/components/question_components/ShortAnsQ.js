@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import styles from './ShortAnsQ.module.css'
-import { QuestionFieldsContext } from "../context/QuestionFieldsContext";
+import { QuestionFieldsContext } from "../../context/QuestionFieldsContext";
 
 
 const ShortAnswerQField = ({fieldId, labelValue}) => {

@@ -1,6 +1,6 @@
 // only artist account can see this
-import ShortAnswerQField from '../components/ShortAnsQ';
-import MCQuestionField from '../components/MCQuestionField';
+import ShortAnswerQField from '../components/question_components/ShortAnsQ';
+import MCQuestionField from '../components/question_components/MCQuestionField';
 import { useContext, useEffect, useState } from 'react';
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from '../context/FormsContext';

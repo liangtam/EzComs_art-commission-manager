@@ -1,11 +1,11 @@
 import {useState, useEffect, useContext} from 'react';
-import ShortAnswerQField from './ShortAnsQ';
+import ShortAnswerQField from '../question_components/ShortAnsQ';
 import {useNavigate, useParams} from 'react-router-dom';
-import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
-import { FormsContext } from '../context/FormsContext';
+import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
+import { FormsContext } from '../../context/FormsContext';
 
 import styles from './FormDetails.module.css';
-import MCQuestionField from './MCQuestionField';
+import MCQuestionField from '../question_components/MCQuestionField';
 
 const FormDetails = () => {
 

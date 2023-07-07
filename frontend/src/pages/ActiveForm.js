@@ -78,7 +78,7 @@ const ActiveForm = () => {
 
     const handleImages = (e) => {
         setReferenceImages(e.target.files);
-        console.log(e.target.files);
+        console.log("Files uploaded: ", e.target.files);
     }
 
     const handleSubmit = async (e) => {
@@ -162,6 +162,10 @@ const ActiveForm = () => {
     useEffect(() => {
         console.log('Q LIST: ' , questionFieldList);
     }, [questionFieldList])
+
+    useEffect(() => {
+        console.log("Ref images: ", referenceImages)
+    }, [referenceImages])
     // Notice we need all these three steps because of how usestate and fetches are asynchronous, so anytime we need to
     // use asynchronous data, we need to make sure it actually fetched properly first.
     return (
