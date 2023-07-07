@@ -16,7 +16,7 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
-    questions: {
+    fillouts: {
         type: Array,
         required: true
     },
@@ -45,7 +45,7 @@ const orderSchema = new Schema({
         required: true
     },
     status: {
-        type: Boolean,
+        type: String,
         required: true
     }
 }, { timestamps: true });

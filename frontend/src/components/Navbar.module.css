@@ -11,7 +11,7 @@
 }
 
 .website_title a{
-    display: block;
+    display: block; 
     font-family: 'Tilt Warp', cursive;
     text-decoration: none;
     color: rgb(39, 39, 39);

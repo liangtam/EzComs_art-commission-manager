@@ -35,12 +35,15 @@ const getOrder = async(req, res) => {
 }
 // add a new order
 const postOrder = async (req, res) => {
-    const { clientName, clientContact, requestDetail, requestSnippet, orderFormFillouts, price, dateReqqed, datePaid, deadline, status } = req.body;
+    //const images = req.files;
+    console.log("postOrder");
+    const { clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status } = req.body;
     
         try {
-            const order = await Order.create({ clientName, clientContact, requestDetail, requestSnippet, orderFormFillouts, price, dateReqqed, datePaid, deadline, status });
+            const order = await Order.create({  clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status });
             res.status(200).json(order);
         } catch (error) {
+            console.log(req.body);
             res.status(400).json({error: error.message});
         }
 };

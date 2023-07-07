@@ -79,8 +79,9 @@ const FormBuilder = () => {
                 questionFieldList[i].optionList = validOptionList;
             }
         }
+        //console.log('questions: ', questions)
 
-        questions = questions.filter((question) => question.type == "mc" && question.optionList.length == 0);
+        //questions = questions.filter((question) => question.type !== "mc" && question.optionList.length !== 0);
 
         let form = {formName, questions, activeStatus};
 
@@ -227,7 +228,7 @@ const FormBuilder = () => {
                 </div>
                 <button onClick={toggleActive}>Set Active</button>
                 <div>{activeStatus? "active" : "inactive"}</div>
-                <button onClick={handleSaveFormClick}>Submit</button>
+                <button type="submit" onClick={handleSaveFormClick}>Submit</button>
             </form>
         </div>
 

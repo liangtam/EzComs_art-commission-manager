@@ -79,6 +79,14 @@ function MainPage() {
                             </QuestionFieldsContext.Provider>
                         </FormsContext.Provider>
                         } />
+
+                        
+                        <Route exact path="/orders" element={
+                            <QuestionFieldsContext.Provider value={{questionFieldList, setQuestionFieldList}}>
+                                <Orders/>
+                            </QuestionFieldsContext.Provider>
+                        } />
+                        
                     </Routes>
                 </div>
             </BrowserRouter>

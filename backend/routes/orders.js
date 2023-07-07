@@ -4,13 +4,12 @@ const multer = require('multer');
 const path = require('path');
 
 const { postOrder, getOrders, getOrder, deleteOrder, updateOrder } = require('../controllers/orderController');
-const Order = require('../models/clientOrderModel');
 
-// storage object
+// storage object (disk storage)
 const Storage = multer.diskStorage({
     destination:(req, file, cb) => {
         // first arg: error, second: destination
-        cb(null, '../images');
+        cb(null, './images');
     },
     filename: (req, file, cb) => {
         console.log(file)
@@ -26,9 +25,6 @@ const upload = multer({
     storage: Storage
 })
 
-// GET all orders
-router.get('/', getOrders);
-
 // GET commissions
 router.get('/commissions', (req, res) => {
     res.json({mssg: 'get all commissions'});
@@ -37,13 +33,17 @@ router.get('/commissions', (req, res) => {
 // GET single order
 router.get('/:id', getOrder);
 
-// POST new order
-router.post('/',  upload.array("images", 5), postOrder);
 
 // DELETE an order
 router.delete('/:id', deleteOrder);
 
 // UPDATE an order
 router.patch('/:id', updateOrder);
+
+// GET all orders
+router.get('/', getOrders);
+
+// POST new order
+router.post('/', postOrder);
 
 module.exports = router;

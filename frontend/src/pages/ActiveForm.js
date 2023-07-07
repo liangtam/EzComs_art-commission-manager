@@ -11,11 +11,11 @@ const ActiveForm = () => {
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
     const [referenceImages, setReferenceImages] = useState([]);
-    const [price, setPrice] = useState('');
+    const [price, setPrice] = useState(0);
     const [dateReqqed, setDateReqqed] = useState('');
     const [datePaid, setDatePaid] = useState('');
     const [deadline, setDeadline] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState(false);
 
     const { forms, setForms } = useContext(FormsContext);
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
@@ -76,8 +76,12 @@ const ActiveForm = () => {
         setQuestionFieldList(questionListCopy);
     }
 
+    const handleImages = (e) => {
+        setReferenceImages(e.target.files);
+        console.log(e.target.files);
+    }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         let questionListCopy = [...questionFieldList]
 
@@ -91,13 +95,45 @@ const ActiveForm = () => {
                         questionListCopy[i].questionAns = selectedAns[j].value;
                     }
                 }
-
             }
         }
 
         setQuestionFieldList(questionListCopy);
 
-        const order = {};
+        const dateObj = new Date();
+        const currDate = `${dateObj.getDate()} / ${dateObj.getMonth()} / ${dateObj.getFullYear()}`;
+        const userDeadline = document.getElementById("deadline").value;
+        console.log("deadline: ", deadline)
+        // const images = document.getElementsByName("images");
+
+        // const formData = new FormData();
+
+        // formData.appened("clientName", clientName);
+        // formData.appened("clientContact", clientContact);
+        // formData.appened("requestDetail", requestDetail);
+        // formData.appened("referenceImages", referenceImages);
+        // formData.appened("price", price);
+        // formData.appened("dateReqqed", dateReqqed);
+        // formData.appened("datePaid", datePaid);
+        // formData.appened("deadline", deadline);
+        const order = {clientName, clientContact, requestDetail, fillouts: questionFieldList, referenceImages, price: -1, dateReqqed: currDate, datePaid: "To be set", deadline: userDeadline, status: "Not started"};
+
+         // first arg: where we're sending the post request to
+         const response = await fetch('http://localhost:4000/api/orders', {
+            method: 'POST',
+            body: JSON.stringify(order), 
+            // to specify that the content type is json
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        });
+        const json = await response.json();
+
+        console.log('here', json, "order: ", order)
+        if (response.ok) {
+            console.log('New order added: ', json);
+        }
 
 
     }
@@ -170,13 +206,17 @@ const ActiveForm = () => {
             </div>
             <div className={styles.reqDetails}>
                 <label> Order details:
-                <textarea type="text" placeholder="Request details"></textarea>
+                <textarea type="text" placeholder="Request details" onChange={handleRequestDetailChange}></textarea>
                 </label>
                 <label> References:
-                    <input type="file" name="images" multiple></input>
+                    <input type="file" name="images" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
+                </label>
+                <label>
+                    Deadline:
+                    <input type="date" id="deadline"></input>
                 </label>
             </div>
-            <button className={styles.submitBtn} onClick={handleSubmit}>yeet</button>
+            <button type="submit" className={styles.submitBtn} onClick={handleSubmit}>yeet</button>
         </form>
     );
 };
