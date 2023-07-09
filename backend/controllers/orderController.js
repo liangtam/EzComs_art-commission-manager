@@ -50,19 +50,48 @@ const getOrder = async(req, res) => {
 // };
 
 const postOrder = async (req, res) => {
-    const imgUrl = req.protocol + '://' + req.get('host');
+    const url = req.protocol + '://' + req.get('host');
         const order = new Order({
             clientName: req.body.clientName,
             clientContact: req.body.clientContact,
             requestDetail: req.body.requestDetail,
             fillouts: req.body.fillouts,
-            referenceImages: imgUrl + '/images/' + req.file.filename,
+            //referenceImages: url + '/images/' + req.file.filename,
             price: req.body.price,
             dateReqqed: req.body.dateReqqed,
             datePaid: req.body.datePaid,
             deadline: req.body.deadline,
             status: req.body.status
         });
+
+        let referenceImages = [];
+        //const files = await req.files;
+
+        // my attempt to make sure filename wont be undefined... works but idk why?
+        while (req.files === null) {
+            for (let i = 0; req.files.length; i++) {
+            const file = req.files[i];
+            //console.log(req.files[i].filename)
+            //if (req.files[i]) {
+                const filePath = url + '/images/' + file.filename;
+                referenceImages.push(filePath);
+            //}
+            }
+            break;
+        }
+        if (req.files) {
+            console.log("true")
+        }
+
+        // works, but idk why forEach works with if(req.files)...
+        // if (req.files) {
+        //     req.files.forEach((file) => {
+        //         const path = url + '/images/' + file.filename;
+        //         referenceImages.push(path);
+        //     })
+        // }
+
+        order.referenceImages = referenceImages;
 
         
         order.save()

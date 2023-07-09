@@ -12,8 +12,8 @@ const formRoutes = require('./routes/form');
 
 // middleware - code that executes b/w us sending a req on the server and us sending a response
 app.use(express.json());
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // middle ware. express.static(root, [options]). It lets us serve static files such as images, CSS files, etc.
 app.use(express.static('images'));

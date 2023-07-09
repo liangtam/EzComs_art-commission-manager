@@ -2,6 +2,7 @@ import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from "../context/FormsContext";
 import { useContext, useEffect, useState } from 'react';
 import styles from './ActiveForm.module.css'
+import axios from 'axios';
 
 
 const ActiveForm = () => {
@@ -11,7 +12,6 @@ const ActiveForm = () => {
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
     const [referenceImages, setReferenceImages] = useState([]);
-    const [deadline, setDeadline] = useState('');
 
     const { forms, setForms } = useContext(FormsContext);
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
@@ -74,7 +74,7 @@ const ActiveForm = () => {
 
     const handleImages = (e) => {
         e.preventDefault();
-        const files = document.getElementById("images").value;
+        const files = e.target.files;
         setReferenceImages(files);
         console.log("Files uploaded: ", files);
     }
@@ -101,42 +101,48 @@ const ActiveForm = () => {
         const dateObj = new Date();
         const currDate = `${dateObj.getDate()} / ${dateObj.getMonth()} / ${dateObj.getFullYear()}`;
         const userDeadline = document.getElementById("deadline").value;
-        console.log("deadline: ", deadline);
-        const images = document.getElementById("images");
-        // const images = document.getElementsByName("images");
 
         const order = new FormData();
 
         order.append("clientName", clientName);
         order.append("clientContact", clientContact);
         order.append("requestDetail", requestDetail);
-        order.append("referenceImages", referenceImages);
+        for (let i = 0; i < questionFieldList.length; i++) {
+            order.append("fillouts", questionFieldList[i]);
+        }
+        for (let i = 0; i < referenceImages.length; i++) {
+            order.append("referenceImages[]", referenceImages[i])
+        }
         order.append("price", -1);
         order.append("dateReqqed", currDate);
         order.append("datePaid", "To be set");
         order.append("deadline", userDeadline);
+        order.append("status", "Not started");
 
-        for (let i = 0; i < images.files.length; i++) {
-            order.append("images", images.files[i]);
-        }
+        // for (let i = 0; i < images.files.length; i++) {
+        //     order.append("images", images.files[i]);
+        // }
         //const order = {clientName, clientContact, requestDetail, fillouts: questionFieldList, referenceImages, price: -1, dateReqqed: currDate, datePaid: "To be set", deadline: userDeadline, status: "Not started"};
 
          // first arg: where we're sending the post request to
-         const response = await fetch('http://localhost:4000/api/orders', {
-            method: 'POST',
-            body: order, 
-            // to specify that the content type is json
-            // headers: {
-            //     'Content-Type': 'application/json'
-            // }
+        //  const response = await fetch('http://localhost:4000/api/orders', {
+        //     method: 'POST',
+        //     body: order, 
 
-        });
-        const json = await response.json();
+        // });
 
-        console.log('here', json, "order: ", [...order])
-        if (response.ok) {
-            console.log('New order added: ', json);
-        }
+        axios.post('http://localhost:4000/api/orders', order, {
+
+        }).then((res) => {
+            console.log(res);
+        })
+
+        // const json = await response.json();
+
+        // console.log('here', json, "order: ", [...order])
+        // if (response.ok) {
+        //     console.log('New order added: ', json);
+        // }
 
 
     }
@@ -216,7 +222,7 @@ const ActiveForm = () => {
                 <textarea type="text" placeholder="Request details" onChange={handleRequestDetailChange}></textarea>
                 </label>
                 <label> References:
-                    <input type="file" id="images" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
+                    <input type="file" id="referenceImages[]" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
                 </label>
                 <label>
                     Deadline:

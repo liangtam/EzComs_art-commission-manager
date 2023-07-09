@@ -39,7 +39,7 @@ const upload = multer({
     limits: {
         fileSize: 1024 * 1024 *2
     }
-})
+});
 
 // GET commissions
 router.get('/commissions', (req, res) => {
@@ -60,6 +60,6 @@ router.patch('/:id', updateOrder);
 router.get('/', getOrders);
 
 // POST new order
-router.post('/', upload.single('referenceImages'), postOrder);
+router.post('/', upload.array('referenceImages[]', 10), postOrder);
 
 module.exports = router;
