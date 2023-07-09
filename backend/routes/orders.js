@@ -6,13 +6,14 @@ const path = require('path');
 const { postOrder, getOrders, getOrder, deleteOrder, updateOrder } = require('../controllers/orderController');
 
 // storage object (disk storage)
+// we first store the image on our computer, then to mongo
 const Storage = multer.diskStorage({
     destination:(req, file, cb) => {
         // first arg: error, second: destination
         cb(null, './images');
     },
     filename: (req, file, cb) => {
-        console.log(file)
+        //console.log(file)
         // first arg: error, second: name of file. we added date to differentiate b/w files with same names
         cb(null, Date.now() + path.extname(file.originalname))
     }
@@ -22,7 +23,22 @@ const Storage = multer.diskStorage({
 // middleware containing the multer object, which contains two objects--storage
 //  storage is kinda where the specifications of the files are
 const upload = multer({
-    storage: Storage
+    storage: Storage,
+    fileFilter: (req, file, cb) => {
+        if (
+            file.mimetype == "image/png" ||
+            file.mimetype == "image/jpg" ||
+            file.mimetype == "image/jpeg"
+        ) {
+            cb(null, true);
+        } else {
+            console.log("Only jpg or png allowed.");
+            cb(null, false);
+        }
+    },
+    limits: {
+        fileSize: 1024 * 1024 *2
+    }
 })
 
 // GET commissions
@@ -44,6 +60,6 @@ router.patch('/:id', updateOrder);
 router.get('/', getOrders);
 
 // POST new order
-router.post('/', postOrder);
+router.post('/', upload.single('referenceImages'), postOrder);
 
 module.exports = router;

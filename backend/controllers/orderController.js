@@ -3,6 +3,7 @@ const Order = require('../models/clientOrderModel');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require ('path');
+const fs = require('fs');
 //const ImageModel = require('./models/imageModel');
 
 
@@ -34,18 +35,59 @@ const getOrder = async(req, res) => {
     res.status(200).json(order);
 }
 // add a new order
-const postOrder = async (req, res) => {
-    //const images = req.files;
-    console.log("postOrder");
-    const { clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status } = req.body;
+// const postOrder = async (req, res) => {
+//     //const images = req.files;
+//     console.log("postOrder");
+//     const { clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status } = req.body;
     
-        try {
-            const order = await Order.create({  clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status });
-            res.status(200).json(order);
-        } catch (error) {
-            console.log(req.body);
-            res.status(400).json({error: error.message});
-        }
+//         try {
+//             const order = await Order.create({  clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status });
+//             res.status(200).json(order);
+//         } catch (error) {
+//             console.log(req.body);
+//             res.status(400).json({error: error.message});
+//         }
+// };
+
+const postOrder = async (req, res) => {
+    const imgUrl = req.protocol + '://' + req.get('host');
+        const order = new Order({
+            clientName: req.body.clientName,
+            clientContact: req.body.clientContact,
+            requestDetail: req.body.requestDetail,
+            fillouts: req.body.fillouts,
+            referenceImages: imgUrl + '/images/' + req.file.filename,
+            price: req.body.price,
+            dateReqqed: req.body.dateReqqed,
+            datePaid: req.body.datePaid,
+            deadline: req.body.deadline,
+            status: req.body.status
+        });
+
+        
+        order.save()
+        .then((response) => {
+            res.status(200).json({
+                mssg: "Order added!"
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(500).json({
+                error: error.message
+            })
+        });
+        
+        //console.log("postOrder");
+        // const { clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status } = req.body;
+        
+        //     try {
+        //         const order = await Order.create({  clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status });
+        //         res.status(200).json(order);
+        //     } catch (error) {
+        //         console.log(req.body);
+        //         res.status(400).json({error: error.message});
+        //     }
 };
 
 

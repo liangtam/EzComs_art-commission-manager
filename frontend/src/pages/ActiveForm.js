@@ -11,11 +11,7 @@ const ActiveForm = () => {
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
     const [referenceImages, setReferenceImages] = useState([]);
-    const [price, setPrice] = useState(0);
-    const [dateReqqed, setDateReqqed] = useState('');
-    const [datePaid, setDatePaid] = useState('');
     const [deadline, setDeadline] = useState('');
-    const [status, setStatus] = useState(false);
 
     const { forms, setForms } = useContext(FormsContext);
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
@@ -77,8 +73,10 @@ const ActiveForm = () => {
     }
 
     const handleImages = (e) => {
-        setReferenceImages(e.target.files);
-        console.log("Files uploaded: ", e.target.files);
+        e.preventDefault();
+        const files = document.getElementById("images").value;
+        setReferenceImages(files);
+        console.log("Files uploaded: ", files);
     }
 
     const handleSubmit = async (e) => {
@@ -103,34 +101,39 @@ const ActiveForm = () => {
         const dateObj = new Date();
         const currDate = `${dateObj.getDate()} / ${dateObj.getMonth()} / ${dateObj.getFullYear()}`;
         const userDeadline = document.getElementById("deadline").value;
-        console.log("deadline: ", deadline)
+        console.log("deadline: ", deadline);
+        const images = document.getElementById("images");
         // const images = document.getElementsByName("images");
 
-        // const formData = new FormData();
+        const order = new FormData();
 
-        // formData.appened("clientName", clientName);
-        // formData.appened("clientContact", clientContact);
-        // formData.appened("requestDetail", requestDetail);
-        // formData.appened("referenceImages", referenceImages);
-        // formData.appened("price", price);
-        // formData.appened("dateReqqed", dateReqqed);
-        // formData.appened("datePaid", datePaid);
-        // formData.appened("deadline", deadline);
-        const order = {clientName, clientContact, requestDetail, fillouts: questionFieldList, referenceImages, price: -1, dateReqqed: currDate, datePaid: "To be set", deadline: userDeadline, status: "Not started"};
+        order.append("clientName", clientName);
+        order.append("clientContact", clientContact);
+        order.append("requestDetail", requestDetail);
+        order.append("referenceImages", referenceImages);
+        order.append("price", -1);
+        order.append("dateReqqed", currDate);
+        order.append("datePaid", "To be set");
+        order.append("deadline", userDeadline);
+
+        for (let i = 0; i < images.files.length; i++) {
+            order.append("images", images.files[i]);
+        }
+        //const order = {clientName, clientContact, requestDetail, fillouts: questionFieldList, referenceImages, price: -1, dateReqqed: currDate, datePaid: "To be set", deadline: userDeadline, status: "Not started"};
 
          // first arg: where we're sending the post request to
          const response = await fetch('http://localhost:4000/api/orders', {
             method: 'POST',
-            body: JSON.stringify(order), 
+            body: order, 
             // to specify that the content type is json
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            // headers: {
+            //     'Content-Type': 'application/json'
+            // }
 
         });
         const json = await response.json();
 
-        console.log('here', json, "order: ", order)
+        console.log('here', json, "order: ", [...order])
         if (response.ok) {
             console.log('New order added: ', json);
         }
@@ -213,7 +216,7 @@ const ActiveForm = () => {
                 <textarea type="text" placeholder="Request details" onChange={handleRequestDetailChange}></textarea>
                 </label>
                 <label> References:
-                    <input type="file" name="images" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
+                    <input type="file" id="images" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
                 </label>
                 <label>
                     Deadline:

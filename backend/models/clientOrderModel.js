@@ -22,7 +22,7 @@ const orderSchema = new Schema({
     },
 
     referenceImages: {
-        type: Array,
+        type: String,
         required: false
     },
 
@@ -30,7 +30,7 @@ const orderSchema = new Schema({
         type: Number,
         required: true
     },
-    
+
     dateReqqed: {
         type: String,
         required: true
@@ -49,6 +49,7 @@ const orderSchema = new Schema({
         type: String,
         required: true
     }
+    
 }, { timestamps: true });
 
 module.exports = mongoose.model('order', orderSchema);
