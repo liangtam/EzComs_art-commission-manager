@@ -18,7 +18,7 @@ const OrderSnippet = ({orderId, order, handleOrderDelete}) => {
                     Price: {order && order.price}
                 </div>
             </Link>
-            <button className={styles.deleteBtn} onClick={handleOrderDelete}>Delete</button>
+            <button className={styles.deleteBtn} onClick={(e) => handleOrderDelete(e, orderId)}>Delete</button>
         </div>
     )
 }
