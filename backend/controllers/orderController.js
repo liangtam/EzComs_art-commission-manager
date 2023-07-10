@@ -53,14 +53,21 @@ const postOrder = async (req, res) => {
 
         // works because req.files isn't an array, but forEach just works w/ general collections
         console.log(req.files);
-        if (req.files) {
-            let path = '';
-                req.files.forEach((file) => {
-                    path = path + file.path + ','
-                })
+        // if (req.files) {
+        //     let path = '';
+        //         req.files.forEach((file) => {
+        //             path = path + file.path + ','
+        //         })
 
-            path = path.substring(0, path.lastIndexOf(","));
-            order.referenceImages = path;
+        //     path = path.substring(0, path.lastIndexOf(","));
+        //     order.referenceImages = path;
+        // }
+        if (req.files) {
+            req.files.forEach((file) => {
+                const path = url + "//images/" + file.filename;
+                referenceImages.push(path);
+            })
+            order.referenceImages = referenceImages;
         }
         
         order.save()

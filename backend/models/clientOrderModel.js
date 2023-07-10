@@ -20,9 +20,9 @@ const orderSchema = new Schema({
         type: Array,
         required: true
     },
-
+    
     referenceImages: {
-        type: String,
+        type: Array,
         required: false
     },
 
