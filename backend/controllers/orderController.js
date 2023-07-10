@@ -52,7 +52,7 @@ const postOrder = async (req, res) => {
         let referenceImages = [];
         if (req.files) {
             for (let i = 0; i < req.files.length; i++) {
-                const path = url + "//images/" + req.files[i].path;
+                const path = url + "/images//" + req.files[i].filename;
                 referenceImages.push(path)
             }
             order.referenceImages = referenceImages;

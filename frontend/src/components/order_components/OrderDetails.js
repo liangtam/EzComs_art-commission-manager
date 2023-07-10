@@ -69,6 +69,10 @@ const OrderDetails = () => {
                 })}
             </div>
             <div className={styles.images}>
+                <div><b>Reference images: </b></div>
+                {order && order.referenceImages.map((refImgURL) => {
+                    return <img className={"refImg" + order._id} src={refImgURL} max-width="512px"></img>
+                } )}
             </div>
         </div>
     )
