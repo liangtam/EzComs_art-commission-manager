@@ -41,7 +41,6 @@ const postOrder = async (req, res) => {
             clientName: req.body.clientName,
             clientContact: req.body.clientContact,
             requestDetail: req.body.requestDetail,
-            //referenceImages: req.body.referenceImages,
             fillouts: req.body.fillouts,
             price: req.body.price,
             dateReqqed: req.body.dateReqqed,
@@ -51,25 +50,8 @@ const postOrder = async (req, res) => {
         });
 
         let referenceImages = [];
-        //const files = await req.files;
 
-        // // my attempt to make sure filename wont be undefined...
-        // while (req.files === null) {
-        //     for (let i = 0; req.files.length; i++) {
-        //     const file = req.files[i];
-        //     //console.log(req.files[i].filename)
-        //     //if (req.files[i]) {
-        //         const filePath = url + '/images/' + file.filename;
-        //         referenceImages.push(filePath);
-        //     //}
-        //     }
-        //     break;
-        // }
-        // if (req.files) {
-        //     console.log("true")
-        // }
-
-        // works, but idk why forEach works with if(req.files)...
+        // works because req.files isn't an array, but forEach just works w/ general collections
         console.log(req.files);
         if (req.files) {
             let path = '';
