@@ -22,7 +22,7 @@ const orderSchema = new Schema({
     },
 
     referenceImages: {
-        type: Array,
+        type: String,
         required: false
     },
 

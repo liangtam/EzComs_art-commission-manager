@@ -12,7 +12,7 @@ const ActiveForm = () => {
     const [clientName, setClientName] = useState('');
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
-    const [referenceImages, setReferenceImages] = useState([]);
+    const [referenceImages, setReferenceImages] = useState('');
 
     const { forms, setForms } = useContext(FormsContext);
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
@@ -34,12 +34,6 @@ const ActiveForm = () => {
             //fetchAllForms();
         }
         let form = forms[0];
-        // console.log("Form is: ", form)
-        // for (let i = 0; i < forms.length; i++) {
-        //     if (forms[i].activeStatus === true) {
-        //         form = forms[i];
-        //     }
-        // }
 
         setActiveForm(form);
 
@@ -83,7 +77,7 @@ const ActiveForm = () => {
             return URL.createObjectURL(file);
         })
 
-        setReferenceImages(imagesArray);
+        setReferenceImages(filesArray);
         console.log("Files uploaded: ", imagesArray);
     }
 
@@ -124,6 +118,7 @@ const ActiveForm = () => {
         for (let i = 0; i < questionFieldList.length; i++) {
             order.append("fillouts", JSON.stringify(questionFieldList[i]));
         }
+        console.log("Reference images: ", referenceImages);
         for (let i = 0; i < referenceImages.length; i++) {
             order.append("referenceImages[]", referenceImages[i])
         }
@@ -133,8 +128,8 @@ const ActiveForm = () => {
         order.append("deadline", userDeadline);
         order.append("status", "Not started");
 
-        // for (let i = 0; i < images.files.length; i++) {
-        //     order.append("images", images.files[i]);
+        // for (let i = 0; i < referenceImages.length; i++) {
+        //     order.append("referenceImages[]", '/images/' + referenceImages[i].filename);
         // }
         //const order = {clientName, clientContact, requestDetail, fillouts: questionFieldList, referenceImages, price: -1, dateReqqed: currDate, datePaid: "To be set", deadline: userDeadline, status: "Not started"};
 
@@ -192,7 +187,7 @@ const ActiveForm = () => {
     // Notice we need all these three steps because of how usestate and fetches are asynchronous, so anytime we need to
     // use asynchronous data, we need to make sure it actually fetched properly first.
     return (
-        <form className={styles.activeForm}>
+        <form onSubmit={handleSubmit} className={styles.activeForm} encType="multipart/form-data">
             <div className={styles.formName}>{activeForm && <h2>{activeForm.formName}</h2>}</div>
             <div className={styles.default_questions}>
                 <label> Client name: </label>
@@ -236,18 +231,18 @@ const ActiveForm = () => {
                 <textarea type="text" placeholder="Request details" onChange={handleRequestDetailChange}></textarea>
                 </label>
                 <label> References:
-                    <input type="file" id="referenceImages[]" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
+                    <input type="file" name="referenceImages" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
                 </label>
                 <label>
                     Deadline:
                     <input type="date" id="deadline"></input>
                 </label>
             </div>
-            <div className={styles.imagePreviews}>
+            {/* <div className={styles.imagePreviews}>
                 {referenceImages && referenceImages.map((img) => {
                     return <ImagePreview image={img} handleDeleteImg={handleDeleteImg}/>
                 })}
-            </div>
+            </div> */}
             <button type="submit" className={styles.submitBtn} onClick={handleSubmit}>yeet</button>
         </form>
     );

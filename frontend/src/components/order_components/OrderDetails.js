@@ -1,11 +1,12 @@
 import styles from './OrderDetails.module.css'
 import { useState, useEffect } from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 const OrderDetails = () => {
 
     const { id } = useParams();
     const [order, setOrder] = useState('');
     const [fillouts, setFillouts] = useState([]);
+    const [refImgs, setRefImgs] = useState([]);
 
 
     const fetchOrder = async () => {
@@ -24,6 +25,7 @@ const OrderDetails = () => {
         fetchOrder();
     }, [])
 
+
     useEffect(() => {
         let questions = [];
         if (Array.isArray(order.fillouts)) {
@@ -34,6 +36,16 @@ const OrderDetails = () => {
             }
         }
         setFillouts(questions);
+
+        let refs = [];
+        if (order.referenceImages) {
+            const refImgArray = Array.from(order.referenceImages);
+            // for (let i = 0; i < refImgArray.length; i++) {
+            //     refs.push(refImgArray[i]);
+            // }
+            console.log(refImgArray[0]);
+        }
+        setRefImgs(refs);
     }, [order])
 
     return (
@@ -55,6 +67,8 @@ const OrderDetails = () => {
                         </li>
                     </div> 
                 })}
+            </div>
+            <div className={styles.images}>
             </div>
         </div>
     )

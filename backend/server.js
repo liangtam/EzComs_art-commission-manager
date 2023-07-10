@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // middle ware. express.static(root, [options]). It lets us serve static files such as images, CSS files, etc.
-app.use(express.static('images'));
+app.use('/images', express.static('images'));
 // routes
 app.use('/api/orders', ordersRoutes);
 

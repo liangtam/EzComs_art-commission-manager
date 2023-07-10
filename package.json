@@ -3,6 +3,7 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "compress.js": "^1.2.2",
+    "compressorjs": "^1.2.1",
     "gridfs": "^1.0.0",
     "method-override": "^3.0.0",
     "multer": "^1.4.5-lts.1",
