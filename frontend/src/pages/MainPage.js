@@ -6,11 +6,12 @@ import FormBuilder from './FormBuilder';
 import Forms from './Forms';
 import Navbar from '../components/Navbar';
 import ActiveForm from './ActiveForm';
+import FormDetails from '../components/form_components/FormDetails';
+import OrderDetails from '../components/order_components/OrderDetails';
 
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
-import FormDetails from '../components/form_components/FormDetails';
 import { FormsContext } from '../context/FormsContext';
-import { OrdersContext } from '../context/OrdersContext';
+import { OrdersContext, OrdersContextProvider } from '../context/OrdersContext';
 
 function MainPage() {
     const [forms, setForms] = useState([]);
@@ -107,6 +108,12 @@ function MainPage() {
                                 </QuestionFieldsContext.Provider>
                             </OrdersContext.Provider>
                         } />
+
+                        <Route exact path="/orders/:id" element={
+                            <OrdersContext.Provider value={{orders, setOrders}}>
+                                <OrderDetails />
+                            </OrdersContext.Provider>
+                        }/>
 
                     </Routes>
                 </div>

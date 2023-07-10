@@ -41,6 +41,7 @@ const postOrder = async (req, res) => {
             clientName: req.body.clientName,
             clientContact: req.body.clientContact,
             requestDetail: req.body.requestDetail,
+            referenceImages: req.body.referenceImages,
             fillouts: req.body.fillouts,
             price: req.body.price,
             dateReqqed: req.body.dateReqqed,
@@ -49,7 +50,7 @@ const postOrder = async (req, res) => {
             status: req.body.status
         });
 
-        let referenceImages = [];
+        ///let referenceImages = [];
         //const files = await req.files;
 
         // // my attempt to make sure filename wont be undefined...
@@ -69,14 +70,14 @@ const postOrder = async (req, res) => {
         // }
 
         // works, but idk why forEach works with if(req.files)...
-        if (req.files) {
-            req.files.forEach((file) => {
-                const path = url + '/images/' + file.filename;
-                referenceImages.push(path);
-            })
-        }
+        // if (req.files) {
+        //     req.files.forEach((file) => {
+        //         const path = url + '/images/' + file.filename;
+        //         referenceImages.push(path);
+        //     })
+        // }
 
-        order.referenceImages = referenceImages;
+        // order.referenceImages = referenceImages;
 
         
         order.save()

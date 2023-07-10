@@ -4,9 +4,10 @@ import { useContext, useEffect, useState } from 'react';
 import styles from './ActiveForm.module.css'
 import axios from 'axios';
 
+import ImagePreview from '../components/ImagePreview';
+
 
 const ActiveForm = () => {
-    //const {activeForm, setActiveForm} = useContext(ActiveFormContext);
     const [activeForm, setActiveForm] = useState(null);
     const [clientName, setClientName] = useState('');
     const [clientContact, setClientContact] = useState('');
@@ -74,9 +75,22 @@ const ActiveForm = () => {
 
     const handleImages = (e) => {
         e.preventDefault();
-        const files = e.target.files;
-        setReferenceImages(files);
-        console.log("Files uploaded: ", files);
+        const files = e.target.files; // NOT AN ARRAY!
+
+        const filesArray = Array.from(files);
+
+        const imagesArray = filesArray.map((file) => {
+            return URL.createObjectURL(file);
+        })
+
+        setReferenceImages(imagesArray);
+        console.log("Files uploaded: ", imagesArray);
+    }
+
+    const handleDeleteImg = (e, img) => {
+        e.preventDefault();
+        setReferenceImages(referenceImages.filter((image) => image !== img));
+
     }
 
     const handleSubmit = async (e) => {
@@ -108,7 +122,7 @@ const ActiveForm = () => {
         order.append("clientContact", clientContact);
         order.append("requestDetail", requestDetail);
         for (let i = 0; i < questionFieldList.length; i++) {
-            order.append("fillouts", questionFieldList[i]);
+            order.append("fillouts", JSON.stringify(questionFieldList[i]));
         }
         for (let i = 0; i < referenceImages.length; i++) {
             order.append("referenceImages[]", referenceImages[i])
@@ -199,7 +213,7 @@ const ActiveForm = () => {
                             );
                         } else if (question.type === 'mc') {
                             return (
-                                <div>
+                                <div> 
                                     <label >{question.questionLabel}: </label>
                                     <div className="options">
                                         {question.optionList.length >= 1 &&
@@ -228,6 +242,11 @@ const ActiveForm = () => {
                     Deadline:
                     <input type="date" id="deadline"></input>
                 </label>
+            </div>
+            <div className={styles.imagePreviews}>
+                {referenceImages && referenceImages.map((img) => {
+                    return <ImagePreview image={img} handleDeleteImg={handleDeleteImg}/>
+                })}
             </div>
             <button type="submit" className={styles.submitBtn} onClick={handleSubmit}>yeet</button>
         </form>
