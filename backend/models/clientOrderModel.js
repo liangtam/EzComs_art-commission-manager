@@ -20,7 +20,7 @@ const orderSchema = new Schema({
         type: Array,
         required: true
     },
-    
+
     referenceImages: {
         type: Array,
         required: false
@@ -48,6 +48,10 @@ const orderSchema = new Schema({
     status: {
         type: String,
         required: true
+    },
+    artistNotes: {
+        type: String,
+        required: false
     }
     
 }, { timestamps: true });

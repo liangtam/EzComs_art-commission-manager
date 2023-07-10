@@ -50,9 +50,17 @@ const postOrder = async (req, res) => {
         });
 
         let referenceImages = [];
+        if (req.files) {
+            for (let i = 0; i < req.files.length; i++) {
+                const path = url + "//images/" + req.files[i].path;
+                referenceImages.push(path)
+            }
+            order.referenceImages = referenceImages;
+        }
 
-        // works because req.files isn't an array, but forEach just works w/ general collections
         console.log(req.files);
+
+        /** YouTube way... not a fan. **/
         // if (req.files) {
         //     let path = '';
         //         req.files.forEach((file) => {
@@ -62,13 +70,18 @@ const postOrder = async (req, res) => {
         //     path = path.substring(0, path.lastIndexOf(","));
         //     order.referenceImages = path;
         // }
-        if (req.files) {
-            req.files.forEach((file) => {
-                const path = url + "//images/" + file.filename;
-                referenceImages.push(path);
-            })
-            order.referenceImages = referenceImages;
-        }
+
+        /** old way. no difference except using forEach. Use this if ref.files isn't an array but just a collection **/
+
+        // let referenceImages = [];
+
+        // if (req.files) {
+        //     req.files.forEach((file) => {
+        //         const path = url + "//images/" + file.filename;
+        //         referenceImages.push(path);
+        //     })
+        //     order.referenceImages = referenceImages;
+        // }
         
         order.save()
         .then((response) => {
@@ -113,7 +126,7 @@ const deleteOrder = async (req, res) => {
 
     res.status(200).json(order);
 }
-// update an order
+// update an order. CONVERT MULTIFORM DATA TO JSON FIRST OR ELSE IT WON'T WORK!
 const updateOrder = async (req, res) => {
     const { id } = req.params;
 
@@ -121,15 +134,28 @@ const updateOrder = async (req, res) => {
         return res.status(404).json({error: 'No such order.'});
     };
 
-    const order = await Order.findOneAndUpdate({_id: id}, {
-        ...req.body //spreading the property of the req.body object
-    } );
+    console.log({...req.body});
+    const newOrder = {...req.body};
+
+    // PATCH DOESNT WORK FOR MULTIFORM DATA
+    // let referenceImages = [];
+    // if (req.files) {
+    //     for (let i = 0; i < req.files.length; i++) {
+    //         const path = url + "//images/" + req.files[i].path;
+    //         referenceImages.push(path)
+    //     }
+    //     newOrder.referenceImages = referenceImages;
+    // }
+
+    const order = await Order.findOneAndUpdate({_id: id}, newOrder);
+
 
     if (!order){
         return res.status(404).json({error: 'No such order.'});
     }
 
     res.status(200).json(order);
+    console.log(newOrder);
 }
 
 module.exports = { postOrder, getOrders, getOrder, deleteOrder, updateOrder };
