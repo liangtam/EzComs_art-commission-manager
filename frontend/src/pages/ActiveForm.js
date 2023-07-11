@@ -12,7 +12,8 @@ const ActiveForm = () => {
     const [clientName, setClientName] = useState('');
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
-    const [referenceImages, setReferenceImages] = useState('');
+    const [referenceImages, setReferenceImages] = useState([]);
+    const [selectedImages, setSelectedImages] = useState('');
 
     const { forms, setForms } = useContext(FormsContext);
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
@@ -71,20 +72,17 @@ const ActiveForm = () => {
         e.preventDefault();
         const files = e.target.files; // NOT AN ARRAY!
 
-        const filesArray = Array.from(files);
-
-        const imagesArray = filesArray.map((file) => {
-            return URL.createObjectURL(file);
-        })
+        let filesArray = Array.from(files);
+        filesArray = referenceImages.concat(filesArray);
 
         setReferenceImages(filesArray);
-        console.log("Files uploaded: ", imagesArray);
     }
 
     const handleDeleteImg = (e, img) => {
         e.preventDefault();
-        setReferenceImages(referenceImages.filter((image) => image !== img));
+        const refImgs = referenceImages.filter((image) => image !== img);
 
+        setReferenceImages(refImgs);
     }
 
     const handleSubmit = async (e) => {
@@ -220,7 +218,7 @@ const ActiveForm = () => {
                                                 </label>
                                             );
                                         })}
-                                        </div>
+                                    </div>
                                 </div>
                             );
                         }
@@ -238,11 +236,11 @@ const ActiveForm = () => {
                     <input type="date" id="deadline"></input>
                 </label>
             </div>
-            {/* <div className={styles.imagePreviews}>
-                {referenceImages && referenceImages.map((img) => {
-                    return <ImagePreview image={img} handleDeleteImg={handleDeleteImg}/>
+            <div className={styles.imagePreviews}>
+                {referenceImages && referenceImages.map((refImgURL) => {
+                    return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg}/>
                 })}
-            </div> */}
+            </div>
             <button type="submit" className={styles.submitBtn} onClick={handleSubmit}>yeet</button>
         </form>
     );
