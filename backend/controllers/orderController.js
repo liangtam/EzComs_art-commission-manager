@@ -118,13 +118,30 @@ const deleteOrder = async (req, res) => {
         return res.status(404).json({error: 'Cannot delete order.'});
     }
 
-    const order = await Order.findOneAndDelete({_id: id})
+    const order = await Order.findById({_id: id})
 
-    if (!order){
+    console.log("order to delete: ", order);
+    const refImgs = order.referenceImages;
+
+    for (let i = 0; i < refImgs.length; i++) {
+        const refImgPath = "./images/" + refImgs[i].substring(30); // get everything after "http://localhost:4000"
+        console.log("refImgPath: ", refImgPath);
+        fs.unlink(refImgPath, (error) => {
+            if (error) {
+                console.log("Error deleting image: ", error);
+            } else {
+                console.log("Images deleted with order!");
+            }
+        })
+    }
+
+    const orderDelete = await Order.findOneAndDelete({_id: id})
+
+    if (!orderDelete){
         return res.status(404).json({error: 'Cannot delete order.'});
     }
 
-    res.status(200).json(order);
+    res.status(200).json(orderDelete);
 }
 // update an order. CONVERT MULTIFORM DATA TO JSON FIRST OR ELSE IT WON'T WORK!
 const updateOrder = async (req, res) => {

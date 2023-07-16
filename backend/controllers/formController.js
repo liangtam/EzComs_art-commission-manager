@@ -1,6 +1,8 @@
 const express = require('express');
 const Form = require('../models/formModel');
 const mongoose = require('mongoose');
+const fs = require('fs');
+//import { unlinkSync } from 'node:fs';
 
 // GET single form
 const getForm = async(req, res) => {
@@ -44,11 +46,14 @@ const postForm = async(req, res) => {
 const deleteForm = async (req, res) => {
     const {id} = req.params;
 
+
+
     if (!mongoose.isValidObjectId(id)) {
         return res.status(404).json({error: 'Invalid form ID!'});
     }
 
     const form = await Form.findByIdAndDelete({_id: id});
+
 
     if (!form) {
         return res.status(400).json({error: 'Form not found.'});
