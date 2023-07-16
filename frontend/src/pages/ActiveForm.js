@@ -13,7 +13,6 @@ const ActiveForm = () => {
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
     const [referenceImages, setReferenceImages] = useState([]);
-    const [selectedImages, setSelectedImages] = useState('');
 
     const { forms, setForms } = useContext(FormsContext);
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);

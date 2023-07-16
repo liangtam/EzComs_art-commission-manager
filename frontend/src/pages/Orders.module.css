@@ -1,0 +1,9 @@
+/* Home/Orders page*/
+.orders {
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    gap: 50px;
+    padding: 20px;
+  }
+  

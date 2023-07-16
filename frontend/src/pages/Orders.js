@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import OrderSnippet from '../components/order_components/OrderSnippet';
 import { OrdersContext } from "../context/OrdersContext";
+import styles from "./Orders.module.css"
 
 const Orders = () => {
     const {orders, setOrders} = useContext(OrdersContext);
@@ -44,7 +45,7 @@ const Orders = () => {
     }, []);
 
     return (
-        <div className="orders">
+        <div className={styles.orders}>
             {orders && orders.map((order) => {
                 return <OrderSnippet key={order._id} orderId={order._id} order={order} handleOrderDelete={handleOrderDelete}/>  
             }

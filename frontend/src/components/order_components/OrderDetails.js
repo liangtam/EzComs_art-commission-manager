@@ -60,18 +60,18 @@ const OrderDetails = () => {
                 <h4>Form fillouts:</h4>
                 {fillouts && fillouts.map((question) => {
                     return <div className={styles.question}>
-                        <li>
-                            <ul><b>{question.questionLabel + ": "}</b>
+                        <ul>
+                            <li><b>{question.questionLabel + ": "}</b>
                                 {question.questionAns}
-                            </ul>
-                        </li>
+                            </li>
+                        </ul>
                     </div> 
                 })}
             </div>
             <div className={styles.images}>
                 <div><b>Reference images: </b></div>
                 {order && order.referenceImages.map((refImgURL) => {
-                    return <img className={"refImg" + order._id} src={refImgURL} max-width="512px"></img>
+                    return <img className={styles.refImg} id={refImgURL + order.id} src={refImgURL} max-width="512px"></img>
                 } )}
             </div>
         </div>
