@@ -67,16 +67,15 @@ const FormBuilder = () => {
     const handleSaveFormClick = async (e) => {
         e.preventDefault();
         let questions = questionFieldList.filter((question) =>
-            question.questionLabel !== "" || (question.type == "mc" && question.optionList.length == 0));
+            question.questionLabel !== "" || (question.type === "mc" && question.optionList.length === 0));
         if (formName === "") {
             setError({error: 'Please provide a name for this form.'});
-            return <div><text>{error && error.message}</text></div>;
         }
 
         for (let i = 0; i < questions.length; i++) {
-            if (questions[i].type == "mc") {
-                let validOptionList = questionFieldList[i].optionList.filter((option) => option.optionLabel !== "");
-                questionFieldList[i].optionList = validOptionList;
+            if (questions[i].type === "mc") {
+                let validOptionList = questions[i].optionList.filter((option) => option.optionLabel !== "");
+                questions[i].optionList = validOptionList;
             }
         }
         //console.log('questions: ', questions)

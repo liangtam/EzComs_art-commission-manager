@@ -72,7 +72,8 @@ const MCQuestionField = ({fieldId, labelValue, optList}) => {
     <div className="mc_question_field_component">
         <input key='mc_question_field' type='text' placeholder="MC Question"
         onChange={(e) => handleFieldChange(e, fieldId)}
-        value={labelValue}></input>
+        value={labelValue}
+        required="true"></input>
 
         <button onClick={(e) => handleRemoveField(e, fieldId)}>Remove</button>  
         <button onClick={(e) => handleOptionClick(e, fieldId)}>Add Option</button>

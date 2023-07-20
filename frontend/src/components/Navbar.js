@@ -11,25 +11,29 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className={styles.navbar_links}>
-                    <li>
-                        <ul>
+                    <ul>
+                        <li>
                             <Link to="/forms">
                             <h4>Manage Forms</h4>
                             </Link>
-                        </ul>
-                        <ul> <Link to="/form">
+                        </li>
+                        <li> <Link to="/form">
                                 <h4>Form</h4>
                             </Link>
-                        </ul>
-                        <ul> <Link to="/form-builder">
+                        </li>
+                        <li> <Link to="/form-builder">
                                 <h4>Form Builder</h4>
                             </Link>
-                        </ul>
-                        <ul> <Link to="/orders">
+                        </li>
+                        <li> <Link to="/orders">
                                 <h4>Orders</h4>
                             </Link>
-                        </ul>
-                    </li>
+                        </li>
+                        <li> <Link to="/record">
+                                <h4>Record</h4>
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>        

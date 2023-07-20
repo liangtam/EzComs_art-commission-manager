@@ -20,11 +20,14 @@
 
 .navbar_links li {
     list-style: none;
+
 }
 
 .navbar_links ul {
-    display: block;
-    float:left;
+    display: flex;
+    float: left; /*temporary*/
+    gap: 25px; /*temporary*/
+    justify-content: space-around;
     padding: 20, 20, 20, 20;
 }
 
