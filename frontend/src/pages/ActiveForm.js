@@ -124,6 +124,7 @@ const ActiveForm = () => {
         order.append("datePaid", "To be set");
         order.append("deadline", userDeadline);
         order.append("status", "Not Started Yet");
+        order.append("artistNotes", "");
 
         // for (let i = 0; i < referenceImages.length; i++) {
         //     order.append("referenceImages[]", '/images/' + referenceImages[i].filename);

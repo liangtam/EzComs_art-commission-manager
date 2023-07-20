@@ -151,7 +151,7 @@ const updateOrder = async (req, res) => {
         return res.status(404).json({error: 'No such order.'});
     };
 
-    console.log({...req.body});
+    console.log("Updated order: ", {...req.body});
     const newOrder = {...req.body};
 
     // PATCH DOESNT WORK FOR MULTIFORM DATA

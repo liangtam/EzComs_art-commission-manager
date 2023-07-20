@@ -7,7 +7,7 @@ const OrderDetails = () => {
     const [order, setOrder] = useState('');
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
-    const [artistNote, setArtistNote] = useState('');
+    const [artistNotes, setArtistNotes] = useState('');
     
 
     const fetchOrder = async () => {
@@ -27,8 +27,32 @@ const OrderDetails = () => {
         console.log("Status selected: ", e.target.value);
     }
 
-    const handleSave = (e) => {
+    const handleSave = async (e) => {
         e.preventDefault();
+        let newOrder = order;
+        newOrder.status = status;
+        newOrder.artistNotes = artistNotes;
+
+        const response = await fetch('http://localhost:4000/api/orders/' + id, {
+            method: 'PATCH',
+            body: JSON.stringify(newOrder),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        const json = response.json();
+
+        if (response.ok) {
+            console.log("Updated order! ", json);
+        } else {
+            console.log("Error: Order was NOT updated :(")
+        }
+
+    }
+
+    const handleArtistNotesChange = (e) => {
+        setArtistNotes(e.target.value);
     }
 
     useEffect(() => {
@@ -47,17 +71,22 @@ const OrderDetails = () => {
         }
         setFillouts(questions);
 
-        // Selecting the radio button with the order's status
+        // Checking the radio button with the order's status
         setStatus(order.status);
-        console.log("order stat: ", order.status)
         const statusRadios = Array.from(document.getElementsByName("statusSelection"));
-        console.log("here", order.status);
+        console.log("Fetched order's status: ", order.status);
         for (let i = 0; i < statusRadios.length; i++) {
-            if (statusRadios[i].id = order.status) {
+            if (statusRadios[i].id === order.status) {
                 statusRadios[i].checked = true;
                 break;
             }
-        }       
+        }
+        
+        // Filling in the artistNotes textarea with order's artistNotes
+        setArtistNotes(order.artistNotes);
+        const artistNoteTextArea = document.getElementById("artistNotes");
+        artistNoteTextArea.value = order.artistNotes;
+
 
     }, [order])
 
@@ -93,7 +122,7 @@ const OrderDetails = () => {
             <div className={styles.orderNotes}>
                 <b>Order notes:</b>
                 <br></br>
-                <textarea placeholder="Order notes" name="" id="" cols="30" rows="10"></textarea>
+                <textarea placeholder="Order notes" name="" id="artistNotes" cols="30" rows="10" onChange={handleArtistNotesChange}></textarea>
             </div>
             <div className={styles.status}>
                 <h4>Status:</h4>
@@ -105,7 +134,7 @@ const OrderDetails = () => {
             </div>
 
             <div className={styles.buttons}>
-                <button type="submit" className={styles.saveBtn} onChange={handleSave}>Save</button>
+                <button className={styles.saveBtn} onClick={handleSave}>Save</button>
                 <button className={styles.deleteBtn}>Delete</button>
             </div>
 
