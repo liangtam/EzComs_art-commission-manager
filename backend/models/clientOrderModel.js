@@ -35,8 +35,12 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
-
     datePaid: {
+        type: String,
+        required: true
+    },
+    
+    dateCompleted: {
         type: String,
         required: true
     },

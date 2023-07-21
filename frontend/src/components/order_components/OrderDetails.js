@@ -7,8 +7,7 @@ const OrderDetails = () => {
     const [order, setOrder] = useState('');
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
-    const [artistNotes, setArtistNotes] = useState('');
-    
+    const [artistNotes, setArtistNotes] = useState('');    
 
     const fetchOrder = async () => {
         const response = await fetch('http://localhost:4000/api/orders/' + id);
@@ -130,12 +129,14 @@ const OrderDetails = () => {
                     <li><label><input type="radio" name="statusSelection" id="Not Started Yet" value="Not Started Yet" onChange={selectStatus}></input>Not Started Yet</label></li>
                     <li><label><input type="radio" name="statusSelection" id="WIP" value="WIP" onChange={selectStatus}></input>WIP</label></li>
                     <li><label><input type="radio" name="statusSelection" id="Paused" value="Paused" onChange={selectStatus}></input>Paused</label></li>
+                    <li><label><input type="radio" name="statusSelection" id="Completed" value="Completed" onChange={selectStatus}></input>Completed</label></li>
                 </ul>
             </div>
 
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>
                 <button className={styles.deleteBtn}>Delete</button>
+                <button className={styles.editBtn}>Edit</button>
             </div>
 
         </div>

@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 
-const { postOrder, getOrders, getOrder, deleteOrder, updateOrder } = require('../controllers/orderController');
+const { postOrder, getOrders, getOrder, deleteOrder, updateOrder, getCompletedOrders } = require('../controllers/orderController');
 
 // storage object (disk storage)
 // we first store the image on our computer, then to mongo
@@ -41,10 +41,8 @@ const upload = multer({
     }
 });
 
-// GET commissions
-router.get('/commissions', (req, res) => {
-    res.json({mssg: 'get all commissions'});
-});
+// GET all COMPLETED orders
+router.get('/completed', getCompletedOrders);
 
 // GET single order
 router.get('/:id', getOrder);

@@ -1,0 +1,4 @@
+.completedOrder {
+    display:flex;
+    justify-content: space-between;
+}

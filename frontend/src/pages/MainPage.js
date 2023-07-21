@@ -8,10 +8,11 @@ import Navbar from '../components/Navbar';
 import ActiveForm from './ActiveForm';
 import FormDetails from '../components/form_components/FormDetails';
 import OrderDetails from '../components/order_components/OrderDetails';
+import Record from './Record';
 
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from '../context/FormsContext';
-import { OrdersContext, OrdersContextProvider } from '../context/OrdersContext';
+import { OrdersContext } from '../context/OrdersContext';
 
 function MainPage() {
     const [forms, setForms] = useState([]);
@@ -113,6 +114,10 @@ function MainPage() {
                             <OrdersContext.Provider value={{orders, setOrders}}>
                                 <OrderDetails />
                             </OrdersContext.Provider>
+                        }/>
+
+                        <Route exact path="/record" element={
+                            <Record/>
                         }/>
 
                     </Routes>

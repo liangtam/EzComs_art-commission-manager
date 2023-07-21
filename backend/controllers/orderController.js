@@ -18,6 +18,13 @@ const getOrders = async (req, res) => {
     res.status(200).json(orders);
 }
 
+// get completed orders
+const getCompletedOrders = async (req, res) => {
+    const completedOrders = await Order.find({status: "Completed"}).sort({createdAt: -1});
+    
+    res.status(200).json(completedOrders);
+}
+
 // get a single order
 const getOrder = async(req, res) => {
     const { id } = req.params;
@@ -36,17 +43,9 @@ const getOrder = async(req, res) => {
 }
 
 const postOrder = async (req, res) => {
+    
     const url = req.protocol + '://' + req.get('host');
-        const order = new Order({
-            clientName: req.body.clientName,
-            clientContact: req.body.clientContact,
-            requestDetail: req.body.requestDetail,
-            fillouts: req.body.fillouts,
-            price: req.body.price,
-            dateReqqed: req.body.dateReqqed,
-            datePaid: req.body.datePaid,
-            deadline: req.body.deadline,
-            status: req.body.status
+        const order = new Order({... req.body
         });
 
         let referenceImages = [];
@@ -175,4 +174,4 @@ const updateOrder = async (req, res) => {
     console.log(newOrder);
 }
 
-module.exports = { postOrder, getOrders, getOrder, deleteOrder, updateOrder };
+module.exports = { postOrder, getOrders, getOrder, deleteOrder, updateOrder, getCompletedOrders };

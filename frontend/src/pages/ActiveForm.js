@@ -122,6 +122,7 @@ const ActiveForm = () => {
         order.append("price", -1);
         order.append("dateReqqed", currDate);
         order.append("datePaid", "To be set");
+        order.append("dateCompleted", "To be set");
         order.append("deadline", userDeadline);
         order.append("status", "Not Started Yet");
         order.append("artistNotes", "");
