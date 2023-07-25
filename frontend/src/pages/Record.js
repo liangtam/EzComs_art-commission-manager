@@ -29,11 +29,13 @@ const Record = () => {
             <div className={styles.header}>
                 <h2>Commission Record</h2>
             </div>
-            {completedOrders && completedOrders.map((completedOrder) => {
-                return <div className={styles.completedOrder + completedOrder.id}>
-                    <CommissionSnippet completedOrder={completedOrder}/>
-                </div>
-            })}
+            <div className={styles.completedOrders}>
+                {completedOrders && completedOrders.map((completedOrder) => {
+                    return <div className={styles.completedOrder}>
+                        <CommissionSnippet completedOrder={completedOrder} completedOrderId={completedOrder._id}/>
+                    </div>
+                })}
+            </div>
         </div>
         
     )

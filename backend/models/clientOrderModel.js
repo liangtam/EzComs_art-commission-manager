@@ -56,6 +56,10 @@ const orderSchema = new Schema({
     artistNotes: {
         type: String,
         required: false
+    },
+    completedArts: {
+        type: Array,
+        required: true
     }
     
 }, { timestamps: true });
