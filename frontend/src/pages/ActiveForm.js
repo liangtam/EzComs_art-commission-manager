@@ -104,7 +104,7 @@ const ActiveForm = () => {
         setQuestionFieldList(questionListCopy);
 
         const dateObj = new Date();
-        const currDate = `${dateObj.getDate()} / ${dateObj.getMonth()} / ${dateObj.getFullYear()}`;
+        const currDate = `${dateObj.getDate()} / ${dateObj.getMonth() + 1} / ${dateObj.getFullYear()}`;
         const userDeadline = document.getElementById("deadline").value;
 
         const order = new FormData();

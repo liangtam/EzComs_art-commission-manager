@@ -9,7 +9,7 @@ const OrderDetails = () => {
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
     const [artistNotes, setArtistNotes] = useState('');
-    const [completedArts, setCompletedArts] = useState('');   
+    const [completedArts, setCompletedArts] = useState([]);   
 
     const fetchOrder = async () => {
         const response = await fetch('http://localhost:4000/api/orders/' + id);
@@ -57,12 +57,22 @@ const OrderDetails = () => {
     }
 
     const handleCompletedArtChange = (e) => {
+        let arts = Array.from(e.target.files);
         
+        setCompletedArts(completedArts.concat(arts));
+    }
+
+    const handleDeleteImage = (e, image) => {
+        e.preventDefault();
+
+        setCompletedArts(completedArts.filter((img) => img !== image));
+
+
     }
 
     useEffect(() => {
         fetchOrder();
-    }, [])
+    }, []);
 
 
     useEffect(() => {
@@ -139,9 +149,11 @@ const OrderDetails = () => {
                     <li><label><input type="radio" name="statusSelection" id="Completed" value="Completed" onChange={selectStatus}></input>Completed</label></li>
                 </ul>
             </div>
+            <label>Completed Artwork <input type="file" accept=".png, .jpeg, .jpg" name="artistImages" onChange={handleCompletedArtChange}multiple></input></label>
             <div className={styles.completedArt}>
-                <label>Completed Artwork <input type="file" onChange={handleCompletedArtChange}multiple></input></label>
-                
+                {completedArts && completedArts.map((artURL) => {
+                    return <ImagePreview image={artURL} handleDeleteImg={handleDeleteImage}></ImagePreview>
+                })}
             </div>
 
             <div className={styles.buttons}>

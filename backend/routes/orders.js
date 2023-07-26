@@ -15,9 +15,18 @@ const Storage = multer.diskStorage({
     filename: (req, file, cb) => {
         //console.log(file)
         // first arg: error, second: name of file. we added date to differentiate b/w files with same names
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const artistStorage = multer.diskStorage({
+    destination:(req, file, cb) => {
+        cb(null, './images/artistImages');
+    },
+    filename:(req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname))
     }
-})
+});
 
 
 // middleware containing the multer object, which contains two objects--storage
@@ -41,6 +50,25 @@ const upload = multer({
     }
 });
 
+const artistUpload = multer({
+    storage: artistStorage,
+    fileFilter: (req, file, cb) => {
+        if (
+            file.mimetype == "image/png" ||
+            file.mimetype == "image/jpg" ||
+            file.mimetype == "image/jpeg"
+        ) {
+            cb(null, true);
+        } else {
+            console.log("Only jpg or png allowed.");
+            cb(null, false);
+        }
+    },
+    limits: {
+        fileSize: 1024 * 1024 *2
+    }
+})
+
 // GET all COMPLETED orders
 router.get('/completed', getCompletedOrders);
 
@@ -52,7 +80,7 @@ router.get('/:id', getOrder);
 router.delete('/:id', deleteOrder);
 
 // UPDATE an order
-router.patch('/:id', updateOrder);
+router.patch('/:id', artistUpload.array('completedArts[]'), updateOrder);
 
 // GET all orders
 router.get('/', getOrders);
