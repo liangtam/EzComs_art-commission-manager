@@ -152,16 +152,17 @@ const updateOrder = async (req, res) => {
 
     console.log("Updated order: ", {...req.body});
     const newOrder = {...req.body};
+    const url = req.protocol + '://' + req.get('host');
 
-    // PATCH DOESNT WORK FOR MULTIFORM DATA
-    // let referenceImages = [];
-    // if (req.files) {
-    //     for (let i = 0; i < req.files.length; i++) {
-    //         const path = url + "//images/" + req.files[i].path;
-    //         referenceImages.push(path)
-    //     }
-    //     newOrder.referenceImages = referenceImages;
-    // }
+    //PATCH DOESNT WORK FOR MULTIFORM DATA
+    let artistFinishedImgs = [];
+    if (req.files) {
+        for (let i = 0; i < req.files.length; i++) {
+            const path = url + "/images/artistImages//" + req.files[i].filename;
+            artistFinishedImgs.push(path)
+        }
+        newOrder.completedArts = artistFinishedImgs;
+    }
 
     const order = await Order.findOneAndUpdate({_id: id}, newOrder);
 

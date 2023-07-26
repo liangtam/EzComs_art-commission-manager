@@ -9,7 +9,8 @@ const OrderDetails = () => {
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
     const [artistNotes, setArtistNotes] = useState('');
-    const [completedArts, setCompletedArts] = useState([]);   
+    const [completedArts, setCompletedArts] = useState([]);
+    const [uploadedCompletedArts, setUploadedCompletedArts] = useState([]);   
 
     const fetchOrder = async () => {
         const response = await fetch('http://localhost:4000/api/orders/' + id);
@@ -30,22 +31,50 @@ const OrderDetails = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
-        let newOrder = order;
-        newOrder.status = status;
-        newOrder.artistNotes = artistNotes;
+        let newOrder = new FormData();
+        newOrder.append("clientName", order.clientName);
+        newOrder.append("clientContact", order.clientContact);
+        newOrder.append("requestDetail", order.requestDetail);
+        for (let i = 0; i < fillouts.length; i++) {
+            newOrder.append("fillouts", JSON.stringify(fillouts[i]));
+        }
+        newOrder.append("referenceImages[]", order.referenceImages)
+        newOrder.append("price", order.price);
+        newOrder.append("dateReqqed", order.dateReqqed);
+        newOrder.append("datePaid", order.datePaid);
+        newOrder.append("dateCompleted", order.dateCompleted);
+        newOrder.append("deadline", order.deadline);
+        newOrder.append("status", status);
+        newOrder.append("artistNotes", artistNotes);
+        for (let i = 0; i < uploadedCompletedArts.length; i++) {
+            newOrder.append("completedArts[]", uploadedCompletedArts[i]);
+        }
+        for (let i = 0; i < completedArts.length; i++) {
+            newOrder.append("completedArts[]", completedArts[i].filename);
+        }
 
         const response = await fetch('http://localhost:4000/api/orders/' + id, {
             method: 'PATCH',
-            body: JSON.stringify(newOrder),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            body: newOrder
         });
 
-        const json = response.json();
+        // let newOrder = order;
+        // newOrder.status = status;
+        // newOrder.artistNotes = artistNotes;
+        
+
+        // const response = await fetch('http://localhost:4000/api/orders/' + id, {
+        //     method: 'PATCH',
+        //     body: JSON.stringify(newOrder),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // });
+
+        // const json = response.json();
 
         if (response.ok) {
-            console.log("Updated order! ", json);
+            console.log("Updated order! ", newOrder);
         } else {
             console.log("Error: Order was NOT updated :(")
         }
@@ -59,15 +88,13 @@ const OrderDetails = () => {
     const handleCompletedArtChange = (e) => {
         let arts = Array.from(e.target.files);
         
-        setCompletedArts(completedArts.concat(arts));
+        setUploadedCompletedArts(uploadedCompletedArts.concat(arts));
     }
 
     const handleDeleteImage = (e, image) => {
         e.preventDefault();
 
-        setCompletedArts(completedArts.filter((img) => img !== image));
-
-
+        setUploadedCompletedArts(uploadedCompletedArts.filter((img) => img !== image));
     }
 
     useEffect(() => {
@@ -79,8 +106,10 @@ const OrderDetails = () => {
         let questions = [];
         if (Array.isArray(order.fillouts)) {
             for (let i = 0; i < order.fillouts.length; i++) {
-                const question = JSON.parse(order.fillouts[i]);
-                console.log(question);
+                // need to parse JSON stringified object back into an object
+                console.log("question before parse: ", order.fillouts[i]);
+                let question = JSON.parse(order.fillouts[i]);
+                console.log("question after parse: ", question);
                 questions.push(question);
             }
         }
@@ -102,8 +131,9 @@ const OrderDetails = () => {
         const artistNoteTextArea = document.getElementById("artistNotes");
         artistNoteTextArea.value = order.artistNotes;
 
-
-
+        // Show any completed artworks
+        setCompletedArts(order.completedArts);
+        
     }, [order])
 
     return (
@@ -149,9 +179,14 @@ const OrderDetails = () => {
                     <li><label><input type="radio" name="statusSelection" id="Completed" value="Completed" onChange={selectStatus}></input>Completed</label></li>
                 </ul>
             </div>
-            <label>Completed Artwork <input type="file" accept=".png, .jpeg, .jpg" name="artistImages" onChange={handleCompletedArtChange}multiple></input></label>
-            <div className={styles.completedArt}>
-                {completedArts && completedArts.map((artURL) => {
+            <div className={styles.completedArtworks}>
+                {completedArts && completedArts.map((completedArt) => {
+                    return <img className={styles.completedArt} src={completedArt}></img>
+                })}
+            </div>
+            <label>Upload Completed Artwork <input type="file" accept=".png, .jpeg, .jpg" name="artistImages" onChange={handleCompletedArtChange}multiple></input></label>
+            <div className={styles.completedArtworksPreviewUpload}>
+                {uploadedCompletedArts && uploadedCompletedArts.map((artURL) => {
                     return <ImagePreview image={artURL} handleDeleteImg={handleDeleteImage}></ImagePreview>
                 })}
             </div>
