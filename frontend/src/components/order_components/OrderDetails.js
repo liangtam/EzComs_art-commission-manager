@@ -50,7 +50,7 @@ const OrderDetails = () => {
             newOrder.append("completedArts[]", uploadedCompletedArts[i]);
         }
         for (let i = 0; i < completedArts.length; i++) {
-            newOrder.append("completedArts[]", completedArts[i].filename);
+            newOrder.append("completedArts[]", completedArts[i]);
         }
 
         const response = await fetch('http://localhost:4000/api/orders/' + id, {

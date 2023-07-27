@@ -150,6 +150,10 @@ const updateOrder = async (req, res) => {
         return res.status(404).json({error: 'No such order.'});
     };
 
+    const oldOrder = await Order.findById({_id: id});
+
+    let alreadyUploadedCompletedArt = oldOrder.completedArts;
+
     console.log("Updated order: ", {...req.body});
     const newOrder = {...req.body};
     const url = req.protocol + '://' + req.get('host');
@@ -161,7 +165,8 @@ const updateOrder = async (req, res) => {
             const path = url + "/images/artistImages//" + req.files[i].filename;
             artistFinishedImgs.push(path)
         }
-        newOrder.completedArts = artistFinishedImgs;
+        const allFinishedImgs = alreadyUploadedCompletedArt.concat(artistFinishedImgs);
+        newOrder.completedArts = allFinishedImgs;
     }
 
     const order = await Order.findOneAndUpdate({_id: id}, newOrder);
