@@ -153,20 +153,34 @@ const updateOrder = async (req, res) => {
     const oldOrder = await Order.findById({_id: id});
 
     let alreadyUploadedCompletedArt = oldOrder.completedArts;
+    let alreadyUploadedWipArt = oldOrder.wipArts;
 
     console.log("Updated order: ", {...req.body});
     const newOrder = {...req.body};
     const url = req.protocol + '://' + req.get('host');
 
-    //PATCH DOESNT WORK FOR MULTIFORM DATA
+    const newlyUploadedCompletedArts = req.files["completedArts[]"];
+    const newlyUploadedWipArts = req.files["wipArts[]"];
+
+    //PATCH DOESNT WORK FOR MULTIFORM DATA -- NVM THIS IS CAP
     let artistFinishedImgs = [];
-    if (req.files) {
-        for (let i = 0; i < req.files.length; i++) {
-            const path = url + "/images/artistImages//" + req.files[i].filename;
+    let wipImgs = [];
+    if (newlyUploadedCompletedArts) {
+        for (let i = 0; i < newlyUploadedCompletedArts.length; i++) {
+            const path = url + "/images/artistImages//" + newlyUploadedCompletedArts[i].filename;
             artistFinishedImgs.push(path)
         }
         const allFinishedImgs = alreadyUploadedCompletedArt.concat(artistFinishedImgs);
         newOrder.completedArts = allFinishedImgs;
+    }
+
+    if (newlyUploadedWipArts) {
+        for (let i = 0; i < newlyUploadedWipArts.length; i++) {
+            const path = url + '/images/artistImages//' + newlyUploadedWipArts[i].filename;
+            wipImgs.push(path);
+        }
+        const allWipImgs = alreadyUploadedWipArt.concat(wipImgs);
+        newOrder.wipArts = allWipImgs;
     }
 
     const order = await Order.findOneAndUpdate({_id: id}, newOrder);

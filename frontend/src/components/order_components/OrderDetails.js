@@ -10,7 +10,10 @@ const OrderDetails = () => {
     const [status, setStatus] = useState(null);
     const [artistNotes, setArtistNotes] = useState('');
     const [completedArts, setCompletedArts] = useState([]);
-    const [uploadedCompletedArts, setUploadedCompletedArts] = useState([]);   
+    const [uploadedCompletedArts, setUploadedCompletedArts] = useState([]);  
+    const [wipArts, setWipArts] = useState([]);
+    const [uploadedWipArts, setUploadedWipArts] = useState([]);
+
 
     const fetchOrder = async () => {
         const response = await fetch('http://localhost:4000/api/orders/' + id);
@@ -49,8 +52,9 @@ const OrderDetails = () => {
         for (let i = 0; i < uploadedCompletedArts.length; i++) {
             newOrder.append("completedArts[]", uploadedCompletedArts[i]);
         }
-        for (let i = 0; i < completedArts.length; i++) {
-            newOrder.append("completedArts[]", completedArts[i]);
+
+        for (let i = 0; i < uploadedWipArts.length; i++) {
+            newOrder.append("wipArts[]", uploadedWipArts[i]);
         }
 
         const response = await fetch('http://localhost:4000/api/orders/' + id, {
@@ -58,23 +62,11 @@ const OrderDetails = () => {
             body: newOrder
         });
 
-        // let newOrder = order;
-        // newOrder.status = status;
-        // newOrder.artistNotes = artistNotes;
-        
-
-        // const response = await fetch('http://localhost:4000/api/orders/' + id, {
-        //     method: 'PATCH',
-        //     body: JSON.stringify(newOrder),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     }
-        // });
-
-        // const json = response.json();
-
         if (response.ok) {
             console.log("Updated order! ", newOrder);
+            fetchOrder();
+            setUploadedCompletedArts([]);
+            setUploadedWipArts([]);
         } else {
             console.log("Error: Order was NOT updated :(")
         }
@@ -91,10 +83,23 @@ const OrderDetails = () => {
         setUploadedCompletedArts(uploadedCompletedArts.concat(arts));
     }
 
+    const handleWIPArtChange = (e) => {
+        let files = Array.from(e.target.files);
+
+        setUploadedWipArts(uploadedWipArts.concat(files));
+    }
+
+
     const handleDeleteImage = (e, image) => {
         e.preventDefault();
 
         setUploadedCompletedArts(uploadedCompletedArts.filter((img) => img !== image));
+    }
+
+    const handleDeleteWipImage = (e, image) => {
+        e.preventDefault();
+
+        setUploadedWipArts(uploadedWipArts.filter((img) => img !== image));
     }
 
     useEffect(() => {
@@ -133,6 +138,10 @@ const OrderDetails = () => {
 
         // Show any completed artworks
         setCompletedArts(order.completedArts);
+
+        if (order.wipArts) {
+            setWipArts(order.wipArts);
+        }
         
     }, [order])
 
@@ -179,11 +188,31 @@ const OrderDetails = () => {
                     <li><label><input type="radio" name="statusSelection" id="Completed" value="Completed" onChange={selectStatus}></input>Completed</label></li>
                 </ul>
             </div>
+
+
+            <div><h4>WIP Artwork</h4></div>
+            <div className={styles.wipArts}>
+                {wipArts && wipArts.map((wipArt) => {
+                    return <img className={styles.wipArt} src={wipArt}></img>
+                })}
+            </div>
+            <br></br>
+            <label>Upload WIP Artwork: <input type="file" accept=".png, .jpeg, .jpg" name="wipImages" onChange={handleWIPArtChange} multiple></input></label>
+            <div className={styles.uploadedWipArts}>
+                {uploadedWipArts && uploadedWipArts.map((uploadedWipArt) => {
+                    return <ImagePreview image={uploadedWipArt} handleDeleteImg={handleDeleteWipImage}></ImagePreview>
+                })}
+            </div>
+
+
             <div className={styles.completedArtworks}>
+            <h4>Completed Artwork</h4>
+            <br></br>
                 {completedArts && completedArts.map((completedArt) => {
                     return <img className={styles.completedArt} src={completedArt}></img>
                 })}
             </div>
+            <br></br>
             <label>Upload Completed Artwork <input type="file" accept=".png, .jpeg, .jpg" name="artistImages" onChange={handleCompletedArtChange}multiple></input></label>
             <div className={styles.completedArtworksPreviewUpload}>
                 {uploadedCompletedArts && uploadedCompletedArts.map((artURL) => {

@@ -57,6 +57,12 @@ const orderSchema = new Schema({
         type: String,
         required: false
     },
+
+    wipArts: {
+        type: Array,
+        required: false
+    },
+    
     completedArts: {
         type: Array,
         required: true

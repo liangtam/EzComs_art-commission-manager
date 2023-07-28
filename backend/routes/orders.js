@@ -80,7 +80,10 @@ router.get('/:id', getOrder);
 router.delete('/:id', deleteOrder);
 
 // UPDATE an order
-router.patch('/:id', artistUpload.array('completedArts[]'), updateOrder);
+router.patch('/:id', artistUpload.fields([
+    {name: 'completedArts[]'},
+    {name: 'wipArts[]'}
+    ]), updateOrder);
 
 // GET all orders
 router.get('/', getOrders);
