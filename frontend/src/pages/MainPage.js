@@ -7,7 +7,8 @@ import Forms from './Forms';
 import Navbar from '../components/Navbar';
 import ActiveForm from './ActiveForm';
 import FormDetails from '../components/form_components/FormDetails';
-import OrderDetails from '../components/order_components/OrderDetails';
+import OrderDetails from './OrderDetails';
+import EditOrderDetails from './EditOrderDetails';
 import Record from './Record';
 
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
@@ -113,6 +114,11 @@ function MainPage() {
                         <Route exact path="/orders/:id" element={
                             <OrdersContext.Provider value={{orders, setOrders}}>
                                 <OrderDetails />
+                            </OrdersContext.Provider>
+                        }/>
+                        <Route exact path="/orders/edit/:id" element={
+                            <OrdersContext.Provider value={{orders, setOrders}}>
+                                <EditOrderDetails />
                             </OrdersContext.Provider>
                         }/>
 

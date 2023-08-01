@@ -1,10 +1,12 @@
 import styles from './OrderDetails.module.css'
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import ImagePreview from '../ImagePreview';
+import { useParams, useNavigate } from 'react-router-dom';
+import ImagePreview from '../components/ImagePreview';
 const OrderDetails = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
+
     const [order, setOrder] = useState('');
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
@@ -71,6 +73,14 @@ const OrderDetails = () => {
             console.log("Error: Order was NOT updated :(")
         }
 
+    }
+
+    const handleEditButton = (e) => {        
+        e.preventDefault();
+
+        navigate('/orders/edit/' + id);
+
+        
     }
 
     const handleArtistNotesChange = (e) => {
@@ -223,7 +233,7 @@ const OrderDetails = () => {
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>
                 <button className={styles.deleteBtn}>Delete</button>
-                <button className={styles.editBtn}>Edit</button>
+                <button className={styles.editBtn} onClick={handleEditButton}>Edit</button>
             </div>
 
         </div>

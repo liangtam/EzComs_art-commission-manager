@@ -95,17 +95,6 @@ const postOrder = async (req, res) => {
             })
         });
         
-        // old json request
-        //console.log("postOrder");
-        // const { clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status } = req.body;
-        
-        //     try {
-        //         const order = await Order.create({  clientName, clientContact, requestDetail, fillouts, referenceImages, price, dateReqqed, datePaid, deadline, status });
-        //         res.status(200).json(order);
-        //     } catch (error) {
-        //         console.log(req.body);
-        //         res.status(400).json({error: error.message});
-        //     }
 };
 
 
@@ -142,7 +131,8 @@ const deleteOrder = async (req, res) => {
 
     res.status(200).json(orderDelete);
 }
-// update an order. CONVERT MULTIFORM DATA TO JSON FIRST OR ELSE IT WON'T WORK!
+// This is to update an order for the convenience of the artist's workspace while working on the commission
+//     You can only add order notes, WIP arts, completed arts, and change the status of the order
 const updateOrder = async (req, res) => {
     const { id } = req.params;
 
@@ -194,4 +184,75 @@ const updateOrder = async (req, res) => {
     console.log(newOrder);
 }
 
-module.exports = { postOrder, getOrders, getOrder, deleteOrder, updateOrder, getCompletedOrders };
+// This is to actually edit the client's order--you can actually change some information on the order
+//      You can change the client's name, request details, fillout answers, and reference images.
+//      For safety reasons, an original copy of the order will always be available.
+const editOrder = async (req, res) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({error: 'No such order.'});
+    };
+
+    const oldOrder = await Order.findById({_id: id});
+
+    let newOrder = {
+        clientName: req.body.clientName,
+        clientContact: req.body.clientContact,
+        requestDetail: req.body.requestDetail,
+        fillouts: req.body.fillouts,
+        price: req.body.price,
+        dateReqqed: req.body.dateReqqed,
+        datePaid: req.body.datePaid,
+        dateCompleted: req.body.dateCompleted,
+        deadline: req.body.deadline,
+        status: req.body.status,
+        wipArts: req.body.status,
+        completedArts: req.body.status,
+        editedStatus: req.body.editedStatus,
+        originalUneditedOrder: req.body.originalUneditedOrder
+    }
+
+    let oldRefImgs = new Set(oldOrder.referenceImages);
+    let refImgsToDelete = new Set(req.body.refImgsToDelete); // this has all current ref imgs without deleted ones
+
+    for (let i = 0; i < refImgsToDelete.length; i++) {
+        const refImgPath = "./images/" + refImgsToDelete[i].substring(30); 
+        fs.unlink(refImgPath, (error) => {
+            if (error) {
+                console.log('Could not delete ' + refImgPath);
+            } else {
+                console.log('Image ' + refImgPath + ' deleted!');
+            }
+        });
+    }
+
+    let updatedRefImgs = Array.from(oldRefImgs).filter(img => !refImgsToDelete.has(img)); // get rid of all deleted imgs
+
+    let newRefImgs = Array.from(req.files);
+    console.log("Req files", req.files);
+    const hostURL = req.protocol + '://' + req.get('host');
+
+    let newRefImgsURLs = [];
+
+    if (req.files) {
+        for (let i = 0; i < newRefImgs.length; i++) {
+            const path = hostURL + '/images//' + newRefImgs[i].filename;
+            newRefImgsURLs.push(path);
+        }
+    }
+
+    newOrder.referenceImages = updatedRefImgs.concat(newRefImgsURLs);
+
+    const order = await Order.findByIdAndUpdate({_id: id}, newOrder);
+
+    if (!order) {
+        res.status(400).json({error: 'Error: Could not edit order!'});
+        console.log('Could not edit order.')
+    }
+
+    res.status(200).json({message: 'Successfully edited order!'});
+
+}
+
+module.exports = { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editOrder, getCompletedOrders };

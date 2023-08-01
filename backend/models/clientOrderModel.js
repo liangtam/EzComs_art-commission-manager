@@ -66,6 +66,16 @@ const orderSchema = new Schema({
     completedArts: {
         type: Array,
         required: true
+    },
+
+    editedStatus: {
+        type: Boolean,
+        required: false
+    },
+
+    originalUneditedOrder: {
+        type: Object,
+        required: false
     }
     
 }, { timestamps: true });

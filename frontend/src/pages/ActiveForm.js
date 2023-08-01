@@ -29,11 +29,11 @@ const ActiveForm = () => {
     };
 
     const findActiveForm = () => {
-        if (forms.length == 0) {
+        if (forms.length === 0) {
             console.log("empty!!!!!");
-            //fetchAllForms();
         }
-        let form = forms[0];
+
+        let form = forms[0]; // the active form is always at the front of the list of forms
 
         setActiveForm(form);
 
@@ -128,32 +128,15 @@ const ActiveForm = () => {
         order.append("artistNotes", "");
         order.append("wipArts", []);
         order.append("completedArts", []);
-
-        // for (let i = 0; i < referenceImages.length; i++) {
-        //     order.append("referenceImages[]", '/images/' + referenceImages[i].filename);
-        // }
-        //const order = {clientName, clientContact, requestDetail, fillouts: questionFieldList, referenceImages, price: -1, dateReqqed: currDate, datePaid: "To be set", deadline: userDeadline, status: "Not started"};
-
-         // first arg: where we're sending the post request to
-        //  const response = await fetch('http://localhost:4000/api/orders', {
-        //     method: 'POST',
-        //     body: order, 
-
-        // });
+        order.append("editedStatus", false);
+        order.append("originalUneditedOrder", {});
+        
 
         axios.post('http://localhost:4000/api/orders', order, {
 
         }).then((res) => {
             console.log(res);
         })
-
-        // const json = await response.json();
-
-        // console.log('here', json, "order: ", [...order])
-        // if (response.ok) {
-        //     console.log('New order added: ', json);
-        // }
-
 
     }
 
@@ -166,7 +149,7 @@ const ActiveForm = () => {
     // Now, after all the forms have been fetched, find the active form
     useEffect(() => {
         //console.log('Forms is now: ', forms)
-        findActiveForm()
+        findActiveForm();
     }, [forms])
 
     // Finally, after you find the active form, populate the question fields list with the active form's questions
