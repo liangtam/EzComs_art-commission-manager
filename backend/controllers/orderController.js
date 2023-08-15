@@ -64,7 +64,8 @@ const postOrder = async (req, res) => {
                     console.log("Req file: ", req.files[i])
                     const cloudResult = await cloudinary.uploader.upload(req.files[i].path);
                     console.log("Cloud result: ", cloudResult);
-                    referenceImages.push(cloudResult.url);
+                    referenceImages.push({imageURL: cloudResult.url,
+                                        imageID: cloudResult.public_id});
 
                     // deleting the image we just uploaded from our file. We wrap it with try catch so that our
                     //      unlinking error doesn't get thrown to the outer try catch. That will be confusing
@@ -125,6 +126,16 @@ const deleteOrder = async (req, res) => {
 
     console.log("order to delete: ", order);
     const refImgs = order.referenceImages;
+
+    // deleting all the reference images from cloudinary
+    for (let i = 0; i < refImgs.length; i++) {
+        try {
+            const cloudResult = await cloudinary.uploader.destroy(refImgs[i].imageID);
+            console.log(`Image deleted from cloudinary! ${cloudResult}`);
+        } catch (error) {
+            console.log(`Error deleting image from cloudinary :( ${error}`);
+        }
+    }
 
     // for (let i = 0; i < refImgs.length; i++) {
     //     const refImgPath = "./images/" + refImgs[i].substring(30); // get everything after "http://localhost:4000"
