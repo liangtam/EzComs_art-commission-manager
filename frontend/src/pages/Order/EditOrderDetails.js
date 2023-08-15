@@ -1,8 +1,8 @@
 import styles from './OrderDetails.module.css'
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ImageComponent from '../components/ImageComponent';
-import ImagePreview from '../components/ImagePreview';
+import ImageComponent from '../../components/ImageComponent';
+import ImagePreview from '../../components/ImagePreview';
 
 const EditOrderDetails = () => {
 
@@ -44,6 +44,7 @@ const EditOrderDetails = () => {
         newOrder.append("datePaid", order.datePaid);
         newOrder.append("dateCompleted", order.dateCompleted);
         newOrder.append("deadline", order.deadline);
+        newOrder.append("editedStatus", order.editedStatus)
         
         // not part of Order schema
         for (let i = 0; i < refImgsToDelete.length; i++) {

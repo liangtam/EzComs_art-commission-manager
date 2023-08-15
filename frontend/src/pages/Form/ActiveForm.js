@@ -1,10 +1,10 @@
-import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
-import { FormsContext } from "../context/FormsContext";
+import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
+import { FormsContext } from "../../context/FormsContext";
 import { useContext, useEffect, useState } from 'react';
 import styles from './ActiveForm.module.css'
 import axios from 'axios';
 
-import ImagePreview from '../components/ImagePreview';
+import ImagePreview from '../../components/ImagePreview';
 
 
 const ActiveForm = () => {
@@ -129,7 +129,7 @@ const ActiveForm = () => {
         order.append("wipArts", []);
         order.append("completedArts", []);
         order.append("editedStatus", false);
-        order.append("originalUneditedOrder", {});
+        order.append("originalUneditedOrder", null);
         
 
         axios.post('http://localhost:4000/api/orders', order, {

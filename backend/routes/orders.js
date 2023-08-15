@@ -2,16 +2,17 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const cloudinary = require("../utils/cloudinary");
 
 const { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editOrder, getCompletedOrders } = require('../controllers/orderController');
 
 // storage object (disk storage)
 // we first store the image on our computer, then to mongo
 const Storage = multer.diskStorage({
-    destination:(req, file, cb) => {
-        // first arg: error, second: destination
-        cb(null, './images');
-    },
+    // destination:(req, file, cb) => {
+    //     // first arg: error, second: destination
+    //     cb(null, './images');
+    // },
     filename: (req, file, cb) => {
         //console.log(file)
         // first arg: error, second: name of file. we added date to differentiate b/w files with same names

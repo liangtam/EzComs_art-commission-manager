@@ -1,7 +1,7 @@
 import styles from './Record.module.css';
-import CommissionSnippet from '../components/order_components/CommissionSnippet';
+import CommissionSnippet from '../../components/order_components/CommissionSnippet';
 import { useState, useEffect, useContext } from 'react';
-import { OrdersContext } from '../context/OrdersContext';
+import { OrdersContext } from '../../context/OrdersContext';
 
 const Record = () => {
     const [completedOrders, setCompletedOrders] = useState([]);

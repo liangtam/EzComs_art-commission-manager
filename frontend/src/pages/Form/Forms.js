@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import FormSnippet from '../components/form_components/FormSnippet';
-import { FormsContext } from "../context/FormsContext";
+import FormSnippet from "../../components/form_components/FormSnippet";
+import { FormsContext } from "../../context/FormsContext";
 import styles from './Forms.module.css'
 
 

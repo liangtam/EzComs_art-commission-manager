@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Orders from './Orders';
-import FormBuilder from './FormBuilder';
-import Forms from './Forms';
+import Orders from './Order/Orders';
+import FormBuilder from './Form/FormBuilder';
+import Forms from './Form/Forms';
 import Navbar from '../components/Navbar';
-import ActiveForm from './ActiveForm';
+import ActiveForm from './Form/ActiveForm';
 import FormDetails from '../components/form_components/FormDetails';
-import OrderDetails from './OrderDetails';
-import EditOrderDetails from './EditOrderDetails';
-import Record from './Record';
+import OrderDetails from './Order/OrderDetails';
+import EditOrderDetails from './Order/EditOrderDetails';
+import Record from './Order/Record';
 
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from '../context/FormsContext';

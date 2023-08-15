@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require ('path');
 const fs = require('fs');
+const cloudinary = require('../utils/cloudinary');
 
 
 //redirect to orders page
@@ -50,40 +51,33 @@ const postOrder = async (req, res) => {
 
         let referenceImages = [];
         if (req.files) {
+            // for (let i = 0; i < req.files.length; i++) {
+            //     const path = url + "/images//" + req.files[i].filename;
+            //     referenceImages.push(path)
+            // }
+            // order.referenceImages = referenceImages;
+
             for (let i = 0; i < req.files.length; i++) {
-                const path = url + "/images//" + req.files[i].filename;
-                referenceImages.push(path)
+                try {
+                    console.log("Req file path: ", req.files[i])
+                    const cloudResult = await cloudinary.uploader.upload(req.files[i].path);
+                    console.log("Cloud result: ", cloudResult);
+                    referenceImages.push(cloudResult.url);
+                }  catch (error) {
+                    console.log("error uploading img: ", error)
+                    return;
+                }
+                
             }
-            order.referenceImages = referenceImages;
         }
 
-        console.log(req.files);
+        console.log("Post order, req.files: " + req.files);
+        console.log("Post order, ref images: " + referenceImages);
 
-        /** YouTube way... not a fan. **/
-        // if (req.files) {
-        //     let path = '';
-        //         req.files.forEach((file) => {
-        //             path = path + file.path + ','
-        //         })
-
-        //     path = path.substring(0, path.lastIndexOf(","));
-        //     order.referenceImages = path;
-        // }
-
-        /** old way. no difference except using forEach. Use this if ref.files isn't an array but just a collection **/
-
-        // let referenceImages = [];
-
-        // if (req.files) {
-        //     req.files.forEach((file) => {
-        //         const path = url + "//images/" + file.filename;
-        //         referenceImages.push(path);
-        //     })
-        //     order.referenceImages = referenceImages;
-        // }
+        order.referenceImages = referenceImages;
         
         order.save()
-        .then((response) => {
+        .then((result) => {
             res.status(200).json({
                 mssg: "Order added!"
             })
@@ -111,17 +105,17 @@ const deleteOrder = async (req, res) => {
     console.log("order to delete: ", order);
     const refImgs = order.referenceImages;
 
-    for (let i = 0; i < refImgs.length; i++) {
-        const refImgPath = "./images/" + refImgs[i].substring(30); // get everything after "http://localhost:4000"
-        console.log("refImgPath: ", refImgPath);
-        fs.unlink(refImgPath, (error) => {
-            if (error) {
-                console.log("Error deleting image: ", error);
-            } else {
-                console.log("Images deleted with order!");
-            }
-        })
-    }
+    // for (let i = 0; i < refImgs.length; i++) {
+    //     const refImgPath = "./images/" + refImgs[i].substring(30); // get everything after "http://localhost:4000"
+    //     console.log("refImgPath: ", refImgPath);
+    //     fs.unlink(refImgPath, (error) => {
+    //         if (error) {
+    //             console.log("Error deleting image: ", error);
+    //         } else {
+    //             console.log("Images deleted with order!");
+    //         }
+    //     })
+    // }
 
     const orderDelete = await Order.findOneAndDelete({_id: id})
 
@@ -149,8 +143,13 @@ const updateOrder = async (req, res) => {
     const newOrder = {...req.body};
     const url = req.protocol + '://' + req.get('host');
 
-    const newlyUploadedCompletedArts = req.files["completedArts[]"];
-    const newlyUploadedWipArts = req.files["wipArts[]"];
+    const newlyUploadedCompletedArts = []
+    const newlyUploadedWipArts = []
+
+    if (req.files) {
+        newlyUploadedCompletedArts = req.files["completedArts[]"];
+        newlyUploadedWipArts = req.files["wipArts[]"];
+    }
 
     //PATCH DOESNT WORK FOR MULTIFORM DATA -- NVM THIS IS CAP
     let artistFinishedImgs = [];
@@ -243,6 +242,11 @@ const editOrder = async (req, res) => {
     }
 
     newOrder.referenceImages = updatedRefImgs.concat(newRefImgsURLs);
+
+    if (newOrder.editedStatus === false) {
+        newOrder.originalUneditedOrder = oldOrder;
+        newOrder.editedStatus = true;
+    }
 
     const order = await Order.findByIdAndUpdate({_id: id}, newOrder);
 

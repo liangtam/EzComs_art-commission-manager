@@ -1,7 +1,7 @@
 import styles from './OrderDetails.module.css'
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import ImagePreview from '../components/ImagePreview';
+import ImagePreview from '../../components/ImagePreview';
 const OrderDetails = () => {
 
     const { id } = useParams();

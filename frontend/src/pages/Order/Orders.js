@@ -1,13 +1,15 @@
 import { useEffect, useState, useContext } from "react";
-import OrderSnippet from '../components/order_components/OrderSnippet';
-import { OrdersContext } from "../context/OrdersContext";
+import OrderSnippet from '../../components/order_components/OrderSnippet';
+import { OrdersContext } from "../../context/OrdersContext";
 import styles from "./Orders.module.css"
 
 const Orders = () => {
     const {orders, setOrders} = useContext(OrdersContext);
-    // [] makes it only fire once
+    
     const fetchOrders = async () => {
+        // making a call to the backend
         const response = await fetch('http://localhost:4000/api/orders');
+        
         // to parse the json from the above response into smt we can work w/ 
         const json = await response.json();
 
