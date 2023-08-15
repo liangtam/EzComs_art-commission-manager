@@ -45,46 +45,67 @@ const getOrder = async(req, res) => {
 
 const postOrder = async (req, res) => {
     
-    const url = req.protocol + '://' + req.get('host');
-        const order = new Order({... req.body
-        });
+    //const url = req.protocol + '://' + req.get('host');
+        const order = new Order({... req.body});
 
         let referenceImages = [];
+
         if (req.files) {
+            /** Old way of image upload: the images were just uploaded to file system**/
             // for (let i = 0; i < req.files.length; i++) {
             //     const path = url + "/images//" + req.files[i].filename;
             //     referenceImages.push(path)
             // }
             // order.referenceImages = referenceImages;
 
+            // Uploading the images to cloudinary, then storing the URLs of the images to the order
             for (let i = 0; i < req.files.length; i++) {
                 try {
-                    console.log("Req file path: ", req.files[i])
+                    console.log("Req file: ", req.files[i])
                     const cloudResult = await cloudinary.uploader.upload(req.files[i].path);
                     console.log("Cloud result: ", cloudResult);
                     referenceImages.push(cloudResult.url);
+
+                    // deleting the image we just uploaded from our file. We wrap it with try catch so that our
+                    //      unlinking error doesn't get thrown to the outer try catch. That will be confusing
+                    try {
+                        fs.unlink(req.files[i].path, (error) => {
+                            if (error) {
+                                throw error;
+                            } else {
+                                console.log(`Unlink success! Deleted file: ${req.files[i].path}`);
+                            }
+                        });
+                    } catch (unlinkError) {
+                        console.log(`Unlink error: ${unlinkError}`);
+                    }                     
+
                 }  catch (error) {
-                    console.log("error uploading img: ", error)
-                    return;
-                }
-                
+                    console.log("Error uploading img: ", error)
+                }  
             }
         }
 
-        console.log("Post order, req.files: " + req.files);
+        //console.log("Post order, req.files: " + req.files);
         console.log("Post order, ref images: " + referenceImages);
 
+        // Setting our order's reference images to the ones we just uploaded
         order.referenceImages = referenceImages;
         
+
+        // Saving the order to backend
         order.save()
         .then((result) => {
             res.status(200).json({
-                mssg: "Order added!"
+                success: true,
+                mssg: "Order added!",
+                data: result
             })
         })
         .catch((error) => {
-            console.log(error);
+            console.log(`Error saving order: ${error}`);
             res.status(500).json({
+                success: false,
                 error: error.message
             })
         });

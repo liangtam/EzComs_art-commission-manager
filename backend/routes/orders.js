@@ -9,10 +9,10 @@ const { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editOrder, get
 // storage object (disk storage)
 // we first store the image on our computer, then to mongo
 const Storage = multer.diskStorage({
-    // destination:(req, file, cb) => {
-    //     // first arg: error, second: destination
-    //     cb(null, './images');
-    // },
+    destination:(req, file, cb) => {
+        // first arg: error, second: destination
+        cb(null, './images');
+    },
     filename: (req, file, cb) => {
         //console.log(file)
         // first arg: error, second: name of file. we added date to differentiate b/w files with same names
