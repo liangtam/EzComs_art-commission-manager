@@ -1,5 +1,5 @@
 
-.fillouts {
+.order_details .fillouts {
   padding: 5px;
 }
 
@@ -12,8 +12,8 @@
   align-items: left;
   padding: 10px;
   gap: 20px;
-
 }
+
 .images img {
   width: 100%;
   max-width: 350px;
@@ -29,8 +29,8 @@
   gap: 10px;
 }
 
-.completedArtworks img {
-  width: 100%; /* this blows up super tiny imgs :) */
+/* .completedArtworks img {
+  width: 100%;
   max-width: 400px;
   max-height: 300px;
 }
@@ -40,7 +40,7 @@
   height: 100%;
   max-width: 400px;
   max-height: 300px;
-}
+} */
 
 
 

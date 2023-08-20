@@ -126,8 +126,8 @@ const ActiveForm = () => {
         order.append("deadline", userDeadline);
         order.append("status", "Not Started Yet");
         order.append("artistNotes", "");
-        order.append("wipArts", []);
-        order.append("completedArts", []);
+        // order.append("wipArts", []);
+        // order.append("completedArts", []);
         order.append("editedStatus", false);
         order.append("originalUneditedOrder", null);
         

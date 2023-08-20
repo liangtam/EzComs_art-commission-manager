@@ -2,6 +2,8 @@ import styles from './OrderDetails.module.css'
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ImagePreview from '../../components/ImagePreview';
+import ImageComponent from '../../components/ImageComponent';
+
 const OrderDetails = () => {
 
     const { id } = useParams();
@@ -11,11 +13,10 @@ const OrderDetails = () => {
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
     const [artistNotes, setArtistNotes] = useState('');
-    const [completedArts, setCompletedArts] = useState([]);
+    const [completedArts, setCompletedArts] = useState(null);
     const [uploadedCompletedArts, setUploadedCompletedArts] = useState([]);  
-    const [wipArts, setWipArts] = useState([]);
+    const [wipArts, setWipArts] = useState(null);
     const [uploadedWipArts, setUploadedWipArts] = useState([]);
-
 
     const fetchOrder = async () => {
         const response = await fetch('http://localhost:4000/api/orders/' + id);
@@ -27,11 +28,6 @@ const OrderDetails = () => {
         } else {
             console.log("response not ok");
         }
-    }
-
-    const selectStatus = (e) => {
-        setStatus(e.target.value);
-        console.log("Status selected: ", e.target.value);
     }
 
     const handleSave = async (e) => {
@@ -78,9 +74,7 @@ const OrderDetails = () => {
     const handleEditButton = (e) => {        
         e.preventDefault();
 
-        navigate('/orders/edit/' + id);
-
-        
+        navigate('/orders/edit/' + id);     
     }
 
     const handleArtistNotesChange = (e) => {
@@ -100,16 +94,28 @@ const OrderDetails = () => {
     }
 
 
-    const handleDeleteImage = (e, image) => {
+    const handleDeletePreviewCompletedImage = (e, image) => {
         e.preventDefault();
 
         setUploadedCompletedArts(uploadedCompletedArts.filter((img) => img !== image));
     }
 
-    const handleDeleteWipImage = (e, image) => {
+    const handleDeleteWipPreviewImage = (e, image) => {
         e.preventDefault();
 
         setUploadedWipArts(uploadedWipArts.filter((img) => img !== image));
+    }
+
+    const handleDeleteCurrentWipArts = (e, imageToDelete) => {
+        e.preventDefault();
+
+        setWipArts(wipArts.filter((image) => image !== imageToDelete));
+    }
+
+    const handleDeleteCurrentCompletedArts = (e, imageToDelete) => {
+        e.preventDefault();
+
+        setCompletedArts(completedArts.filter((image) => image !== imageToDelete));
     }
 
     useEffect(() => {
@@ -122,9 +128,9 @@ const OrderDetails = () => {
         if (Array.isArray(order.fillouts)) {
             for (let i = 0; i < order.fillouts.length; i++) {
                 // need to parse JSON stringified object back into an object
-                console.log("question before parse: ", order.fillouts[i]);
+                //console.log("question before parse: ", order.fillouts[i]);
                 let question = JSON.parse(order.fillouts[i]);
-                console.log("question after parse: ", question);
+                //console.log("question after parse: ", question);
                 questions.push(question);
             }
         }
@@ -147,13 +153,20 @@ const OrderDetails = () => {
         artistNoteTextArea.value = order.artistNotes;
 
         // Show any completed artworks
+        // if (order.completedArts) {
+        //     let orderCompletedArts = order.completedArts;
+        //     console.log("Here: ", Array.isArray(order.completedArts), Array.isArray(orderCompletedArts));
+        //     for (let i = 0; i < orderCompletedArts.length; i++) {
+        //         orderCompletedArts[i] = JSON.parse(orderCompletedArts[i])
+        //     }
+        // }
         setCompletedArts(order.completedArts);
 
         if (order.wipArts) {
             setWipArts(order.wipArts);
         }
         
-    }, [order])
+    }, [order]);
 
     return (
         <div className={styles.order_details}>
@@ -181,7 +194,7 @@ const OrderDetails = () => {
             <div><b>Reference images: </b></div>
             <div className={styles.images}>
                 {order && order.referenceImages.map((refImgURL) => {
-                    return <img className={styles.refImg} id={refImgURL + order.id} src={refImgURL}></img>
+                    return <img className={styles.refImg} id={refImgURL + order.id} src={refImgURL.imageURL}></img>
                 } )}
             </div>
             <div className={styles.orderNotes}>
@@ -191,26 +204,26 @@ const OrderDetails = () => {
             </div>
             <div className={styles.status}>
                 <h4>Status:</h4>
-                <ul>
-                    <li><label><input type="radio" name="statusSelection" id="Not Started Yet" value="Not Started Yet" onChange={selectStatus}></input>Not Started Yet</label></li>
-                    <li><label><input type="radio" name="statusSelection" id="WIP" value="WIP" onChange={selectStatus}></input>WIP</label></li>
-                    <li><label><input type="radio" name="statusSelection" id="Paused" value="Paused" onChange={selectStatus}></input>Paused</label></li>
-                    <li><label><input type="radio" name="statusSelection" id="Completed" value="Completed" onChange={selectStatus}></input>Completed</label></li>
-                </ul>
+                <select onChange={setStatus}>
+                    <option value="Not Started Yet">Not Started Yet</option>
+                    <option value="WIP">Work In Progress</option>
+                    <option value="Paused">Paused</option>
+                    <option value="Completed">Completed</option>
+                </select>
             </div>
 
 
             <div><h4>WIP Artwork</h4></div>
             <div className={styles.wipArts}>
                 {wipArts && wipArts.map((wipArt) => {
-                    return <img className={styles.wipArt} src={wipArt}></img>
+                    return <ImageComponent image={wipArt} handleDeleteImage={handleDeleteCurrentWipArts} />
                 })}
             </div>
             <br></br>
             <label>Upload WIP Artwork: <input type="file" accept=".png, .jpeg, .jpg" name="wipImages" onChange={handleWIPArtChange} multiple></input></label>
             <div className={styles.uploadedWipArts}>
                 {uploadedWipArts && uploadedWipArts.map((uploadedWipArt) => {
-                    return <ImagePreview image={uploadedWipArt} handleDeleteImg={handleDeleteWipImage}></ImagePreview>
+                    return <ImagePreview image={uploadedWipArt} handleDeleteImg={handleDeleteWipPreviewImage}></ImagePreview>
                 })}
             </div>
 
@@ -219,14 +232,14 @@ const OrderDetails = () => {
             <h4>Completed Artwork</h4>
             <br></br>
                 {completedArts && completedArts.map((completedArt) => {
-                    return <img className={styles.completedArt} src={completedArt}></img>
+                    return <ImageComponent image={completedArt} handleDeleteImage={handleDeleteCurrentCompletedArts} />
                 })}
             </div>
             <br></br>
             <label>Upload Completed Artwork <input type="file" accept=".png, .jpeg, .jpg" name="artistImages" onChange={handleCompletedArtChange}multiple></input></label>
             <div className={styles.completedArtworksPreviewUpload}>
                 {uploadedCompletedArts && uploadedCompletedArts.map((artURL) => {
-                    return <ImagePreview image={artURL} handleDeleteImg={handleDeleteImage}></ImagePreview>
+                    return <ImagePreview image={artURL} handleDeleteImg={handleDeletePreviewCompletedImage}></ImagePreview>
                 })}
             </div>
 

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import ImageComponent from '../../components/ImageComponent';
 import ImagePreview from '../../components/ImagePreview';
 
+// This is for actually editing the client's order details
 const EditOrderDetails = () => {
 
     const { id } = useParams();
@@ -14,6 +15,42 @@ const EditOrderDetails = () => {
     const [referenceImages, setReferenceImages] = useState([]);
     const [refImgsToDelete, setRefImgsToDelete] = useState([]);
     const [uploadedReferenceImages, setUploadedReferenceImages] = useState([]);
+
+        useEffect(() => {
+        fetchOrder();
+    }, []);
+
+
+    useEffect(() => {
+        let questions = [];
+
+        // Setting the order fillouts
+        if (Array.isArray(order.fillouts)) {
+            for (let i = 0; i < order.fillouts.length; i++) {
+                // need to parse JSON stringified object back into an object
+                console.log("question before parse: ", order.fillouts[i]);
+                let question = JSON.parse(order.fillouts[i]);
+                console.log("question after parse: ", question);
+                questions.push(question);
+            }
+        }
+        setFillouts(questions);
+
+        // Checking the radio button with the order's status
+        const statusRadios = Array.from(document.getElementsByName("statusSelection"));
+        console.log("Fetched order's status: ", order.status);
+        for (let i = 0; i < statusRadios.length; i++) {
+            if (statusRadios[i].id === order.status) {
+                statusRadios[i].checked = true;
+                break;
+            }
+        }
+
+        setClientName(order.clientName);
+        setReferenceImages(order.referenceImages);
+        setRequestDetail(order.requestDetail)
+        
+    }, [order])
 
     const fetchOrder = async () => {
         const response = await fetch('http://localhost:4000/api/orders/' + id);
@@ -65,13 +102,13 @@ const EditOrderDetails = () => {
 
     }
 
-    const handleClientNameChange = (e) => {
-        setClientName(e.target.value);
-    }
+    // const handleClientNameChange = (e) => {
+    //     setClientName(e.target.value);
+    // }
 
-    const handleRequestDetailChange = (e) => {
-        setRequestDetail(e.target.value);
-    }
+    // const handleRequestDetailChange = (e) => {
+    //     setRequestDetail(e.target.value);
+    // }
 
     const handleFilloutChange = (e, questionId) => {
         let newFillouts = [...fillouts];
@@ -84,10 +121,11 @@ const EditOrderDetails = () => {
         setFillouts(newFillouts);
     }
 
-    const handleDeleteImage = (e, imageURL) => {
+    const handleDeleteImage = (e, image) => {
         e.preventDefault();
-        setReferenceImages(referenceImages.filter((imgURL) => imgURL !== imageURL));
-        setRefImgsToDelete([...refImgsToDelete, imageURL])
+        setReferenceImages(referenceImages.filter((img) => img !== image)); // these are the ref imgs the order already had
+        console.log("Image param: ", image)
+        setRefImgsToDelete([...refImgsToDelete, image.imageID])
     }
 
     const handleDeleteUploadedImage = (e, img) => {
@@ -101,45 +139,12 @@ const EditOrderDetails = () => {
         setUploadedReferenceImages(uploadedReferenceImages.concat(files));
     }
 
-    useEffect(() => {
-        fetchOrder();
-    }, []);
-
-
-    useEffect(() => {
-        let questions = [];
-        if (Array.isArray(order.fillouts)) {
-            for (let i = 0; i < order.fillouts.length; i++) {
-                // need to parse JSON stringified object back into an object
-                console.log("question before parse: ", order.fillouts[i]);
-                let question = JSON.parse(order.fillouts[i]);
-                console.log("question after parse: ", question);
-                questions.push(question);
-            }
-        }
-        setFillouts(questions);
-
-        // Checking the radio button with the order's status
-        const statusRadios = Array.from(document.getElementsByName("statusSelection"));
-        console.log("Fetched order's status: ", order.status);
-        for (let i = 0; i < statusRadios.length; i++) {
-            if (statusRadios[i].id === order.status) {
-                statusRadios[i].checked = true;
-                break;
-            }
-        }
-
-        setClientName(order.clientName);
-        setReferenceImages(order.referenceImages);
-        setRequestDetail(order.requestDetail)
-        
-    }, [order])
 
     return (
         <div className={styles.order_details}>
-            <h3><strong>Client name: </strong><input type="text" value={clientName} onChange={handleClientNameChange}></input></h3>
+            <h3><strong>Client name: </strong><input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)}></input></h3>
             <p><strong>Client contact: </strong>  { order && order.clientContact}</p>
-            <p><strong>Request: </strong> <textarea type="text" value={requestDetail} onChange={handleRequestDetailChange}></textarea></p>
+            <p><strong>Request: </strong> <textarea type="text" value={requestDetail} onChange={(e) => setRequestDetail(e.target.value)}></textarea></p>
             <p><strong>Requested on: </strong> {order && order.dateReqqed}</p>
             <p><strong>Deadline:</strong> {order && order.deadline}</p>
             <div className={styles.status}>
@@ -160,8 +165,8 @@ const EditOrderDetails = () => {
             </div>
             <div><b>Reference images: </b></div>
             <div className={styles.images}>
-                {referenceImages && referenceImages.map((refImgURL) => {
-                    return <ImageComponent imageURL={refImgURL} handleDeleteImage={handleDeleteImage}></ImageComponent>;
+                {referenceImages && referenceImages.map((refImg) => {
+                    return <ImageComponent image={refImg} handleDeleteImage={handleDeleteImage}></ImageComponent>;
                 } )}
             </div>
             <label>Upload More Reference Images: <input type="file" name="uploadedReferenceImages" accept=".png, .jpg, .jpeg" onChange={handleAddImage} multiple></input></label>

@@ -2,6 +2,7 @@ import React from "react";
 import styles from './ImagePreview.module.css';
 
 const ImagePreview = ({image, handleDeleteImg}) => {
+    
     const imageURL = URL.createObjectURL(image);
 
     return (

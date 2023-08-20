@@ -46,7 +46,9 @@ const getOrder = async(req, res) => {
 const postOrder = async (req, res) => {
     
     //const url = req.protocol + '://' + req.get('host');
-        const order = new Order({... req.body});
+        let order = new Order({... req.body});
+        order.wipArts = [];
+        order.completedArts = [];
 
         let referenceImages = [];
 
@@ -173,36 +175,97 @@ const updateOrder = async (req, res) => {
 
     console.log("Updated order: ", {...req.body});
     const newOrder = {...req.body};
-    const url = req.protocol + '://' + req.get('host');
+    //const url = req.protocol + '://' + req.get('host');
 
-    const newlyUploadedCompletedArts = []
-    const newlyUploadedWipArts = []
+    let newlyUploadedCompletedArts = []
+    let newlyUploadedWipArts = []
 
     if (req.files) {
         newlyUploadedCompletedArts = req.files["completedArts[]"];
         newlyUploadedWipArts = req.files["wipArts[]"];
     }
 
-    //PATCH DOESNT WORK FOR MULTIFORM DATA -- NVM THIS IS CAP
+    //PATCH DOESNT WORK FOR MULTIFORM DATA -- NVM THIS JUST APPLIES TO POSTMAN
     let artistFinishedImgs = [];
     let wipImgs = [];
+
     if (newlyUploadedCompletedArts) {
         for (let i = 0; i < newlyUploadedCompletedArts.length; i++) {
-            const path = url + "/images/artistImages//" + newlyUploadedCompletedArts[i].filename;
-            artistFinishedImgs.push(path)
+            try {
+                const cloudResult = await cloudinary.uploader.upload(newlyUploadedCompletedArts[i].path);
+                console.log(`Successfully uploaded completed artwork!`, cloudResult);
+                artistFinishedImgs.push({
+                    imageID: cloudResult.public_id,
+                    imageURL: cloudResult.url
+                });
+
+                try {
+                    fs.unlink(newlyUploadedCompletedArts[i].path, (error) => {
+                        if (error) {
+                            throw error;
+                        } else {
+                            console.log(`Uploaded newly completed art! ${cloudResult}`);
+                        }
+                    })
+                } catch (unlinkError) {
+                    console.log("Unlink completed art error: ", unlinkError);
+                }
+            } catch (error) {
+                console.log("Error uploading to cloudinary: ", error);
+            }
         }
-        const allFinishedImgs = alreadyUploadedCompletedArt.concat(artistFinishedImgs);
-        newOrder.completedArts = allFinishedImgs;
+
+        const allCompletedArts = alreadyUploadedCompletedArt.concat(artistFinishedImgs);
+        newOrder.completedArts = allCompletedArts;
     }
 
     if (newlyUploadedWipArts) {
         for (let i = 0; i < newlyUploadedWipArts.length; i++) {
-            const path = url + '/images/artistImages//' + newlyUploadedWipArts[i].filename;
-            wipImgs.push(path);
+            try {
+                const cloudResult = await cloudinary.uploader.upload(newlyUploadedWipArts[i].path);
+                console.log(`Successfully uploaded WIP artwork!`, cloudResult);
+                wipImgs.push({
+                    imageID: cloudResult.public_id,
+                    imageURL: cloudResult.url
+                });
+
+                try {
+                    fs.unlink(newlyUploadedCompletedArts[i].path, (error) => {
+                        if (error) {
+                            //throw error;
+                        } else {
+                            console.log(`Uploaded new WIP art! ${cloudResult}`);
+                        }
+                    })
+                } catch (unlinkError) {
+                    console.log("Unlink WIP art error: ", unlinkError);
+                }
+            } catch (error) {
+                console.log("Error uploading to cloudinary: ", error);
+            }
         }
         const allWipImgs = alreadyUploadedWipArt.concat(wipImgs);
         newOrder.wipArts = allWipImgs;
     }
+
+    /* OLD METHOD (uploaded images to file system and thats it. URL is access via localhost) */
+    // if (newlyUploadedCompletedArts) {
+    //     for (let i = 0; i < newlyUploadedCompletedArts.length; i++) {
+    //         const path = url + "/images/artistImages//" + newlyUploadedCompletedArts[i].filename;
+    //         artistFinishedImgs.push(path)
+    //     }
+    //     const allFinishedImgs = alreadyUploadedCompletedArt.concat(artistFinishedImgs);
+    //     newOrder.completedArts = allFinishedImgs;
+    // }
+
+    // if (newlyUploadedWipArts) {
+    //     for (let i = 0; i < newlyUploadedWipArts.length; i++) {
+    //         const path = url + '/images/artistImages//' + newlyUploadedWipArts[i].filename;
+    //         wipImgs.push(path);
+    //     }
+    //     const allWipImgs = alreadyUploadedWipArt.concat(wipImgs);
+    //     newOrder.wipArts = allWipImgs;
+    // }
 
     const order = await Order.findOneAndUpdate({_id: id}, newOrder);
 

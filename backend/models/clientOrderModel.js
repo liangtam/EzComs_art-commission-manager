@@ -47,7 +47,7 @@ const orderSchema = new Schema({
 
     deadline: {
         type: String,
-        required: true
+        required: false
     },
     status: {
         type: String,
@@ -70,7 +70,7 @@ const orderSchema = new Schema({
 
     editedStatus: {
         type: Boolean,
-        required: false
+        required: true
     },
 
     originalUneditedOrder: {
