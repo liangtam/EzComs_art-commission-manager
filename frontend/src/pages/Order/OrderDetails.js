@@ -13,10 +13,22 @@ const OrderDetails = () => {
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
     const [artistNotes, setArtistNotes] = useState('');
-    const [completedArts, setCompletedArts] = useState(null);
+    const [completedArts, setCompletedArts] = useState([]);
     const [uploadedCompletedArts, setUploadedCompletedArts] = useState([]);  
-    const [wipArts, setWipArts] = useState(null);
+    const [wipArts, setWipArts] = useState([]);
     const [uploadedWipArts, setUploadedWipArts] = useState([]);
+
+    const [wipArtsToDelete, setWipArtsToDelete] = useState([]);
+    const [completedArtsToDelete, setCompletedArtsToDelete] = useState([]);
+
+    // useEffect(() => {
+    //     console.log(status)
+    // }, [status])
+
+    useEffect(() => {
+        console.log("Wip arts to delete: ", wipArtsToDelete)
+        console.log("Completed arts to delete: ", completedArtsToDelete)
+    }, [wipArtsToDelete, completedArtsToDelete])
 
     const fetchOrder = async () => {
         const response = await fetch('http://localhost:4000/api/orders/' + id);
@@ -53,6 +65,19 @@ const OrderDetails = () => {
 
         for (let i = 0; i < uploadedWipArts.length; i++) {
             newOrder.append("wipArts[]", uploadedWipArts[i]);
+        }
+
+        newOrder.append("originalUneditedOrder", order.originalUneditedOrder);
+
+        console.log("WipArtsToDelete: ", wipArtsToDelete);
+        // if (wipArtsToDelete.length) {
+
+        // }
+        for (let i = 0; i < wipArtsToDelete.length; i++) {
+            newOrder.append('wipArtsToDelete[]', JSON.stringify(wipArtsToDelete[i]));
+        }
+        for (let i = 0; i < completedArtsToDelete.length; i++) {
+            newOrder.append('completedArtsToDelete[]', JSON.stringify(completedArtsToDelete[i]));
         }
 
         const response = await fetch('http://localhost:4000/api/orders/' + id, {
@@ -110,12 +135,14 @@ const OrderDetails = () => {
         e.preventDefault();
 
         setWipArts(wipArts.filter((image) => image !== imageToDelete));
+        setWipArtsToDelete([imageToDelete, ...wipArtsToDelete]);
     }
 
     const handleDeleteCurrentCompletedArts = (e, imageToDelete) => {
         e.preventDefault();
 
         setCompletedArts(completedArts.filter((image) => image !== imageToDelete));
+        setCompletedArtsToDelete([imageToDelete, ...completedArtsToDelete]);
     }
 
     useEffect(() => {
@@ -138,14 +165,15 @@ const OrderDetails = () => {
 
         // Checking the radio button with the order's status
         setStatus(order.status);
-        const statusRadios = Array.from(document.getElementsByName("statusSelection"));
-        console.log("Fetched order's status: ", order.status);
-        for (let i = 0; i < statusRadios.length; i++) {
-            if (statusRadios[i].id === order.status) {
-                statusRadios[i].checked = true;
-                break;
-            }
-        }
+        console.log("Status: ", JSON.stringify(order.status));
+        // const statusRadios = Array.from(document.getElementsByName("statusSelection"));
+        // console.log("Fetched order's status: ", order.status);
+        // for (let i = 0; i < statusRadios.length; i++) {
+        //     if (statusRadios[i].id === order.status) {
+        //         statusRadios[i].checked = true;
+        //         break;
+        //     }
+        // }
         
         // Filling in the artistNotes textarea with order's artistNotes
         setArtistNotes(order.artistNotes);
@@ -204,7 +232,7 @@ const OrderDetails = () => {
             </div>
             <div className={styles.status}>
                 <h4>Status:</h4>
-                <select onChange={setStatus}>
+                <select value={status} name="status" onChange={(e) => setStatus(e.target.value)}>
                     <option value="Not Started Yet">Not Started Yet</option>
                     <option value="WIP">Work In Progress</option>
                     <option value="Paused">Paused</option>

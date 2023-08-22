@@ -125,7 +125,7 @@ const EditOrderDetails = () => {
         e.preventDefault();
         setReferenceImages(referenceImages.filter((img) => img !== image)); // these are the ref imgs the order already had
         console.log("Image param: ", image)
-        setRefImgsToDelete([...refImgsToDelete, image.imageID])
+        setRefImgsToDelete([...refImgsToDelete, image])
     }
 
     const handleDeleteUploadedImage = (e, img) => {

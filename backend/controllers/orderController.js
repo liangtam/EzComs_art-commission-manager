@@ -174,11 +174,40 @@ const updateOrder = async (req, res) => {
     let alreadyUploadedWipArt = oldOrder.wipArts;
 
     console.log("Updated order: ", {...req.body});
-    const newOrder = {...req.body};
+    const newOrder = {
+        clientName: req.body.clientName,
+        clientContact: req.body.clientContact,
+        requestDetail: req.body.requestDetail,
+        fillouts: req.body.fillouts,
+        price: req.body.price,
+        dateReqqed: req.body.dateReqqed,
+        datePaid: req.body.datePaid,
+        dateCompleted: req.body.dateCompleted,
+        deadline: req.body.deadline,
+        status: req.body.status,
+        artistNotes: req.body.artistNotes,
+        editedStatus: req.body.editedStatus,
+        originalUneditedOrder: req.body.originalUneditedOrder
+
+    };
     //const url = req.protocol + '://' + req.get('host');
 
-    let newlyUploadedCompletedArts = []
-    let newlyUploadedWipArts = []
+    let completedArtsToDelete = [];
+    let wipArtsToDelete = [];
+
+    if (req.body.completedArtsToDelete) {
+        completedArtsToDelete = Array.from(req.body.completedArtsToDelete);
+
+    }
+
+    if (req.body.wipArtsToDelete) {
+        wipArtsToDelete = Array.from(req.body.wipArtsToDelete);
+    }
+
+    console.log("Comp arts to delete: ", completedArtsToDelete, completedArtsToDelete.size, "WIP arts to delete: ", wipArtsToDelete)
+
+    let newlyUploadedCompletedArts = [];
+    let newlyUploadedWipArts = [];
 
     if (req.files) {
         newlyUploadedCompletedArts = req.files["completedArts[]"];
@@ -189,6 +218,34 @@ const updateOrder = async (req, res) => {
     let artistFinishedImgs = [];
     let wipImgs = [];
 
+
+    /** Deleting images to be deleted **/
+    for (let i = 0; i < completedArtsToDelete.length; i++) {
+        // console.log('here')
+        // console.log("Thing to delete: ", completedArtsToDelete[i])
+        try {
+            const result = cloudinary.uploader.destroy(JSON.parse(completedArtsToDelete[i]).imageID);
+            console.log(`Completed art deleted! ${result}`);
+        } catch (error) {
+            console.log(`Error deleting completed art :( ${error}`)
+        }
+    }
+
+    for (let i = 0; i < wipArtsToDelete.length; i++) {
+        try {
+            const result = cloudinary.uploader.destroy(JSON.parse(wipArtsToDelete[i]).imageID);
+            console.log(`WIP art deleted! ${result}`);
+        } catch (error) {
+            console.log(`Error deleting WIP art :( ${error}`)
+        }
+    }
+
+    //console.log("Alr uploaded art b4: ", alreadyUploadedCompletedArt)
+    alreadyUploadedCompletedArt = alreadyUploadedCompletedArt.filter((img) => !completedArtsToDelete.includes(JSON.stringify(img)));
+    //console.log("Alr uploaded art after: ", alreadyUploadedCompletedArt)
+    alreadyUploadedWipArt = alreadyUploadedWipArt.filter((img) => !wipArtsToDelete.includes(JSON.stringify(img)));
+
+    /** Adding the newly uploaded artworks to our already uploaded artworks (where all the deleted ones are already removed) **/
     if (newlyUploadedCompletedArts) {
         for (let i = 0; i < newlyUploadedCompletedArts.length; i++) {
             try {
@@ -214,11 +271,11 @@ const updateOrder = async (req, res) => {
                 console.log("Error uploading to cloudinary: ", error);
             }
         }
-
-        const allCompletedArts = alreadyUploadedCompletedArt.concat(artistFinishedImgs);
-        newOrder.completedArts = allCompletedArts;
     }
+    const allCompletedArts = alreadyUploadedCompletedArt.concat(artistFinishedImgs);
+    newOrder.completedArts = allCompletedArts;
 
+    console.log("new uploaded wips: ", newlyUploadedWipArts);
     if (newlyUploadedWipArts) {
         for (let i = 0; i < newlyUploadedWipArts.length; i++) {
             try {
@@ -230,7 +287,7 @@ const updateOrder = async (req, res) => {
                 });
 
                 try {
-                    fs.unlink(newlyUploadedCompletedArts[i].path, (error) => {
+                    fs.unlink(newlyUploadedWipArts[i].path, (error) => {
                         if (error) {
                             //throw error;
                         } else {
@@ -244,9 +301,9 @@ const updateOrder = async (req, res) => {
                 console.log("Error uploading to cloudinary: ", error);
             }
         }
-        const allWipImgs = alreadyUploadedWipArt.concat(wipImgs);
-        newOrder.wipArts = allWipImgs;
     }
+    const allWipImgs = alreadyUploadedWipArt.concat(wipImgs);
+    newOrder.wipArts = allWipImgs;
 
     /* OLD METHOD (uploaded images to file system and thats it. URL is access via localhost) */
     // if (newlyUploadedCompletedArts) {
@@ -267,10 +324,11 @@ const updateOrder = async (req, res) => {
     //     newOrder.wipArts = allWipImgs;
     // }
 
+    /** Saving the order now! **/
     const order = await Order.findOneAndUpdate({_id: id}, newOrder);
 
 
-    if (!order){
+    if (!order) {
         return res.status(404).json({error: 'No such order.'});
     }
 
@@ -301,14 +359,14 @@ const editOrder = async (req, res) => {
         dateCompleted: req.body.dateCompleted,
         deadline: req.body.deadline,
         status: req.body.status,
-        wipArts: req.body.status,
-        completedArts: req.body.status,
+        wipArts: req.body.wipArts,
+        completedArts: req.body.completedArts,
         editedStatus: req.body.editedStatus,
         originalUneditedOrder: req.body.originalUneditedOrder
     }
 
     let oldRefImgs = new Set(oldOrder.referenceImages);
-    let refImgsToDelete = new Set(req.body.refImgsToDelete); // this has all current ref imgs without deleted ones
+    let refImgsToDelete = new Set(req.body.refImgsToDelete);
 
     for (let i = 0; i < refImgsToDelete.length; i++) {
         const refImgPath = "./images/" + refImgsToDelete[i].substring(30); 

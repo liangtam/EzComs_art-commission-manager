@@ -3,7 +3,7 @@ import styles from './ImageComponent.module.css';
 
 const ImageComponent = ({image, handleDeleteImage}) => {
     const imageURL = image.imageURL;
-    console.log("img url: ", image)
+    //console.log("img: ", image)
     return (
         <div className={styles.imgComponent}>
             <img className={styles.img} src={imageURL}></img>
