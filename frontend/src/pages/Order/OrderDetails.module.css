@@ -29,6 +29,24 @@
   gap: 10px;
 }
 
+.id {
+  color: rgb(96, 96, 172);
+}
+
+.origOrderIcon {
+  background: none;
+  border: none;
+}
+
+.origOrderIcon:hover {
+  cursor: pointer;
+  translate: 0px 1px;
+}
+
+.origOrderIcon img {
+  width: 30px;
+}
+
 /* .completedArtworks img {
   width: 100%;
   max-width: 400px;

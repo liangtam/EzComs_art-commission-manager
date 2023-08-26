@@ -22,6 +22,8 @@ const OrderDetails = () => {
     const [wipArtsToDelete, setWipArtsToDelete] = useState([]);
     const [completedArtsToDelete, setCompletedArtsToDelete] = useState([]);
 
+    const [showOrigOrder, setShowOrigOrder] = useState(false);
+
     // useEffect(() => {
     //     console.log(status)
     // }, [status])
@@ -200,6 +202,7 @@ const OrderDetails = () => {
 
     return (
         <div className={styles.order_details}>
+            <div className={styles.id}> <strong>ID: </strong> {order && order._id} </div>
             <h3><strong>Client name: </strong>{order && order.clientName}</h3>
             <p><strong>Client contact: </strong>  { order && order.clientContact}</p>
             <p><strong>Request: </strong> {order && order.requestDetail}</p>
@@ -272,8 +275,8 @@ const OrderDetails = () => {
                     return <ImagePreview image={artURL} handleDeleteImg={handleDeletePreviewCompletedImage}></ImagePreview>
                 })}
             </div>
-
-            {order && order.editedStatus &&
+            <button className={styles.origOrderIcon}><img src='../images/orig_order_icon.png' alt="Show Original Order"></img></button>
+            {showOrigOrder && order && order.originalUneditedOrder &&
             <div className={styles.origOrder}><h3>Unedited Order: </h3>
             <OriginalOrderComponent origOrder={order.originalUneditedOrder} fillouts={parseFillouts(order.originalUneditedOrder.fillouts)}/></div>}
 
