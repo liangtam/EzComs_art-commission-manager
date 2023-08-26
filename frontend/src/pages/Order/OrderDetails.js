@@ -275,7 +275,7 @@ const OrderDetails = () => {
                     return <ImagePreview image={artURL} handleDeleteImg={handleDeletePreviewCompletedImage}></ImagePreview>
                 })}
             </div>
-            <button className={styles.origOrderIcon}><img src='../images/orig_order_icon.png' alt="Show Original Order"></img></button>
+            <button className={styles.origOrderIcon} onClick={(e) => setShowOrigOrder(!showOrigOrder)}><img src='../images/orig_order_icon.png' alt="Show Original Order"></img></button>
             {showOrigOrder && order && order.originalUneditedOrder &&
             <div className={styles.origOrder}><h3>Unedited Order: </h3>
             <OriginalOrderComponent origOrder={order.originalUneditedOrder} fillouts={parseFillouts(order.originalUneditedOrder.fillouts)}/></div>}
