@@ -395,11 +395,16 @@ const editOrder = async (req, res) => {
     }
 
     newOrder.referenceImages = updatedRefImgs.concat(newRefImgsURLs);
+    
+    //console.log("Edited status: ", JSON.parse(newOrder.editedStatus));
 
-    if (newOrder.editedStatus === false) {
+    if (JSON.parse(newOrder.editedStatus) == false) {
         newOrder.originalUneditedOrder = oldOrder;
         newOrder.editedStatus = true;
+        console.log("Edited status!");
     }
+    //console.log("Edited status now: ", newOrder.editedStatus);
+
 
     const order = await Order.findByIdAndUpdate({_id: id}, newOrder);
 

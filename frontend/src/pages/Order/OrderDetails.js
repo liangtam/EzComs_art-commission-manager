@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ImagePreview from '../../components/ImagePreview';
 import ImageComponent from '../../components/ImageComponent';
+import OriginalOrderComponent from '../../components/order_components/OriginalOrderComponent';
 
 const OrderDetails = () => {
 
@@ -145,23 +146,24 @@ const OrderDetails = () => {
         setCompletedArtsToDelete([imageToDelete, ...completedArtsToDelete]);
     }
 
+    const parseFillouts = (fillouts) => {
+        if (!Array.isArray(fillouts)) {
+            return [];
+        }
+        let parsedFillouts = [];
+        for (let i = 0; i < fillouts.length; i++) {
+            parsedFillouts.push(JSON.parse(fillouts[i]));
+        }
+        return parsedFillouts;
+    }
+
     useEffect(() => {
         fetchOrder();
     }, []);
 
 
     useEffect(() => {
-        let questions = [];
-        if (Array.isArray(order.fillouts)) {
-            for (let i = 0; i < order.fillouts.length; i++) {
-                // need to parse JSON stringified object back into an object
-                //console.log("question before parse: ", order.fillouts[i]);
-                let question = JSON.parse(order.fillouts[i]);
-                //console.log("question after parse: ", question);
-                questions.push(question);
-            }
-        }
-        setFillouts(questions);
+        setFillouts(parseFillouts(order.fillouts));
 
         // Checking the radio button with the order's status
         setStatus(order.status);
@@ -270,6 +272,10 @@ const OrderDetails = () => {
                     return <ImagePreview image={artURL} handleDeleteImg={handleDeletePreviewCompletedImage}></ImagePreview>
                 })}
             </div>
+
+            {order && order.editedStatus &&
+            <div className={styles.origOrder}><h3>Unedited Order: </h3>
+            <OriginalOrderComponent origOrder={order.originalUneditedOrder} fillouts={parseFillouts(order.originalUneditedOrder.fillouts)}/></div>}
 
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>
