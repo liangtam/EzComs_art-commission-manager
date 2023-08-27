@@ -4,7 +4,7 @@ const multer = require('multer');
 const path = require('path');
 const cloudinary = require("../utils/cloudinary");
 
-const { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editOrder, getCompletedOrders } = require('../controllers/orderController');
+const { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editClientOrder, getCompletedOrders } = require('../controllers/orderController');
 
 // storage object (disk storage)
 // we first store the image on our computer, then to mongo
@@ -73,7 +73,7 @@ const artistUpload = multer({
 // GET all COMPLETED orders
 router.get('/completed', getCompletedOrders);
 
-router.patch('/edit/:id', upload.array('uploadedReferenceImages[]'), editOrder);
+router.patch('/edit/:id', upload.array('uploadedReferenceImages[]'), editClientOrder);
 
 // GET single order
 router.get('/:id', getOrder);

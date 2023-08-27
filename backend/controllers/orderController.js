@@ -339,7 +339,7 @@ const updateOrder = async (req, res) => {
 // This is to actually edit the client's order--you can actually change some information on the order
 //      You can change the client's name, request details, fillout answers, and reference images.
 //      For safety reasons, an original copy of the order will always be available.
-const editOrder = async (req, res) => {
+const editClientOrder = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)){
@@ -362,39 +362,83 @@ const editOrder = async (req, res) => {
         wipArts: req.body.wipArts,
         completedArts: req.body.completedArts,
         editedStatus: req.body.editedStatus,
-        originalUneditedOrder: req.body.originalUneditedOrder
+        originalUneditedOrder: JSON.stringify(req.body.originalUneditedOrder)
     }
 
-    let oldRefImgs = new Set(oldOrder.referenceImages);
-    let refImgsToDelete = new Set(req.body.refImgsToDelete);
+    let oldRefImgs = oldOrder.referenceImages;
+    let refImgsToDelete = [];
+
+    if (req.body.refImgsToDelete) {
+        refImgsToDelete = Array.from(req.body.refImgsToDelete);
+    }
+
+    // ** OLD METHOD **//
+    // for (let i = 0; i < refImgsToDelete.length; i++) {
+    //     const refImgPath = "./images/" + refImgsToDelete[i].substring(30); 
+    //     fs.unlink(refImgPath, (error) => {
+    //         if (error) {
+    //             console.log('Could not delete ' + refImgPath);
+    //         } else {
+    //             console.log('Image ' + refImgPath + ' deleted!');
+    //         }
+    //     });
+    // }
 
     for (let i = 0; i < refImgsToDelete.length; i++) {
-        const refImgPath = "./images/" + refImgsToDelete[i].substring(30); 
-        fs.unlink(refImgPath, (error) => {
-            if (error) {
-                console.log('Could not delete ' + refImgPath);
-            } else {
-                console.log('Image ' + refImgPath + ' deleted!');
-            }
-        });
-    }
 
-    let updatedRefImgs = Array.from(oldRefImgs).filter(img => !refImgsToDelete.has(img)); // get rid of all deleted imgs
+        try {
+            const result = cloudinary.uploader.destroy(JSON.parse(refImgsToDelete[i]).imageID);
+            console.log("Deleted ref imgs to delete!: ", result);
+        } catch (error) {
+            console.log(`Error: ${error}`);
+        }
+    }
+    console.log("Ref imgs to delete: ", refImgsToDelete);
+    console.log("Ref imgs to delete item example: ", refImgsToDelete[0]);
+
+
+    let updatedRefImgs = oldRefImgs.filter(img => !refImgsToDelete.includes(JSON.stringify(img))); // get rid of all deleted imgs
+    console.log("UpdatedRefImgs: ", updatedRefImgs);
 
     let newRefImgs = Array.from(req.files);
     console.log("Req files", req.files);
-    const hostURL = req.protocol + '://' + req.get('host');
+    //const hostURL = req.protocol + '://' + req.get('host');
 
-    let newRefImgsURLs = [];
+    let newRefImgsToSave = [];
 
     if (req.files) {
+        // ** OLD METHOD **//
+        // for (let i = 0; i < newRefImgs.length; i++) {
+        //     const path = hostURL + '/images//' + newRefImgs[i].filename;
+        //     newRefImgsURLs.push(path);
+        // }
         for (let i = 0; i < newRefImgs.length; i++) {
-            const path = hostURL + '/images//' + newRefImgs[i].filename;
-            newRefImgsURLs.push(path);
+            console.log("path: ", newRefImgs[i].path)
+            try {
+                const result = await cloudinary.uploader.upload(newRefImgs[i].path);
+                newRefImgsToSave.push({
+                    imageURL: result.url,
+                    imageID: result.public_id
+                });
+
+                try {
+                    fs.unlink(newRefImgs[i].path, (error) => {
+                        if (error) {
+                        } else {
+                            console.log(`Uploaded image! ${result}`);
+
+                        }
+                    });
+                } catch (err) {
+                    console.log("Error unlinking image");
+                }
+            } catch (error){
+                console.log(`Error ${error}`);
+            }
         }
     }
 
-    newOrder.referenceImages = updatedRefImgs.concat(newRefImgsURLs);
+    newOrder.referenceImages = updatedRefImgs.concat(newRefImgsToSave);
     
     //console.log("Edited status: ", JSON.parse(newOrder.editedStatus));
 
@@ -417,4 +461,4 @@ const editOrder = async (req, res) => {
 
 }
 
-module.exports = { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editOrder, getCompletedOrders };
+module.exports = { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editClientOrder, getCompletedOrders };

@@ -128,9 +128,7 @@ const ActiveForm = () => {
         order.append("artistNotes", "");
         // order.append("wipArts", []);
         // order.append("completedArts", []);
-        order.append("editedStatus", false);
-        order.append("originalUneditedOrder", null);
-        
+        order.append("editedStatus", false);        
 
         axios.post('http://localhost:4000/api/orders', order, {
 

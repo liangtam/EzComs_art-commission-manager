@@ -148,15 +148,15 @@ const OrderDetails = () => {
         setCompletedArtsToDelete([imageToDelete, ...completedArtsToDelete]);
     }
 
-    const parseFillouts = (fillouts) => {
-        if (!Array.isArray(fillouts)) {
+    const parseArrayItemsToJSON = (arr) => {
+        if (!Array.isArray(arr)) {
             return [];
         }
-        let parsedFillouts = [];
+        let parsedArr = [];
         for (let i = 0; i < fillouts.length; i++) {
-            parsedFillouts.push(JSON.parse(fillouts[i]));
+            parsedArr.push(JSON.parse(arr[i]));
         }
-        return parsedFillouts;
+        return parsedArr;
     }
 
     useEffect(() => {
@@ -165,7 +165,7 @@ const OrderDetails = () => {
 
 
     useEffect(() => {
-        setFillouts(parseFillouts(order.fillouts));
+        setFillouts(parseArrayItemsToJSON(order.fillouts));
 
         // Checking the radio button with the order's status
         setStatus(order.status);
@@ -193,6 +193,7 @@ const OrderDetails = () => {
         //     }
         // }
         setCompletedArts(order.completedArts);
+        console.log("orig: ", order.originalUneditedOrder);
 
         if (order.wipArts) {
             setWipArts(order.wipArts);
@@ -275,10 +276,12 @@ const OrderDetails = () => {
                     return <ImagePreview image={artURL} handleDeleteImg={handleDeletePreviewCompletedImage}></ImagePreview>
                 })}
             </div>
-            <button className={styles.origOrderIcon} onClick={(e) => setShowOrigOrder(!showOrigOrder)}><img src='../images/orig_order_icon.png' alt="Show Original Order"></img></button>
+            {order && order.editedStatus &&
+                <button className={styles.origOrderIcon} onClick={(e) => setShowOrigOrder(!showOrigOrder)}><img src='../images/orig_order_icon.png' alt="Show Original Order"></img></button>
+            }
             {showOrigOrder && order && order.originalUneditedOrder &&
             <div className={styles.origOrder}><h3>Unedited Order: </h3>
-            <OriginalOrderComponent origOrder={order.originalUneditedOrder} fillouts={parseFillouts(order.originalUneditedOrder.fillouts)}/></div>}
+            <OriginalOrderComponent origOrder={order.originalUneditedOrder} fillouts={parseArrayItemsToJSON(order.originalUneditedOrder.fillouts)} referenceImages={order.originalUneditedOrder.referenceImages}/></div>}
 
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>

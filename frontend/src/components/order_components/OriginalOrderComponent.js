@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import origOrderStyles from "./OriginalOrderComponent.module.css";
 
-const OriginalOrderComponent = ({origOrder, fillouts}) => {
+const OriginalOrderComponent = ({origOrder, fillouts, referenceImages}) => {
 
     const [order, setOrder] = useState(origOrder);
     //const [fillouts, setFillouts] = useState([]);
@@ -15,7 +15,7 @@ const OriginalOrderComponent = ({origOrder, fillouts}) => {
 
     return (
         <div className={origOrderStyles.order_details}>
-            <h3><strong>Client name: </strong>{ order && order.clientName }</h3>
+            <h3><strong>Client name: </strong>{ order && origOrder.clientName }</h3>
             <p><strong> Client contact: </strong>  { order && order.clientContact}</p>
             <p><strong> Request: </strong> { order && order.requestDetail }</p>
             <p><strong> Requested on: </strong> { order && order.dateReqqed }</p>
@@ -38,8 +38,8 @@ const OriginalOrderComponent = ({origOrder, fillouts}) => {
             </div>
             <div><b>Reference images:</b></div>
             <div className={origOrderStyles.images}>
-                {order && order.referenceImages.map((refImgURL) => {
-                    return <img className={origOrderStyles.refImg} id={refImgURL + order.id} src={refImgURL.imageURL}></img>
+                {referenceImages && referenceImages.map((refImg) => {
+                    return <img className={origOrderStyles.refImg} src={refImg.imageURL} alt={refImg.imageID}></img>
                 } )}
             </div>
 
