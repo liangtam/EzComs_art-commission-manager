@@ -150,11 +150,13 @@ const OrderDetails = () => {
 
     const parseArrayItemsToJSON = (arr) => {
         if (!Array.isArray(arr)) {
+            console.log("not an array");
             return [];
         }
         let parsedArr = [];
-        for (let i = 0; i < fillouts.length; i++) {
+        for (let i = 0; i < arr.length; i++) {
             parsedArr.push(JSON.parse(arr[i]));
+            console.log(arr[i])
         }
         return parsedArr;
     }
@@ -166,6 +168,8 @@ const OrderDetails = () => {
 
     useEffect(() => {
         setFillouts(parseArrayItemsToJSON(order.fillouts));
+        //console.log("Fillouts: ", parseArrayItemsToJSON(order.fillouts));
+        //console.log("Raw fillouts: ", order.fillouts);
 
         // Checking the radio button with the order's status
         setStatus(order.status);
