@@ -5,7 +5,7 @@ const messageReducer = (state, action) => {
                 successMessage: "",
                 errorMessage: "Could not update order.",
                 loadingMessage: ""
-            }
+            };
         case 'successUpdate':
             return {
                 successMessage: "Order is updated.",

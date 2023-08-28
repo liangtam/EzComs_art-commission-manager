@@ -1,8 +1,10 @@
 import styles from './OrderDetails.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { useParams } from 'react-router-dom';
 import ImageComponent from '../../components/ImageComponent';
 import ImagePreview from '../../components/ImagePreview';
+import { messageReducer, ACTION} from '../reducers/messageReducer';
+
 
 // This is for actually editing the client's order details
 const EditOrderDetails = () => {
@@ -16,7 +18,13 @@ const EditOrderDetails = () => {
     const [refImgsToDelete, setRefImgsToDelete] = useState([]);
     const [uploadedReferenceImages, setUploadedReferenceImages] = useState([]);
 
-        useEffect(() => {
+    const [state, dispatch] = useReducer( messageReducer, {
+        successMessage: "",
+        errorMessage: "",
+        loadingMessage: ""
+    })
+
+    useEffect(() => {
         fetchOrder();
     }, []);
 
@@ -66,6 +74,7 @@ const EditOrderDetails = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
+        dispatch({type: ACTION.LOADING});
         let newOrder = new FormData();
         newOrder.append("clientName", clientName);
         newOrder.append("clientContact", order.clientContact);
@@ -96,8 +105,10 @@ const EditOrderDetails = () => {
         if (response.ok) {
             console.log("Updated order! ", newOrder);
             fetchOrder();
+            dispatch({type: ACTION.SUCCESS_UPDATE});
         } else {
             console.log("Error: Order was NOT updated :(")
+            dispatch({type: ACTION.ERROR_UPDATE});
         }
 
     }
@@ -174,6 +185,9 @@ const EditOrderDetails = () => {
                     return <ImagePreview image={img} handleDeleteImg={handleDeleteUploadedImage}></ImagePreview>
                 })}
             </div>
+            {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
+            {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
+            {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
 
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>
