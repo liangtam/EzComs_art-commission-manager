@@ -1,9 +1,10 @@
 import styles from './OrderDetails.module.css'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import ImagePreview from '../../components/ImagePreview';
 import ImageComponent from '../../components/ImageComponent';
 import OriginalOrderComponent from '../../components/order_components/OriginalOrderComponent';
+import { messageReducer, ACTION} from '../reducers/messageReducer';
 
 const OrderDetails = () => {
 
@@ -23,6 +24,14 @@ const OrderDetails = () => {
     const [completedArtsToDelete, setCompletedArtsToDelete] = useState([]);
 
     const [showOrigOrder, setShowOrigOrder] = useState(false);
+    
+
+    const [state, dispatch] = useReducer( messageReducer, {
+        successMessage: "",
+        errorMessage: "",
+        loadingMessage: ""
+    })
+
 
     // useEffect(() => {
     //     console.log(status)
@@ -34,8 +43,7 @@ const OrderDetails = () => {
     }, [wipArtsToDelete, completedArtsToDelete])
 
     const fetchOrder = async () => {
-        const response = await fetch('http://localhost:4000/api/orders/' + id);
-        
+        const response = await fetch('http://localhost:4000/api/orders/' + id);        
         if (response.ok) {
             const json = await response.json();
             setOrder(json);
@@ -47,6 +55,9 @@ const OrderDetails = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
+
+        dispatch({type: ACTION.LOADING});
+
         let newOrder = new FormData();
         newOrder.append("clientName", order.clientName);
         newOrder.append("clientContact", order.clientContact);
@@ -93,8 +104,10 @@ const OrderDetails = () => {
             fetchOrder();
             setUploadedCompletedArts([]);
             setUploadedWipArts([]);
+            dispatch({type: ACTION.SUCCESS_UPDATE});
         } else {
             console.log("Error: Order was NOT updated :(")
+            dispatch({type: ACTION.ERROR_UPDATE});
         }
 
     }
@@ -286,6 +299,10 @@ const OrderDetails = () => {
             {showOrigOrder && order && order.originalUneditedOrder &&
             <div className={styles.origOrder}><h3>Unedited Order: </h3>
             <OriginalOrderComponent origOrder={order.originalUneditedOrder} fillouts={parseArrayItemsToJSON(order.originalUneditedOrder.fillouts)} referenceImages={order.originalUneditedOrder.referenceImages}/></div>}
+
+            {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
+            {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
+            {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
 
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>

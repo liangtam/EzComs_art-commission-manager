@@ -47,6 +47,18 @@
   width: 30px;
 }
 
+.errorMessage {
+  color: rgb(255, 101, 101)
+}
+
+.successMessage {
+  color: rgb(27, 184, 27);
+}
+
+.loadingMessage {
+  color: grey;
+}
+
 /* .completedArtworks img {
   width: 100%;
   max-width: 400px;
