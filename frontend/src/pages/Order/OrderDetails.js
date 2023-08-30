@@ -237,6 +237,7 @@ const OrderDetails = () => {
 
     return (
         <div className={styles.order_details}>
+            {/* <button className={styles.backBtn} onClick={(e) => navigate('/orders/')}>Back</button> */}
             <div className={styles.id}> <strong>ID: </strong> {order && order._id} </div>
             <h3><strong>Client name: </strong>{order && order.clientName}</h3>
             <p><strong>Client contact: </strong>  { order && order.clientContact}</p>

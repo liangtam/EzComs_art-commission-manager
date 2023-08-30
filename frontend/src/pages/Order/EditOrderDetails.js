@@ -1,6 +1,6 @@
 import styles from './OrderDetails.module.css'
 import { useState, useEffect, useReducer } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ImageComponent from '../../components/ImageComponent';
 import ImagePreview from '../../components/ImagePreview';
 import { messageReducer, ACTION} from '../reducers/messageReducer';
@@ -10,6 +10,7 @@ import { messageReducer, ACTION} from '../reducers/messageReducer';
 const EditOrderDetails = () => {
 
     const { id } = useParams();
+    const navigate = useNavigate();
     const [order, setOrder] = useState('');
     const [fillouts, setFillouts] = useState([]);
     const [clientName, setClientName] = useState('');
@@ -153,6 +154,7 @@ const EditOrderDetails = () => {
 
     return (
         <div className={styles.order_details}>
+            <button className={styles.backBtn} onClick={(e) => navigate(`/orders/${id}`)}>Back</button>
             <h3><strong>Client name: </strong><input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)}></input></h3>
             <p><strong>Client contact: </strong>  { order && order.clientContact}</p>
             <p><strong>Request: <br></br></strong> <textarea type="text" value={requestDetail} onChange={(e) => setRequestDetail(e.target.value)}></textarea></p>
