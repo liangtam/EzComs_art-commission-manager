@@ -161,6 +161,23 @@ const OrderDetails = () => {
         setCompletedArtsToDelete([imageToDelete, ...completedArtsToDelete]);
     }
 
+    const handleOrderDelete = async (e, orderId) => {
+        e.preventDefault();
+        console.log(orderId);
+        const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
+            method: 'DELETE'
+        })
+
+        if (response.ok) {
+            console.log("Order deleted!");
+            navigate('/orders/');
+            //fetchOrders();
+        } else {
+            console.log("Error :( ", response.statusText);
+            dispatch({type: ACTION.ERROR_DELETE});
+        }
+    }
+
     const parseArrayItemsToJSON = (arr) => {
         if (!Array.isArray(arr)) {
             console.log("not an array");
@@ -306,7 +323,7 @@ const OrderDetails = () => {
 
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>
-                <button className={styles.deleteBtn}>Delete</button>
+                <button className={styles.deleteBtn} onClick={(e) => handleOrderDelete(e, id)}>Delete</button>
                 <button className={styles.editBtn} onClick={handleEditButton}>Edit</button>
             </div>
 
