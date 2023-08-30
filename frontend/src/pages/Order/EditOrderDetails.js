@@ -156,10 +156,10 @@ const EditOrderDetails = () => {
         <div className={styles.order_details}>
             <button className={styles.backBtn} onClick={(e) => navigate(`/orders/${id}`)}>Back</button>
             <h3><strong>Client name: </strong><input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)}></input></h3>
-            <p><strong>Client contact: </strong>  { order && order.clientContact}</p>
-            <p><strong>Request: <br></br></strong> <textarea type="text" value={requestDetail} onChange={(e) => setRequestDetail(e.target.value)}></textarea></p>
-            <p><strong>Requested on: </strong> {order && order.dateReqqed}</p>
-            <p><strong>Deadline:</strong> {order && order.deadline}</p>
+            <p><strong> Client contact: </strong>  { order && order.clientContact}</p>
+            <p><strong> Request: <br></br></strong> <textarea type="text" value={requestDetail} onChange={(e) => setRequestDetail(e.target.value)}></textarea></p>
+            <p><strong> Requested on: </strong> {order && order.dateReqqed}</p>
+            <p><strong> Deadline:</strong> {order && order.deadline}</p>
 
             <div className={styles.fillouts}>
                 <h4>Form fillouts:</h4>

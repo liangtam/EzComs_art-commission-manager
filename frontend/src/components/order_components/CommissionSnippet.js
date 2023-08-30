@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 const CommissionSnippet = ({completedOrder, completedOrderId}) => {
 
     const navigate = useNavigate();
+    const [showArtPreview, setShowArtPreview] = useState(false);
     const handleViewClick = (e) => {
         e.preventDefault();
         navigate(`/orders/${completedOrderId}`)
@@ -13,6 +14,11 @@ const CommissionSnippet = ({completedOrder, completedOrderId}) => {
     const handleEditClick = (e) => {
         e.preventDefault();
 
+    }
+
+    const handleArtHover = (e) => {
+        console.log("Hovered");
+        setShowArtPreview(true);
     }
 
     const handleDeleteClick = (e) => {
@@ -40,15 +46,16 @@ const CommissionSnippet = ({completedOrder, completedOrderId}) => {
                 <div className={styles.price}>
                     <h4>{completedOrder && completedOrder.price}</h4>
                 </div>
-                <div className={styles.completedArtIcon}>
+                <div className={styles.completedArtIcon} onMouseEnter={(e) => setShowArtPreview(true)} onMouseLeave={(e) =>  setShowArtPreview(false)}>
                     <button><img src='./images/image_icon.png' alt="Art"></img></button>
                 </div>
                 <div className={styles.buttons}>
                     <button className={styles.viewBtn} onClick={handleViewClick}>View</button>
-                    <button className={styles.editBtn} onClick={handleEditClick}>Edit</button>
+                    {/* <button className={styles.editBtn} onClick={handleEditClick}>Edit</button> */}
                     <button className={styles.deleteBtn} onClick={handleDeleteClick}>Delete</button>                
                 </div>
             </div>
+            {showArtPreview && completedOrder && completedOrder.completedArts.length !== 0 && <div className={styles.artPreview}><img src={completedOrder.completedArts[0].imageURL} alt="N/A"></img></div>}
         </div>
     )
 }

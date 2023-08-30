@@ -46,3 +46,10 @@
     color: white;
     background-color: rgb(255, 74, 74);
 }
+
+.artPreview {
+    margin-left: 1000px;
+}
+.artPreview img {
+    max-width: 200px;
+}
