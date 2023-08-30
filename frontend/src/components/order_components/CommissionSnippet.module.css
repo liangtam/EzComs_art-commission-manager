@@ -1,7 +1,7 @@
 .headers {
     display: flex;
-    gap: 250px;
-    padding-left: 50px;
+    gap: 190px;
+    padding-left: 70px;
     margin: 20px;
 }
 
@@ -16,10 +16,13 @@
 
 .buttons button {
     border: none;
-    padding: 5px 20px 5px 20px;
-    border-radius: 3px;
+    padding: 1px 15px 1px 15px;
+    border-radius: 5px;
 }
 
+.buttons .deleteBtn:hover {
+    background-color: rgb(232, 28, 28);
+}
 .buttons button:hover{
     cursor: pointer;
     background-color:rgb(209, 209, 209);
@@ -28,4 +31,18 @@
 .buttons {
     display: flex;
     gap: 10px;
+}
+
+.completedArtIcon img {
+    max-width: 30px; 
+}
+
+.completedArtIcon button {
+    background: none;
+    border: none;
+}
+
+.deleteBtn {
+    color: white;
+    background-color: rgb(255, 74, 74);
 }
