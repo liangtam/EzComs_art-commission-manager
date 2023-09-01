@@ -134,11 +134,32 @@ const ActiveForm = () => {
 
         }).then((res) => {
             console.log(res);
+            //clearForm();
         }).catch((error) => {
             console.log(error);
         })
 
     }
+
+    // const clearForm = () => {
+    //     setClientContact('');
+    //     setClientName('');
+    //     setRequestDetail('');
+    //     setReferenceImages([]);
+    //     for (let i = 0; i < questionFieldList.id; i++) {
+    //         if (questionFieldList[i].type == 'mc') {
+    //             var options = document.getElementsByName('option' + questionFieldList[i].id);
+    //             for (let j = 0; j < options.length; i++) {
+    //                 if (options[j].checked) {
+    //                     options[j].checked = false;
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     console.log("cleared form");
+                
+    // }
 
     // First, fetch all the forms
     useEffect( () => {
@@ -175,9 +196,9 @@ const ActiveForm = () => {
             <div className={styles.formName}>{activeForm && <h2>{activeForm.formName}</h2>}</div>
             <div className={styles.default_questions}>
                 <label> Client name: </label>
-                <input type="text" placeholder="Name" onChange={handleClientNameChange}></input>
+                <input type="text" placeholder="Name" value={clientName} onChange={handleClientNameChange}></input>
                 <label> Client contact: </label>
-                <input type="email" placeholder="someone@example.com, or Twitter: @someone, etc." onChange={handleClientContactChange}></input>
+                <input type="email" placeholder="someone@example.com, or Twitter: @someone, etc." value={clientContact} onChange={handleClientContactChange}></input>
             </div>
 
             <div className={styles.custom_questions}>
@@ -212,7 +233,7 @@ const ActiveForm = () => {
             </div>
             <div className={styles.reqDetails}>
                 <label> Order details:
-                <textarea type="text" placeholder="Request details" onChange={handleRequestDetailChange}></textarea>
+                <textarea type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange}></textarea>
                 </label>
                 <label> References:
                     <input type="file" name="referenceImages" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>

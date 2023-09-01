@@ -12,6 +12,12 @@ const messageReducer = (state, action) => {
                 errorMessage: "",
                 loadingMessage: ""
             };
+        case 'successUpload':
+            return {
+                successMessage: "Order submitted!",
+                errorMessage: "",
+                loadingMessage: ""
+            };
         case 'errorDelete':
             return {
                 successMessage: "",
@@ -34,7 +40,8 @@ const ACTION = {
     ERROR_UPDATE: 'errorUpdate',
     ERROR_DELETE: 'errorDelete',
     LOADING: 'loading',
-    SUCCESS_UPDATE: "successUpdate"
+    SUCCESS_UPDATE: "successUpdate",
+    SUCCESS_UPLOAD: "successUpload"
 }
 
 export  {messageReducer, ACTION};

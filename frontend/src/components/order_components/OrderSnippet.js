@@ -5,8 +5,7 @@ import { OrdersContext } from '../../context/OrdersContext';
 import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
 
 const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
-    const [openPopup, setOpenPopup] = useState(false);
-    const navigate = useNavigate();
+
 
     // const handleOpenPopup = (e) => {
     //     e.preventDefault();

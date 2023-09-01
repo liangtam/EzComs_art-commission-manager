@@ -1,8 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './CommissionSnippet.module.css';
 import { useState, useEffect } from 'react';
+import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
 
-const CommissionSnippet = ({completedOrder, completedOrderId}) => {
+
+const CommissionSnippet = ({completedOrder, completedOrderId, handleOpenPopup}) => {
 
     const navigate = useNavigate();
     const [showArtPreview, setShowArtPreview] = useState(false);
@@ -52,7 +54,7 @@ const CommissionSnippet = ({completedOrder, completedOrderId}) => {
                 <div className={styles.buttons}>
                     <button className={styles.viewBtn} onClick={handleViewClick}>View</button>
                     {/* <button className={styles.editBtn} onClick={handleEditClick}>Edit</button> */}
-                    <button className={styles.deleteBtn} onClick={handleDeleteClick}>Delete</button>                
+                    <button className={styles.deleteBtn} onClick={(e) => handleOpenPopup(e, completedOrderId)}>Delete</button>                
                 </div>
             </div>
             {showArtPreview && completedOrder && completedOrder.completedArts.length !== 0 && <div className={styles.artPreview}><img src={completedOrder.completedArts[0].imageURL} alt="N/A"></img></div>}
