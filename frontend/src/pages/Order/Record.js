@@ -5,6 +5,7 @@ import { OrdersContext } from '../../context/OrdersContext';
 
 const Record = () => {
     const [completedOrders, setCompletedOrders] = useState([]);
+    
     //const {orders, setOrders} = useContext(OrdersContext);
 
     const findCompletedOrders = async () => {

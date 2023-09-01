@@ -5,6 +5,7 @@ import ImagePreview from '../../components/ImagePreview';
 import ImageComponent from '../../components/ImageComponent';
 import OriginalOrderComponent from '../../components/order_components/OriginalOrderComponent';
 import { messageReducer, ACTION} from '../reducers/messageReducer';
+import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
 
 const OrderDetails = () => {
 
@@ -24,6 +25,7 @@ const OrderDetails = () => {
     const [completedArtsToDelete, setCompletedArtsToDelete] = useState([]);
 
     const [showOrigOrder, setShowOrigOrder] = useState(false);
+    const [openPopup, setOpenPopup] = useState(false);
     
 
     const [state, dispatch] = useReducer( messageReducer, {
@@ -161,10 +163,19 @@ const OrderDetails = () => {
         setCompletedArtsToDelete([imageToDelete, ...completedArtsToDelete]);
     }
 
-    const handleOrderDelete = async (e, orderId) => {
+    const handleOpenPopup = (e) => {
         e.preventDefault();
-        console.log(orderId);
-        const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
+        setOpenPopup(true);
+    }
+
+    const closePopup = (e) => {
+        setOpenPopup(false);
+    }
+
+    const handleDeleteOrder = async (e) => {
+        e.preventDefault();
+        dispatch({type: ACTION.LOADING});
+        const response = await fetch('http://localhost:4000/api/orders/' + id, {
             method: 'DELETE'
         })
 
@@ -324,9 +335,14 @@ const OrderDetails = () => {
 
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>
-                <button className={styles.deleteBtn} onClick={(e) => handleOrderDelete(e, id)}>Delete</button>
+                <button className={styles.deleteBtn} onClick={handleOpenPopup}>Delete</button>
                 <button className={styles.editBtn} onClick={handleEditButton}>Edit</button>
             </div>
+            {openPopup &&
+            <SetActiveFormPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
+                <h3>Are you sure?</h3>
+                <p>Are you sure you want to delete this order? This action cannot be undone.</p>
+            </SetActiveFormPopup>}
 
         </div>
     )

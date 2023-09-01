@@ -170,7 +170,7 @@ const EditOrderDetails = () => {
         });
 
         if (response.ok) {
-            console.log("Deleted order!");
+            window.location.reload();
             navigate('/orders/');
         } else{
             console.log("Error! ", response.statusText);
@@ -225,7 +225,7 @@ const EditOrderDetails = () => {
             {openPopup &&
             <SetActiveFormPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
                 <h3>Are you sure?</h3>
-                <p>This action cannot be undone.</p>
+                <p>Are you sure you want to delete this order? This action cannot be undone.</p>
             </SetActiveFormPopup>}
 
         </div>
