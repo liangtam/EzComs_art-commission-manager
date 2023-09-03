@@ -2,7 +2,7 @@ import { useEffect, useState, useContext, useNavigate} from "react";
 import OrderSnippet from '../../components/order_components/OrderSnippet';
 import { OrdersContext } from "../../context/OrdersContext";
 import styles from "./Orders.module.css"
-import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
+import YesNoPopup from '../../components/form_components/YesNoPopup';
 
 
 const Orders = () => {
@@ -70,10 +70,10 @@ const Orders = () => {
     return (
         <div className={styles.ordersContainer}>
             {openPopup &&
-            <SetActiveFormPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
+            <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
                 <h3>Are you sure?</h3>
                 <p>Are you sure you want to delete this order? This action cannot be undone.</p>
-            </SetActiveFormPopup>}
+            </YesNoPopup>}
             <div className={styles.orders}>
                 {orders && orders.map((order) => {
                     return <OrderSnippet key={order._id} orderId={order._id} order={order} handleOpenPopup={handleOpenPopup}/>  

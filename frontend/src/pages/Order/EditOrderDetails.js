@@ -3,8 +3,8 @@ import { useState, useEffect, useReducer } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ImageComponent from '../../components/ImageComponent';
 import ImagePreview from '../../components/ImagePreview';
-import { messageReducer, ACTION} from '../reducers/messageReducer';
-import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
+import { orderMessageReducer, ACTION} from '../reducers/orderMessageReducer.js';
+import YesNoPopup from '../../components/form_components/YesNoPopup';
 
 
 // This is for actually editing the client's order details
@@ -22,7 +22,7 @@ const EditOrderDetails = () => {
 
     const [openPopup, setOpenPopup] = useState(false);
 
-    const [state, dispatch] = useReducer( messageReducer, {
+    const [state, dispatch] = useReducer( orderMessageReducer, {
         successMessage: "",
         errorMessage: "",
         loadingMessage: ""
@@ -223,10 +223,10 @@ const EditOrderDetails = () => {
                 <button className={styles.deleteBtn} onClick={handleOpenPopup}>Delete</button>
             </div>
             {openPopup &&
-            <SetActiveFormPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
+            <YesNoPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
                 <h3>Are you sure?</h3>
                 <p>Are you sure you want to delete this order? This action cannot be undone.</p>
-            </SetActiveFormPopup>}
+            </YesNoPopup>}
 
         </div>
     )

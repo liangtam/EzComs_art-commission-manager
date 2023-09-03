@@ -4,8 +4,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ImagePreview from '../../components/ImagePreview';
 import ImageComponent from '../../components/ImageComponent';
 import OriginalOrderComponent from '../../components/order_components/OriginalOrderComponent';
-import { messageReducer, ACTION} from '../reducers/messageReducer';
-import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
+import { orderMessageReducer, ACTION} from '../reducers/orderMessageReducer.js';
+import YesNoPopup from '../../components/form_components/YesNoPopup';
 
 const OrderDetails = () => {
 
@@ -28,7 +28,7 @@ const OrderDetails = () => {
     const [openPopup, setOpenPopup] = useState(false);
     
 
-    const [state, dispatch] = useReducer( messageReducer, {
+    const [state, dispatch] = useReducer( orderMessageReducer, {
         successMessage: "",
         errorMessage: "",
         loadingMessage: ""
@@ -107,9 +107,16 @@ const OrderDetails = () => {
             setUploadedCompletedArts([]);
             setUploadedWipArts([]);
             dispatch({type: ACTION.SUCCESS_UPDATE});
+            setTimeout(() => {
+                dispatch({type: ACTION.RESET});
+            }, 3000);
+
         } else {
             console.log("Error: Order was NOT updated :(")
             dispatch({type: ACTION.ERROR_UPDATE});
+            setTimeout(() => {
+                dispatch({type: ACTION.RESET});
+            }, 3000);
         }
 
     }
@@ -185,7 +192,11 @@ const OrderDetails = () => {
             //fetchOrders();
         } else {
             console.log("Error :( ", response.statusText);
+
             dispatch({type: ACTION.ERROR_DELETE});
+            setTimeout(() => {
+                dispatch({type: ACTION.RESET});
+            }, 3000);
         }
     }
 
@@ -329,9 +340,9 @@ const OrderDetails = () => {
             <div className={styles.origOrder}><h3>Unedited Order: </h3>
             <OriginalOrderComponent origOrder={order.originalUneditedOrder} fillouts={parseArrayItemsToJSON(order.originalUneditedOrder.fillouts)} referenceImages={order.originalUneditedOrder.referenceImages}/></div>}
 
-            {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
-            {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
-            {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
+            {state && state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
+            {state && state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
+            {state && state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
 
             <div className={styles.buttons}>
                 <button className={styles.saveBtn} onClick={handleSave}>Save</button>
@@ -339,10 +350,10 @@ const OrderDetails = () => {
                 <button className={styles.editBtn} onClick={handleEditButton}>Edit</button>
             </div>
             {openPopup &&
-            <SetActiveFormPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
+            <YesNoPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
                 <h3>Are you sure?</h3>
                 <p>Are you sure you want to delete this order? This action cannot be undone.</p>
-            </SetActiveFormPopup>}
+            </YesNoPopup>}
 
         </div>
     )

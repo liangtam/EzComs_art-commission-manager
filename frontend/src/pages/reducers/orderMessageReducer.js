@@ -1,4 +1,4 @@
-const messageReducer = (state, action) => {
+const orderMessageReducer = (state, action) => {
     switch (action.type) {
         case 'errorUpdate':
             return {
@@ -30,6 +30,12 @@ const messageReducer = (state, action) => {
                 errorMessage: "",
                 loadingMessage: "Loading..."
             };
+        case 'reset':
+            return {
+                successMessage: "",
+                errorMessage: "",
+                loadingMessage: ""
+            };
         default:
             console.log("Something went wrong");
     }
@@ -41,7 +47,16 @@ const ACTION = {
     ERROR_DELETE: 'errorDelete',
     LOADING: 'loading',
     SUCCESS_UPDATE: "successUpdate",
-    SUCCESS_UPLOAD: "successUpload"
+    SUCCESS_UPLOAD: "successUpload",
+    RESET: "reset"
 }
 
-export  {messageReducer, ACTION};
+const resetAfterSomeTime = (delay) => {
+    return (dispatch) => {
+        setTimeout(() => {
+            dispatch({type: ACTION.RESET});
+        }, delay);
+    };
+}
+
+export  {orderMessageReducer, ACTION, resetAfterSomeTime};

@@ -6,7 +6,7 @@ import { FormsContext } from '../../context/FormsContext';
 
 import styles from './FormDetails.module.css';
 import MCQuestionField from '../../components/question_components/MCQuestionField';
-import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
+import YesNoPopup from '../../components/form_components/YesNoPopup';
 
 const FormDetails = () => {
 
@@ -91,7 +91,7 @@ const FormDetails = () => {
 
     const handleSaveClick = async (e) => {
         e.preventDefault();
-        let questions = [];
+        console.log("here")
 
         if (formName === '') {
             setError({error: 'Please provide a name for this form.'});
@@ -129,6 +129,8 @@ const FormDetails = () => {
                     setActiveFormReplacementOpenPopup(true);
                 }
             }
+        } else {
+            saveForm();
         }
     }
 
@@ -228,7 +230,7 @@ const FormDetails = () => {
 
     return (
         <div className={styles.formDetails}>
-                    { activeFormReplacementOpenPopup && <SetActiveFormPopup
+                    { activeFormReplacementOpenPopup && <YesNoPopup
                     yesFunction={(e) => {
                         replaceActiveForm();
                         saveForm();
@@ -236,13 +238,13 @@ const FormDetails = () => {
                     closePopup={(e) => setActiveFormReplacementOpenPopup(false)}>
                         <h3>Another Form Is Currently Active</h3>
                         <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
-                    </SetActiveFormPopup>}
+                    </YesNoPopup>}
             { openDeletePopup &&
-            <SetActiveFormPopup yesFunction={handleDelete}
+            <YesNoPopup yesFunction={handleDelete}
             closePopup={(e) => setOpenDeletePopup(false)}>
                 <h3>Are you sure?</h3>
                 <p>Are you sure you want to delete this form? This action cannot be undone.</p>
-            </SetActiveFormPopup>}
+            </YesNoPopup>}
             <div className={styles.title}>
                 <h4>Name: <input type="text" onChange={handleNameChange} value={formName} ></input></h4>
             </div>

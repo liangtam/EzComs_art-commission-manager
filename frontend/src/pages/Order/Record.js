@@ -1,9 +1,9 @@
 import styles from './Record.module.css';
 import CommissionSnippet from '../../components/order_components/CommissionSnippet';
 import { useState, useEffect, useContext, useReducer} from 'react';
-import { messageReducer, ACTION} from '../reducers/messageReducer';
+import { orderMessageReducer, ACTION} from '../reducers/orderMessageReducer.js';
 import { OrdersContext } from '../../context/OrdersContext';
-import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
+import YesNoPopup from '../../components/form_components/YesNoPopup';
 import Orders from './Orders';
 
 const Record = () => {
@@ -12,7 +12,7 @@ const Record = () => {
 
     const [selectedID, setSelectedID] = useState('');
 
-    const [state, dispatch] = useReducer( messageReducer, {
+    const [state, dispatch] = useReducer( orderMessageReducer, {
         successMessage: "",
         errorMessage: "",
         loadingMessage: ""
@@ -75,10 +75,10 @@ const Record = () => {
     return (
         <div className={styles.record}>
             {openPopup &&
-            <SetActiveFormPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
+            <YesNoPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
                 <h3>Are you sure?</h3>
                 <p>Are you sure you want to delete this commission? This action cannot be undone.</p>
-            </SetActiveFormPopup>}
+            </YesNoPopup>}
             <div className={styles.header}>
                 <h2>Commission Record</h2>
             </div>

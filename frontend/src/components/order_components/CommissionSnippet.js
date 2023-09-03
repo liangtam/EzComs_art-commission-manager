@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './CommissionSnippet.module.css';
 import { useState, useEffect } from 'react';
-import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
 
 
 const CommissionSnippet = ({completedOrder, completedOrderId, handleOpenPopup}) => {

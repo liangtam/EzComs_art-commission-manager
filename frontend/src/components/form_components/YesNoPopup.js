@@ -1,7 +1,7 @@
 import { useState } from "react";
-import styles from './SetActiveFormPopup.module.css';
+import styles from './YesNoPopup.module.css';
 
-const SetActiveFormPopup = ({children, yesFunction, closePopup}) => {
+const YesNoPopup = ({children, yesFunction, closePopup}) => {
     return (
         <div className={styles.popupContainer}>
             <div className={styles.popupContent}>
@@ -15,4 +15,4 @@ const SetActiveFormPopup = ({children, yesFunction, closePopup}) => {
     )
 }
 
-export default SetActiveFormPopup;
+export default YesNoPopup;

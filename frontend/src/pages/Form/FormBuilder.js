@@ -1,10 +1,10 @@
 // only artist account can see this
 import ShortAnswerQField from '../../components/question_components/ShortAnsQ';
 import MCQuestionField from '../../components/question_components/MCQuestionField';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
 import { FormsContext } from '../../context/FormsContext';
-import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
+import YesNoPopup from '../../components/form_components/YesNoPopup';
 
 const FormBuilder = () => {
     const [formName, setName] = useState("");
@@ -15,7 +15,7 @@ const FormBuilder = () => {
     // list of list of options, each list of options correspond to a multiple choice question in questionFieldList
     //const [optionListsList, setOptionListsList] = useState([]);
     const [openPopup, setOpenPopup] = useState(false);
-    const [error, setError] = useState(null);
+
 
     /*
     EFFECT: sets the name of the form to what is entered in the form name field
@@ -99,6 +99,7 @@ const FormBuilder = () => {
             }
         } else {
             saveForm();
+
         }
     }
 
@@ -106,7 +107,7 @@ const FormBuilder = () => {
         let questions = questionFieldList.filter((question) =>
         question.questionLabel !== "" || (question.type === "mc" && question.optionList.length === 0));
         if (formName === "") {
-            setError({error: 'Please provide a name for this form.'});
+            return;
         }
 
         for (let i = 0; i < questions.length; i++) {
@@ -142,8 +143,9 @@ const FormBuilder = () => {
                     setQuestionFieldList([]);
                     setName("");
                     setActiveStatus(false);
+
                 } else {
-                    setError(json.error);
+
                 }
                 setOpenPopup(false);
     }
@@ -169,7 +171,7 @@ const FormBuilder = () => {
         if (response.ok) {
             console.log("Made the original active form inactive!", json);
         } else {
-            setError(json.error);
+            console.log("Error replacing active form :(");
         }
 
 
@@ -198,7 +200,7 @@ const FormBuilder = () => {
     return (
         <div className="form_maker">
             {openPopup &&
-                    <SetActiveFormPopup
+                    <YesNoPopup
                     yesFunction={(e) => {
                         replaceActiveForm();
                         saveForm();
@@ -206,7 +208,7 @@ const FormBuilder = () => {
                     closePopup={(e) => setOpenPopup(false)}>
                         <h3>Another Form Is Currently Active</h3>
                         <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
-                    </SetActiveFormPopup>}
+                    </YesNoPopup>}
             <h3>Create an order form for your clients</h3>
             <form>
                 <h4>Default questions included in form:</h4>
@@ -245,6 +247,7 @@ const FormBuilder = () => {
                         })}
                     {/* </QuestionFieldsContext.Provider> */}
                 </div>
+
                 <button onClick={toggleActive}>Set Active</button>
                 <div>{activeStatus? "active" : "inactive"}</div>
                 <button type="submit" onClick={handleSaveFormClick}>Submit</button>
