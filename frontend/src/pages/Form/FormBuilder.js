@@ -4,6 +4,7 @@ import MCQuestionField from '../../components/question_components/MCQuestionFiel
 import { useContext, useEffect, useState } from 'react';
 import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
 import { FormsContext } from '../../context/FormsContext';
+import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
 
 const FormBuilder = () => {
     const [formName, setName] = useState("");
@@ -13,6 +14,7 @@ const FormBuilder = () => {
     const [activeStatus, setActiveStatus] = useState(false);
     // list of list of options, each list of options correspond to a multiple choice question in questionFieldList
     //const [optionListsList, setOptionListsList] = useState([]);
+    const [openPopup, setOpenPopup] = useState(false);
     const [error, setError] = useState(null);
 
     /*
@@ -64,10 +66,45 @@ const FormBuilder = () => {
     /* 
     EFFECT: saves the form into database, if valid. Else, throw an error.
     */
-    const handleSaveFormClick = async (e) => {
+    const handleSaveFormClick = (e) => {
         e.preventDefault();
+
+        // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
+        if (activeStatus === true) {
+            console.log("boop")
+            if (forms.length > 0) {
+                const activeForm = findActiveForm();
+
+                // if (activeForm.activeStatus === true) {
+                //     const confirmBox = window.confirm("Setting this form as active makes your current active form inactive. Would you like to set this form to be active instead of the current active form?");
+
+                //     let formsCopy = [... forms];
+
+                //     if (confirmBox === true) {
+                //         formsCopy[0].activeStatus = false;
+                //         console.log("HERE");
+                //         replaceActiveForm(activeForm);
+                //         formsCopy.unshift(form); // pushes our form to the front of list of form
+                //         //console.log("got hereee ", form.activeStatus)
+                //     } else {
+                //         form = {formName, questions, activeStatus: false};
+                //         formsCopy.push(form);
+                //         setForms(formsCopy);
+                //         //console.log("got here :000 ", form)
+                //     }
+                // }
+                if (activeForm.activeStatus === true) {
+                    setOpenPopup(true);
+                }
+            }
+        } else {
+            saveForm();
+        }
+    }
+
+    const saveForm = async () => {
         let questions = questionFieldList.filter((question) =>
-            question.questionLabel !== "" || (question.type === "mc" && question.optionList.length === 0));
+        question.questionLabel !== "" || (question.type === "mc" && question.optionList.length === 0));
         if (formName === "") {
             setError({error: 'Please provide a name for this form.'});
         }
@@ -83,64 +120,37 @@ const FormBuilder = () => {
         //questions = questions.filter((question) => question.type !== "mc" && question.optionList.length !== 0);
 
         let form = {formName, questions, activeStatus};
-
-        // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
-        if (activeStatus === true) {
-            console.log("boop")
-            if (forms.length > 0) {
-                const activeForm = findActiveForm();
-
-                if (activeForm.activeStatus === true) {
-                    const confirmBox = window.confirm("Setting this form as active makes your current active form inactive. Would you like to set this form to be active instead of the current active form?");
-
-                    let formsCopy = [... forms];
-
-                    if (confirmBox === true) {
-                        formsCopy[0].activeStatus = false;
-                        console.log("HERE");
-                        replaceActiveForm(activeForm);
-                        formsCopy.unshift(form); // pushes our form to the front of list of form
-                        //console.log("got hereee ", form.activeStatus)
-                    } else {
-                        form = {formName, questions, activeStatus: false};
-                        formsCopy.push(form);
-                        setForms(formsCopy);
-                        //console.log("got here :000 ", form)
+                // first arg: where we're sending the post request to
+                const response = await fetch('http://localhost:4000/api/forms', {
+                    method: 'POST',
+                    body: JSON.stringify(form), 
+                    // to specify that the content type is json
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
+        
+                });
+        
+                // parsing our response to json
+                const json = await response.json();
+        
+                if (response.ok) {
+                    console.log('New form added!', json);
+                    // jquery -- find an element with id formName_field and set its value to ''.
+                    //          So, we're clearing the name field here.
+                    document.getElementById('formName_field').value='';
+                    setQuestionFieldList([]);
+                    setName("");
+                    setActiveStatus(false);
+                } else {
+                    setError(json.error);
                 }
-            }
-        }
-
-        // first arg: where we're sending the post request to
-        const response = await fetch('http://localhost:4000/api/forms', {
-            method: 'POST',
-            body: JSON.stringify(form), 
-            // to specify that the content type is json
-            headers: {
-                'Content-Type': 'application/json'
-            }
-
-        });
-
-        // parsing our response to json
-        const json = await response.json();
-
-        if (response.ok) {
-            console.log('New form added!', json);
-            // jquery -- find an element with id formName_field and set its value to ''.
-            //          So, we're clearing the name field here.
-            document.getElementById('formName_field').value='';
-            setQuestionFieldList([]);
-            setName("");
-            setActiveStatus(false);
-        } else {
-            setError(json.error);
-        }
-
+                setOpenPopup(false);
     }
 
-    const replaceActiveForm = async (activeForm) => {
+    const replaceActiveForm = async () => {
         //console.log("currActiveForm's status", activeForm.activeStatus);
+        const activeForm = findActiveForm();
         const idOfCurrActiveForm = activeForm._id;
 
         activeForm.activeStatus = false;
@@ -187,6 +197,16 @@ const FormBuilder = () => {
 
     return (
         <div className="form_maker">
+            {openPopup &&
+                    <SetActiveFormPopup
+                    yesFunction={(e) => {
+                        replaceActiveForm();
+                        saveForm();
+                    }}
+                    closePopup={(e) => setOpenPopup(false)}>
+                        <h3>Another Form Is Currently Active</h3>
+                        <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
+                    </SetActiveFormPopup>}
             <h3>Create an order form for your clients</h3>
             <form>
                 <h4>Default questions included in form:</h4>
