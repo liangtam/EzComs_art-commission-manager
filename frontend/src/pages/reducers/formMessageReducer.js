@@ -1,39 +1,45 @@
-const orderMessageReducer = (state, action) => {
+const formMessageReducer = (state, action) => {
     switch (action.type) {
         case 'errorUpdate':
             return {
                 successMessage: "",
-                errorMessage: "Could not update order.",
-                loadingMessage: ""
-            };
-        case 'errorGetAll':
-            return {
-                successMessage: "",
-                errorMessage: "Could not load orders.",
+                errorMessage: "Could not update form.",
                 loadingMessage: ""
             };
         case 'successUpdate':
             return {
-                successMessage: "Order is updated.",
+                successMessage: "Form is updated.",
                 errorMessage: "",
                 loadingMessage: ""
             };
         case 'successUpload':
             return {
-                successMessage: "Order submitted!",
+                successMessage: "Form saved!",
                 errorMessage: "",
                 loadingMessage: ""
             };
         case 'successDelete':
             return {
-                successMessage: "Order deleted!",
+                successMessage: "Form deleted!",
                 errorMessage: "",
                 loadingMessage: ""
-            }
+            };
         case 'errorDelete':
             return {
                 successMessage: "",
-                errorMessage: "Could not delete order.",
+                errorMessage: "Could not delete form.",
+                loadingMessage: ""
+            };
+        case 'errorUpload':
+            return {
+                successMessage: "",
+                errorMessage: "Could not upload form.",
+                loadingMessage: ""
+            };
+        case 'errorGetAll':
+            return {
+                successMessage: "",
+                errorMessage: "Could not load forms.",
                 loadingMessage: ""
             };
         case 'loading':
@@ -66,12 +72,12 @@ const ACTION = {
     RESET: "reset"
 }
 
-const resetAfterSomeTime = (delay) => {
-    return (dispatch) => {
-        setTimeout(() => {
-            dispatch({type: ACTION.RESET});
-        }, delay);
-    };
-}
+// const resetAfterSomeTime = (delay) => {
+//     return (dispatch) => {
+//         setTimeout(() => {
+//             dispatch({type: ACTION.RESET});
+//         }, delay);
+//     };
+// }
 
-export  {orderMessageReducer, ACTION, resetAfterSomeTime};
+export  {formMessageReducer, ACTION};

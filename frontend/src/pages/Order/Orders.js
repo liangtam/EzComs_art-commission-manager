@@ -1,19 +1,23 @@
-import { useEffect, useState, useContext, useNavigate} from "react";
+import { useEffect, useState, useContext, useReducer} from "react";
 import OrderSnippet from '../../components/order_components/OrderSnippet';
 import { OrdersContext } from "../../context/OrdersContext";
 import styles from "./Orders.module.css"
 import YesNoPopup from '../../components/form_components/YesNoPopup';
+import { orderMessageReducer, ACTION } from "../reducers/orderMessageReducer";
 
 
 const Orders = () => {
     const {orders, setOrders} = useContext(OrdersContext);
     const [openPopup, setOpenPopup] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
+    const [state, dispatch] = useReducer(orderMessageReducer, {});
+
 
 
     
     const fetchOrders = async () => {
         // making a call to the backend
+        dispatch({type: ACTION.LOADING});
         const response = await fetch('http://localhost:4000/api/orders');
         
         // to parse the json from the above response into smt we can work w/ 
@@ -22,6 +26,12 @@ const Orders = () => {
         if (response.ok) {
             setOrders(json);
             console.log('Fetched all forms in orders page! ', json);
+            dispatch({type: ACTION.RESET});
+        } else {
+            dispatch({type: ACTION.ERROR_GET_ALL})
+            setTimeout(() => {
+                dispatch({type: ACTION.RESET});
+            }, 3000);
         }
     }
 
@@ -69,6 +79,9 @@ const Orders = () => {
 
     return (
         <div className={styles.ordersContainer}>
+            {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
+            {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
+            {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
             {openPopup &&
             <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
                 <h3>Are you sure?</h3>

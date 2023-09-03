@@ -127,6 +127,8 @@ const FormDetails = () => {
                 // }
                 if (activeForm.activeStatus === true) {
                     setActiveFormReplacementOpenPopup(true);
+                } else {
+                    saveForm();
                 }
             }
         } else {

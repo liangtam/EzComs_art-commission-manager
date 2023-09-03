@@ -5,6 +5,8 @@ import { useContext, useEffect, useReducer, useState } from 'react';
 import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
 import { FormsContext } from '../../context/FormsContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
+import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
+import styles from './FormBuilder.module.css';
 
 const FormBuilder = () => {
     const [formName, setName] = useState("");
@@ -15,6 +17,8 @@ const FormBuilder = () => {
     // list of list of options, each list of options correspond to a multiple choice question in questionFieldList
     //const [optionListsList, setOptionListsList] = useState([]);
     const [openPopup, setOpenPopup] = useState(false);
+
+    const [state, dispatch] = useReducer( formMessageReducer, {});
 
 
     /*
@@ -104,6 +108,7 @@ const FormBuilder = () => {
     }
 
     const saveForm = async () => {
+        dispatch({type: ACTION.LOADING});
         let questions = questionFieldList.filter((question) =>
         question.questionLabel !== "" || (question.type === "mc" && question.optionList.length === 0));
         if (formName === "") {
@@ -122,32 +127,36 @@ const FormBuilder = () => {
 
         let form = {formName, questions, activeStatus};
                 // first arg: where we're sending the post request to
-                const response = await fetch('http://localhost:4000/api/forms', {
-                    method: 'POST',
-                    body: JSON.stringify(form), 
+            const response = await fetch('http://localhost:4000/api/forms', {
+            method: 'POST',
+                body: JSON.stringify(form), 
                     // to specify that the content type is json
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
+                headers: {
+                    'Content-Type': 'application/json'
+                }
         
-                });
+            });
         
                 // parsing our response to json
-                const json = await response.json();
+            const json = await response.json();
         
-                if (response.ok) {
-                    console.log('New form added!', json);
+            if (response.ok) {
+                console.log('New form added!', json);
                     // jquery -- find an element with id formName_field and set its value to ''.
                     //          So, we're clearing the name field here.
-                    document.getElementById('formName_field').value='';
-                    setQuestionFieldList([]);
-                    setName("");
-                    setActiveStatus(false);
+                document.getElementById('formName_field').value='';
+                setQuestionFieldList([]);
+                setName("");
+                setActiveStatus(false);
+                dispatch({type: ACTION.SUCCESS_UPLOAD});
 
-                } else {
-
-                }
-                setOpenPopup(false);
+            } else {
+                dispatch({type: ACTION.ERROR_UPLOAD});
+            }
+            setOpenPopup(false);
+            setTimeout(() => {
+                dispatch({type: ACTION.RESET});
+            }, 3000);    
     }
 
     const replaceActiveForm = async () => {
@@ -198,25 +207,27 @@ const FormBuilder = () => {
     }, [])
 
     return (
-        <div className="form_maker">
+        <div className={styles.formBuilderContainer}>
             {openPopup &&
-                    <YesNoPopup
-                    yesFunction={(e) => {
-                        replaceActiveForm();
-                        saveForm();
-                    }}
-                    closePopup={(e) => setOpenPopup(false)}>
-                        <h3>Another Form Is Currently Active</h3>
-                        <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
-                    </YesNoPopup>}
+                <YesNoPopup
+                yesFunction={(e) => {
+                    replaceActiveForm();
+                    saveForm();
+                }}
+                closePopup={(e) => setOpenPopup(false)}>
+                    <h3>Another Form Is Currently Active</h3>
+                    <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
+                </YesNoPopup>}
             <h3>Create an order form for your clients</h3>
             <form>
-                <h4>Default questions included in form:</h4>
-                <li>
-                    <ul>Client Name: </ul>
-                    <ul>Client Email: </ul>
-                    <ul>Order Details: </ul>
-                </li>
+                <h4>Default features included in the form:</h4>
+                <ul>
+                    <li>Order Name </li>
+                    <li>Client Name </li>
+                    <li>Client Email </li>
+                    <li>Order Details </li>
+                    <li>Deadline (optional) </li>
+                </ul>
                 <div className="form_name">
                     <h4>Name of form:</h4>
                     <input id="formName_field" type='text' onChange={handleNameFieldChange}></input>
@@ -242,11 +253,15 @@ const FormBuilder = () => {
                                                         //handleFieldChange={handleFieldChange}
                                                         optList={questionField.optionList}
                                                         key={"mcq" + questionField.id}/>
-                                        );
+                                );
                             }
                         })}
                     {/* </QuestionFieldsContext.Provider> */}
                 </div>
+
+                {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
+                {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
+                {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
 
                 <button onClick={toggleActive}>Set Active</button>
                 <div>{activeStatus? "active" : "inactive"}</div>

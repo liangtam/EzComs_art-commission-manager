@@ -4,7 +4,6 @@ import { useState, useEffect, useContext, useReducer} from 'react';
 import { orderMessageReducer, ACTION} from '../reducers/orderMessageReducer.js';
 import { OrdersContext } from '../../context/OrdersContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import Orders from './Orders';
 
 const Record = () => {
     const [completedOrders, setCompletedOrders] = useState([]);
@@ -57,6 +56,9 @@ const Record = () => {
         } else {
             console.log(`Error, could not delete order ${selectedID}, ${response.statusText}`);
             dispatch({type: ACTION.ERROR_DELETE});
+            setTimeout(() => {
+                dispatch({type: ACTION.RESET})
+            }, 5000);
         }
         setOpenPopup(false);
     }
