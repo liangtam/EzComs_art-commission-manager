@@ -6,7 +6,7 @@ import FormBuilder from './Form/FormBuilder';
 import Forms from './Form/Forms';
 import Navbar from '../components/Navbar';
 import ActiveForm from './Form/ActiveForm';
-import FormDetails from '../components/form_components/FormDetails';
+import FormDetails from './Form/FormDetails';
 import OrderDetails from './Order/OrderDetails';
 import EditOrderDetails from './Order/EditOrderDetails';
 import Record from './Order/Record';

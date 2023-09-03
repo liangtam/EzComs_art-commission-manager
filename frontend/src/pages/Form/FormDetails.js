@@ -1,11 +1,12 @@
 import {useState, useEffect, useContext} from 'react';
-import ShortAnswerQField from '../question_components/ShortAnsQ';
+import ShortAnswerQField from '../../components/question_components/ShortAnsQ';
 import {useNavigate, useParams} from 'react-router-dom';
 import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
 import { FormsContext } from '../../context/FormsContext';
 
 import styles from './FormDetails.module.css';
-import MCQuestionField from '../question_components/MCQuestionField';
+import MCQuestionField from '../../components/question_components/MCQuestionField';
+import SetActiveFormPopup from '../../components/form_components/SetActiveFormPopup';
 
 const FormDetails = () => {
 
@@ -21,6 +22,8 @@ const FormDetails = () => {
     const [wasAlreadyActive, setWasAlreadyActive] = useState(false);
     const [form, setForm] = useState(null);
     const [error, setError] = useState(null);
+    const [activeFormReplacementOpenPopup, setActiveFormReplacementOpenPopup] = useState(false);
+    const [openDeletePopup, setOpenDeletePopup] = useState(false);
 
     const fetchForm = async () => {
         const response = await fetch('http://localhost:4000/api/forms/' + id);
@@ -95,8 +98,43 @@ const FormDetails = () => {
             return <div><text>{error.message}</text></div>;
         }
 
-        // Making sure there is only one active form at a time
+        // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
+        if (wasAlreadyActive) {
+            console.log("was already active");
+            saveForm();
+        } else if (activeStatus === true) {
+            console.log("boop")
+            if (forms.length > 0) {
+                const activeForm = findActiveForm();
 
+                // if (activeForm.activeStatus === true) {
+                //     const confirmBox = window.confirm("Setting this form as active makes your current active form inactive. Would you like to set this form to be active instead of the current active form?");
+
+                //     let formsCopy = [...forms];
+
+                //     if (confirmBox === true) {
+                //         formsCopy[0].activeStatus = false;
+                //         console.log("HERE");
+                //         replaceActiveForm(activeForm);
+                //         //formsCopy.unshift(updatedForm); // pushes our form to the front of list of form
+                //         console.log("got hereee ", form.activeStatus)
+                //     } else {
+                //         updatedForm = {formName, questions, activeStatus:false};
+                //        // formsCopy.push(updatedForm);
+                //         setForms(formsCopy);
+                //         console.log("got here :000 ", updatedForm)
+                //     }
+                // }
+                if (activeForm.activeStatus === true) {
+                    setActiveFormReplacementOpenPopup(true);
+                }
+            }
+        }
+    }
+
+    const saveForm = async () => {
+
+        let questions = [];
         for (let i = 0; i < questionFieldList.length; i++) {
             if (questionFieldList[i].questionLabel !== "") {
                 questions.push(questionFieldList[i]);
@@ -104,36 +142,6 @@ const FormDetails = () => {
         }
 
         let updatedForm = {formName, questions:questions, activeStatus};
-
-        // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
-        if (wasAlreadyActive) {
-            console.log("was already active");
-        } else if (activeStatus === true) {
-            console.log("boop")
-            if (forms.length > 0) {
-                const activeForm = findActiveForm();
-
-                if (activeForm.activeStatus === true) {
-                    const confirmBox = window.confirm("Setting this form as active makes your current active form inactive. Would you like to set this form to be active instead of the current active form?");
-
-                    let formsCopy = [...forms];
-
-                    if (confirmBox === true) {
-                        formsCopy[0].activeStatus = false;
-                        console.log("HERE");
-                        replaceActiveForm(activeForm);
-                        //formsCopy.unshift(updatedForm); // pushes our form to the front of list of form
-                        console.log("got hereee ", form.activeStatus)
-                    } else {
-                        updatedForm = {formName, questions, activeStatus:false};
-                       // formsCopy.push(updatedForm);
-                        setForms(formsCopy);
-                        console.log("got here :000 ", updatedForm)
-                    }
-                }
-            }
-        }
-        
 
         const response = await fetch('http://localhost:4000/api/forms/' + id, {
             method: 'PATCH',
@@ -153,9 +161,13 @@ const FormDetails = () => {
         } else {
             setError(json.error);
         }
+
+        setActiveFormReplacementOpenPopup(false);
+        navigate('/forms');
     }
 
-    const replaceActiveForm = async (activeForm) => {
+    const replaceActiveForm = async () => {
+        const activeForm = findActiveForm();
         console.log("currActiveForm's status", activeForm.activeStatus);
         const idOfCurrActiveForm = activeForm._id;
 
@@ -177,8 +189,7 @@ const FormDetails = () => {
         } else {
             setError(json.error);
         }
-
-
+        setActiveFormReplacementOpenPopup(false);
     }
 
     const findActiveForm = () => {
@@ -217,6 +228,21 @@ const FormDetails = () => {
 
     return (
         <div className={styles.formDetails}>
+                    { activeFormReplacementOpenPopup && <SetActiveFormPopup
+                    yesFunction={(e) => {
+                        replaceActiveForm();
+                        saveForm();
+                    }}
+                    closePopup={(e) => setActiveFormReplacementOpenPopup(false)}>
+                        <h3>Another Form Is Currently Active</h3>
+                        <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
+                    </SetActiveFormPopup>}
+            { openDeletePopup &&
+            <SetActiveFormPopup yesFunction={handleDelete}
+            closePopup={(e) => setOpenDeletePopup(false)}>
+                <h3>Are you sure?</h3>
+                <p>Are you sure you want to delete this form? This action cannot be undone.</p>
+            </SetActiveFormPopup>}
             <div className={styles.title}>
                 <h4>Name: <input type="text" onChange={handleNameChange} value={formName} ></input></h4>
             </div>
@@ -236,10 +262,10 @@ const FormDetails = () => {
             </div>}
             <button onClick={handleShortAnswerClick}>Add Short Answer Question</button>
             <button onClick={handleMCClick}>Add Multiple Choice</button>
-            <button onClick={handleDelete}>Delete</button>
             <button onClick={toggleActiveStatus}>Set Active</button>
             <div>{activeStatus? "active" : "inactive"}</div>
             <button className={styles.saveBtn} onClick={handleSaveClick}>Save</button>
+            <button onClick={(e) => setOpenDeletePopup(true)}>Delete</button>
         </div>
     )
 
