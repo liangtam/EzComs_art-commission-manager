@@ -8,6 +8,7 @@ import ImagePreview from '../../components/ImagePreview';
 
 
 const ActiveForm = () => {
+    const [noActiveForm, setNoActiveForm] = useState(false);
     const [activeForm, setActiveForm] = useState(null);
     const [clientName, setClientName] = useState('');
     const [clientContact, setClientContact] = useState('');
@@ -24,7 +25,7 @@ const ActiveForm = () => {
         if (response.ok) {
             setForms(json);
             console.log("Form page: Fetched all forms! ", forms);
-            findActiveForm();
+            //findActiveForm();
         }
     };
 
@@ -35,10 +36,18 @@ const ActiveForm = () => {
 
         let form = forms[0]; // the active form is always at the front of the list of forms
 
+        if (!form) {
+            return null;
+        } else if (form.activeStatus === false) {
+            setNoActiveForm(true);
+            return null;
+        }
+
         setActiveForm(form);
 
         if (activeForm != null) {
             setQuestionFieldList(activeForm.questions);
+            console.log("Status: ", activeForm.activeStatus)
             console.log("setQList");  
         }
         return form;
@@ -191,66 +200,74 @@ const ActiveForm = () => {
     }, [referenceImages])
     // Notice we need all these three steps because of how usestate and fetches are asynchronous, so anytime we need to
     // use asynchronous data, we need to make sure it actually fetched properly first.
-    return (
-        <form onSubmit={handleSubmit} className={styles.activeForm} encType="multipart/form-data">
-            <div className={styles.formName}>{activeForm && <h2>{activeForm.formName}</h2>}</div>
-            <div className={styles.default_questions}>
-                <label> Client name: </label>
-                <input type="text" placeholder="Name" value={clientName} onChange={handleClientNameChange}></input>
-                <label> Client contact: </label>
-                <input type="email" placeholder="someone@example.com, or Twitter: @someone, etc." value={clientContact} onChange={handleClientContactChange}></input>
-            </div>
 
-            <div className={styles.custom_questions}>
-            {questionFieldList && questionFieldList.length >= 1 &&
-                    questionFieldList.map((question) => {
-                        if (question.type === 'shortAns') {
-                            return (
-                                <div>
-                                    <label>{question.questionLabel}: </label>
-                                    <input type="text" onChange={(e) => handleAnswerFieldChange(e, question.id)}></input>
-                                </div>
-                            );
-                        } else if (question.type === 'mc') {
-                            return (
-                                <div> 
-                                    <label >{question.questionLabel}: </label>
-                                    <div className="options">
-                                        {question.optionList.length >= 1 &&
-                                        question.optionList.map((option) => {
-                                            return (
-                                                <label>
-                                                    {option.optionLabel}
-                                                    <input type="radio" name={"option" + question.id} value={option.optionLabel}></input>
-                                                </label>
-                                            );
-                                        })}
+
+
+
+    if (noActiveForm) {
+        return <div>You have no active form!</div>
+    } else {
+        return (
+            <form onSubmit={handleSubmit} className={styles.activeForm} encType="multipart/form-data">
+                <div className={styles.formName}>{activeForm && <h2>{activeForm.formName}</h2>}</div>
+                <div className={styles.default_questions}>
+                    <label> Client name: </label>
+                    <input type="text" placeholder="Name" value={clientName} onChange={handleClientNameChange}></input>
+                    <label> Client contact: </label>
+                    <input type="email" placeholder="someone@example.com, or Twitter: @someone, etc." value={clientContact} onChange={handleClientContactChange}></input>
+                </div>
+
+                <div className={styles.custom_questions}>
+                {questionFieldList && questionFieldList.length >= 1 &&
+                        questionFieldList.map((question) => {
+                            if (question.type === 'shortAns') {
+                                return (
+                                    <div>
+                                        <label>{question.questionLabel}: </label>
+                                        <input type="text" onChange={(e) => handleAnswerFieldChange(e, question.id)}></input>
                                     </div>
-                                </div>
-                            );
-                        }
+                                );
+                            } else if (question.type === 'mc') {
+                                return (
+                                    <div> 
+                                        <label >{question.questionLabel}: </label>
+                                        <div className="options">
+                                            {question.optionList.length >= 1 &&
+                                            question.optionList.map((option) => {
+                                                return (
+                                                    <label>
+                                                        {option.optionLabel}
+                                                        <input type="radio" name={"option" + question.id} value={option.optionLabel}></input>
+                                                    </label>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        })}
+                </div>
+                <div className={styles.reqDetails}>
+                    <label> Order details:
+                    <textarea type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange}></textarea>
+                    </label>
+                    <label> References:
+                        <input type="file" name="referenceImages" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
+                    </label>
+                    <label>
+                        Deadline:
+                        <input type="date" id="deadline"></input>
+                    </label>
+                </div>
+                <div className={styles.imagePreviews}>
+                    {referenceImages && referenceImages.map((refImgURL) => {
+                        return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg}/>
                     })}
-            </div>
-            <div className={styles.reqDetails}>
-                <label> Order details:
-                <textarea type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange}></textarea>
-                </label>
-                <label> References:
-                    <input type="file" name="referenceImages" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
-                </label>
-                <label>
-                    Deadline:
-                    <input type="date" id="deadline"></input>
-                </label>
-            </div>
-            <div className={styles.imagePreviews}>
-                {referenceImages && referenceImages.map((refImgURL) => {
-                    return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg}/>
-                })}
-            </div>
-            <button type="submit" className={styles.submitBtn} onClick={handleSubmit}>yeet</button>
-        </form>
-    );
+                </div>
+                <button type="submit" className={styles.submitBtn} onClick={handleSubmit}>yeet</button>
+            </form>
+        );
+    }
 };
 
 export default ActiveForm;
