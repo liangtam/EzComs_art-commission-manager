@@ -40,14 +40,27 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
                 <p>Are you sure you want to delete this order? This action cannot be undone.</p>
             </YesNoPopup>} */}
             <Link className={styles.link} to={`/orders/${orderId}`}>
+                {order && order.orderName &&
+                <div className={styles.orderName}>
+                    <h4>{order.orderName}</h4>
+                </div>}
+                {order && !order.orderName &&
+                <div className={styles.defaultOrderName}>
+                    Name: {order && order.clientName}'s Order
+                </div>}
                 <div className={styles.clientName}>
-                    <h4>{order && order.clientName}</h4>
+                    Client Name: {order && order.clientName}
                 </div>
-                <div className={styles.deadline}>
-                    Deadline: {order && order.deadline}
-                </div>
+                {order && order.deadline &&
+                    <div className={styles.deadline}>
+                        Deadline: {order.deadline}
+                    </div>}
+
                 <div className={styles.price}>
                     Price: {order && order.price}
+                </div>
+                <div className={styles.orderID}>
+                    ID: {order && order._id}
                 </div>
             </Link>
             <button className={styles.deleteBtn} onClick={(e) => handleOpenPopup(e, orderId)}>Delete</button>

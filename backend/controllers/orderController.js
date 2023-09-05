@@ -175,6 +175,7 @@ const updateOrder = async (req, res) => {
 
     console.log("Updated order: ", {...req.body});
     const newOrder = {
+        orderName: req.body.orderName,
         clientName: req.body.clientName,
         clientContact: req.body.clientContact,
         requestDetail: req.body.requestDetail,

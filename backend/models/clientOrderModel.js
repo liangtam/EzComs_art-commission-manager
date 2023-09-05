@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 
 // These are completed orders, so clients' commission orders
 const orderSchema = new Schema({
+    orderName: {
+        type: String,
+        required: false
+    },
     clientName: {
         type: String,
         required: true

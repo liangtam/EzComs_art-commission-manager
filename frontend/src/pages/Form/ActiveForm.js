@@ -113,11 +113,12 @@ const ActiveForm = () => {
         setQuestionFieldList(questionListCopy);
 
         const dateObj = new Date();
-        const currDate = `${dateObj.getDate()} / ${dateObj.getMonth() + 1} / ${dateObj.getFullYear()}`;
+        const currDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
         const userDeadline = document.getElementById("deadline").value;
 
         const order = new FormData();
 
+        order.append("orderName", '');
         order.append("clientName", clientName);
         order.append("clientContact", clientContact);
         order.append("requestDetail", requestDetail);
@@ -257,6 +258,7 @@ const ActiveForm = () => {
                     <label>
                         Deadline:
                         <input type="date" id="deadline"></input>
+                        <p>Leave blank if there is no deadline.</p>
                     </label>
                 </div>
                 <div className={styles.imagePreviews}>

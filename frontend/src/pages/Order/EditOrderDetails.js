@@ -110,9 +110,15 @@ const EditOrderDetails = () => {
             console.log("Updated order! ", newOrder);
             fetchOrder();
             dispatch({type: ACTION.SUCCESS_UPDATE});
+            setTimeout(() => {
+                dispatch({type: ACTION.RESET});
+            }, 3000)
         } else {
             console.log("Error: Order was NOT updated :(")
             dispatch({type: ACTION.ERROR_UPDATE});
+            setTimeout(() => {
+                dispatch({type: ACTION.RESET});
+            }, 3000)
         }
 
     }
@@ -170,7 +176,6 @@ const EditOrderDetails = () => {
         });
 
         if (response.ok) {
-            window.location.reload();
             navigate('/orders/');
         } else{
             console.log("Error! ", response.statusText);

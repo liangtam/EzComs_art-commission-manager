@@ -13,6 +13,8 @@ const OrderDetails = () => {
     const navigate = useNavigate();
 
     const [order, setOrder] = useState('');
+
+    const [orderName, setOrderName] = useState('');
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
     const [artistNotes, setArtistNotes] = useState('');
@@ -60,7 +62,12 @@ const OrderDetails = () => {
 
         dispatch({type: ACTION.LOADING});
 
+        const dateObj = new Date();
+        const currDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
+
         let newOrder = new FormData();
+
+        newOrder.append("orderName", orderName);
         newOrder.append("clientName", order.clientName);
         newOrder.append("clientContact", order.clientContact);
         newOrder.append("requestDetail", order.requestDetail);
@@ -71,7 +78,16 @@ const OrderDetails = () => {
         newOrder.append("price", order.price);
         newOrder.append("dateReqqed", order.dateReqqed);
         newOrder.append("datePaid", order.datePaid);
-        newOrder.append("dateCompleted", order.dateCompleted);
+
+        if (order.status === "Completed" && status === "Completed") {
+            newOrder.append("dateCompleted", order.dateCompleted);
+        } else if (order.status === "Completed" && status !== "Completed") {
+            newOrder.append("dateCompleted", "To be set");
+        } else if (order.status !== "Completed" && status === "Completed") {
+            newOrder.append("dateCompleted", currDate);
+        } else {
+            newOrder.append("dateCompleted", order.dateCompleted);
+        }
         newOrder.append("deadline", order.deadline);
         newOrder.append("status", status);
         newOrder.append("artistNotes", artistNotes);
@@ -254,17 +270,22 @@ const OrderDetails = () => {
         if (order.wipArts) {
             setWipArts(order.wipArts);
         }
+
+        setOrderName(order.orderName);
         
     }, [order]);
 
     return (
         <div className={styles.order_details}>
             {/* <button className={styles.backBtn} onClick={(e) => navigate('/orders/')}>Back</button> */}
+            <h3>Order name: </h3> <input type="text" value={orderName} onChange={(e) => setOrderName(e.target.value)} placeholder="eg. Bob Thumbnail"></input>
             <div className={styles.id}> <strong>ID: </strong> {order && order._id} </div>
             <h3><strong>Client name: </strong>{order && order.clientName}</h3>
             <p><strong>Client contact: </strong>  { order && order.clientContact}</p>
             <p><strong>Request: </strong> {order && order.requestDetail}</p>
             <p><strong>Requested on: </strong> {order && order.dateReqqed}</p>
+            {order && order.dateCompleted !== "To be set" &&
+            <p><strong>Date completed: </strong> {order.dateCompleted}</p>}
             <p><strong>Deadline:</strong> {order && order.deadline}</p>
             <div className={styles.status}>
                 
