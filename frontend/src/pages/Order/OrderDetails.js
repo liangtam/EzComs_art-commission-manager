@@ -18,6 +18,7 @@ const OrderDetails = () => {
     const [fillouts, setFillouts] = useState([]);
     const [status, setStatus] = useState(null);
     const [artistNotes, setArtistNotes] = useState('');
+    const [price, setPrice] = useState('');
     const [completedArts, setCompletedArts] = useState([]);
     const [uploadedCompletedArts, setUploadedCompletedArts] = useState([]);  
     const [wipArts, setWipArts] = useState([]);
@@ -75,7 +76,7 @@ const OrderDetails = () => {
             newOrder.append("fillouts", JSON.stringify(fillouts[i]));
         }
         newOrder.append("referenceImages[]", order.referenceImages)
-        newOrder.append("price", order.price);
+        newOrder.append("price", price);
         newOrder.append("dateReqqed", order.dateReqqed);
         newOrder.append("datePaid", order.datePaid);
 
@@ -229,12 +230,11 @@ const OrderDetails = () => {
         return parsedArr;
     }
 
-    useEffect(() => {
-        fetchOrder();
-    }, []);
+    const initializeStates = () => {
+        if (!order) {
+            return;
+        }
 
-
-    useEffect(() => {
         setFillouts(parseArrayItemsToJSON(order.fillouts));
         //console.log("Fillouts: ", parseArrayItemsToJSON(order.fillouts));
         //console.log("Raw fillouts: ", order.fillouts);
@@ -272,6 +272,16 @@ const OrderDetails = () => {
         }
 
         setOrderName(order.orderName);
+        setPrice(order.price);
+    }
+
+    useEffect(() => {
+        fetchOrder();
+    }, []);
+
+
+    useEffect(() => {
+       initializeStates();
         
     }, [order]);
 
@@ -286,7 +296,8 @@ const OrderDetails = () => {
             <p><strong>Requested on: </strong> {order && order.dateReqqed}</p>
             {order && order.dateCompleted !== "To be set" &&
             <p><strong>Date completed: </strong> {order.dateCompleted}</p>}
-            <p><strong>Deadline:</strong> {order && order.deadline}</p>
+            {order && order.deadline &&
+            <p><strong>Deadline:</strong> {order.deadline}</p>}
             <div className={styles.status}>
                 
             </div>
@@ -303,6 +314,7 @@ const OrderDetails = () => {
                     </div> 
                 })}
             </div>
+            <strong>Price: </strong><input type="number" value={price} onChange={(e) => setPrice(e.target.value)}></input>
             <div><b>Reference images: </b></div>
             <div className={styles.images}>
                 {order && order.referenceImages.map((refImgURL) => {
