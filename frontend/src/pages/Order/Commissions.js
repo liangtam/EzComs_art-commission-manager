@@ -82,7 +82,7 @@ const Commissions = () => {
                 <p>Are you sure you want to delete this commission? This action cannot be undone.</p>
             </YesNoPopup>}
             <div className={styles.header}>
-                <h2>Commission Commissions</h2>
+                <h2>Commissions</h2>
             </div>
             <div className={styles.completedOrders}>
                 {completedOrders && completedOrders.map((completedOrder) => {

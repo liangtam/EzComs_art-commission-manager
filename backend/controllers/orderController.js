@@ -1,5 +1,5 @@
 const express = require('express');
-const Order = require('../models/clientOrderModel');
+const Order = require('../models/orderModel');
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require ('path');
