@@ -44,10 +44,6 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
                 <div className={styles.orderName}>
                     <h4>{order.orderName}</h4>
                 </div>}
-                {order && !order.orderName &&
-                <div className={styles.defaultOrderName}>
-                    Name: {order && order.clientName}'s Order
-                </div>}
                 <div className={styles.clientName}>
                     Client Name: {order && order.clientName}
                 </div>

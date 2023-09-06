@@ -118,7 +118,7 @@ const ActiveForm = () => {
 
         const order = new FormData();
 
-        order.append("orderName", '');
+        order.append("orderName", `${clientName}'s Order`);
         order.append("clientName", clientName);
         order.append("clientContact", clientContact);
         order.append("requestDetail", requestDetail);

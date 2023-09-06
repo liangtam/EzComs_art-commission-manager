@@ -9,7 +9,7 @@ import ActiveForm from './Form/ActiveForm';
 import FormDetails from './Form/FormDetails';
 import OrderDetails from './Order/OrderDetails';
 import EditOrderDetails from './Order/EditOrderDetails';
-import Record from './Order/Record';
+import Commissions from './Order/Commissions';
 
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from '../context/FormsContext';
@@ -122,8 +122,8 @@ function MainPage() {
                             </OrdersContext.Provider>
                         }/>
 
-                        <Route exact path="/record" element={
-                            <Record/>
+                        <Route exact path="/commissions" element={
+                            <Commissions/>
                         }/>
 
                     </Routes>

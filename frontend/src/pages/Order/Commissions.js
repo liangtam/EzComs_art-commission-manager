@@ -1,11 +1,11 @@
-import styles from './Record.module.css';
+import styles from './Commissions.module.css';
 import CommissionSnippet from '../../components/order_components/CommissionSnippet';
 import { useState, useEffect, useContext, useReducer} from 'react';
 import { orderMessageReducer, ACTION} from '../reducers/orderMessageReducer.js';
 import { OrdersContext } from '../../context/OrdersContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 
-const Record = () => {
+const Commissions = () => {
     const [completedOrders, setCompletedOrders] = useState([]);
     const [openPopup, setOpenPopup] = useState(false);
 
@@ -75,14 +75,14 @@ const Record = () => {
     }, []);
 
     return (
-        <div className={styles.record}>
+        <div className={styles.commissions}>
             {openPopup &&
             <YesNoPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
                 <h3>Are you sure?</h3>
                 <p>Are you sure you want to delete this commission? This action cannot be undone.</p>
             </YesNoPopup>}
             <div className={styles.header}>
-                <h2>Commission Record</h2>
+                <h2>Commission Commissions</h2>
             </div>
             <div className={styles.completedOrders}>
                 {completedOrders && completedOrders.map((completedOrder) => {
@@ -100,4 +100,4 @@ const Record = () => {
     )
 }
 
-export default Record;
+export default Commissions;

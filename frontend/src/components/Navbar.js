@@ -29,8 +29,8 @@ const Navbar = () => {
                                 <h4>Orders</h4>
                             </Link>
                         </li>
-                        <li> <Link to="/record">
-                                <h4>Record</h4>
+                        <li> <Link to="/commissions">
+                                <h4>Commissions</h4>
                             </Link>
                         </li>
                     </ul>
