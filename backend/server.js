@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 const ordersRoutes = require('./routes/orders');
 const formRoutes = require('./routes/form');
+const userRoutes = require('./routes/user')
 
 // middleware - code that executes b/w us sending a req on the server and us sending a response
 app.use(express.json());
@@ -21,6 +22,9 @@ app.use('/images', express.static('images'));
 app.use('/api/orders', ordersRoutes);
 
 app.use('/api/forms', formRoutes);
+
+app.use('/api/user', userRoutes);
+
 
 // connect to MongoDB(it's async)
 mongoose.connect(process.env.MONGO_URI)

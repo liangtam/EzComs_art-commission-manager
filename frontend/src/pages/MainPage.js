@@ -14,6 +14,7 @@ import Commissions from './Order/Commissions';
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from '../context/FormsContext';
 import { OrdersContext } from '../context/OrdersContext';
+import Login from './Login';
 
 function MainPage() {
     const [forms, setForms] = useState([]);
@@ -124,6 +125,9 @@ function MainPage() {
 
                         <Route exact path="/commissions" element={
                             <Commissions/>
+                        }/>
+                        <Route exact path="/login" element={
+                            <Login/>
                         }/>
 
                     </Routes>
