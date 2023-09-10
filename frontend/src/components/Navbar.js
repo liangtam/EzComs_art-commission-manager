@@ -1,7 +1,15 @@
 import {Link} from 'react-router-dom';
+import { useLogout } from '../hooks/useLogout';
 
 import styles from './Navbar.module.css'
 const Navbar = () => {
+
+    const { logout } = useLogout();
+
+    const handleLogout = () => {
+        logout();
+    }
+
     return (
         <div className={styles.nav_header}>
             <div className={styles.nav_container}>
@@ -33,10 +41,14 @@ const Navbar = () => {
                                 <h4>Commissions</h4>
                             </Link>
                         </li>
-                        <li> <Link to="/login">
-                                <h4>User</h4>
+                        <div><li> <Link to="/login">
+                                <h4>Login</h4>
                             </Link>
                         </li>
+                        </div>
+                        <div>
+                            <button onClick = {handleLogout}>Logout</button>
+                        </div>
                     </ul>
                 </div>
             </div>
