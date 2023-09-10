@@ -2,9 +2,11 @@ import {Link} from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 
 import styles from './Navbar.module.css'
+import { useAuthContext } from '../hooks/useAuthContext';
 const Navbar = () => {
 
     const { logout } = useLogout();
+    const { user } = useAuthContext();
 
     const handleLogout = () => {
         logout();
@@ -41,14 +43,16 @@ const Navbar = () => {
                                 <h4>Commissions</h4>
                             </Link>
                         </li>
-                        <div><li> <Link to="/login">
+                        {!user && <div><li> <Link to="/login">
                                 <h4>Login</h4>
                             </Link>
                         </li>
                         </div>
-                        <div>
+                        }
+                        {user && <div> 
+                            <span> {user.email}</span>
                             <button onClick = {handleLogout}>Logout</button>
-                        </div>
+                        </div>}
                     </ul>
                 </div>
             </div>

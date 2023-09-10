@@ -1,4 +1,4 @@
-import {createContext, useReducer} from 'react';
+import {createContext, useReducer, useEffect} from 'react';
 
 const AuthContext = createContext();
 
@@ -22,6 +22,13 @@ const AuthContextProvider = ({children}) => {
         user: null
     })
 
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user')); // the local storage item is a json string
+
+        if (user) {
+            dispatch({type: ACTION.LOGIN, payload: user})
+        }
+    }, []);
     // every time our state changes, it will be logged to the console
     console.log('AuthContext state: ', state);
 
