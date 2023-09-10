@@ -3,8 +3,11 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const cloudinary = require("../utils/cloudinary");
+const requireAuth = require('../middleware/requireAuth');
 
 const { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editClientOrder, getCompletedOrders } = require('../controllers/orderController');
+
+router.use(requireAuth);
 
 // storage object (disk storage)
 // we first store the image on our computer, then to mongo
@@ -69,6 +72,7 @@ const artistUpload = multer({
         fileSize: 1024 * 1024 *2
     }
 })
+
 
 // GET all COMPLETED orders
 router.get('/completed', getCompletedOrders);

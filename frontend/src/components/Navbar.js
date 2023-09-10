@@ -22,27 +22,27 @@ const Navbar = () => {
                 </div>
                 <div className={styles.navbar_links}>
                     <ul>
-                        <li>
+                        {user && <li>
                             <Link to="/forms">
                             <h4>Manage Forms</h4>
                             </Link>
-                        </li>
-                        <li> <Link to="/form">
+                        </li>}
+                        {user && <li> <Link to="/form">
                                 <h4>Form</h4>
                             </Link>
-                        </li>
-                        <li> <Link to="/form-builder">
+                        </li>}
+                        {user && <li> <Link to="/form-builder">
                                 <h4>Form Builder</h4>
                             </Link>
-                        </li>
-                        <li> <Link to="/orders">
+                        </li>}
+                        {user && <li> <Link to="/orders">
                                 <h4>Orders</h4>
                             </Link>
-                        </li>
-                        <li> <Link to="/commissions">
+                        </li>}
+                        {user && <li> <Link to="/commissions">
                                 <h4>Commissions</h4>
                             </Link>
-                        </li>
+                        </li>}
                         {!user && <div><li> <Link to="/login">
                                 <h4>Login</h4>
                             </Link>
