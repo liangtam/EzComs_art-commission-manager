@@ -33,6 +33,10 @@ const Navbar = () => {
                                 <h4>Commissions</h4>
                             </Link>
                         </li>
+                        <li> <Link to="/login">
+                                <h4>User</h4>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>
