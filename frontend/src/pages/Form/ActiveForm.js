@@ -5,6 +5,7 @@ import styles from './ActiveForm.module.css'
 import axios from 'axios';
 
 import ImagePreview from '../../components/ImagePreview';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 
 const ActiveForm = () => {
@@ -18,18 +19,28 @@ const ActiveForm = () => {
     const { forms, setForms } = useContext(FormsContext);
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
+    const {user} = useAuthContext();
+
     const fetchAllForms = async () => {
-        const response = await fetch('http://localhost:4000/api/forms/');
+        if (!user) {
+            return;
+        }
+        const response = await fetch('http://localhost:4000/api/forms/', {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
         const json = await response.json();
 
         if (response.ok) {
             setForms(json);
-            console.log("Form page: Fetched all forms! ", forms);
+            console.log("Form page: Fetched all forms in ActiveForm! ", forms);
             //findActiveForm();
         }
     };
 
     const findActiveForm = () => {
+        console.log("Here")
         if (forms.length === 0) {
             console.log("empty!!!!!");
         }
@@ -44,6 +55,7 @@ const ActiveForm = () => {
         }
 
         setActiveForm(form);
+        console.log("form: ", form);
 
         if (activeForm != null) {
             setQuestionFieldList(activeForm.questions);
@@ -138,16 +150,30 @@ const ActiveForm = () => {
         order.append("artistNotes", "");
         // order.append("wipArts", []);
         // order.append("completedArts", []);
-        order.append("editedStatus", false);        
-
-        axios.post('http://localhost:4000/api/orders', order, {
-
+        order.append("editedStatus", false);  
+        order.append("user_id", user._id);
+        
+        fetch('http://localhost:4000/api/orders', {
+            method: 'POST',
+            body: order,
+            headers: {
+                'Authorization': `Bearer ${user.token}`,
+            }
         }).then((res) => {
             console.log(res);
             //clearForm();
         }).catch((error) => {
             console.log(error);
         })
+
+        // axios.post('http://localhost:4000/api/orders', order, {
+
+        // }).then((res) => {
+        //     console.log(res);
+        //     //clearForm();
+        // }).catch((error) => {
+        //     console.log(error);
+        // })
 
     }
 
@@ -173,13 +199,16 @@ const ActiveForm = () => {
 
     // First, fetch all the forms
     useEffect( () => {
-        fetchAllForms(); 
+        if (user) {
+            console.log("hhh")
+            fetchAllForms();
+        }
         //setQuestionFieldList(activeForm.questions);
     }, []);
 
     // Now, after all the forms have been fetched, find the active form
     useEffect(() => {
-        //console.log('Forms is now: ', forms)
+        console.log('Forms is now: ', forms)
         findActiveForm();
     }, [forms])
 

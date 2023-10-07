@@ -4,6 +4,7 @@ import { OrdersContext } from "../../context/OrdersContext";
 import styles from "./Orders.module.css"
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { orderMessageReducer, ACTION } from "../reducers/orderMessageReducer";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 
 const Orders = () => {
@@ -12,13 +13,23 @@ const Orders = () => {
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [state, dispatch] = useReducer(orderMessageReducer, {});
 
+    const {user} = useAuthContext();
+
 
 
     
     const fetchOrders = async () => {
+        if (!user) {
+            return;
+        }
         // making a call to the backend
         dispatch({type: ACTION.LOADING});
-        const response = await fetch('http://localhost:4000/api/orders');
+        const response = await fetch('http://localhost:4000/api/orders', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
         
         // to parse the json from the above response into smt we can work w/ 
         const json = await response.json();
@@ -48,9 +59,13 @@ const Orders = () => {
 
     const handleDeleteOrder = async (e, orderId) => {
         e.preventDefault();
+        if (!user) {
+            return;
+        }
         console.log(orderId);
         const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
-            method: 'DELETE'
+            method: 'DELETE',
+            'Authorization': `Bearer ${user.token}`
         })
 
         if (response.ok) {

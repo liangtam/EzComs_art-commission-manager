@@ -7,6 +7,7 @@ import { FormsContext } from '../../context/FormsContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import styles from './FormBuilder.module.css';
+import {useAuthContext} from '../../hooks/useAuthContext';
 
 const FormBuilder = () => {
     const [formName, setName] = useState("");
@@ -19,6 +20,8 @@ const FormBuilder = () => {
     const [openPopup, setOpenPopup] = useState(false);
 
     const [state, dispatch] = useReducer( formMessageReducer, {});
+
+    const {user} = useAuthContext();
 
 
     /*
@@ -71,6 +74,9 @@ const FormBuilder = () => {
     EFFECT: saves the form into database, if valid. Else, throw an error.
     */
     const handleSaveFormClick = (e) => {
+        if (!user) {
+            return;
+        }
         e.preventDefault();
 
         // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
@@ -102,12 +108,16 @@ const FormBuilder = () => {
                 }
             }
         } else {
-            saveForm();
-
+            if (user) {
+                saveForm();
+            }
         }
     }
 
     const saveForm = async () => {
+        if (!user) {
+            return;
+        }
         dispatch({type: ACTION.LOADING});
         let questions = questionFieldList.filter((question) =>
         question.questionLabel !== "" || (question.type === "mc" && question.optionList.length === 0));
@@ -132,7 +142,8 @@ const FormBuilder = () => {
                 body: JSON.stringify(form), 
                     // to specify that the content type is json
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`
                 }
         
             });
@@ -160,6 +171,9 @@ const FormBuilder = () => {
     }
 
     const replaceActiveForm = async () => {
+        if (!user) {
+            return;
+        }
         //console.log("currActiveForm's status", activeForm.activeStatus);
         const activeForm = findActiveForm();
         const idOfCurrActiveForm = activeForm._id;
@@ -171,7 +185,8 @@ const FormBuilder = () => {
             method: 'PATCH',
             body: JSON.stringify(activeForm),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
 

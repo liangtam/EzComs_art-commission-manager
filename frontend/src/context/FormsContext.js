@@ -1,10 +1,30 @@
 import { createContext } from "react";
 
-export const FormsContext = createContext();
+const FormsContext = createContext();
 
-export const FormsContextProvider = ({children}) => {
+const FORM_ACTION = {
+    GET_ALL_FORMS: "getAllForms",
+    DELETE_FORM: "deleteForm",
+    GET_ONE_FORM: "getOneForm"
+}
+
+const formReducer = (state, action) => {
+    switch(action.type) {
+        case 'getAllForms': {
+
+        }
+    }
+}
+
+const FormsContextProvider = ({children}) => {
+    const [state, dispatch] = useReducer(formReducer, []);
     
-    <FormsContext.Provider>
+    
+    return (
+    <FormsContext.Provider value={{...state, dispatch, FORM_ACTION}}>
         {children}
     </FormsContext.Provider>
+    )
 }
+
+export {FormsContextProvider, FormsContext};

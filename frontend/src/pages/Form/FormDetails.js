@@ -7,6 +7,7 @@ import { FormsContext } from '../../context/FormsContext';
 import styles from './FormDetails.module.css';
 import MCQuestionField from '../../components/question_components/MCQuestionField';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const FormDetails = () => {
 
@@ -25,8 +26,17 @@ const FormDetails = () => {
     const [activeFormReplacementOpenPopup, setActiveFormReplacementOpenPopup] = useState(false);
     const [openDeletePopup, setOpenDeletePopup] = useState(false);
 
+    const {user} = useAuthContext();
+
     const fetchForm = async () => {
-        const response = await fetch('http://localhost:4000/api/forms/' + id);
+        if (!user) {
+            return;
+        }
+        const response = await fetch('http://localhost:4000/api/forms/' + id, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
         console.log("formId: ", id);
         const json = await response.json();
         console.log(json);
@@ -60,6 +70,9 @@ const FormDetails = () => {
     */
     const handleShortAnswerClick = (e) => {
         e.preventDefault();
+        if (!user) {
+            return;
+        }
         const newShortAnsId = questionFieldList.length;
         const newQObj = {
             id: newShortAnsId,
@@ -91,6 +104,9 @@ const FormDetails = () => {
 
     const handleSaveClick = async (e) => {
         e.preventDefault();
+        if (!user) {
+            return;
+        }
         console.log("here")
 
         if (formName === '') {
@@ -145,13 +161,14 @@ const FormDetails = () => {
             }
         }
 
-        let updatedForm = {formName, questions:questions, activeStatus};
+        let updatedForm = {formName, questions:questions, activeStatus, user_id: user._id};
 
         const response = await fetch('http://localhost:4000/api/forms/' + id, {
             method: 'PATCH',
             body: JSON.stringify(updatedForm),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
 
@@ -171,6 +188,9 @@ const FormDetails = () => {
     }
 
     const replaceActiveForm = async () => {
+        if (!user) {
+            return;
+        }
         const activeForm = findActiveForm();
         console.log("currActiveForm's status", activeForm.activeStatus);
         const idOfCurrActiveForm = activeForm._id;
@@ -182,7 +202,8 @@ const FormDetails = () => {
             method: 'PATCH',
             body: JSON.stringify(activeForm),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         });
 
@@ -209,9 +230,13 @@ const FormDetails = () => {
 
     const handleDelete = async (e) => {
         e.preventDefault();
+        if (!user) {
+            return;
+        }
         const response = await fetch('http://localhost:4000/api/forms/' + id, {
             method: 'DELETE',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
         })
 
         if (response.ok) {

@@ -6,6 +6,7 @@ import ImageComponent from '../../components/ImageComponent';
 import OriginalOrderComponent from '../../components/order_components/OriginalOrderComponent';
 import { orderMessageReducer, ACTION} from '../reducers/orderMessageReducer.js';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const OrderDetails = () => {
 
@@ -29,6 +30,8 @@ const OrderDetails = () => {
 
     const [showOrigOrder, setShowOrigOrder] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
+
+    const {user} = useAuthContext();
     
 
     const [state, dispatch] = useReducer( orderMessageReducer, {
@@ -48,7 +51,14 @@ const OrderDetails = () => {
     }, [wipArtsToDelete, completedArtsToDelete])
 
     const fetchOrder = async () => {
-        const response = await fetch('http://localhost:4000/api/orders/' + id);        
+        if (!user) {
+            return;
+        }
+        const response = await fetch('http://localhost:4000/api/orders/' + id, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });        
         if (response.ok) {
             const json = await response.json();
             setOrder(json);
@@ -59,6 +69,10 @@ const OrderDetails = () => {
     }
 
     const handleSave = async (e) => {
+        if (!user) {
+            return;
+        }
+
         e.preventDefault();
 
         dispatch({type: ACTION.LOADING});
@@ -113,8 +127,13 @@ const OrderDetails = () => {
             newOrder.append('completedArtsToDelete[]', JSON.stringify(completedArtsToDelete[i]));
         }
 
+        newOrder.append("user_id", order.user_id);
+
         const response = await fetch('http://localhost:4000/api/orders/' + id, {
             method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            },
             body: newOrder
         });
 
@@ -197,10 +216,16 @@ const OrderDetails = () => {
     }
 
     const handleDeleteOrder = async (e) => {
+        if (!user) {
+            return;
+        }
         e.preventDefault();
         dispatch({type: ACTION.LOADING});
         const response = await fetch('http://localhost:4000/api/orders/' + id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
 
         if (response.ok) {

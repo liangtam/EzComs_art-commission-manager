@@ -4,6 +4,7 @@ import { useState, useEffect, useContext, useReducer} from 'react';
 import { orderMessageReducer, ACTION} from '../reducers/orderMessageReducer.js';
 import { OrdersContext } from '../../context/OrdersContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const Commissions = () => {
     const [completedOrders, setCompletedOrders] = useState([]);
@@ -15,13 +16,20 @@ const Commissions = () => {
         successMessage: "",
         errorMessage: "",
         loadingMessage: ""
-    })
+    });
+
+    const {user} = useAuthContext();
 
     
     //const {orders, setOrders} = useContext(OrdersContext);
 
     const findCompletedOrders = async () => {
-        const response = await fetch('http://localhost:4000/api/orders/completed');
+        const response = await fetch('http://localhost:4000/api/orders/completed', {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+
+            }
+        });
 
         const json = await response.json();
 
@@ -45,7 +53,10 @@ const Commissions = () => {
     const handleDeleteOrder = async (e) => {
         // dispatch({type: ACTION.LOADING});
         const response = await fetch('http://localhost:4000/api/orders/' + selectedID, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         });
 
         if (response.ok) {
@@ -71,7 +82,9 @@ const Commissions = () => {
     }
 
     useEffect(() => {
-        findCompletedOrders();
+        if (user) {
+            findCompletedOrders();
+        }
     }, []);
 
     return (

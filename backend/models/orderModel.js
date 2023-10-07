@@ -80,6 +80,10 @@ const orderSchema = new Schema({
     originalUneditedOrder: {
         type: Object,
         required: false
+    },
+    user_id: {
+        type: String,
+        required: true
     }
     
 }, { timestamps: true });

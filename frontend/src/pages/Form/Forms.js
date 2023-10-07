@@ -4,6 +4,7 @@ import { FormsContext } from "../../context/FormsContext";
 import styles from './Forms.module.css'
 import { formMessageReducer, ACTION } from "../reducers/formMessageReducer";
 import YesNoPopup from "../../components/form_components/YesNoPopup";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 
 const Forms = () => {
@@ -12,9 +13,18 @@ const Forms = () => {
     const [openDeletePopup, setOpenDeletePopup] = useState(false);
     const [state, dispatch] = useReducer(formMessageReducer, {});
 
+    const {user} = useAuthContext();
+
     const fetchAllForms = async () => {
+        if (!user) {
+            return;
+        }
         dispatch({type: ACTION.LOADING});
-        const response = await fetch('http://localhost:4000/api/forms/');
+        const response = await fetch('http://localhost:4000/api/forms/', {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
 
         const json = await response.json();
 
@@ -34,9 +44,16 @@ const Forms = () => {
     }
 
     const handleDelete = async (e) => {
+        if (!user) {
+            return;
+        }
+        console.log("h")
         e.preventDefault();
         const response = await fetch('http://localhost:4000/api/forms/' + selectedID, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
 
         if (response.ok) {
@@ -51,7 +68,9 @@ const Forms = () => {
     }
 
     useEffect(() => {
-        fetchAllForms();
+        if (user) {
+            fetchAllForms();
+        }
         console.log('fetched');
     }, [])
 

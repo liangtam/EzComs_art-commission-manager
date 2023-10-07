@@ -15,6 +15,10 @@ const formSchema = new Schema({
     activeStatus: {
         type: Boolean,
         required: true
+    },
+    user_id: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 
