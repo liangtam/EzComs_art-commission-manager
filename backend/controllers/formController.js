@@ -23,8 +23,9 @@ const getForm = async(req, res) => {
 
 // GET all forms
 const getForms = async(req, res) => {
+    const user_id = req.user._id;
     // the finds all forms, starting from most recent one
-    const forms = await Form.find({}).sort({activeStatus: -1, createdAt: -1});
+    const forms = await Form.find({user_id: user_id}).sort({activeStatus: -1, createdAt: -1});
 
     // this means signal everything is ok, and the "forms" is
     //      sending the array as json back to client 

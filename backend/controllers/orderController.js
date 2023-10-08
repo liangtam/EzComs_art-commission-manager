@@ -14,14 +14,16 @@ const redirectToOrders = (req, res) => {
 
 // get orders
 const getOrders = async (req, res) => {
-    const orders = await Order.find({}).sort({createdAt: -1});
+    const user_id = req.user._id;
+    const orders = await Order.find({user_id: user_id}).sort({createdAt: -1});
 
     res.status(200).json(orders);
 }
 
 // get completed orders
 const getCompletedOrders = async (req, res) => {
-    const completedOrders = await Order.find({status: "Completed"}).sort({createdAt: -1});
+    const user_id = req.user._id;
+    const completedOrders = await Order.find({status: "Completed", user_id}).sort({createdAt: -1});
     
     res.status(200).json(completedOrders);
 }

@@ -71,7 +71,13 @@ function MainPage() {
     return (
         <div className="App">
             <BrowserRouter>
+                <FormsContext.Provider value={{ forms, setForms }}>
+                <OrdersContext.Provider value={{ orders, setOrders }}>
+
+
                 <Navbar />
+                </OrdersContext.Provider>
+                </FormsContext.Provider>
                 <div className="pages">
                     <Routes>
                         <Route

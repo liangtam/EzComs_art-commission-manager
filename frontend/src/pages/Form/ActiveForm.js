@@ -42,7 +42,9 @@ const ActiveForm = () => {
     const findActiveForm = () => {
         console.log("Here")
         if (forms.length === 0) {
+            setNoActiveForm(true);
             console.log("empty!!!!!");
+            return;
         }
 
         let form = forms[0]; // the active form is always at the front of the list of forms
@@ -148,8 +150,6 @@ const ActiveForm = () => {
         order.append("deadline", userDeadline);
         order.append("status", "Not Started Yet");
         order.append("artistNotes", "");
-        // order.append("wipArts", []);
-        // order.append("completedArts", []);
         order.append("editedStatus", false);  
         order.append("user_id", user._id);
         
