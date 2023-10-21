@@ -22,7 +22,6 @@ import { useFormFetches } from '../hooks/useFormFetches';
 function MainPage() {
     const [forms, setForms] = useState([]);
     const [orders, setOrders] = useState([]);
-    //const [activeForm, setActiveForm] = useState(null);
     // the current list of questions of the CURRENT form the user is on
     const [questionFieldList, setQuestionFieldList] = useState([]);
     const { user } = useAuthContext();
@@ -42,7 +41,6 @@ function MainPage() {
         if (response.ok) {
             setForms(json);
             console.log('Fetched all forms in main page! ', json);
-            //findActiveForm();
         }
     };
 

@@ -83,25 +83,6 @@ const FormBuilder = () => {
         if (activeStatus === true) {
             if (forms.length > 0) {
                 const activeForm = findActiveForm();
-
-                // if (activeForm.activeStatus === true) {
-                //     const confirmBox = window.confirm("Setting this form as active makes your current active form inactive. Would you like to set this form to be active instead of the current active form?");
-
-                //     let formsCopy = [... forms];
-
-                //     if (confirmBox === true) {
-                //         formsCopy[0].activeStatus = false;
-                //         console.log("HERE");
-                //         replaceActiveForm(activeForm);
-                //         formsCopy.unshift(form); // pushes our form to the front of list of form
-                //         //console.log("got hereee ", form.activeStatus)
-                //     } else {
-                //         form = {formName, questions, activeStatus: false};
-                //         formsCopy.push(form);
-                //         setForms(formsCopy);
-                //         //console.log("got here :000 ", form)
-                //     }
-                // }
                 if (activeForm.activeStatus === true) {
                     setOpenPopup(true);
                 } else {
@@ -255,26 +236,18 @@ const FormBuilder = () => {
                 <div className="create_qs">
                     <button onClick={handleShortAnswerClick}>Add Short Answer</button>
                     <button onClick={handleMCClick}>Add Multiple Choice</button>
-                    {/* <QuestionFieldsContext.Provider value={{questionFieldList, setQuestionFieldList}}> */}
                         {(questionFieldList.length >= 1) && questionFieldList.map((questionField) => {
                             if (questionField.type === "shortAns") {
                                 return <ShortAnswerQField fieldId = {questionField.id}
-                                                        //handleRemoveField={handleRemoveField}
-                                                        //handleFieldChange={handleFieldChange}
+
                                                         key={"saq" + questionField.id}/>;
                             } else if (questionField.type === "mc") {
                                 return (<MCQuestionField fieldId = {questionField.id}
-                                                        //handleOptionClick = {handleOptionClick}
-                                                        //handleOptionFieldChange = {handleOptionFieldChange}
-                                                        //handleRemoveOptionField = {handleRemoveOptionField}
-                                                        //handleRemoveField={handleRemoveField}
-                                                        //handleFieldChange={handleFieldChange}
                                                         optList={questionField.optionList}
                                                         key={"mcq" + questionField.id}/>
                                 );
                             }
                         })}
-                    {/* </QuestionFieldsContext.Provider> */}
                 </div>
 
                 {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
