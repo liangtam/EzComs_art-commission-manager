@@ -81,7 +81,6 @@ const FormBuilder = () => {
 
         // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
         if (activeStatus === true) {
-            console.log("boop")
             if (forms.length > 0) {
                 const activeForm = findActiveForm();
 
@@ -105,6 +104,10 @@ const FormBuilder = () => {
                 // }
                 if (activeForm.activeStatus === true) {
                     setOpenPopup(true);
+                } else {
+                    if (user) {
+                        saveForm();
+                    }
                 }
             }
         } else {

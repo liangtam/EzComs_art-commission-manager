@@ -4,22 +4,22 @@ const {getForm, postForm, getForms, deleteForm, updateForm} = require('../contro
 const requireAuth = require('../middleware/requireAuth');
 
 // require authentication for all form routes
-router.use(requireAuth); // this middleware will be fired before any of the other routes
+// router.use(requireAuth); // this middleware will be fired before any of the other routes
 
 // GET a form
-router.get('/:id', getForm);
+router.get('/:id', requireAuth, getForm);
 
 // DELETE a form
-router.delete('/:id', deleteForm);
+router.delete('/:id', requireAuth, deleteForm);
 
 // UPDATE a form
-router.patch('/:id', updateForm);
+router.patch('/:id', requireAuth, updateForm);
 
 // POST a form
-router.post('/', postForm)
+router.post('/', requireAuth, postForm)
 
 // GET all forms
-router.get('/', getForms);
+router.get('/', requireAuth, getForms);
 
 
 

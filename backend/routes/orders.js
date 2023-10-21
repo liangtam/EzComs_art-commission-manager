@@ -7,7 +7,7 @@ const requireAuth = require('../middleware/requireAuth');
 
 const { postOrder, getOrders, getOrder, deleteOrder, updateOrder, editClientOrder, getCompletedOrders } = require('../controllers/orderController');
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
 // storage object (disk storage)
 // we first store the image on our computer, then to mongo
@@ -75,25 +75,25 @@ const artistUpload = multer({
 
 
 // GET all COMPLETED orders
-router.get('/completed', getCompletedOrders);
+router.get('/completed', requireAuth, getCompletedOrders);
 
-router.patch('/edit/:id', upload.array('uploadedReferenceImages[]'), editClientOrder);
+router.patch('/edit/:id', requireAuth, upload.array('uploadedReferenceImages[]'), editClientOrder);
 
 // GET single order
-router.get('/:id', getOrder);
+router.get('/:id', requireAuth, getOrder);
 
 
 // DELETE an order
-router.delete('/:id', deleteOrder);
+router.delete('/:id', requireAuth, deleteOrder);
 
 // UPDATE an order
-router.patch('/:id', artistUpload.fields([
+router.patch('/:id', requireAuth, artistUpload.fields([
     {name: 'completedArts[]'},
     {name: 'wipArts[]'}
     ]), updateOrder);
 
 // GET all orders
-router.get('/', getOrders);
+router.get('/', requireAuth, getOrders);
 
 // POST new order
 router.post('/', upload.array('referenceImages[]', 10), postOrder);
