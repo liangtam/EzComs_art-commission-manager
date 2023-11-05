@@ -21,19 +21,23 @@ const ActiveForm = () => {
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
     const {user} = useAuthContext();
-    const {id} = useParams();
+    const {userID} = useParams();
 
     const fetchActiveForm = async () => {
         try {
-            const response = await fetch("http://localhost:4000/api/forms/active/" + id, {
+            const response = await fetch("http://localhost:4000/api/forms/active/" + userID, {
                 method: 'GET'
             });
 
-            const responseJson = await response.json();
-
-            console.log("Response json: ", responseJson);
-
             if (response.ok) {
+                const responseJson = await response.json();
+
+                console.log("Response json: ", responseJson);
+
+                if (responseJson.length === 0) {
+                    setNoActiveForm(true);
+                    return;
+                }
                 setActiveForm(responseJson);
                 setNoActiveForm(false);
             } else {

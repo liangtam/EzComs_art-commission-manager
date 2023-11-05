@@ -138,7 +138,7 @@ function MainPage() {
 
                         <Route
                             exact
-                            path="/form/:id"
+                            path="/form/:userID"
                             element={
                                 (
                                     <FormsContext.Provider value={{ forms, setForms }}>
