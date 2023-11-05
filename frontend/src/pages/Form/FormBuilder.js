@@ -103,8 +103,7 @@ const FormBuilder = () => {
             return;
         }
         dispatch({type: ACTION.LOADING});
-        let questions = questionFieldList.filter((question) =>
-        question.questionLabel !== "" || (question.type === "mc" && question.optionList.length === 0));
+        let questions = questionFieldList.filter((question) => question.questionLabel !== "" || (question.type === "mc" && question.optionList.length !== 0));
         if (formName === "") {
             return;
         }
