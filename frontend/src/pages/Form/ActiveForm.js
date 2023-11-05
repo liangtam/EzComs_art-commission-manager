@@ -38,7 +38,7 @@ const ActiveForm = () => {
                     setNoActiveForm(true);
                     return;
                 }
-                setActiveForm(responseJson);
+                setActiveForm(responseJson[0]);
                 setNoActiveForm(false);
             } else {
                 setNoActiveForm(true);
@@ -243,6 +243,7 @@ const ActiveForm = () => {
         //console.log('Q LIST is now: ', questionFieldList)
         if (activeForm != null) {
             setQuestionFieldList(activeForm.questions);
+            console.log(activeForm.questions)
             console.log("setQList");  
         }
     }, [activeForm])
