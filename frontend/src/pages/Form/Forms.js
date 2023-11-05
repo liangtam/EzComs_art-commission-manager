@@ -71,7 +71,7 @@ const Forms = () => {
             fetchAllForms();
         }
         console.log('fetched');
-    }, [])
+    }, [user])
 
     return (
         <div className={styles.formsContainer}>

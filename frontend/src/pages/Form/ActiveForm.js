@@ -1,8 +1,6 @@
 import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
-import { FormsContext } from "../../context/FormsContext";
 import { useContext, useEffect, useState } from 'react';
 import styles from './ActiveForm.module.css'
-import axios from 'axios';
 
 import ImagePreview from '../../components/ImagePreview';
 import { useAuthContext } from '../../hooks/useAuthContext';

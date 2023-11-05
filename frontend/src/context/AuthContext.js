@@ -23,11 +23,13 @@ const AuthContextProvider = ({children}) => {
     })
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user')); // the local storage item is a json string
-
-        if (user) {
-            dispatch({type: ACTION.LOGIN, payload: user})
+        async function getUser() {
+            const user = await JSON.parse(localStorage.getItem('user')); // the local storage item is a json string
+            if (user) {
+                dispatch({type: ACTION.LOGIN, payload: user})
+            }
         }
+        getUser();
     }, []);
     // every time our state changes, it will be logged to the console
     console.log('AuthContext state: ', state);
