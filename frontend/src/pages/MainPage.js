@@ -72,104 +72,31 @@ function MainPage() {
                 <FormsContext.Provider value={{ forms, setForms }}>
                     <OrdersContext.Provider value={{ orders, setOrders }}>
                         <Navbar />
+                        <div className="pages">
+                            <Routes>
+                                {user && (
+                                    <>
+                                        <Route exact path="/" element={<Orders />} />
+                                        <Route exact path="/forms" element={<Forms />} />
+
+                                        <Route exact path="/form-builder" element={<FormBuilder />} />
+
+                                        <Route exact path="/form/:userID" element={<ActiveForm />} />
+
+                                        <Route exact path="/orders" element={<Orders />} />
+
+                                        <Route exact path="/orders/:id" element={<OrderDetails />} />
+                                        <Route exact path="/orders/edit/:id" element={<EditOrderDetails />} />
+                                    </>
+                                )}
+
+                                <Route exact path="/commissions" element={user ? <Commissions /> : <Navigate to="/login"></Navigate>} />
+                                {!user && <Route path="/login" element={<Login />} />}
+                                <Route exact path="/forms/:id" element={<FormDetails />} />
+                            </Routes>
+                        </div>
                     </OrdersContext.Provider>
                 </FormsContext.Provider>
-                <div className="pages">
-                    <Routes>
-                        {user && (
-                            <>
-                                <Route
-                                    exact
-                                    path="/"
-                                    element={
-                                        <OrdersContext.Provider value={{ orders, setOrders }}>
-                                            <Orders />
-                                        </OrdersContext.Provider>
-                                    }
-                                />
-                                <Route
-                                    exact
-                                    path="/forms"
-                                    element={
-                                        <FormsContext.Provider value={{ forms, setForms }}>
-                                            <Forms />
-                                        </FormsContext.Provider>
-                                    }
-                                />
-
-                                <Route
-                                    exact
-                                    path="/form-builder"
-                                    element={
-                                        <FormsContext.Provider value={{ forms, setForms }}>
-                                            <QuestionFieldsContext.Provider value={{ questionFieldList, setQuestionFieldList }}>
-                                                <FormBuilder />
-                                            </QuestionFieldsContext.Provider>
-                                        </FormsContext.Provider>
-                                    }
-                                />
-
-                                <Route
-                                    exact
-                                    path="/form/:userID"
-                                    element={
-                                        <FormsContext.Provider value={{ forms, setForms }}>
-                                            <QuestionFieldsContext.Provider value={{ questionFieldList, setQuestionFieldList }}>
-                                                <ActiveForm />
-                                            </QuestionFieldsContext.Provider>
-                                        </FormsContext.Provider>
-                                    }
-                                />
-
-                                <Route
-                                    exact
-                                    path="/orders"
-                                    element={
-                                        <OrdersContext.Provider value={{ orders, setOrders }}>
-                                            <QuestionFieldsContext.Provider value={{ questionFieldList, setQuestionFieldList }}>
-                                                <Orders />
-                                            </QuestionFieldsContext.Provider>
-                                        </OrdersContext.Provider>
-                                    }
-                                />
-
-                                <Route
-                                    exact
-                                    path="/orders/:id"
-                                    element={
-                                        <OrdersContext.Provider value={{ orders, setOrders }}>
-                                            <OrderDetails />
-                                        </OrdersContext.Provider>
-                                    }
-                                />
-                                <Route
-                                    exact
-                                    path="/orders/edit/:id"
-                                    element={
-                                        <OrdersContext.Provider value={{ orders, setOrders }}>
-                                            <EditOrderDetails />
-                                        </OrdersContext.Provider>
-                                    }
-                                />
-                            </>
-                        )}
-
-                        <Route exact path="/commissions" element={user ? <Commissions /> : <Navigate to="/login"></Navigate>} />
-                        {/* Login Route (only shown when user is not authenticated) */}
-                        {!user && <Route path="/login" element={<Login />} />}
-                        <Route
-                            exact
-                            path="/forms/:id"
-                            element={
-                                <FormsContext.Provider value={{ forms, setForms }}>
-                                    <QuestionFieldsContext.Provider value={{ questionFieldList, setQuestionFieldList }}>
-                                        <FormDetails />
-                                    </QuestionFieldsContext.Provider>
-                                </FormsContext.Provider>
-                            }
-                        />
-                    </Routes>
-                </div>
             </BrowserRouter>
         </div>
     );
