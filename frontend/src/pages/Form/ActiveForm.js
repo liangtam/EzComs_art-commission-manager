@@ -261,7 +261,7 @@ const ActiveForm = () => {
 
 
     if (noActiveForm) {
-        return <div>You have no active form!</div>
+        return <div>No active form yet.</div>
     } else {
         return (
             <form onSubmit={handleSubmit} className={styles.activeForm} encType="multipart/form-data">

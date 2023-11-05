@@ -47,7 +47,6 @@ const Forms = () => {
         if (!user) {
             return;
         }
-        console.log("h")
         e.preventDefault();
         const response = await fetch('http://localhost:4000/api/forms/' + selectedID, {
             method: 'DELETE',

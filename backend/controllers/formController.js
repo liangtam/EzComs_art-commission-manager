@@ -70,6 +70,7 @@ const postForm = async(req, res) => {
 
 const deleteForm = async (req, res) => {
     const {id} = req.params;
+    console.log("ID: ", id);
 
 
 

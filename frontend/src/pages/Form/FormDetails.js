@@ -233,15 +233,22 @@ const FormDetails = () => {
         if (!user) {
             return;
         }
-        const response = await fetch('http://localhost:4000/api/forms/' + id, {
+        console.log("here, ", id);
+        try {
+            const response = await fetch('http://localhost:4000/api/forms/' + id, {
             method: 'DELETE',
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
+            }
         })
 
-        if (response.ok) {
-            console.log('Form deleted!');
-            navigate('/forms');
+            if (response.ok) {
+                console.log('Form deleted!');
+                navigate('/forms');
+            }
+        } catch(error) {
+            console.log("Error deleting form: ", error);
         }
     }
 
