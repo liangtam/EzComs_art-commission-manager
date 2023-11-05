@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const getActiveForm = async(req, res) => {
     const {id} = req.params;
-    console.log("id: ", id);
+    // console.log("id: ", id);
 
     if (!mongoose.isValidObjectId(id)) {
         return res.status(404).json({error: "Active form does not exist. ID is not valid."});
@@ -30,7 +30,7 @@ const getActiveForm = async(req, res) => {
 // GET single form
 const getForm = async(req, res) => {
     const {id} = req.params;
-
+    console.log("id: ", id);
     
     if (!mongoose.isValidObjectId(id)){
         return res.status(404).json({error: 'Form does not exist. Invalid ID!'});

@@ -101,6 +101,7 @@ const postOrder = async (req, res) => {
         // Saving the order to backend
         order.save()
         .then((result) => {
+            console.log("Order saved! ", order);
             res.status(200).json({
                 success: true,
                 mssg: "Order added!",

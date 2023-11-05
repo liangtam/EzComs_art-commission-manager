@@ -176,7 +176,7 @@ const ActiveForm = () => {
         order.append("status", "Not Started Yet");
         order.append("artistNotes", "");
         order.append("editedStatus", false);  
-        order.append("user_id", user._id);
+        order.append("user_id", user.userID);
         
         fetch('http://localhost:4000/api/orders', {
             method: 'POST',

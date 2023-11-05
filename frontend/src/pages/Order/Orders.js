@@ -65,7 +65,9 @@ const Orders = () => {
         console.log(orderId);
         const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
             method: 'DELETE',
-            'Authorization': `Bearer ${user.token}`
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
 
         if (response.ok) {

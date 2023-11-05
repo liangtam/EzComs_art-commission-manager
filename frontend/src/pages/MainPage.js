@@ -71,30 +71,30 @@ function MainPage() {
             <BrowserRouter>
                 <FormsContext.Provider value={{ forms, setForms }}>
                     <OrdersContext.Provider value={{ orders, setOrders }}>
-                        <Navbar />
-                        <div className="pages">
-                            <Routes>
-                                {user && (
-                                    <>
-                                        <Route exact path="/" element={<Orders />} />
-                                        <Route exact path="/forms" element={<Forms />} />
+                        <QuestionFieldsContext.Provider value={{ setQuestionFieldList, questionFieldList }}>
+                            <Navbar />
+                            <div className="pages">
+                                <Routes>
+                                    {user && (
+                                        <>
+                                            <Route exact path="/" element={<Orders />} />
+                                            <Route exact path="/forms" element={<Forms />} />
 
-                                        <Route exact path="/form-builder" element={<FormBuilder />} />
+                                            <Route exact path="/form-builder" element={<FormBuilder />} />
+                                            <Route exact path="/forms/:id" element={<FormDetails />} />
+                                            <Route exact path="/orders" element={<Orders />} />
 
-                                        <Route exact path="/form/:userID" element={<ActiveForm />} />
+                                            <Route exact path="/orders/:id" element={<OrderDetails />} />
+                                            <Route exact path="/orders/edit/:id" element={<EditOrderDetails />} />
+                                        </>
+                                    )}
 
-                                        <Route exact path="/orders" element={<Orders />} />
-
-                                        <Route exact path="/orders/:id" element={<OrderDetails />} />
-                                        <Route exact path="/orders/edit/:id" element={<EditOrderDetails />} />
-                                    </>
-                                )}
-
-                                <Route exact path="/commissions" element={user ? <Commissions /> : <Navigate to="/login"></Navigate>} />
-                                {!user && <Route path="/login" element={<Login />} />}
-                                <Route exact path="/forms/:id" element={<FormDetails />} />
-                            </Routes>
-                        </div>
+                                    <Route exact path="/commissions" element={user ? <Commissions /> : <Navigate to="/login"></Navigate>} />
+                                    {!user && <Route path="/login" element={<Login />} />}
+                                    <Route exact path="/form/:userID" element={<ActiveForm />} />
+                                </Routes>
+                            </div>
+                        </QuestionFieldsContext.Provider>
                     </OrdersContext.Provider>
                 </FormsContext.Provider>
             </BrowserRouter>

@@ -32,16 +32,22 @@ const FormDetails = () => {
         if (!user) {
             return;
         }
-        const response = await fetch('http://localhost:4000/api/forms/' + id, {
+        try {
+            const response = await fetch('http://localhost:4000/api/forms/' + id, {
             headers: {
                 'Authorization': `Bearer ${user.token}`
             }
         });
+    
         console.log("formId: ", id);
         const json = await response.json();
-        console.log(json);
+        // console.log(json);
         if (response.ok) {
             console.log("Response was ok");
+            if (!json || json.length === 0) {
+                setError("No form found.");
+                return;
+            }
             setForm(json);
             setQuestionFieldList(json.questions);
             setFormName(json.formName);
@@ -50,6 +56,9 @@ const FormDetails = () => {
                 setWasAlreadyActive(true);
             }
         }
+    } catch (error) {
+        console.log(error);
+    }
         // if (form !== null) {
         //     console.log("here");
         //     setQuestionFieldList(form.questions);
