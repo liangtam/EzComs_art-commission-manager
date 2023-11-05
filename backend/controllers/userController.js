@@ -15,7 +15,9 @@ const loginUser = async (req, res) => {
         // create a token
         const token = createToken(user._id);
 
-        res.status(200).json({email, token});
+        const userID = user._id;
+
+        res.status(200).json({email, userID, token});
 
     } catch (error) {
         res.status(400).json({error: error.message});
@@ -33,9 +35,10 @@ const signUpUser = async (req, res) => {
 
         // create a token
         const token = createToken(user._id);
+        const userID = user._id;
 
         // passing the token back to frontend (header, payload, secret all encoded and mushed together into a string, ea item separated via dots)
-        res.status(200).json({email, token});
+        res.status(200).json({email, userID, token});
     } catch (error) {
         res.status(400).json({error: error.message})
     }

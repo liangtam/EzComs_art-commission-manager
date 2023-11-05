@@ -138,16 +138,14 @@ function MainPage() {
 
                         <Route
                             exact
-                            path="/form"
+                            path="/form/:id"
                             element={
-                                user ? (
+                                (
                                     <FormsContext.Provider value={{ forms, setForms }}>
                                         <QuestionFieldsContext.Provider value={{ questionFieldList, setQuestionFieldList }}>
                                             <ActiveForm />
                                         </QuestionFieldsContext.Provider>
                                     </FormsContext.Provider>
-                                ) : (
-                                    <Navigate to="/login"></Navigate>
                                 )
                             }
                         />

@@ -6,66 +6,89 @@ import axios from 'axios';
 
 import ImagePreview from '../../components/ImagePreview';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useParams } from 'react-router-dom';
 
 
 const ActiveForm = () => {
-    const [noActiveForm, setNoActiveForm] = useState(false);
     const [activeForm, setActiveForm] = useState(null);
     const [clientName, setClientName] = useState('');
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
     const [referenceImages, setReferenceImages] = useState([]);
 
-    const { forms, setForms } = useContext(FormsContext);
+    const [noActiveForm, setNoActiveForm] = useState(false);
+
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
     const {user} = useAuthContext();
+    const {id} = useParams();
 
-    const fetchAllForms = async () => {
-        if (!user) {
-            return;
-        }
-        const response = await fetch('http://localhost:4000/api/forms/', {
-            headers: {
-                'Authorization': `Bearer ${user.token}`
+    const fetchActiveForm = async () => {
+        try {
+            const response = await fetch("http://localhost:4000/api/forms/active/" + id, {
+                method: 'GET'
+            });
+
+            const responseJson = await response.json();
+
+            console.log("Response json: ", responseJson);
+
+            if (response.ok) {
+                setActiveForm(responseJson);
+                setNoActiveForm(false);
+            } else {
+                setNoActiveForm(true);
             }
-        });
-        const json = await response.json();
-
-        if (response.ok) {
-            setForms(json);
-            console.log("Form page: Fetched all forms in ActiveForm! ", forms);
-            //findActiveForm();
-        }
-    };
-
-    const findActiveForm = () => {
-        console.log("Here")
-        if (forms.length === 0) {
+        } catch (error) {
             setNoActiveForm(true);
-            console.log("empty!!!!!");
-            return;
+            console.log("An error occurred while fetching active form: ", error);
         }
+    }
+    // const fetchAllForms = async () => {
+    //     if (!user) {
+    //         return;
+    //     }
+    //     const response = await fetch('http://localhost:4000/api/forms/', {
+    //         headers: {
+    //             'Authorization': `Bearer ${user.token}`
+    //         }
+    //     });
+    //     const json = await response.json();
 
-        let form = forms[0]; // the active form is always at the front of the list of forms
+    //     if (response.ok) {
+    //         setForms(json);
+    //         console.log("Form page: Fetched all forms in ActiveForm! ", forms);
+    //         //findActiveForm();
+    //     }
+    // };
 
-        if (!form) {
-            return null;
-        } else if (form.activeStatus === false) {
-            setNoActiveForm(true);
-            return null;
-        }
+    // const findActiveForm = () => {
+    //     console.log("Here")
+    //     if (forms.length === 0) {
+    //         setNoActiveForm(true);
+    //         console.log("empty!!!!!");
+    //         return;
+    //     }
 
-        setActiveForm(form);
-        console.log("form: ", form);
+    //     let form = forms[0]; // the active form is always at the front of the list of forms
 
-        if (activeForm != null) {
-            setQuestionFieldList(activeForm.questions);
-            console.log("Status: ", activeForm.activeStatus)
-            console.log("setQList");  
-        }
-        return form;
-    };
+    //     if (!form) {
+    //         return null;
+    //     } else if (form.activeStatus === false) {
+    //         setNoActiveForm(true);
+    //         return null;
+    //     }
+
+    //     setActiveForm(form);
+    //     console.log("form: ", form);
+
+    //     if (activeForm != null) {
+    //         setQuestionFieldList(activeForm.questions);
+    //         console.log("Status: ", activeForm.activeStatus)
+    //         console.log("setQList");  
+    //     }
+    //     return form;
+    // };
 
     const handleClientNameChange = (e) => {
         setClientName(e.target.value);
@@ -155,10 +178,10 @@ const ActiveForm = () => {
         
         fetch('http://localhost:4000/api/orders', {
             method: 'POST',
-            body: order,
-            headers: {
-                'Authorization': `Bearer ${user.token}`,
-            }
+            body: order
+            // headers: {
+            //     'Authorization': `Bearer ${user.token}`,
+            // }
         }).then((res) => {
             console.log(res);
             //clearForm();
@@ -198,19 +221,18 @@ const ActiveForm = () => {
     // }
 
     // First, fetch all the forms
-    useEffect( () => {
-        if (user) {
-            console.log("hhh")
-            fetchAllForms();
-        }
-        //setQuestionFieldList(activeForm.questions);
-    }, []);
+    // useEffect( () => {
+    //     if (user) {
+    //         console.log("hhh")
+    //         fetchAllForms();
+    //     }
+    //     //setQuestionFieldList(activeForm.questions);
+    // }, []);
 
     // Now, after all the forms have been fetched, find the active form
     useEffect(() => {
-        console.log('Forms is now: ', forms)
-        findActiveForm();
-    }, [forms])
+        fetchActiveForm();
+    }, [])
 
     // Finally, after you find the active form, populate the question fields list with the active form's questions
     useEffect(() => {

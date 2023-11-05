@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {getForm, postForm, getForms, deleteForm, updateForm} = require('../controllers/formController');
+const {getForm, postForm, getForms, deleteForm, updateForm, getActiveForm} = require('../controllers/formController');
 const requireAuth = require('../middleware/requireAuth');
 
 // require authentication for all form routes
 // router.use(requireAuth); // this middleware will be fired before any of the other routes
+
+// GET an active form
+router.get("/active/:id", getActiveForm);
 
 // GET a form
 router.get('/:id', requireAuth, getForm);

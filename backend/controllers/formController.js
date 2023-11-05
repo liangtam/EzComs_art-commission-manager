@@ -4,6 +4,29 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 //import { unlinkSync } from 'node:fs';
 
+
+const getActiveForm = async(req, res) => {
+    const {id} = req.params;
+    console.log("id: ", id);
+
+    if (!mongoose.isValidObjectId(id)) {
+        return res.status(404).json({error: "Active form does not exist. ID is not valid."});
+    }
+
+    try {
+        const activeForm = await Form.find({user_id : id, activeStatus: true});
+        
+        if (!activeForm) {
+            return res.status(404).json({error: "Active form does not exist."});
+        }
+        res.status(200).json(activeForm);
+    } catch (error) {
+        console.log(error);
+        return res.status(404).json({error: "Error fetching active form."});
+
+    }
+
+}
 // GET single form
 const getForm = async(req, res) => {
     const {id} = req.params;
@@ -83,4 +106,4 @@ const updateForm = async (req, res) => {
 };
 
 
-module.exports = {getForm, postForm, getForms, deleteForm, updateForm};
+module.exports = {getForm, postForm, getForms, deleteForm, updateForm, getActiveForm};

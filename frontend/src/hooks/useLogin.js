@@ -13,7 +13,7 @@ const useLogin = () => {
         setError(null);
 
         const userObj = {email, password};
-        console.log(JSON.stringify(userObj))
+        // console.log(JSON.stringify(userObj))
 
         const response = await fetch('http://localhost:4000/api/user/login', {
             method: 'POST',

@@ -7,6 +7,8 @@ const Navbar = () => {
     const { logout } = useLogout();
     const { user } = useAuthContext();
 
+    console.log("User: ", user);
+
     const handleLogout = () => {
         logout();
     };
@@ -32,7 +34,7 @@ const Navbar = () => {
                         )}
                         {user && (
                             <li>
-                                <Link to="/form">
+                                <Link to={`/form/${user.userID}`}>
                                     <h4>Form</h4>
                                 </Link>
                             </li>

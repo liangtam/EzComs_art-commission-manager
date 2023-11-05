@@ -43,6 +43,7 @@ userSchema.statics.signUp = async function(email, password) {
     const hash = await bcrypt.hash(password, salt);
 
     const user = await this.create({email, password: hash});
+    // console.log("Sign up: ", user);
 
     return user;
 }
@@ -66,6 +67,7 @@ userSchema.statics.login = async function(email, password) {
     if (!match) {
         throw Error('Incorrect password.');
     }
+    // console.log("Login: ", user);
 
     return user;
 }
