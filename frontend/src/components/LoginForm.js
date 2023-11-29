@@ -1,11 +1,14 @@
 import { useState } from "react";
 import styles from './LoginForm.module.css';
 import { useLogin } from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const {error, isLoading, login } = useLogin();
+
+    const nav = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -14,8 +17,9 @@ const LoginForm = () => {
         
         console.log("b4: ", isLoading)
         await login(email, password);
+        nav("/orders");
 
-        console.log(isLoading)
+        // console.log(isLoading)
 
     }
 
