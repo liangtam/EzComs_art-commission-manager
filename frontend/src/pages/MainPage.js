@@ -59,12 +59,12 @@ function MainPage() {
         }
     };
 
-    useEffect(() => {
-        if (user) {
-            fetchAllForms();
-            fetchAllOrders();
-        }
-    }, [user]);
+    // useEffect(() => {
+    //     if (user) {
+    //         fetchAllForms();
+    //         fetchAllOrders();
+    //     }
+    // }, [user]);
 
     return (
         <div className="App">

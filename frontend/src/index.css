@@ -1,9 +1,11 @@
 /* font */
 @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sora:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 :root {
   --sora: 'Sora', sans-serif;
+  --inter: 'Inter', sans-serif;
   --bg-color: rgb(244, 244, 244);
   --roboto: 'Roboto', sans-serif;
   --iceblue: rgb(0, 183, 255);
@@ -12,13 +14,14 @@
 
 *{
   margin: 0;
+  padding: 0;
 }
 .app {
   height: 100vh;
   width: 100vw;
 }
 
-.header {
+/* .header {
   height: 20px;
   width: 100%;
 
@@ -27,8 +30,8 @@
   justify-content: center;
   background: red;
   border-bottom: solid var(--iceblue) 4px;
-}
-.header a {
+} */
+/* .header a {
   color: var(--bluegrey);
   font-family: sora;
   text-decoration: none;
@@ -41,17 +44,18 @@
   align-items: center;
   justify-content: space-between;
   text-decoration: none;
-}
+} */
 
 body {
   /* font-family: roboto; */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: --inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+  sans-serif; */
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 15px;
   margin: 0, auto;
   background: var(--bg-color);
-  padding: 10px
+
 }

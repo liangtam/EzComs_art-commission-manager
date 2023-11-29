@@ -1,45 +1,143 @@
 @import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
 
 .nav_container {
-    display: table;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-bottom: 25px;
-    padding-top: 10px;
-    width: 90%;
-    background-color: white;
+    height: 7em;
+    flex-shrink: 0;
+    background: var(--Black, #030303);
+    left: 0;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.website_title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-left: 10%;
 }
 
 .website_title a{
-    display: block; 
-    font-family: 'Tilt Warp', cursive;
+    flex-shrink: 0;
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
     text-decoration: none;
-    color: rgb(39, 39, 39);
-    padding-bottom: 20px;
 }
 
-.navbar_links li {
-    list-style: none;
-
+.website_title img {
+    height: 60px;
 }
 
-.navbar_links ul {
+.navbar_links {
+    margin-right: 10%;
+}
+.navbar_links .loggedIn_links {
+    /* background-color: red; */
     display: flex;
-    float: left; /*temporary*/
-    gap: 25px; /*temporary*/
-    justify-content: space-around;
-    padding: 20, 20, 20, 20;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: center;
+    gap: 3em;
+
 }
 
-.navbar_links a{
+.navbar_links .loggedIn_links a:hover {
+    color: #00E2C7;
+}
+
+.navbar_links .loggedIn_links button{
+    font-weight: bold;
+    background-color: none;
+    border: none;
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 0.7em;
+    padding-left: 1.2em;
+    padding-right: 1.2em;
+}
+
+.navbar_links .loggedIn_links button:hover{
+    cursor: pointer;
+    background-color:  #00E2C7;
+    transition: background-color 0.3s ease;
+}
+
+.navbar_links ul li{
+    /* background-color: red; */
+    list-style: none;
+    /* background-color: red; */
+    padding: 10px;
+}
+
+.navbar_links li a {
+    color: white;
+    font-size: 16px;
     text-decoration: none;
-    color:rgb(43, 43, 43);
-    display: block;
-    padding: 5px;
-    /* background-color: #e0edff; */
+    transition: color 0.3s ease;    
+}
+
+.navbar_links .regLinks {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
+    gap: 100px;
+}
+
+.navbar_links .regLinks {
+    width: 170px;
+    height: 43px;
+    padding: 10px;
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
 
 }
 
+.navbar_links .regLinks a:hover {
+    color:#00E2C7;
+}
+
+.navbar_links .signUpLink a {
+    color: black;
+}
+
+.navbar_links .signUpLink a:hover {
+    color: black;
+}
+
+
+
+.navbar_links .signUpLink {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    background-color: #00E2C7;
+    border-radius: 20px;
+    padding: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar_links .signUpLink:hover{
+    cursor: pointer;
+    background-color: #00b19c;
+
+}
+
+rgb(0, 168, 148)
 .navbar_links a:hover{
     /* color: white; */
     /* background-color: rgb(63, 143, 213); */
