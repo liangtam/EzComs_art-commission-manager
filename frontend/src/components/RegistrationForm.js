@@ -16,10 +16,14 @@ const RegistrationForm = () => {
 
     return (
         <form className={styles.container}>
-            <h3>Registration</h3>
+            <div className={styles.intro}>
+                <h3>Sign Up Now</h3>
+                <p>Guess what. It's just as Ez.</p>
+            </div>
             <div className={styles.content}>
                 <label>Email: <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input></label>
                 <label>Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label>
+                <p>Password must be at least 8 characters long, contain a number and a special character (?!@#$%&)</p>
             </div>
             <button disabled={isLoading} onClick={handleSignUp}>Sign Up</button>
             {error && <div className={styles.errorMessage}>{error}</div>}
