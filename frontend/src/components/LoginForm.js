@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from './LoginForm.module.css';
+import generalRegStyles from './LoginReg.module.css';
 import { useLogin } from "../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
 
@@ -24,9 +24,9 @@ const LoginForm = () => {
     }
 
     return (
-        <form className={styles.container}>
+        <form className={generalRegStyles.container}>
             <h3>Login</h3>
-            <div className={styles.content}>
+            <div className={generalRegStyles.content}>
                 <label>Email: <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input></label>
                 <label>Password: <input type="text" value={password} onChange={(e) => setPassword(e.target.value)}></input></label>
             </div>

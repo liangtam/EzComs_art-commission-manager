@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from './LoginForm.module.css';
+import styles from './LoginReg.module.css';
 import { useSignup } from '../hooks/useSignup';
 
 const RegistrationForm = () => {

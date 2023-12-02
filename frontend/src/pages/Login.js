@@ -9,13 +9,15 @@ const Login = () => {
 
     return (
         <div className={styles.loginContainer}>
-            <button onClick={(e) => setRegFormSelected(true)}>New User</button>
-            <button onClick={(e) => setRegFormSelected(false)}>Old User</button>
             <div className={styles.loginTitleIntro}>
-                <h2>EzComms</h2>
-                <p>Manage all your commmissions and clients in one place.</p>
+                <h2>Art commissions made easy for artists.</h2>
+                <p>Customize and create commission forms, track your orders, upload reference photos and progress art to your workspace, and manage your income. All in one place.</p>
             </div>
             <div className={styles.form}>
+                <div className={styles.buttons}>
+                    <button className={styles.signUpButton} onClick={(e) => setRegFormSelected(true)}>New User</button>
+                    <button className={styles.loginButton} onClick={(e) => setRegFormSelected(false)}>Old User</button>
+                </div>
                 {!regFormSelected && 
                 <LoginForm/>}
 
