@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 90vh;
+    height: 88svh;
 }
 
 .form {
@@ -39,16 +39,27 @@
     flex-shrink: 0;
     border-radius: 20px;
     border: none;
+    transition: background-color 0.2s ease;
 }
 
 .buttons button:hover {
     cursor: pointer;
 }
 
-.buttons .signUpButton {
+.buttons .notClickedButton:hover {
+    background-color: #dddddd;;
+}
+
+.buttons .clickedButton {
     color: var(--ezComs_turquoise);
     background: none;
     border: 3px solid var(--ezComs_turquoise);
+    transition: border-color 0.2s ease, color 0.3s ease;
+}
+
+.buttons .clickedButton:hover {
+    border-color:var(--bg-color);
+    color: var(--bg-color);
 }
 
 .loginTitleIntro {

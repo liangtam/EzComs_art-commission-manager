@@ -17,7 +17,7 @@ const RegistrationForm = () => {
     return (
         <form className={styles.container}>
             <div className={styles.intro}>
-                <h3>Sign Up Now</h3>
+                <h3><b>Sign Up Now</b></h3>
                 <p>Guess what. It's just as Ez.</p>
             </div>
             <div className={styles.content}>

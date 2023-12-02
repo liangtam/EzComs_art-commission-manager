@@ -15,8 +15,8 @@ const Login = () => {
             </div>
             <div className={styles.form}>
                 <div className={styles.buttons}>
-                    <button className={styles.signUpButton} onClick={(e) => setRegFormSelected(true)}>New User</button>
-                    <button className={styles.loginButton} onClick={(e) => setRegFormSelected(false)}>Old User</button>
+                    <button className={regFormSelected? styles.notClickedButton : styles.clickedButton} onClick={(e) => setRegFormSelected(true)}>New User</button>
+                    <button className={!regFormSelected? styles.notClickedButton : styles.clickedButton} onClick={(e) => setRegFormSelected(false)}>Old User</button>
                 </div>
                 {!regFormSelected && 
                 <LoginForm/>}
