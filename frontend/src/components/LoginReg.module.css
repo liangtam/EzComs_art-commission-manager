@@ -40,6 +40,7 @@
     font-size: 20px;
     padding: 10px 25px 10px 25px;
     border-radius: 10px;
+    transition: background-color 0.2s ease;
 }
 
 .container button:hover {

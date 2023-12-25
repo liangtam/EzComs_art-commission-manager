@@ -72,7 +72,7 @@ function MainPage() {
                 <FormsContext.Provider value={{ forms, setForms }}>
                     <OrdersContext.Provider value={{ orders, setOrders }}>
                         <QuestionFieldsContext.Provider value={{ setQuestionFieldList, questionFieldList }}>
-                            <Navbar />
+                            {user && <Navbar />}
                             <div className="pages">
                                 <Routes>
                                     {user && (
@@ -90,7 +90,7 @@ function MainPage() {
                                     )}
 
                                     <Route exact path="/commissions" element={user ? <Commissions /> : <Navigate to="/login"></Navigate>} />
-                                    {!user && <Route path="/login" element={<Login />} />}
+                                    {!user && <Route path="/" element={<Login />} />}
                                     <Route exact path="/form/:userID" element={<ActiveForm />} />
                                 </Routes>
                             </div>

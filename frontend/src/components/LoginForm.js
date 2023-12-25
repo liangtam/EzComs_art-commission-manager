@@ -17,8 +17,9 @@ const LoginForm = () => {
         
         console.log("b4: ", isLoading)
         await login(email, password);
-        nav("/orders");
-
+        if (!error) {
+            nav("/orders");
+        }
         // console.log(isLoading)
 
     }
