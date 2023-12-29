@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rebeccapurple;
+    /* background-color: rebeccapurple; */
 }
 
 .landingTitle h1 {
@@ -34,6 +34,7 @@
     height: 646px;
     flex-shrink: 0;
     border-radius: 30px;
+    z-index: 1;
 }
 
 .buttons {
@@ -89,7 +90,9 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background-color: rgb(208, 208, 255);
+    z-index: 1;
+    transform: translate(0px, -8%);
+    /* background-color: rgb(208, 208, 255); */
 }
 .loginTitleIntro .landingIntro {
     display: flex;
@@ -101,16 +104,17 @@
 
 .loginTitleIntro h2 {
     display: flex;
-    width: 465px;
+    width: 475px;
     height: 92px;
     flex-direction: column;
     justify-content: center;
     flex-shrink: 0;
+    margin-top: 15px;
 
     color: #000;
     text-align: center;
     font-family: Inter;
-    font-size: 40px;
+    font-size: 42px;
     font-style: normal;
     font-weight: 900;
     line-height: normal;
@@ -143,9 +147,100 @@
     position: fixed;
     top: -50px;
     left: -50px;
-    border-radius: 50% 50% 41% 59% / 52% 50% 50% 48%;
+    border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
     background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
     width: 200px;
     height: 200px;
+    transition: border-radius 3s ease; 
+    animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear;
+  }
+
+  .blob2 {
+    position: fixed;
+    left: 10%;
+    bottom: 10%;
+    border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    width: 100px;
+    height: 100px;
+    animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear;
+  }
+
+@keyframes blob1Animation {
+    0% {
+        border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    }
+    25% {
+        border-radius: 42% 58% 43% 57% / 51% 39% 61% 49%;
+    }
+    50% {
+        border-radius: 32% 68% 35% 65% / 56% 33% 67% 44%;
+    }
+
+    75% {
+        border-radius: 41% 59% 42% 58% / 46% 40% 60% 54%;
+    }
+
+    100% {
+        border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes spinning {
+    0% {
+        rotate: 0deg;
+    }
+
+    100% {
+        rotate: 359deg;
+    }
+}
+
+/* #mainWave {
+    fill: linear-gradient(180deg, #00ADFC 0%, #00E2C7 100.45%);
+    position: fixed;
+    z-index: 0;
+    bottom: 0;
+    right:0;
+    width: 100%;
+height: 1169.16px;
+flex-shrink: 0;
+} */
+
+.wave {
+    position: relative;
+    width: 100%;
+    height: 150px; /* Adjust the height as needed */
+    background-color: #3498db; /* Adjust the background color as needed */
+    overflow: hidden;
   }
   
+  .wave::before,
+  .wave::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 50px; /* Adjust the wave height as needed */
+    background-color: inherit; /* Inherit the background color from the parent */
+    border-radius: 50%;
+  }
+  
+  .wave::before {
+    bottom: 100%;
+    transform-origin: bottom center;
+  }
+  
+  .wave::after {
+    top: 100%;
+    transform-origin: top center;
+  }
