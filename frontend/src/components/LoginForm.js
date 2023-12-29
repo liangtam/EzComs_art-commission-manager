@@ -1,5 +1,5 @@
 import { useState } from "react";
-import generalRegStyles from './LoginReg.module.css';
+import styles from './LoginReg.module.css';
 import { useLogin } from "../hooks/useLogin";
 import { useNavigate } from "react-router-dom";
 
@@ -25,14 +25,19 @@ const LoginForm = () => {
     }
 
     return (
-        <form className={generalRegStyles.container}>
-            <h3>Login</h3>
-            <div className={generalRegStyles.content}>
-                <label>Email: <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input></label>
-                <label>Password: <input type="text" value={password} onChange={(e) => setPassword(e.target.value)}></input></label>
+<form className={styles.container}>
+            <div className={styles.intro}>
+                <h3><b>Login</b></h3>
+                <p>Welcome back!</p>
+            </div>
+            <div className={styles.content}>
+                <label>Email: <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input></label>
+                <label>Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label>
+                <p>Password must be at least 8 characters long, contain a number and a special character (?!@#$%&)</p>
+                {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
             <button disabled={isLoading} onClick={handleLogin}>Login</button>
-            {error && <div>{error}</div>}
+            {error && <div className={styles.errorMessage}>{error}</div>}
         </form>
     )
     

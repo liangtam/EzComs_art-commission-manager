@@ -22,16 +22,17 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    height: 80vh;
-    background-color: blue;
+    height: 100vh;
+    width: 100vw;
+    /* background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise)); */
 }
+
+
 
 .form {
     width: 550px;
     height: 646px;
     flex-shrink: 0;
-    background-color: #F5F5F5;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     border-radius: 30px;
 }
 
@@ -39,15 +40,13 @@
     display: flex;
     justify-content: space-evenly;
     border-radius: 30px 30px 0px 0px;
-    background: #000;
+    border-bottom: 6px solid white;
     width: 550px;
     height: 103px;
     align-items: center;
 }
 
 .buttons button {
-    color: #010101;
-
     text-align: center;
     font-family: Inter;
     font-size: 20px;
@@ -68,27 +67,36 @@
 }
 
 .buttons .notClickedButton:hover {
-    background-color: #dddddd;;
+    color: white;
+    background-color: black;
 }
 
 .buttons .clickedButton {
-    color: var(--ezComs_turquoise);
+    color: white;
     background: none;
-    border: 3px solid var(--ezComs_turquoise);
+    border: 3px solid white;
     transition: border-color 0.2s ease, color 0.3s ease;
 }
 
-.buttons .clickedButton:hover {
-    border-color:var(--bg-color);
-    color: var(--bg-color);
-}
+/* .buttons .clickedButton:hover {
+    border-color: black;
+    color: black;
+} */
 
 .loginTitleIntro {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    gap: 10px;
+    background-color: rgb(208, 208, 255);
+}
+.loginTitleIntro .landingIntro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
 }
 
 .loginTitleIntro h2 {
@@ -102,25 +110,42 @@
     color: #000;
     text-align: center;
     font-family: Inter;
-    font-size: 50px;
+    font-size: 40px;
     font-style: normal;
     font-weight: 900;
     line-height: normal;
 }
 
-.loginTitleIntro p {
+.loginTitleIntro li {
     display: flex;
-    width: 455px;
-    height: 317px;
-    flex-direction: column;
-    justify-content: center;
-    flex-shrink: 0;
-
+    align-items: center;
     color: #000;
-
     font-family: Inter;
     font-size: 30px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    list-style-type: none;
+    padding: 15px 0px 15px 0px;
 }
+
+.loginTitleIntro li label {
+    max-width: 465px;
+    margin-left: 20px;
+}
+
+.loginTitleIntro li svg {
+    min-width: 43px; /* Set the minimum width */
+    min-height: 43px; /* Set the minimum height */
+}
+
+.blob1 {
+    position: fixed;
+    top: -50px;
+    left: -50px;
+    border-radius: 50% 50% 41% 59% / 52% 50% 50% 48%;
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    width: 200px;
+    height: 200px;
+  }
+  
