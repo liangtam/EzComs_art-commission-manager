@@ -3,13 +3,13 @@ import styles from './Login.module.css';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
 import logo from '../public/images/EzComs_Logo_Black.png';
-import waveImg from '../public/images/waveImg.png';
+import wave from '../public/images/wave.png'
 
 const Login = () => {
     const [regFormSelected, setRegFormSelected] = useState(true);
 
     return (
-        <body>
+        <body className={styles.landingBody}>
             <div className={styles.loginContainer}>
                 <div className={styles.loginContent}>
                     <div className={styles.loginTitleIntro}>
@@ -93,19 +93,7 @@ const Login = () => {
             </div>
             <canvas className={styles.blob1}></canvas>
             <canvas className={styles.blob2}></canvas>
-            <img src={waveImg}></img>
-            {/* <svg id={styles.mainWave} xmlns="http://www.w3.org/2000/svg" width="1036" height="1024" viewBox="0 0 1036 1024" fill="none">
-                <path
-                    d="M329.982 275.5C291.582 101.1 387.649 0.5 440.482 -28H1150.48L1187.98 213L1257.98 1063C814.149 1129.17 -78.0478 1208.1 5.49999 1043.5C107.018 843.5 84.4823 907.5 229.982 759.5C375.482 611.5 377.982 493.5 329.982 275.5Z"
-                    fill="url(#paint0_linear_150_193)"
-                />
-                <defs>
-                    <linearGradient id="paint0_linear_150_193" x1="633.991" y1="-28" x2="633.991" y2="1146.44" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#00ADFC" />
-                        <stop offset="1" stop-color="#00E2C7" />
-                    </linearGradient>
-                </defs>
-            </svg> */}
+            {/* <img src={wave} id={styles.wave}></img> */}
         </body>
     );
 };
