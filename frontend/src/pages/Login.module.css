@@ -1,6 +1,7 @@
 .loginContainer {
     display: flex;
     flex-direction: column;
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise))
 }
 .loginContainer .landingTitle {
     margin-top: 90px;
@@ -206,41 +207,4 @@
     }
 }
 
-/* #mainWave {
-    fill: linear-gradient(180deg, #00ADFC 0%, #00E2C7 100.45%);
-    position: fixed;
-    z-index: 0;
-    bottom: 0;
-    right:0;
-    width: 100%;
-height: 1169.16px;
-flex-shrink: 0;
-} */
 
-.wave {
-    position: relative;
-    width: 100%;
-    height: 150px; /* Adjust the height as needed */
-    background-color: #3498db; /* Adjust the background color as needed */
-    overflow: hidden;
-  }
-  
-  .wave::before,
-  .wave::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 50px; /* Adjust the wave height as needed */
-    background-color: inherit; /* Inherit the background color from the parent */
-    border-radius: 50%;
-  }
-  
-  .wave::before {
-    bottom: 100%;
-    transform-origin: bottom center;
-  }
-  
-  .wave::after {
-    top: 100%;
-    transform-origin: top center;
-  }
