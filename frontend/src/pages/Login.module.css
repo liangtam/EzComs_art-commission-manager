@@ -1,15 +1,19 @@
 .landingBody {
-    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise))
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
 }
-.loginContainer {
+.landingContainer {
     display: flex;
-    flex-direction: column;
-    background-image: url("../public/images/wave.png");
-    background-size: 55% 100%;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-image: url('../public/images/wave.png');
+    background-size: 55vw 100vh;
     background-repeat: repeat-y;
-    animation: scrollWave 35s linear infinite
+    animation: scrollWave 100s linear infinite;
+    background-color: var(--darkgrey);
 }
-.loginContainer .landingTitle {
+.landingContainer .landingTitle {
     margin-top: 90px;
     display: flex;
     justify-content: center;
@@ -25,16 +29,6 @@
 .landingTitle img {
     height: 100px;
 }
-.loginContent {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-    /* background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise)); */
-}
-
-
 
 .form {
     width: 550px;
@@ -91,7 +85,7 @@
     color: black;
 } */
 
-.loginTitleIntro {
+.landingExerpt {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -101,7 +95,7 @@
     transform: translate(0px, -8%);
     /* background-color: rgb(208, 208, 255); */
 }
-.loginTitleIntro .landingIntro {
+.landingExerpt .landingIntro {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -109,7 +103,7 @@
     gap: 26px;
 }
 
-.loginTitleIntro h2 {
+.landingExerpt h2 {
     display: flex;
     width: 475px;
     height: 92px;
@@ -127,7 +121,7 @@
     line-height: normal;
 }
 
-.loginTitleIntro li {
+.landingExerpt li {
     display: flex;
     align-items: center;
     color: #000;
@@ -140,12 +134,12 @@
     padding: 15px 0px 15px 0px;
 }
 
-.loginTitleIntro li label {
+.landingExerpt li label {
     max-width: 465px;
     margin-left: 20px;
 }
 
-.loginTitleIntro li svg {
+.landingExerpt li svg {
     min-width: 43px; /* Set the minimum width */
     min-height: 43px; /* Set the minimum height */
 }
@@ -158,11 +152,11 @@
     background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
     width: 200px;
     height: 200px;
-    transition: border-radius 3s ease; 
+    transition: border-radius 3s ease;
     animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear;
-  }
+}
 
-  .blob2 {
+.blob2 {
     position: fixed;
     left: 10%;
     bottom: 10%;
@@ -171,7 +165,18 @@
     width: 100px;
     height: 100px;
     animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear;
-  }
+}
+
+.blob3 {
+    position: fixed;
+    left: calc(-200px + 100vw);
+    bottom: -200px;
+    border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    width: calc(0.2 * 100vw);
+    height: calc(0.2 * 100vw);
+    animation: blob1Animation 10s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear;
+}
 
 @keyframes blob1Animation {
     0% {
@@ -215,15 +220,10 @@
 
 @keyframes scrollWave {
     0% {
-        background-position-y: 0%;
+        background-position-y: calc(-1 * 100vh);
     }
 
     100% {
-        background-position-y: 1280px;
+        background-position-y: 100vh;
     }
 }
-
-
-
-
-
