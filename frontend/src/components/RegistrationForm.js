@@ -26,8 +26,8 @@ const RegistrationForm = () => {
                 <p>Password must be at least 8 characters long, contain a number and a special character (?!@#$%&)</p>
                 {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
-            <button disabled={isLoading} onClick={handleSignUp}>Sign Up</button>
             {error && <div className={styles.errorMessage}>{error}</div>}
+            <button disabled={isLoading} onClick={handleSignUp}>Sign Up</button>
         </form>
     )
     

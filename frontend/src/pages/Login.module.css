@@ -70,7 +70,7 @@
 
 .buttons .notClickedButton:hover {
     color: white;
-    background-color: black;
+    background-color: var(--ezComs_turquoise);
 }
 
 .buttons .clickedButton {
@@ -158,7 +158,7 @@
 
 .blob2 {
     position: fixed;
-    left: 10%;
+    right: calc(-200px + 100vw);
     bottom: 10%;
     border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
     background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
