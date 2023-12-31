@@ -12,12 +12,13 @@ const RegistrationForm = () => {
         console.log(email, password);
 
         await signUp(email, password);
+        console.log("regForm: ", error);
     }
 
     return (
         <form className={styles.container}>
             <div className={styles.intro}>
-                <h3><b>Sign Up Now</b></h3>
+                <h3><b><span style={{color: "#00E2C7"}}> Sign Up </span>Now</b></h3>
                 <p>Guess what. It's just as Ez.</p>
             </div>
             <div className={styles.content}>
@@ -26,8 +27,8 @@ const RegistrationForm = () => {
                 <p>Password must be at least 8 characters long, contain a number and a special character (?!@#$%&)</p>
                 {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
-            {error && <div className={styles.errorMessage}>{error}</div>}
-            <button disabled={isLoading} onClick={handleSignUp}>Sign Up</button>
+            {error && <div className="errorMessage">{error}</div>}
+            <button disabled={isLoading} className="blueButton" onClick={handleSignUp}>Sign Up</button>
         </form>
     )
     

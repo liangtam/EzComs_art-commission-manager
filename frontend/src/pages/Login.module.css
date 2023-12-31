@@ -22,12 +22,12 @@
 }
 
 .landingTitle h1 {
-    font-size: 80px;
+    font-size: 70px;
     padding: 20px;
 }
 
 .landingTitle img {
-    height: 100px;
+    height: 90px;
 }
 
 .form {
@@ -48,30 +48,6 @@
     align-items: center;
 }
 
-.buttons button {
-    text-align: center;
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-
-    width: 170px;
-    height: 47px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    border: none;
-    transition: background-color 0.2s ease;
-}
-
-.buttons button:hover {
-    cursor: pointer;
-}
-
-.buttons .notClickedButton:hover {
-    color: white;
-    background-color: var(--ezComs_turquoise);
-}
 
 .buttons .clickedButton {
     color: white;
@@ -115,7 +91,7 @@
     color: #000;
     text-align: center;
     font-family: Inter;
-    font-size: 42px;
+    font-size: 40px;
     font-style: normal;
     font-weight: 900;
     line-height: normal;
@@ -126,7 +102,7 @@
     align-items: center;
     color: #000;
     font-family: Inter;
-    font-size: 30px;
+    font-size: 22px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
@@ -139,9 +115,11 @@
     margin-left: 20px;
 }
 
-.landingExerpt li svg {
-    min-width: 43px; /* Set the minimum width */
-    min-height: 43px; /* Set the minimum height */
+.landingIntro li svg {
+    min-width: 10px; /* Set the minimum width */
+    min-height: 10px; /* Set the minimum height */
+    max-width: 35px;
+    max-height: 35px;
 }
 
 .blob1 {
@@ -153,18 +131,18 @@
     width: 200px;
     height: 200px;
     transition: border-radius 3s ease;
-    animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear;
+    animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear, floating 5s infinite ease-in-out alternate;
 }
 
 .blob2 {
     position: fixed;
-    right: calc(-200px + 100vw);
+    right: calc(-0.08*100vw + 100vw);
     bottom: 10%;
     border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
     background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
-    width: 100px;
-    height: 100px;
-    animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear;
+    width: 80px;
+    height: 80px;
+    animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear, floating 4s infinite ease-in-out alternate;
 }
 
 .blob3 {
@@ -175,7 +153,7 @@
     background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
     width: calc(0.2 * 100vw);
     height: calc(0.2 * 100vw);
-    animation: blob1Animation 10s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear;
+    animation: blob1Animation 10s infinite alternate, fadeIn 3s ease, spinning 35s infinite linear, floating 10s infinite ease-in-out alternate;
 }
 
 @keyframes blob1Animation {
@@ -225,5 +203,11 @@
 
     100% {
         background-position-y: 100vh;
+    }
+}
+
+@keyframes floating {
+    to {
+        transform: translateY(10%);
     }
 }

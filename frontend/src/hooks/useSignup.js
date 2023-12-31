@@ -12,7 +12,7 @@ const useSignup = () => {
         setError(null);
 
         const userObj = {email, password};
-        console.log(JSON.stringify(userObj))
+        // console.log(JSON.stringify(userObj))
 
         const response = await fetch('http://localhost:4000/api/user/signup', {
             method: 'POST',
@@ -27,7 +27,7 @@ const useSignup = () => {
         if (!response.ok) {
             setIsLoading(false);
             setError(user.error);
-            console.log(user.error)
+            console.log("Sign up error: ", user.error)
         }
 
         if (response.ok) {
