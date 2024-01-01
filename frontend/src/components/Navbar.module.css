@@ -2,6 +2,7 @@
 
 .nav_container {
     height: 11vh;
+    width: 100vw;
     flex-shrink: 0;
     background: var(--darkgrey);
     left: 0;
@@ -53,7 +54,7 @@
 .nav_links a {
     color: white;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 1em;
     transition: color 0.2s ease-in;
     padding: 0px 15px;
 }
@@ -86,4 +87,43 @@
     /* color: white; */
     /* background-color: rgb(63, 143, 213); */
     background-color: #e0edff;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .website_title {
+        margin-left: 6%;
+    }
+
+    .website_title h1{
+        font-size: 0.9em;
+    }
+
+    .website_title img {
+        height: 35px;
+    }
+
+    .nav_links {
+        gap: 2rem;
+    }
+    .nav_links a {
+        color: white;
+        text-decoration: none;
+        font-size: 0.8rem;
+        transition: color 0.2s ease-in;
+        padding: 0px 15px;
+    }
+
+    .loggedInDetails {
+        margin-right: 6%;
+    }
+
+    #email {
+        font-size: 0.9rem;
+    }
+
+    .logoutButton {
+        font-size: 0.9rem;
+        padding: 0.9rem;
+    }
 }

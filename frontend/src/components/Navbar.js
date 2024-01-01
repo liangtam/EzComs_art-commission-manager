@@ -17,8 +17,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className={styles.nav_header}>
-            <div className={styles.nav_container}>
+            <nav className={styles.nav_container}>
                 <div className={styles.website_title}>
                     <Link to={user ? '/' : '/login'}>
                         <img src={image}></img>
@@ -34,9 +33,9 @@ const Navbar = () => {
                         <Link to="/forms">
                             <h4>Manage Forms</h4>
                         </Link>
-                        <Link to={`/form/${user.userID}`}>
+                        {/* <Link to={`/form/${user.userID}`}>
                             <h4>Form</h4>
-                        </Link>
+                        </Link> */}
                         <Link to="/form-builder">
                             <h4>Form Builder</h4>
                         </Link>
@@ -73,8 +72,7 @@ const Navbar = () => {
                             </li>
                         </div>
                     )} */}
-            </div>
-        </div>
+            </nav>
     );
 };
 
