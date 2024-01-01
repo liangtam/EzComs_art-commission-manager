@@ -9,7 +9,7 @@ const Login = () => {
     const [regFormSelected, setRegFormSelected] = useState(true);
 
     return (
-        <body className={styles.landingBody}>
+        <div className={styles.landingBody}>
             <div className={styles.landingContainer}>
                 <div className={styles.landingExerpt}>
                     <div className={styles.landingTitle}>
@@ -33,7 +33,6 @@ const Login = () => {
                                 <label>Customize and create commission forms</label>
                             </li>
                             <li>
-                                {' '}
                                 <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
                                     <path d="M11.6609 22.2878L17.4574 28.0843L30.9826 14.5591" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
                                     <path
@@ -77,22 +76,22 @@ const Login = () => {
                 </div>
                 <div className={styles.form}>
                     <div className={styles.buttons}>
-                        <button className={regFormSelected ? "whiteOutlineButton" : "filledWhiteTurquoiseButton"} onClick={(e) => setRegFormSelected(true)}>
+                        <button className={regFormSelected ? "whiteOutlineButton" : "filledWhiteTurquoiseButton"} id="newUserBtn" onClick={(e) => setRegFormSelected(true)}>
                             New User
                         </button>
-                        <button className={!regFormSelected ? "whiteOutlineButton" : "filledWhiteTurquoiseButton"} onClick={(e) => setRegFormSelected(false)}>
+                        <button className={!regFormSelected ? "whiteOutlineButton" : "filledWhiteTurquoiseButton"} id="oldUserBtn" onClick={(e) => setRegFormSelected(false)}>
                             Old User
                         </button>
                     </div>
-                    {!regFormSelected && <LoginForm />}
+                    {!regFormSelected &&<div className={styles.actualForm}><LoginForm /></div>}
 
-                    {regFormSelected && <RegistrationForm />}
+                    {regFormSelected && <div className={styles.actualForm}><RegistrationForm /></div>}
                 </div>
             </div>
             <div className={styles.blob1}></div>
             <div className={styles.blob2}></div>
             <div className={styles.blob3}></div>
-        </body>
+        </div>
     );
 };
 
