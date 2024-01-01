@@ -91,7 +91,12 @@ function MainPage() {
                                     )}
 
                                     <Route exact path="/commissions" element={user ? <Commissions /> : <Navigate to="/login"></Navigate>} />
-                                    {!user && <Route path="/login" element={<Login />} />}
+                                    {!user && (
+                                        <>
+                                            <Route exact path="/" element={<Login />} />
+                                            <Route exact path="/login" element={<Login />} />
+                                        </>
+                                    )}
                                     <Route exact path="/form/:userID" element={<ActiveForm />} />
                                 </Routes>
                             </div>
