@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
 
 .nav_container {
-    height: 12vh;
+    height: 11vh;
     flex-shrink: 0;
-    background: var(--Black, #030303);
+    background: var(--darkgrey);
     left: 0;
     position: sticky;
     top: 0;
@@ -17,7 +17,12 @@
     justify-content: center;
     align-items: center;
     gap: 15px;
-    margin-left: 10%;
+    margin-left: 8%;
+    /* background: red; */
+}
+
+.website_title h1 {
+    font-size: 30px;
 }
 
 .website_title a{
@@ -32,110 +37,50 @@
 }
 
 .website_title img {
-    height: 60px;
+    height: 45px;
 }
 
-.navbar_links {
-    margin-right: 10%;
-}
-.navbar_links .loggedIn_links {
+.nav_links {
     /* background-color: red; */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    justify-items: center;
-    gap: 3em;
+    gap: 4em;
+    /* background: green; */
 
 }
 
-.navbar_links .loggedIn_links a:hover {
-    color: #00E2C7;
-}
-
-.navbar_links .loggedIn_links button{
-    font-weight: bold;
-    background-color: none;
-    border: none;
-    font-size: 10em;
-    border-radius: 10px;
-    padding: 0.7em;
-    padding-left: 1.2em;
-    padding-right: 1.2em;
-}
-
-.navbar_links .loggedIn_links button:hover{
-    cursor: pointer;
-    background-color:  #00E2C7;
-    transition: background-color 0.3s ease;
-}
-
-.navbar_links ul li{
-    /* background-color: red; */
-    list-style: none;
-    /* background-color: red; */
-    padding: 10px;
-}
-
-.navbar_links li a {
+.nav_links a {
     color: white;
-    font-size: 1.5em;
     text-decoration: none;
-    transition: color 0.3s ease;    
+    font-size: 16px;
+    transition: color 0.2s ease-in;
+    padding: 0px 15px;
 }
 
-.navbar_links .regLinks {
+.nav_links a:hover{
+    color: var(--ezComs_turquoise);
+}
+
+.logoutButton {
+    font-size: 16px;
+}
+
+#email {
+    color: white;
+    font-size: 16px;
+    padding: 0px 20px;
+}
+
+.loggedInDetails {
     display: flex;
-    list-style: none;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    justify-content: space-around;
-    gap: 100px;
+    gap: 15px;
+    margin-right: 8%;
+    /* background-color: blue; */
 }
 
-.navbar_links .regLinks {
-    width: 170px;
-    height: 43px;
-    padding: 10px;
-    display: flex;
-    list-style: none;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.navbar_links .regLinks a:hover {
-    color:#00E2C7;
-}
-
-.navbar_links .signUpLink a {
-    color: black;
-}
-
-.navbar_links .signUpLink a:hover {
-    color: black;
-}
-
-
-
-.navbar_links .signUpLink {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-shrink: 0;
-    background-color: #00E2C7;
-    border-radius: 20px;
-    padding: 15px;
-    padding-left: 20px;
-    padding-right: 20px;
-    transition: background-color 0.3s ease;
-}
-
-.navbar_links .signUpLink:hover{
-    cursor: pointer;
-    background-color: #00b19c;
-
-}
 
 .navbar_links a:hover{
     /* color: white; */

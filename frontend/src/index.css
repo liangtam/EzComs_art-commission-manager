@@ -5,102 +5,109 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
 :root {
-  --sora: 'Sora', sans-serif;
-  --inter: 'Inter', sans-serif;
-  --bg-color:  #F5F5F5;
-  --roboto: 'Roboto', sans-serif;
-  --iceblue: rgb(0, 183, 255);
-  --bluegrey: rgb(59, 91, 112);
-  --ezComs_turquoise: #00E2C7;
-  --ezComs_blue: #00ADFC;
-  --darkgrey: rgb(26, 26, 26);
+    --sora: 'Sora', sans-serif;
+    --inter: 'Inter', sans-serif;
+    --bg-color: #f5f5f5;
+    --roboto: 'Roboto', sans-serif;
+    --iceblue: rgb(0, 183, 255);
+    --bluegrey: rgb(59, 91, 112);
+    --ezComs_turquoise: #00e2c7;
+    --ezComs_blue: #00adfc;
+    --darkgrey: rgb(26, 26, 26);
 }
 
-*{
-  margin: 0;
-  padding: 0;
+* {
+    margin: 0;
+    padding: 0;
 }
 .app {
-  height: 100vh;
-  width: 100vw;
+    height: 100vh;
+    width: 100vw;
 }
 
 .errorMessage {
-  font-size: 16px;
-  padding: 10px;
-  color: rgb(255, 134, 134);
+    font-size: 16px;
+    padding: 10px;
+    color: rgb(255, 134, 134);
 }
 
 button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .filledWhiteTurquoiseButton {
-  text-align: center;
-  font-family: Inter;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+    text-align: center;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 
-  padding: 12px 35px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  border: none;
-  transition: background-color 0.2s ease;
+    padding: 12px 35px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    border: none;
+    transition: background-color 0.2s ease;
 }
 
 .filledWhiteTurquoiseButton:hover {
-  color: white;
-  background-color: var(--ezComs_turquoise);
+    color: white;
+    background-color: var(--ezComs_turquoise);
 }
 
 .whiteOutlineButton {
-  text-align: center;
-  font-family: Inter;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
+    text-align: center;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 
-
-  padding: 12px 35px;
-  border-radius: 20px;
-  color: white;
-  background: none;
-  border: 3px solid white;
-  transition: border-color 0.2s ease, color 0.3s ease;
+    padding: 12px 35px;
+    border-radius: 20px;
+    color: white;
+    background: none;
+    border: 3px solid white;
+    transition: border-color 0.2s ease, color 0.3s ease;
 }
 
 .blueButton {
-  color: white;
-  font-weight: 550;
-  background-color: var(--ezComs_blue);
-  border: none;
-  font-size: 16px;
-  margin: 30px;
-  padding: 10px 25px 10px 25px;
-  border-radius: 10px;
-  transition: background-color 0.2s ease;
+    color: white;
+    font-weight: 550;
+    background-color: var(--ezComs_blue);
+    border: none;
+    font-size: 16px;
+    margin: 30px;
+    padding: 10px 25px 10px 25px;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
 }
 
 .blueButton:hover {
-  cursor: pointer;
-  background-color: rgb(0, 145, 229);
+    cursor: pointer;
+    background-color: rgb(0, 145, 229);
 }
 
+.turquoiseHoverLink a {
+    text-decoration: none;
+}
+
+.turquoiseHoverLink a{
+
+}
+
+
 body {
-  /* font-family: roboto; */
-  /* font-family: --inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    /* font-family: roboto; */
+    /* font-family: --inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
   sans-serif; */
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 15px;
-  margin: 0, auto;
-  background-color: #FFF;
-
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 15px;
+    margin: 0, auto;
+    background-color: #fff;
 }
 
 /* .header {
@@ -127,5 +134,3 @@ body {
   justify-content: space-between;
   text-decoration: none;
 } */
-
-

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
+import Dashboard from './Dashboard';
 import Orders from './Order/Orders';
 import FormBuilder from './Form/FormBuilder';
 import Forms from './Form/Forms';
@@ -77,7 +78,7 @@ function MainPage() {
                                 <Routes>
                                     {user && (
                                         <>
-                                            <Route exact path="/" element={<Orders />} />
+                                            <Route exact path="/" element={<Dashboard />} />
                                             <Route exact path="/forms" element={<Forms />} />
 
                                             <Route exact path="/form-builder" element={<FormBuilder />} />
