@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
 
+.menuImage {
+    display: none;
+    margin-right: 8%;
+}
+.menuImage img {
+    height: 50px;
+}
 .nav_container {
     height: 11vh;
     width: 100vw;
@@ -11,6 +18,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+
+.nav_links .active {
+    color: blue;
 }
 
 .website_title {
@@ -46,7 +58,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 4em;
+    gap: 5em;
     /* background: green; */
 
 }
@@ -56,11 +68,14 @@
     text-decoration: none;
     font-size: 1em;
     transition: color 0.2s ease-in;
-    padding: 0px 15px;
+    padding: 10px 0px;
+
 }
 
 .nav_links a:hover{
     color: var(--ezComs_turquoise);
+    /* border-bottom: 2px solid var(--ezComs_turquoise); */
+
 }
 
 .logoutButton {
@@ -68,7 +83,7 @@
 }
 
 #email {
-    color: white;
+    color: rgb(158, 231, 255);
     font-size: 16px;
     padding: 0px 20px;
 }
@@ -89,7 +104,10 @@
     background-color: #e0edff;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1280px) {
+    .nav_container {
+        max-width: 1280px;
+    }
 
     .website_title {
         margin-left: 6%;
@@ -125,5 +143,50 @@
     .logoutButton {
         font-size: 0.9rem;
         padding: 0.9rem;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .nav_container {
+        max-width: 1024px;
+        justify-content: center;
+    }
+
+    .nav_links {
+        gap: 0.9em;
+    }
+    #email {
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .nav_container {
+        max-width: 768px;
+        justify-content: space-between;
+    }
+
+    .menuImage {
+        display: flex;
+    }
+
+    .nav_links {
+        display: none;
+    }
+
+    .loggedInDetails {
+        display: none;
+    }
+}
+
+@media only screen and (max-width:640px) {
+    .nav_container {
+        max-width: 640px;
+    }
+}
+
+@media only screen and (max-width:475px) {
+    .nav_container {
+        max-width: 475px;
     }
 }
