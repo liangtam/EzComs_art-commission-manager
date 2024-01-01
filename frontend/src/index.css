@@ -96,6 +96,11 @@ button:hover {
 
 }
 
+.smallerButton {
+  padding: 10px;
+  font-size: 15px;
+}
+
 
 body {
     /* font-family: roboto; */

@@ -76,10 +76,10 @@ const Login = () => {
                 </div>
                 <div className={styles.form}>
                     <div className={styles.buttons}>
-                        <button className={regFormSelected ? "whiteOutlineButton" : "filledWhiteTurquoiseButton"} id="newUserBtn" onClick={(e) => setRegFormSelected(true)}>
+                        <button className={`${regFormSelected ? "whiteOutlineButton" : "filledWhiteTurquoiseButton"} smallerButton`} id="newUserBtn" onClick={(e) => setRegFormSelected(true)}>
                             New User
                         </button>
-                        <button className={!regFormSelected ? "whiteOutlineButton" : "filledWhiteTurquoiseButton"} id="oldUserBtn" onClick={(e) => setRegFormSelected(false)}>
+                        <button className={`${!regFormSelected ? "whiteOutlineButton" : "filledWhiteTurquoiseButton"} smallerButton`}id="oldUserBtn" onClick={(e) => setRegFormSelected(false)}>
                             Old User
                         </button>
                     </div>

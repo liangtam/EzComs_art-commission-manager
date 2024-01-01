@@ -85,14 +85,14 @@
     
     .content {
         width: 100%;
-        background: purple;
+        /* background: purple; */
     }
 
     .content label {
         width: 100%;
         display: flex;
         align-items: center;
-        background-color: blue;
+        /* background-color: blue; */
     }
 
     .content label input {
@@ -102,6 +102,40 @@
 
     .content p {
         width: 100%;
+    }
+}
+
+@media only screen and (max-width: 482px) {
+    .container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .container .intro {
+        display: none;
+        background-color: red;
+        margin: 0;
+    }
+    .content label {
+        gap: 5px;
+        padding: 10px 0px;
+    }
+    .container .intro p {
+        font-size: 16px;
+        margin: 0;
+        background-color: blue;
+    }
+
+    .container .intro h3 {
+        font-size: 22px;
+    }
+
+    .smallBlueButton {
+        margin: 0px;
+    }
+
+    .smallErrorMessage {
+        font-size: 14px;
     }
 }
 
