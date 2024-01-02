@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import ezComsHead from '../public/images/ezComs_placeholder_head.png';
 import styles from './Dashboard.module.css';
@@ -28,7 +29,7 @@ const Dashboard = () => {
                     {/* </div> */}
                     {/* <div className={styles.secondRow}> */}
                     <div className={styles.widget} id={styles.activeFormWidget}>
-                        <h1>Active Form</h1>
+                        <Link to={`/form/${user.userID}`}><h1>Active Form</h1></Link>
                     </div>
                     <div className={styles.widget} id={styles.ordersWidget}>
                         <h1>Orders</h1>
