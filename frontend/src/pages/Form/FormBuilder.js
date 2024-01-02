@@ -73,8 +73,7 @@ const FormBuilder = () => {
     */
     const handleSaveFormClick = (e) => {
         if (!user) {
-            console.log('Hoi');
-
+            // console.log('Hoi');
             return;
         }
         e.preventDefault();
