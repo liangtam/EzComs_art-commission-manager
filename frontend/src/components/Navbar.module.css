@@ -2,10 +2,6 @@
 
 .menuImage {
     display: none;
-    margin-right: 8%;
-}
-.menuImage img {
-    height: 50px;
 }
 .nav_container {
     height: 11vh;
@@ -163,16 +159,56 @@
 @media only screen and (max-width:768px) {
     .nav_container {
         max-width: 768px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+    }
+    .menuContent {
+        display: flex;
+        width: 100%;
         justify-content: space-between;
+        background-color: blue;
     }
 
     .menuImage {
         display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80%;
+        width: 10%;
+        border-radius: 10px;
+        margin-right: 5%;
+        gap: 0em;
+    }
+
+    .menuImage:hover {
+        background-color: rgb(51, 52, 65);
+    }
+    .menuImage img {
+        height: 50px;
+    }
+
+    .menuImage img:hover {
+        cursor: pointer;
     }
 
     .nav_links {
         display: none;
+        flex-direction: column;
+
     }
+
+    .openMenu {
+        display: flex;
+        background-color: red;
+    }
+
+    .openMenu h4 {
+        padding: 10px;
+        background: green;
+    }
+
 
     .loggedInDetails {
         display: none;

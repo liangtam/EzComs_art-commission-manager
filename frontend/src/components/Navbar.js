@@ -11,6 +11,7 @@ const Navbar = () => {
     const { user } = useAuthContext();
     const [showMenu, setShowMenu] = useState(false);
     const nav = useNavigate();
+    console.log(showMenu);
 
     console.log('User: ', user);
 
@@ -21,18 +22,26 @@ const Navbar = () => {
 
     return (
         <nav className={styles.nav_container}>
-            <div className={styles.website_title}>
-                <Link to={user ? '/' : '/login'}>
-                    <img src={image}></img>
-                </Link>
-                <Link to={user ? '/' : '/login'}>
-                    <h1>
-                        <strong>EzComs</strong>
-                    </h1>
-                </Link>
+            <div className={styles.menuContent}>
+                <div className={styles.website_title}>
+                    <Link to={user ? '/' : '/login'}>
+                        <img src={image}></img>
+                    </Link>
+                    <Link to={user ? '/' : '/login'}>
+                        <h1>
+                            <strong>EzComs</strong>
+                        </h1>
+                    </Link>
+                </div>
+                {user && (
+                    <div className={styles.menuImage}>
+                        <img id="menuImage" onClick={(e) => setShowMenu(!showMenu)} src={menuImage}></img>
+                    </div>
+                )}
             </div>
+
             {user && (
-                <ul className={styles.nav_links}>
+                <div className={`${showMenu ? styles.openMenu : ''} ${styles.nav_links}`}>
                     <NavLink to="/forms">
                         <h4>Manage Forms</h4>
                     </NavLink>
@@ -50,7 +59,7 @@ const Navbar = () => {
                     <NavLink to="/commissions">
                         <h4>Commissions</h4>
                     </NavLink>
-                </ul>
+                </div>
             )}
             {user && (
                 <div className={styles.loggedInDetails}>
@@ -58,11 +67,6 @@ const Navbar = () => {
                     <button className={`filledWhiteTurquoiseButton ${styles.logoutButton}`} onClick={handleLogout}>
                         Logout
                     </button>
-                </div>
-            )}
-            {user && (
-                <div className={styles.menuImage}>
-                    <img id="menuImage" onClick={(e) => setShowMenu(!showMenu)} src={menuImage}></img>
                 </div>
             )}
 
