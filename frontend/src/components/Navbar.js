@@ -42,7 +42,7 @@ const Navbar = () => {
 
             {user && (
                 <div className={`${showMenu ? styles.openMenu : ''} ${styles.nav_links}`}>
-                    <NavLink to="/forms">
+                    <NavLink to="/forms" >
                         <h4>Manage Forms</h4>
                     </NavLink>
                     {/* <Link to={`/form/${user.userID}`}>
@@ -52,7 +52,7 @@ const Navbar = () => {
                         <h4>Form Builder</h4>
                     </NavLink>
 
-                    <NavLink to="/orders">
+                    <NavLink to="/orders" >
                         <h4>Orders</h4>
                     </NavLink>
 
@@ -62,7 +62,7 @@ const Navbar = () => {
                 </div>
             )}
             {user && (
-                <div className={styles.loggedInDetails}>
+                <div className={`${showMenu ? styles.openMenu : ''} ${styles.loggedInDetails} `}>
                     <span id={styles.email}> {user.email}</span>
                     <button className={`filledWhiteTurquoiseButton ${styles.logoutButton}`} onClick={handleLogout}>
                         Logout
