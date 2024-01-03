@@ -3,9 +3,10 @@
     display: flex;
     justify-content: center;
     /* border-radius: 30px; */
-    /* background-color: rgb(49, 54, 72) */
+    /* background-color: rgb(49, 54, 72); */
     position: relative;
     overflow: hidden;
+    background-color: rgb(243, 246, 248);
 }
 
 .dashboardContent {
@@ -14,9 +15,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgba(244, 244, 244);
+    /* background-color: var(--darkgrey); */
     margin: 10px;
     border-radius: 30px;
+    background-color: white;
     /* background-color: rgb(49, 54, 72) */
 }
 
