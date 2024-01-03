@@ -25,6 +25,10 @@
     width: 100vw;
 }
 
+a {
+    text-decoration: none;
+}
+
 .errorMessage {
     font-size: 16px;
     padding: 10px;

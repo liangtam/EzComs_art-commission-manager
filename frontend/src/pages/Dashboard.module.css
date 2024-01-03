@@ -53,10 +53,43 @@
     font-size: 40px;
     padding: 10px;
 }
-#nextOrderWidget {
+
+.nextOrderWidget {
     grid-row: 1/3;
     grid-column: 3 / 5;
-    background-color: orange;
+    background-image: url("../public/images/upcomingorder_bg.png");
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#upcomingOrderWidget {
+    color: white;
+
+}
+
+.title {
+    width: 100%;
+    height: 30%;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title h1 {
+    color: white;
+    font-size: 25px;
+    padding: 15px;
+}
+
+.orderDetails {
+    padding: 10px;
+}
+.orderDetails p {
+    padding: 7px;
 }
 
 #activeFormWidget {

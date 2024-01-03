@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext, useOrdersContext } from '../hooks/index';
 import ezComsHead from '../public/images/ezComs_placeholder_head.png';
+import upcomingOrderBG from '../public/images/upcomingorder_bg.png';
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
@@ -64,25 +65,29 @@ const Dashboard = () => {
                         </div>
                     )}
                     {orders.length !== 0 && orders[0].status !== 'Completed' && (
-                        <div className={styles.widget} id={styles.nextOrderWidget}>
-                            <Link to={`orders/${orders[0]._id}`}>
-                                <h1>Upcoming Order</h1>
-                            </Link>
-                            <p>
-                                <b>{orders[0].orderName}</b>
-                            </p>
-                            <p>
-                                <b>Deadline: </b>
-                                {orders[0].deadline}
-                            </p>
-                            <p>
-                                <b>Date ordered: </b>
-                                {orders[0].dateReqqed}
-                            </p>
-                            <p>
-                                <b>Price: </b>
-                                {orders[0].price === -1 ? 'Not set' : orders[0].price}
-                            </p>
+                        <div className={`${styles.widget} ${styles.nextOrderWidget} ${styles.upcomingOrderWidget}`} id={styles.upcomingOrderWidget}>
+                            <div className={styles.title}>
+                                <Link to={`orders/${orders[0]._id}`}>
+                                    <h1>Upcoming Order</h1>
+                                </Link>
+                            </div>
+                            <div className={styles.orderDetails}>
+                                <p>
+                                    <b>{orders[0].orderName}</b>
+                                </p>
+                                <p>
+                                    <b>Deadline: </b>
+                                    {orders[0].deadline}
+                                </p>
+                                <p>
+                                    <b>Date ordered: </b>
+                                    {orders[0].dateReqqed}
+                                </p>
+                                <p>
+                                    <b>Price: </b>
+                                    {orders[0].price === -1 ? 'Not set' : orders[0].price}
+                                </p>
+                            </div>
                         </div>
                     )}
 
@@ -94,10 +99,14 @@ const Dashboard = () => {
                         </Link>
                     </div>
                     <div className={styles.widget} id={styles.ordersWidget}>
-                        <h1>Orders</h1>
+                        <Link to="/orders">
+                            <h1>Orders</h1>
+                        </Link>
                     </div>
                     <div className={styles.widget} id={styles.commissionsWidget}>
-                        <h1>Commissions</h1>
+                        <Link to="/commissions">
+                            <h1>Commissions</h1>
+                        </Link>
                     </div>
                     <div id={styles.ezComsHead}>
                         <img src={ezComsHead}></img>
