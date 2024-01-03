@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import styles from './LoginReg.module.css';
 import { useLogin } from '../hooks/useLogin';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { login, error, isLoading} = useLogin();
+    const nav = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -14,6 +16,9 @@ const LoginForm = () => {
         // console.log('b4: ', isLoading);
         await login(email, password);
 
+        if (!error) {
+            nav("/");
+        }
         // console.log(isLoading)
     };
 
