@@ -3,7 +3,8 @@ EzComs is a website for freelance artists that features a dynamic form builder f
 Artists can also add their own reference images, progress images, and notes to the orders to keep track of progress and have an efficient workspace when working on a commission.
 
 ![image](https://github.com/liangtam/Art-Commission-Manager/assets/63375678/19588c89-3880-4672-8631-1d5172d7fa10)
-![image](https://github.com/liangtam/Art-Commission-Manager/assets/63375678/e2561d82-1047-416f-8d90-0fdd6cfb9140)
+![image](https://github.com/liangtam/Art-Commission-Manager/assets/63375678/e5927e6b-db4b-4ffe-bd88-2f41e033d139)
+
 
 
 
