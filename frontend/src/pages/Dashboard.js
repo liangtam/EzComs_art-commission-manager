@@ -4,6 +4,12 @@ import { useAuthContext, useOrdersContext } from '../hooks/index';
 import ezComsHead from '../public/images/ezComs_placeholder_head.png';
 import ezComsSleepy from '../public/images/ezComs_placeholder_sleepy.png';
 import winterTrees from '../public/images/winterdate_trees_bg.png';
+import activeFormBg from '../public/images/ezcoms_activeform_bg.png';
+import ordersBg from '../public/images/ezcoms_orders_bg.png';
+import commissionsBg from '../public/images/ezcoms_commissions_bg.png';
+import ezComsWave from '../public/images/EzComs_LoginWave.png';
+
+
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
@@ -94,20 +100,24 @@ const Dashboard = () => {
                         </Link>
                     )}
 
-                    <Link to={`/form/${user.userID}`} className={styles.widget} id={styles.activeFormWidget}>
+                    <Link to={`/form/${user.userID}`} className={`${styles.widget} ${styles.smallerWidget}`} id={styles.activeFormWidget}>
                         <h1>Active Form</h1>
+                        <img src={activeFormBg}></img>
                     </Link>
-                    <Link to="/orders" className={styles.widget} id={styles.ordersWidget}>
+                    <Link to="/orders" className={`${styles.widget} ${styles.smallerWidget}`} id={styles.ordersWidget}>
                         <h1>Orders</h1>
+                        <img src={ordersBg}></img>
                     </Link>
                     <Link to="/commissions" className={styles.widget} id={styles.commissionsWidget}>
                         <h1>Commissions</h1>
+                        <img src={commissionsBg}></img>
                     </Link>
                     <div id={styles.ezComsHead}>
                         <img src={ezComsHead}></img>
                     </div>
                 </div>
             </div>
+            <img id={styles.ezComsWave} src={ezComsWave}></img>
         </div>
     );
 };

@@ -2,17 +2,22 @@
     height: 89vh;
     display: flex;
     justify-content: center;
-    /* background-color: blue; */
-    border-radius: 30px;
+    /* border-radius: 30px; */
+    /* background-color: rgb(49, 54, 72) */
+    position: relative;
+    overflow: hidden;
 }
 
 .dashboardContent {
-    width: 85%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(244, 244, 244);
+    background-color: rgba(244, 244, 244);
+    margin: 10px;
+    border-radius: 30px;
+    /* background-color: rgb(49, 54, 72) */
 }
 
 .welcomeMessage {
@@ -40,7 +45,7 @@
     flex-direction: column;
     align-items: center;
     transition: opacity 0.2s ease;
-    
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 .widget:hover {
@@ -55,7 +60,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: start;
-    background-image: url("../public/images/winterdate_bg.png");
+    background-image: url('../public/images/winterdate_bg.png');
     background-size: cover;
     position: relative;
 }
@@ -89,7 +94,7 @@
 .nextOrderWidget {
     grid-row: 1/3;
     grid-column: 3 / 5;
-    background-image: url("../public/images/upcomingorder_bg.png");
+    background-image: url('../public/images/upcomingorder_bg.png');
     background-size: 100% 100%;
     display: flex;
     flex-direction: column;
@@ -97,7 +102,6 @@
 }
 #upcomingOrderWidget {
     color: white;
-
 }
 
 .nextOrderWidget .title {
@@ -133,35 +137,84 @@
     padding: 10px;
     color: rgb(102, 223, 179);
 }
+
+.smallerWidget {
+    position: relative;
+    overflow: hidden;
+}
+
+.smallerWidget h1 {
+    z-index: 1;
+    font-size: 1.2em;
+    margin: 4%;
+    padding: 8px 20px;
+    background-color: rgba(158, 232, 242, 0.3);
+    border-radius: 25px;
+
+}
+
+.smallerWidget img {
+    position: absolute;
+    height: 90%;
+    bottom: -40%;
+    opacity: 70%;
+    transition: transform 0.3s ease-in-out;
+
+}
+
+.smallerWidget:hover img {
+    transform: translateY(-8%);
+
+}
+
 #activeFormWidget {
     grid-column: 3;
     grid-row: 3;
-    background: rgb(0,166,228);
-    background: linear-gradient(0deg, rgba(0,166,228,1) 0%, rgba(0,72,138,1) 100%);
-}
+    background: rgb(0, 166, 228);
+    background: linear-gradient(0deg, rgba(0, 166, 228, 1) 0%, rgba(0, 72, 138, 1) 100%);
 
-#activeFormWidget h1 {
-    font-size: 1.5em;
-    padding: 10px;
 }
 
 #ordersWidget {
     grid-row: 3;
     grid-column: 4;
-    background: rgb(82,194,111);
-    background: linear-gradient(0deg, rgba(82,194,111,1) 0%, rgba(0,113,113,1) 100%);
+    background: rgb(82, 194, 111);
+    background: linear-gradient(0deg, rgba(82, 194, 111, 1) 0%, rgba(0, 113, 113, 1) 100%);
+
 }
 
-#ordersWidget h1 {
-    font-size: 1.5em;
-    padding: 12px;
-}
 
 #commissionsWidget {
     grid-row: 4;
     grid-column: 3 / 5;
-    background: rgb(131,58,180);
-background: linear-gradient(0deg, rgba(131,58,180,1) 0%, rgba(126,29,253,1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background: rgb(131, 58, 180);
+    background: linear-gradient(0deg, rgba(131, 58, 180, 1) 0%, rgba(126, 29, 253, 1) 100%);
+    position: relative;
+    overflow: hidden;
+
+}
+
+#commissionsWidget h1 {
+    z-index: 1;
+    margin-left: 4%;
+    padding: 8px 20px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 25px;
+}
+
+#commissionsWidget img {
+    position: absolute;
+    height: 90%;
+    left: 30%;
+    opacity: 40%;
+    transition: transform 0.5s ease;
+}
+
+#commissionsWidget:hover img {
+    transform: translateX(-5%);
 }
 
 #ezComsHead {
@@ -170,12 +223,25 @@ background: linear-gradient(0deg, rgba(131,58,180,1) 0%, rgba(126,29,253,1) 100%
     align-items: center;
     grid-row: 3/5;
     grid-column: 1/3;
+    border-radius: 25px;
+    transition: background-color 0.2s ease;
+}
+
+#ezComsHead:hover {
+    background-color:  rgba(0.5, 1, 1, 0.02);
+
 }
 #ezComsHead img {
     height: 100%;
     animation: squish 1.2s infinite linear alternate;
     transform-origin: bottom;
+}
 
+#ezComsWave {
+    position: absolute;
+    height: 37%;
+    left: 0%;
+    bottom: -5%;
 }
 
 @keyframes squish {
@@ -183,3 +249,4 @@ background: linear-gradient(0deg, rgba(131,58,180,1) 0%, rgba(126,29,253,1) 100%
         transform: scaleY(0.97);
     }
 }
+
