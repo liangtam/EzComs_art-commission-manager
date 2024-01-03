@@ -1,6 +1,30 @@
-.forms {
+.formsContainer {
     display: flex;
-    flex-flow: wrap;
-    gap: 50px;
-    padding: 15px;
+    flex-direction: column;
+    align-items: center;
+    height: 89vh;
+    background-color: blue;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    height: 15%;
+    border-radius: 30px;
+    background-color: red;
+}
+.title h1 {
+    font-size: 2em;
+}
+.forms {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, minmax(0, 45%));
+
+    gap: 5%;
+    width: 80%;
+    height: 100%;
+    border-radius: 30px;
+    background-color: orange;
 }
