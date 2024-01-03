@@ -88,7 +88,7 @@
 .orderDetails {
     padding: 10px;
 }
-.orderDetails p {
+.orderDetails ul li {
     padding: 7px;
 }
 

@@ -65,30 +65,27 @@ const Dashboard = () => {
                         </div>
                     )}
                     {orders.length !== 0 && orders[0].status !== 'Completed' && (
-                        <div className={`${styles.widget} ${styles.nextOrderWidget} ${styles.upcomingOrderWidget}`} id={styles.upcomingOrderWidget}>
+                        <Link to={`orders/${orders[0]._id}`} className={`${styles.widget} ${styles.nextOrderWidget} ${styles.upcomingOrderWidget}`} id={styles.upcomingOrderWidget}>
                             <div className={styles.title}>
-                                <Link to={`orders/${orders[0]._id}`}>
-                                    <h1>Upcoming Order</h1>
-                                </Link>
+                                <h1>Upcoming Order</h1>
                             </div>
                             <div className={styles.orderDetails}>
-                                <p>
-                                    <b>{orders[0].orderName}</b>
-                                </p>
-                                <p>
-                                    <b>Deadline: </b>
-                                    {orders[0].deadline}
-                                </p>
-                                <p>
-                                    <b>Date ordered: </b>
-                                    {orders[0].dateReqqed}
-                                </p>
-                                <p>
-                                    <b>Price: </b>
-                                    {orders[0].price === -1 ? 'Not set' : orders[0].price}
-                                </p>
+                                <ul>
+                                    <li>
+                                        <b>Order Name:</b> {orders[0].orderName}
+                                    </li>
+                                    <li>
+                                        <b>Deadline:</b> {orders[0].deadline}
+                                    </li>
+                                    <li>
+                                        <b>Date ordered:</b> {orders[0].dateReqqed}
+                                    </li>
+                                    <li>
+                                        <b>Price:</b> {orders[0].price === -1 ? 'Not set' : orders[0].price}
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
+                        </Link>
                     )}
 
                     {/* </div> */}
