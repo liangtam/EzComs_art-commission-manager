@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext, useOrdersContext } from '../hooks/index';
 import ezComsHead from '../public/images/ezComs_placeholder_head.png';
-import upcomingOrderBG from '../public/images/upcomingorder_bg.png';
+import ezComsSleepy from '../public/images/ezComs_placeholder_sleepy.png';
+import winterTrees from '../public/images/winterdate_trees_bg.png';
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
@@ -48,31 +49,36 @@ const Dashboard = () => {
     return (
         <div className={styles.dashboardContainer}>
             <div className={styles.dashboardContent}>
-                <h1>Welcome back, {user.email}</h1>
+                <div className={styles.welcomeMessage}>
+                    <h1>Welcome back, {user.email}</h1>
+                </div>
                 <div className={styles.gridContent}>
-                    {/* <div className={styles.firstRow}> */}
                     <div className={styles.widget} id={styles.dateWidget}>
                         <div id={styles.monthYear}>
                             <h1>{`${monthAbbreviations[currDate.getMonth()]} ${currDate.getDate()}`}</h1>
-                            <h2>{`${currDate.getFullYear()}`}</h2>
+                            <h1>{`${currDate.getFullYear()}`}</h1>
                         </div>
-                        <h1>{`${currDate.getHours()} : ${currDate.getMinutes()} : ${currDate.getSeconds().toString().padStart(2, '0')}`}</h1>
+                        <h1 className={styles.time}>{`${currDate.getHours().toString().padStart(2, '0')} : ${currDate.getMinutes().toString().padStart(2, '0')} : ${currDate.getSeconds().toString().padStart(2, '0')}`}</h1>
+                        <img src={winterTrees}></img>
                     </div>
-                    {orders.length === 0 && (
-                        <div className={styles.widget} id={styles.noOrderWidget}>
-                            <h1>No Upcoming Orders</h1>
-                            <h2>You can chillax for now.</h2>
+                    {(orders.length === 0 || (orders.length !== 0 && orders[0].status === 'Completed')) && (
+                        <div className={`${styles.widget} ${styles.nextOrderWidget}`} id={styles.noOrderWidget}>
+                            <div className={styles.title}>
+                                <h1>No Upcoming Orders</h1>
+                            </div>
+                            <h2>You can chillax for now!</h2>
+                            <img src={ezComsSleepy}></img>
                         </div>
                     )}
                     {orders.length !== 0 && orders[0].status !== 'Completed' && (
-                        <Link to={`orders/${orders[0]._id}`} className={`${styles.widget} ${styles.nextOrderWidget} ${styles.upcomingOrderWidget}`} id={styles.upcomingOrderWidget}>
+                        <Link to={`orders/${orders[0]._id}`} className={`${styles.widget} ${styles.nextOrderWidget}`} id={styles.upcomingOrderWidget}>
                             <div className={styles.title}>
                                 <h1>Upcoming Order</h1>
                             </div>
                             <div className={styles.orderDetails}>
                                 <ul>
                                     <li>
-                                        <b>Order Name:</b> {orders[0].orderName}
+                                        <b>Order name:</b> {orders[0].orderName}
                                     </li>
                                     <li>
                                         <b>Deadline:</b> {orders[0].deadline}
@@ -88,28 +94,18 @@ const Dashboard = () => {
                         </Link>
                     )}
 
-                    {/* </div> */}
-                    {/* <div className={styles.secondRow}> */}
-                    <div className={styles.widget} id={styles.activeFormWidget}>
-                        <Link to={`/form/${user.userID}`}>
-                            <h1>Active Form</h1>
-                        </Link>
-                    </div>
-                    <div className={styles.widget} id={styles.ordersWidget}>
-                        <Link to="/orders">
-                            <h1>Orders</h1>
-                        </Link>
-                    </div>
-                    <div className={styles.widget} id={styles.commissionsWidget}>
-                        <Link to="/commissions">
-                            <h1>Commissions</h1>
-                        </Link>
-                    </div>
+                    <Link to={`/form/${user.userID}`} className={styles.widget} id={styles.activeFormWidget}>
+                        <h1>Active Form</h1>
+                    </Link>
+                    <Link to="/orders" className={styles.widget} id={styles.ordersWidget}>
+                        <h1>Orders</h1>
+                    </Link>
+                    <Link to="/commissions" className={styles.widget} id={styles.commissionsWidget}>
+                        <h1>Commissions</h1>
+                    </Link>
                     <div id={styles.ezComsHead}>
                         <img src={ezComsHead}></img>
                     </div>
-
-                    {/* </div> */}
                 </div>
             </div>
         </div>
