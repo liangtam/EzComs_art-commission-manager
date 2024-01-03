@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useAuthContext, useOrdersContext } from '../hooks/index';
 import ezComsHead from '../public/images/ezComs_placeholder_head.png';
 import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
     const { user } = useAuthContext();
+    const { orders } = useOrdersContext();
 
     const [currDate, setCurrDate] = useState(new Date());
     const monthAbbreviations = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];

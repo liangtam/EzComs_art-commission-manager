@@ -153,7 +153,11 @@ const ActiveForm = () => {
 
         const dateObj = new Date();
         const currDate = `${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`;
-        const userDeadline = document.getElementById("deadline").value;
+        let userDeadline = document.getElementById("deadline").value;
+        if (userDeadline === "") {
+            userDeadline = "9999-12-31";
+        }
+        // console.log("userdeadline: ", userDeadline, typeof userDeadline)
 
         const order = new FormData();
 
@@ -177,7 +181,6 @@ const ActiveForm = () => {
         order.append("artistNotes", "");
         order.append("editedStatus", false);  
         order.append("user_id", user.userID);
-        
         fetch('http://localhost:4000/api/orders', {
             method: 'POST',
             body: order

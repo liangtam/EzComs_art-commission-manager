@@ -15,7 +15,8 @@ const redirectToOrders = (req, res) => {
 // get orders
 const getOrders = async (req, res) => {
     const user_id = req.user._id;
-    const orders = await Order.find({user_id: user_id}).sort({createdAt: -1});
+    const orders = await Order.find({user_id: user_id}).sort({deadline: 1});
+    console.log("getOrders: ", orders);
 
     res.status(200).json(orders);
 }
@@ -96,7 +97,7 @@ const postOrder = async (req, res) => {
 
         // Setting our order's reference images to the ones we just uploaded
         order.referenceImages = referenceImages;
-        
+
 
         // Saving the order to backend
         order.save()

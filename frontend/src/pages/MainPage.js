@@ -18,47 +18,48 @@ import { OrdersContext } from '../context/OrdersContext';
 import Login from './Login';
 
 import { useAuthContext } from '../hooks/useAuthContext';
+import { OrdersContextProvider } from '../context/OrdersContext';
 import { useFormFetches } from '../hooks/useFormFetches';
+import { useOrdersContext } from '../hooks';
 
 function MainPage() {
     const [forms, setForms] = useState([]);
-    const [orders, setOrders] = useState([]);
     // the current list of questions of the CURRENT form the user is on
     const [questionFieldList, setQuestionFieldList] = useState([]);
     const { user } = useAuthContext();
 
-    const fetchAllForms = async () => {
-        if (!user) {
-            return;
-        }
-        const response = await fetch('http://localhost:4000/api/forms/', {
-            headers: {
-                Authorization: `Bearer ${user.token}`
-            }
-        });
+    // const fetchAllForms = async () => {
+    //     if (!user) {
+    //         return;
+    //     }
+    //     const response = await fetch('http://localhost:4000/api/forms/', {
+    //         headers: {
+    //             Authorization: `Bearer ${user.token}`
+    //         }
+    //     });
 
-        const json = await response.json();
+    //     const json = await response.json();
 
-        if (response.ok) {
-            setForms(json);
-            console.log('Fetched all forms in main page! ', json);
-        }
-    };
+    //     if (response.ok) {
+    //         setForms(json);
+    //         console.log('Fetched all forms in main page! ', json);
+    //     }
+    // };
 
-    const fetchAllOrders = async () => {
-        const response = await fetch('http://localhost:4000/api/orders', {
-            headers: {
-                Authorization: `Bearer ${user.token}`
-            }
-        });
+    // const fetchAllOrders = async () => {
+    //     const response = await fetch('http://localhost:4000/api/orders', {
+    //         headers: {
+    //             Authorization: `Bearer ${user.token}`
+    //         }
+    //     });
 
-        const json = await response.json();
+    //     const json = await response.json();
 
-        if (response.ok) {
-            setOrders(json);
-            console.log('Fetched all orders in main page! ', json);
-        }
-    };
+    //     if (response.ok) {
+    //         setOrders(json);
+    //         console.log('Fetched all orders in main page! ', json);
+    //     }
+    // };
 
     // useEffect(() => {
     //     if (user) {
@@ -71,7 +72,7 @@ function MainPage() {
         <div className="App">
             <BrowserRouter>
                 <FormsContext.Provider value={{ forms, setForms }}>
-                    <OrdersContext.Provider value={{ orders, setOrders }}>
+                    <OrdersContextProvider>
                         <QuestionFieldsContext.Provider value={{ setQuestionFieldList, questionFieldList }}>
                             {user && <Navbar />}
                             <div className="pages">
@@ -101,7 +102,7 @@ function MainPage() {
                                 </Routes>
                             </div>
                         </QuestionFieldsContext.Provider>
-                    </OrdersContext.Provider>
+                    </OrdersContextProvider>
                 </FormsContext.Provider>
             </BrowserRouter>
         </div>

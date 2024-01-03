@@ -1,27 +1,26 @@
-import { useEffect, useState, useContext, useReducer} from "react";
+import { useEffect, useState, useContext, useReducer } from 'react';
 import OrderSnippet from '../../components/order_components/OrderSnippet';
-import { OrdersContext } from "../../context/OrdersContext";
-import styles from "./Orders.module.css"
+import { OrdersContext } from '../../context/OrdersContext';
+import styles from './Orders.module.css';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { orderMessageReducer, ACTION } from "../reducers/orderMessageReducer";
-import { useAuthContext } from "../../hooks/useAuthContext";
-
+import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useOrdersContext } from '../../hooks';
 
 const Orders = () => {
-    const {orders, setOrders} = useContext(OrdersContext);
+    const { orders, setOrders } = useOrdersContext();
     const [openPopup, setOpenPopup] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [state, dispatch] = useReducer(orderMessageReducer, {});
 
-    const {user} = useAuthContext();
+    const { user } = useAuthContext();
+    console.log('orders: ', orders);
 
-
-
-    
     const fetchOrders = async () => {
         if (!user) {
             return;
         }
+
         // making a call to the backend
         dispatch({type: ACTION.LOADING});
         const response = await fetch('http://localhost:4000/api/orders', {
@@ -30,8 +29,8 @@ const Orders = () => {
                 'Authorization': `Bearer ${user.token}`
             }
         });
-        
-        // to parse the json from the above response into smt we can work w/ 
+
+        // to parse the json from the above response into smt we can work w/
         const json = await response.json();
 
         if (response.ok) {
@@ -50,12 +49,12 @@ const Orders = () => {
         e.preventDefault();
         setOpenPopup(true);
         setSelectedOrderId(orderId);
-        console.log("here")
-    }
+        console.log('here');
+    };
 
     const closePopup = (e) => {
         setOpenPopup(false);
-    }
+    };
 
     const handleDeleteOrder = async (e, orderId) => {
         e.preventDefault();
@@ -66,12 +65,12 @@ const Orders = () => {
         const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
             method: 'DELETE',
             headers: {
-                'Authorization': `Bearer ${user.token}`
+                Authorization: `Bearer ${user.token}`
             }
-        })
+        });
 
         if (response.ok) {
-            console.log("Order deleted!");
+            console.log('Order deleted!');
             removeFromOrderList(orderId);
             setOpenPopup(false);
             setSelectedOrderId(null);
@@ -79,19 +78,19 @@ const Orders = () => {
         } else {
             console.log(`Error deleting order: ${response.statusText}`);
         }
-    }
+    };
 
     const removeFromOrderList = (orderId) => {
         let orderListCopy = orders.filter((order) => order._id !== orderId);
         setOrders(orderListCopy);
-    }
+    };
 
     // the empty array is dependency array. when it's empty, it means this only fires once
 
     useEffect(() => {
         fetchOrders();
-        
-        console.log("fetched orders");
+
+        console.log('fetched orders');
     }, []);
 
     return (
@@ -99,19 +98,20 @@ const Orders = () => {
             {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
             {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
             {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
-            {openPopup &&
-            <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
-                <h3>Are you sure?</h3>
-                <p>Are you sure you want to delete this order? This action cannot be undone.</p>
-            </YesNoPopup>}
+            {openPopup && (
+                <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
+                    <h3>Are you sure?</h3>
+                    <p>Are you sure you want to delete this order? This action cannot be undone.</p>
+                </YesNoPopup>
+            )}
             <div className={styles.orders}>
-                {orders && orders.map((order) => {
-                    return <OrderSnippet key={order._id} orderId={order._id} order={order} handleOpenPopup={handleOpenPopup}/>  
-                }
-                )}
+                {orders &&
+                    orders.map((order) => {
+                        return <OrderSnippet key={order._id} orderId={order._id} order={order} handleOpenPopup={handleOpenPopup} />;
+                    })}
             </div>
         </div>
-    )
+    );
 };
 
 export default Orders;
