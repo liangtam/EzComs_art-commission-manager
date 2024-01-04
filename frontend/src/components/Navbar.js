@@ -24,10 +24,10 @@ const Navbar = () => {
         <nav className={styles.nav_container}>
             <div className={styles.menuContent}>
                 <div className={styles.website_title}>
-                    <Link to={user ? '/' : '/login'}>
+                    <Link to={user ? '/' : '/login' } onClick={(e) => setShowMenu(false)}>
                         <img src={image}></img>
                     </Link>
-                    <Link to={user ? '/' : '/login'}>
+                    <Link to={user ? '/' : '/login'} onClick={(e) => setShowMenu(false)}>
                         <h1>
                             <strong>EzComs</strong>
                         </h1>
@@ -42,23 +42,23 @@ const Navbar = () => {
 
             {user && (
                 <div className={`${showMenu ? styles.openMenu : ''} ${styles.nav_links}`}>
-                    <NavLink to="/forms" >
+                    <Link to="/forms" onClick={(e) => setShowMenu(false)} >
                         <h4>Manage Forms</h4>
-                    </NavLink>
+                    </Link>
                     {/* <Link to={`/form/${user.userID}`}>
                             <h4>Form</h4>
                         </Link> */}
-                    <NavLink to="/form-builder">
+                    <Link to="/form-builder" onClick={(e) => setShowMenu(false)}>
                         <h4>Form Builder</h4>
-                    </NavLink>
+                    </Link>
 
-                    <NavLink to="/orders" >
+                    <Link to="/orders" onClick={(e) => setShowMenu(false)}>
                         <h4>Orders</h4>
-                    </NavLink>
+                    </Link>
 
-                    <NavLink to="/commissions">
+                    <Link to="/commissions" onClick={(e) => setShowMenu(false)}>
                         <h4>Commissions</h4>
-                    </NavLink>
+                    </Link>
                 </div>
             )}
             {user && (

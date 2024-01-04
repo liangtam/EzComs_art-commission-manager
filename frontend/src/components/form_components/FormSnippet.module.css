@@ -4,7 +4,6 @@
     background: linear-gradient(rgb(240, 240, 240), rgb(238, 238, 238));
     padding: 10px;
     height: 100%;
-    max-width: 100%;
     border-radius: 8px;
     align-items: center;
     justify-content: center;
@@ -53,7 +52,6 @@
     /* background-color: blue; */
     height: 50%;
     padding: 10px;
-    max-width: 100%;
 
 }
 
@@ -69,7 +67,6 @@
 .questionsPreview ul li {
     font-size: 0.9em;
     padding: 5px 0px;
-    max-width: 100%;
     overflow-x: scroll;
     white-space: nowrap;
 
@@ -79,8 +76,7 @@
     width: 100%;
     display: flex;
     justify-content: space-around;
-
-    
+   
 }
 
 .bottom .activeStatus {
@@ -93,4 +89,34 @@
     height: 1.2em;
     padding: 0px 10px;
     margin-top: 5px;
+}
+
+.bottom .actions img:hover {
+    cursor: pointer;
+    opacity: 60%;
+}
+
+@media screen and (min-width: 1400px) {
+    .bottom img {
+        display: none;
+    }
+
+    .formSnippet {
+        position: relative;
+        justify-content: start;
+    }
+
+    .bottom {
+        justify-content: center;
+        position: absolute;
+        bottom: 5%;
+    }
+
+    .formSnippet:hover img {
+        display: inline;
+    }
+
+    .formSnippet:hover .bottom {
+        justify-content: space-around;
+    }
 }
