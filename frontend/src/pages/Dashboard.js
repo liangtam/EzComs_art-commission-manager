@@ -87,7 +87,8 @@ const Dashboard = () => {
                                         <b>Order name:</b> {orders[0].orderName}
                                     </li>
                                     <li>
-                                        <b>Deadline:</b> {orders[0].deadline}
+                                        <b>Deadline:</b> {orders[0].deadline !== "9999-12-31" && orders[0].deadline}
+                                        {orders[0].deadline === "9999-12-31" && "--------"}
                                     </li>
                                     <li>
                                         <b>Date ordered:</b> {orders[0].dateReqqed}

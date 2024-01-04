@@ -89,7 +89,7 @@ const Forms = () => {
                 )}
                 {forms &&
                     forms.map((form) => {
-                        return <FormSnippet formId={form._id} form={form} handleDelete={handleOpenDeletePopup} key={form._id} />;
+                        return <div className={styles.formSnippet}><FormSnippet formId={form._id} form={form} handleDelete={handleOpenDeletePopup} key={form._id} /></div>;
                     })}
             </div>
         </div>

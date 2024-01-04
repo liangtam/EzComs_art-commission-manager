@@ -2,8 +2,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 89vh;
+    height: 91.5vh;
+    width: 100%;
     background-color: blue;
+    overflow: scroll;
 }
 
 .title {
@@ -18,13 +20,28 @@
     font-size: 2em;
 }
 .forms {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, minmax(0, 45%));
-
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
     gap: 5%;
     width: 80%;
     height: 100%;
-    border-radius: 30px;
+    border-radius: 10px;
     background-color: orange;
+    overflow: auto;
+
+}
+
+.formSnippet {
+    min-height: 45%;
+    margin: 5%;
+}
+
+@media screen and (min-width: 1500px) {
+    .forms {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, minmax(0, 45%));
+    }
 }
