@@ -1,47 +1,96 @@
 .formSnippet {
     display: flex;
     flex-direction: column;
-    background: rgb(255, 255, 255);
+    background: linear-gradient(rgb(240, 240, 240), rgb(238, 238, 238));
     padding: 10px;
     height: 100%;
+    max-width: 100%;
     border-radius: 8px;
     align-items: center;
- 
+    justify-content: center;
+    
 }
 
-
 .link {
-    color: rgb(74, 74, 74);
+    color: grey;
     text-decoration: none;
-    background-color: blue;
+    /* background-color: blue; */
     height: 90%;
-    width: 80%;
+    width: 100%;
 }
 
 .link .formStats {
     display: flex;
     flex-direction: column;
     align-items: start;
-    background-color: gray;
+    background-color: rgba(0, 0, 0, 0.05);
+    /* background-color: gray; */
     border-radius: 5px;
-
+    padding: 10px;
+    padding-bottom: 0px;
+    
 }
 
-.link .title {
-    padding-top: 8px;
+.formStats .title {
     padding-bottom: 8px;
     font-size: 16px;
+    color: rgb(74, 74, 74);
+
+    /* border-bottom: 3px solid rgb(191, 191, 191); */
+    width: 100%;
 }
 
-.link .numOfQuestions {
-
-    font-size: 14px;
+.formStats .numOfQuestions {
+    padding: 10px 0px;
+    font-size: 0.9em;
 }
 
-.link .activeStatus {
+.questionsPreview p {
+    font-size: 0.9em;
+}
+
+.questionsPreview {
+    /* background-color: blue; */
+    height: 50%;
+    padding: 10px;
+    max-width: 100%;
+
+}
+
+.questionsPreview ul {
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    padding: 3px 0px;
+    /* background-color: red; */
+    list-style-position: inside;
+}
+
+.questionsPreview ul li {
+    font-size: 0.9em;
+    padding: 5px 0px;
+    max-width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+
+}
+
+.bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+
+    
+}
+
+.bottom .activeStatus {
     color: rgb(0, 193, 55);
+    padding: 3px 10px;
 }
 
-.actions img {
+.bottom .actions img {
+    opacity: 50%;
     height: 1.2em;
+    padding: 0px 10px;
+    margin-top: 5px;
 }
