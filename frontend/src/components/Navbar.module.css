@@ -194,7 +194,8 @@ nav .active {
         background-color: rgb(51, 52, 65);
     }
     .menuImage img {
-        height: 50px;
+        height: 40px;
+        padding: 10px;
     }
 
     .menuImage img:hover {

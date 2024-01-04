@@ -83,7 +83,7 @@
     align-items: center;
 }
 
-#monthYear h1 {
+#dateWidget #monthYear h1 {
     font-size: 3.3em;
     padding: 10px;
 }
@@ -121,6 +121,7 @@
     color: white;
     font-size: 1.8em;
     padding: 15px;
+    text-align: center;
 }
 
 .orderDetails {
@@ -138,6 +139,7 @@
     font-size: 1.5em;
     padding: 10px;
     color: rgb(102, 223, 179);
+    text-align: center;
 }
 
 .smallerWidget {
@@ -152,7 +154,7 @@
     padding: 8px 20px;
     background-color: rgba(158, 232, 242, 0.3);
     border-radius: 25px;
-
+    text-align: center;
 }
 
 .smallerWidget img {
@@ -161,12 +163,10 @@
     bottom: -40%;
     opacity: 70%;
     transition: transform 0.3s ease-in-out;
-
 }
 
 .smallerWidget:hover img {
     transform: translateY(-8%);
-
 }
 
 #activeFormWidget {
@@ -174,7 +174,6 @@
     grid-row: 3;
     background: rgb(0, 166, 228);
     background: linear-gradient(0deg, rgba(0, 166, 228, 1) 0%, rgba(0, 72, 138, 1) 100%);
-
 }
 
 #ordersWidget {
@@ -182,9 +181,7 @@
     grid-column: 4;
     background: rgb(82, 194, 111);
     background: linear-gradient(0deg, rgba(82, 194, 111, 1) 0%, rgba(0, 113, 113, 1) 100%);
-
 }
-
 
 #commissionsWidget {
     grid-row: 4;
@@ -196,7 +193,6 @@
     background: linear-gradient(0deg, rgba(131, 58, 180, 1) 0%, rgba(126, 29, 253, 1) 100%);
     position: relative;
     overflow: hidden;
-
 }
 
 #commissionsWidget h1 {
@@ -205,6 +201,7 @@
     padding: 8px 20px;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 25px;
+    text-align: center;
 }
 
 #commissionsWidget img {
@@ -230,8 +227,7 @@
 }
 
 #ezComsHead:hover {
-    background-color:  rgba(0.5, 1, 1, 0.02);
-
+    background-color: rgba(0.5, 1, 1, 0.02);
 }
 #ezComsHead img {
     height: 100%;
@@ -252,3 +248,243 @@
     }
 }
 
+@media screen and (max-width: 1280px) {
+    #dateWidget #monthYear h1 {
+        font-size: 2.5em;
+    }
+
+    .nextOrderWidget .title h1 {
+        font-size: 1.5em;
+    }
+
+    #noOrderWidget h2 {
+        font-size: 1.1em;
+    }
+
+    .time {
+        font-size: 2.3em;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    h1 {
+        font-size: 1.5em;
+    }
+    #dateWidget #monthYear h1 {
+        font-size: 200%;
+    }
+
+    .nextOrderWidget .title h1 {
+        font-size: 1.4em;
+    }
+
+    #noOrderWidget h2 {
+        font-size: 1.2em;
+    }
+
+    #noOrderWidget img {
+        height: 35%;
+    }
+
+    .time {
+        font-size: 2em;
+    }
+
+    .smallerWidget h1 {
+        font-size: 1.1em;
+        margin: 5%;
+    }
+
+    .smallerWidget img {
+        height: 70%;
+        bottom: -30%;
+    }
+
+    #commissionsWidget h1 {
+        font-size: 1.5em;
+    }
+
+    #commissionsWidget img {
+        height: 70%;
+        left: 10%;
+    }
+
+    #ezComsHead img {
+        height: 80%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dashboardContainer {
+        height: 91.5vh;
+    }
+
+    h1 {
+        font-size: 1.2em;
+    }
+
+    #dateWidget {
+        justify-content: center;
+    }
+
+    #dateWidget #monthYear {
+        flex-direction: column;
+        margin-top: 0;
+    }
+
+    .time {
+        margin: 0;
+    }
+    #dateWidget #monthYear h1 {
+        font-size: 1.6em;
+    }
+
+    .nextOrderWidget .title h1 {
+        font-size: 1.2em;
+    }
+
+    #noOrderWidget h2 {
+        font-size: 1em;
+    }
+
+    #noOrderWidget img {
+        height: 35%;
+    }
+
+    .time {
+        font-size: 1.5em;
+    }
+
+    .smallerWidget h1 {
+        font-size: 0.8em;
+        margin: 7%;
+        padding: 5%;
+    }
+
+    .smallerWidget img {
+        height: 70%;
+        bottom: -30%;
+    }
+
+    #commissionsWidget {
+        align-items: center;
+    }
+    #commissionsWidget h1 {
+        font-size: 1.3em;
+        margin: 0;
+    }
+
+    #ezComsHead img {
+        height: 60%;
+    }
+}
+
+@media screen and (max-width: 640px) {
+
+    .welcomeMessage {
+        justify-content: center;
+    }
+    .welcomeMessage h1 {
+        font-size: 1.2em;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    .gridContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        /* background-color: red; */
+        /* border-radius: 30px; */
+        overflow-y: auto;
+    }
+
+    .widget {
+        width: 100%;
+        min-height: 40%;
+        max-height: 40%;
+    }
+
+    #dateWidget {
+        height: 40%;
+        overflow: hidden;
+    }
+
+    #dateWidget h1 {
+        z-index: 1;
+    }
+
+    .nextOrderWidget {
+        height: 40%;
+    }
+
+    .time {
+        margin: 0;
+    }
+    #dateWidget #monthYear h1 {
+        font-size: 1.5em;
+    }
+
+    .nextOrderWidget .title h1 {
+        font-size: 1em;
+    }
+
+    #noOrderWidget h2 {
+        font-size: 1em;
+    }
+
+    #noOrderWidget img {
+        height: 35%;
+    }
+
+    .time {
+        font-size: 1.5em;
+    }
+
+    .smallerWidget h1 {
+        font-size: 0.8em;
+        margin: 7%;
+        padding: 5%;
+    }
+
+    .smallerWidget img {
+        height: 70%;
+        top: 30%;
+
+
+    }
+
+    #commissionsWidget {
+        align-items: center;
+        overflow: hidden;
+    }
+    #commissionsWidget h1 {
+        font-size: 1.2em;
+        padding: 0;
+        padding: 15px;
+        border-radius: 20px;
+        margin: 0;
+    }
+
+    #commissionsWidget img {
+        left: -70%;
+        top: 0;
+    }
+
+    #ezComsHead img {
+        height: 100%;
+        width: 100%;
+    }
+    #ezComsWave {
+        display: none;
+    }
+
+    .smallerWidget {
+        z-index: 1;
+        margin: 0;
+        width: 100%;
+
+        background-color: blue;
+    }
+}

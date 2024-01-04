@@ -112,7 +112,7 @@ const Dashboard = () => {
                     <Link to="/commissions" className={styles.widget} id={styles.commissionsWidget}>
                         <h1>Commissions</h1>
                         <img src={commissionsBg}></img>
-                    </Link>
+                    </Link> 
                     <div id={styles.ezComsHead}>
                         <img src={ezComsHead}></img>
                     </div>
