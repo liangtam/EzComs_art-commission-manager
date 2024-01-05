@@ -148,6 +148,13 @@ button:hover {
     padding-bottom: 1rem;
 }
 
+.line {
+    min-width: 100%;
+    height: 3px;
+    background-color: grey;
+
+}
+
 @media only screen and (max-width: 482px) {
     .whiteOutlineButton, .filledWhiteTurquoiseButton {
         padding: 10px;

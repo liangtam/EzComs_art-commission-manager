@@ -12,6 +12,7 @@
   justify-content: space-between;
   position: relative;
   overflow: hidden;
+  transition: translate 0.3s ease;
 
 }
  .orderContainer * {
@@ -24,7 +25,7 @@
  }
 
 .orderContainer:hover {
-  translate: 0px 2px;
+  translate: 0px -2px;
   cursor: pointer;
 }
 
