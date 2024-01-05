@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { OrdersContext } from '../../context/OrdersContext';
 import YesNoPopup from '../form_components/YesNoPopup';
+import trashIcon from '../../public/images/delete_trash.png';
+import editIcon from '../../public/images/edit_icon.png';
 
 const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
-
+    const nav = useNavigate();
     // const handleOpenPopup = (e) => {
     //     e.preventDefault();
     //     setOpenPopup(true);
@@ -58,7 +60,11 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
                     ID: {order && order._id}
                 </div>
             </Link>
-            <button className="blueButton deleteBtn" onClick={(e) => handleOpenPopup(e, orderId)}>Delete</button>
+            <div className={styles.actions}>
+                    <img src={editIcon} alt="Edit" onClick={(e) => nav(`/orders/${orderId}`)}></img>
+
+                    <img src={trashIcon} alt="Delete" onClick={(e) => handleOpenPopup(e, orderId)}></img>
+                </div>
         </div>
     )
 }
