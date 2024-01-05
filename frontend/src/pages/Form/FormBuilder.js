@@ -81,7 +81,8 @@ const FormBuilder = () => {
         // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
         if (activeStatus === true && forms.length > 0) {
             const activeForm = findActiveForm();
-            if (activeForm.activeStatus === true) { // just a safety guard
+            if (activeForm.activeStatus === true) {
+                // just a safety guard
                 setOpenPopup(true);
             } else {
                 if (user) {
@@ -215,41 +216,54 @@ const FormBuilder = () => {
                     <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
                 </YesNoPopup>
             )}
-            <h3>Create an order form for your clients</h3>
-            <form>
-                <h4>Default features included in the form:</h4>
-                <ul>
-                    <li>Order Name </li>
-                    <li>Client Name </li>
-                    <li>Client Email </li>
-                    <li>Order Details </li>
-                    <li>Deadline (optional) </li>
-                </ul>
-                <div className="form_name">
-                    <h4>Name of form:</h4>
-                    <input id="formName_field" type="text" onChange={handleNameFieldChange}></input>
+            <h1>Create an order form for your clients</h1>
+            <form className={styles.formBuilderContent}>
+                <div className={styles.formContent}>
+                    <div className={styles.formName}>
+                        <h4>Name of form:</h4>
+                        <input id="formName_field" type="text" onChange={handleNameFieldChange}></input>
+                    </div>
+                    <h4>Default features included in the form:</h4>
+                    <ul>
+                        <li>Order Name </li>
+                        <li>Client Name </li>
+                        <li>Client Email </li>
+                        <li>Order Details </li>
+                        <li>Deadline (optional) </li>
+                    </ul>
+                    {/* <h2>------------------------------------------------------------</h2> */}
                 </div>
-                <h2>------------------------------------------------------------</h2>
-                <div className="create_qs">
-                    <button onClick={handleShortAnswerClick}>Add Short Answer</button>
-                    <button onClick={handleMCClick}>Add Multiple Choice</button>
-                    {questionFieldList.length >= 1 &&
-                        questionFieldList.map((questionField) => {
-                            if (questionField.type === 'shortAns') {
-                                return <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />;
-                            } else if (questionField.type === 'mc') {
-                                return <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />;
-                            }
-                        })}
+                {questionFieldList.length >= 1 &&
+                    questionFieldList.map((questionField) => {
+                        if (questionField.type === 'shortAns') {
+                            return <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />;
+                        } else if (questionField.type === 'mc') {
+                            return <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />;
+                        }
+                    })}
+
+                <div className={styles.createQuestions}>
+                    <div className={styles.questionButtons}>
+                        <button className={`${styles.formBuilderBtn} ${styles.saBtn}`} onClick={handleShortAnswerClick}>
+                            Add Short Answer
+                        </button>
+                        <button className={`${styles.formBuilderBtn} ${styles.mcBtn}`} onClick={handleMCClick}>
+                            Add Multiple Choice
+                        </button>
+                    </div>
                 </div>
 
                 {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
                 {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
                 {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
 
-                <button onClick={toggleActive}>Set Active</button>
-                <div>{activeStatus ? 'active' : 'inactive'}</div>
-                <button type="submit" onClick={handleSaveFormClick}>
+                <div className={styles.activeStatus}>
+                    <button className={`${styles.formBuilderBtn} ${styles.activeStatusBtn}`} onClick={toggleActive}>
+                        Set Active
+                    </button>
+                    <div className={`${activeStatus ? styles.active : styles.inactive} ${styles.activeStatus}`}>{activeStatus ? 'Active' : 'Inactive'}</div>
+                </div>
+                <button className="blueButton" type="submit" onClick={handleSaveFormClick}>
                     Submit
                 </button>
             </form>

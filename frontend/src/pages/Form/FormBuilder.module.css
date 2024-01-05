@@ -1,6 +1,91 @@
 .formBuilderContainer {
     display: flex;
     flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    /* background-color: blue; */
+    height: 90vh;
+    width: 100vw;
+    border-radius: 10px;
+}
+
+.formBuilderContent {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: orange;
+    padding: 10px;
 }
+
+.formBuilderContent ul {
+    list-style-position: inside;
+}
+
+.formName input {
+    border: none;
+    border-bottom: 2px solid grey;
+    background-color: transparent;
+
+}
+
+.formBuilderContent .createQuestions {
+    width: 100%;
+    /* background-color: gray; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+}
+
+.questionButtons {
+    width: 100%;
+    display: flex;
+    background-color: red;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.questionButtons button {
+    font-size: 0.8rem;
+}
+
+.formBuilderBtn {
+    padding: 0.3rem 0.4rem;
+    border: none;
+    border-radius: 5px;
+}
+
+.formBuilderBtn:hover {
+    background-color: rgb(190, 190, 190);
+}
+
+.activeStatus {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: purple;
+    width: 80%;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.activeStatusBtn {
+    width: 100%;
+}
+
+.active {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    color: var(--activeGreen);
+}
+
+.inactive {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+}
+

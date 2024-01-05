@@ -35,7 +35,7 @@ const ShortAnswerQField = ({fieldId, labelValue}) => {
 
 
     return (
-    <div className="shortanswer_question_field_component">
+    <div className={`${styles.questionContainer}`}>
         <input key='shortanswer_question_field' type='text' placeholder="Question" value={labelValue}
         onChange={(e) => handleFieldChange(e, fieldId)} required></input>
         <button onClick={(e) => handleRemoveField(e, fieldId)}>Remove</button>        

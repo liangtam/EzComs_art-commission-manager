@@ -81,7 +81,7 @@
 }
 
 .bottom .activeStatus {
-    color: rgb(0, 193, 55);
+    color: var(--activeGreen);
     padding: 3px 10px;
 }
 
