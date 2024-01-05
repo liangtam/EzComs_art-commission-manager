@@ -13,22 +13,16 @@
     /* background-color: blue; */
 }
 .questionContent input {
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid grey;
-    padding: 0.3rem 0.5rem;
-    padding-top: 0.5rem;
-    margin: 0.7rem 0.5rem;
+
     width: 70%;
-    font-size: 1em;
+
 }
 
 .questionContent input:focus {
     outline: none;
     border-bottom: 2px solid var(--ezComs_blue);
     background-color: rgba(187, 210, 255, 0.2);
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+
 }
 
 .removeQBtn {

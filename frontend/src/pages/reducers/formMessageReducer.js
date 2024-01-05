@@ -42,6 +42,12 @@ const formMessageReducer = (state, action) => {
                 errorMessage: "Could not load forms.",
                 loadingMessage: ""
             };
+        case 'customError':
+            return {
+                successMessage: "",
+                errorMessage: action.payload,
+                loadingMessage: ""
+            }
         case 'loading':
             return {
                 successMessage: "",
@@ -65,6 +71,7 @@ const ACTION = {
     ERROR_DELETE: 'errorDelete',
     ERROR_UPLOAD: 'errorUpload',
     ERROR_GET_ALL: 'errorGetAll',
+    ERROR_CUSTOM: 'customError',
     LOADING: 'loading',
     SUCCESS_UPDATE: "successUpdate",
     SUCCESS_UPLOAD: "successUpload",

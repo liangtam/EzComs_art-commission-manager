@@ -33,7 +33,7 @@ const ShortAnswerQField = ({ fieldId, labelValue }) => {
 
     return (
         <div className={`${styles.questionContent}`}>
-            <input key="shortanswer_question_field" type="text" placeholder="Short Answer Question" value={labelValue} onChange={(e) => handleFieldChange(e, fieldId)} required></input>
+            <input className="transparentInput" key="shortanswer_question_field" type="text" placeholder="Short Answer Question" value={labelValue} onChange={(e) => handleFieldChange(e, fieldId)} required></input>
             <button className={styles.removeQBtn} onClick={(e) => handleRemoveField(e, fieldId)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="76" height="77" viewBox="0 0 76 77" fill="none">
                     <path

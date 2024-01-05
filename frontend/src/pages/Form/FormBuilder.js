@@ -103,11 +103,13 @@ const FormBuilder = () => {
         if (!user) {
             return;
         }
-        dispatch({ type: ACTION.LOADING });
-        let questions = questionFieldList.filter((question) => question.questionLabel !== '' || (question.type === 'mc' && question.optionList.length !== 0));
         if (formName === '') {
+            dispatch({ type: ACTION.ERROR_CUSTOM, payload: 'Please name your form.' });
+            setOpenPopup(false);
             return;
         }
+        dispatch({ type: ACTION.LOADING });
+        let questions = questionFieldList.filter((question) => question.questionLabel !== '' || (question.type === 'mc' && question.questionLabel !== '' && question.optionList.length !== 0));
 
         for (let i = 0; i < questions.length; i++) {
             if (questions[i].type === 'mc') {
@@ -120,31 +122,35 @@ const FormBuilder = () => {
         //questions = questions.filter((question) => question.type !== "mc" && question.optionList.length !== 0);
 
         let form = { formName, questions, activeStatus };
-        console.log('Form: ', form);
+        // console.log('Form: ', form);
         // first arg: where we're sending the post request to
-        const response = await fetch('http://localhost:4000/api/forms', {
-            method: 'POST',
-            body: JSON.stringify(form),
-            // to specify that the content type is json
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${user.token}`
+        try {
+            const response = await fetch('http://localhost:4000/api/forms', {
+                method: 'POST',
+                body: JSON.stringify(form),
+                // to specify that the content type is json
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+
+            // parsing our response to json
+            const json = await response.json();
+
+            if (response.ok) {
+                console.log('New form added!', json);
+                // jquery -- find an element with id formName_field and set its value to ''.
+                //          So, we're clearing the name field here.
+                document.getElementById('formName_field').value = '';
+                setQuestionFieldList([]);
+                setName('');
+                setActiveStatus(false);
+                dispatch({ type: ACTION.SUCCESS_UPLOAD });
+            } else {
+                throw new Error();
             }
-        });
-
-        // parsing our response to json
-        const json = await response.json();
-
-        if (response.ok) {
-            console.log('New form added!', json);
-            // jquery -- find an element with id formName_field and set its value to ''.
-            //          So, we're clearing the name field here.
-            document.getElementById('formName_field').value = '';
-            setQuestionFieldList([]);
-            setName('');
-            setActiveStatus(false);
-            dispatch({ type: ACTION.SUCCESS_UPLOAD });
-        } else {
+        } catch (err) {
             dispatch({ type: ACTION.ERROR_UPLOAD });
         }
         setOpenPopup(false);
@@ -223,8 +229,9 @@ const FormBuilder = () => {
             <form className={styles.formBuilderContent}>
                 <div className={styles.formContent}>
                     <div className={styles.formName}>
-                        <h4>Name of form:</h4>
-                        <input id="formName_field" type="text" onChange={handleNameFieldChange}></input>
+                        <h4>
+                            Name of form: <input className="transparentInput" id="formName_field" type="text" onChange={handleNameFieldChange} placeholder="Coolest form"></input>
+                        </h4>
                     </div>
                     <h5>Default features included in the form:</h5>
                     <ul>
@@ -268,16 +275,16 @@ const FormBuilder = () => {
                     </div>
                 </div>
 
-                {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
-                {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
-                {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
-
                 <div className={styles.activeStatus}>
                     <button className={`${styles.formBuilderBtn} ${styles.activeStatusBtn}`} onClick={toggleActive}>
                         Set Active
                     </button>
                     <div className={`${activeStatus ? styles.active : styles.inactive} ${styles.activeStatus}`}>{activeStatus ? 'Active' : 'Inactive'}</div>
                 </div>
+
+                {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
+                {state.successMessage && <div className="successMessage">{state.successMessage}</div>}
+                {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                 <button className="blueButton" type="submit" onClick={handleSaveFormClick}>
                     Submit
                 </button>

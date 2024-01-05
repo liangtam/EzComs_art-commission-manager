@@ -70,7 +70,7 @@ const MCQuestionField = ({ fieldId, labelValue, optList }) => {
     return (
         <div className={styles.questionContainer}>
             <div className={styles.questionContent}>
-            <input key="mc_question_field" type="text" placeholder="MC Question" onChange={(e) => handleFieldChange(e, fieldId)} value={labelValue} required={true}></input>
+            <input className="transparentInput" key="mc_question_field" type="text" placeholder="MC Question" onChange={(e) => handleFieldChange(e, fieldId)} value={labelValue} required={true}></input>
             <button className={styles.addOption} onClick={(e) => handleOptionClick(e, fieldId)}>Add Option</button>
 
             <button className={styles.removeQBtn} onClick={(e) => handleRemoveField(e, fieldId)}>

@@ -41,12 +41,7 @@
 }
 
 .formName input {
-    border: none;
-    border-bottom: 2px solid grey;
-    background-color: transparent;
-    width: 100%;
-    margin: 0.5rem;
-    padding: 0.2rem 0.5rem;
+    width: 70%;
 }
 
 .formName input:focus {
@@ -136,6 +131,28 @@
 .question {
     width: 100%;
     /* background-color: black; */
+}
+
+.formDetailsBottomButtons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.saveBtn {
+    background-color: var(--ezComs_turquoise);
+}
+
+.saveBtn:hover {
+    background-color: rgb(52, 216, 200);
+}
+.deleteBtn {
+    background-color: rgb(251, 99, 99);
+}
+
+.deleteBtn:hover {
+    background-color: rgb(210, 75, 75);
+
 }
 @media screen and (min-width: 768px) {
     .activeStatus {
