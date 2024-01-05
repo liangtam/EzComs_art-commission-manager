@@ -216,14 +216,17 @@ const FormBuilder = () => {
                     <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
                 </YesNoPopup>
             )}
-            <h1>Create an order form for your clients</h1>
+            <div className={styles.intro}>
+                <h1>Create an order form for your clients</h1>
+                <p>An active form will be accessible by anyone, including your clients. An inactive form is only accessible to you.</p>
+            </div>
             <form className={styles.formBuilderContent}>
                 <div className={styles.formContent}>
                     <div className={styles.formName}>
                         <h4>Name of form:</h4>
                         <input id="formName_field" type="text" onChange={handleNameFieldChange}></input>
                     </div>
-                    <h4>Default features included in the form:</h4>
+                    <h5>Default features included in the form:</h5>
                     <ul>
                         <li>Order Name </li>
                         <li>Client Name </li>
@@ -233,21 +236,33 @@ const FormBuilder = () => {
                     </ul>
                     {/* <h2>------------------------------------------------------------</h2> */}
                 </div>
-                {questionFieldList.length >= 1 &&
-                    questionFieldList.map((questionField) => {
-                        if (questionField.type === 'shortAns') {
-                            return <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />;
-                        } else if (questionField.type === 'mc') {
-                            return <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />;
-                        }
-                    })}
+
+                {questionFieldList.length >= 1 && (
+                    <div className={styles.questions}>
+                        {questionFieldList.map((questionField) => {
+                            if (questionField.type === 'shortAns') {
+                                return (
+                                    <div className={styles.question}>
+                                        <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />
+                                    </div>
+                                );
+                            } else if (questionField.type === 'mc') {
+                                return (
+                                    <div className={styles.question}>
+                                        <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />
+                                    </div>
+                                );
+                            }
+                        })}
+                    </div>
+                )}
 
                 <div className={styles.createQuestions}>
                     <div className={styles.questionButtons}>
-                        <button className={`${styles.formBuilderBtn} ${styles.saBtn}`} onClick={handleShortAnswerClick}>
+                        <button className={`${styles.formBuilderBtn}`} onClick={handleShortAnswerClick}>
                             Add Short Answer
                         </button>
-                        <button className={`${styles.formBuilderBtn} ${styles.mcBtn}`} onClick={handleMCClick}>
+                        <button className={`${styles.formBuilderBtn}`} onClick={handleMCClick}>
                             Add Multiple Choice
                         </button>
                     </div>

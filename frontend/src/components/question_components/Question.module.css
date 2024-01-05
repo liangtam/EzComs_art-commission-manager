@@ -1,5 +1,66 @@
-input {
+.questionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 100%;
+}
+.questionContent {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    /* background-color: blue; */
+}
+.questionContent input {
     background-color: transparent;
     border: none;
-    border-bottom: 5px;
+    border-bottom: 2px solid grey;
+    padding: 0.3rem 0.5rem;
+    padding-top: 0.5rem;
+    margin: 0.7rem 0.5rem;
+    width: 70%;
+    font-size: 1em;
+}
+
+.questionContent input:focus {
+    outline: none;
+    border-bottom: 2px solid var(--ezComs_blue);
+    background-color: rgba(187, 210, 255, 0.2);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.removeQBtn {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    background-color: transparent;
+    opacity: 30%;
+    border: none;
+    width: 20px;
+    height: 20px;
+}
+
+.addOption {
+    border: none;
+    color: white;
+    background-color: black;
+    opacity: 30%;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+@media screen and (min-width: 1024px) {
+    .questionContent input {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+
+    .questionContent input {
+        width: 50%;
+    }
 }
