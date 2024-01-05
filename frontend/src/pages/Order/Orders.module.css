@@ -47,7 +47,7 @@
   .orders {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: 45%;
+      grid-auto-rows: 40%;
       /* background-color: blue; */
       gap: 10px;
       justify-content: center;
@@ -81,14 +81,19 @@
   
 }
 
+
 @media screen and (min-width: 1280px){
   .orders {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-auto-rows: 30%;
     margin: 0;
     /* background-color: rebeccapurple; */
-  }
+    gap: 20px;
+    }
   .order {
-    min-width: 0;
-  }
-  
+
+    /* background-color: orange; */
+    justify-self: center;
+    min-width: 100%;
+  }  
 }
