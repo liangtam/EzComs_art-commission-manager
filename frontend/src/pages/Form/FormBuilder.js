@@ -222,7 +222,7 @@ const FormBuilder = () => {
                     <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
                 </YesNoPopup>
             )}
-            <div className={styles.intro}>
+            <div className="pageTitle">
                 <h1>Create an order form for your clients</h1>
                 <p>An active form will be accessible by anyone, including your clients. An inactive form is only accessible to you.</p>
             </div>

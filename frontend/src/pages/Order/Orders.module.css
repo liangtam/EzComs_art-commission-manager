@@ -1,9 +1,60 @@
 /* Home/Orders page*/
+.ordersContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 90vh;
+  width: 100%;
+}
+.ordersContainer h1 {
+  font-size: 1.5em;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+
 .orders {
-    display: flex;
-    flex-flow: wrap;
-    align-items: center;
-    gap: 50px;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 5%;
+  width: 80%;
+  height: 100%;
+  border-radius: 10px;
+  overflow-y: auto;
+  /* background-color: black; */
+
+}
+.order {
+  width: 100%;
+  max-width: 280px;
+  height: 100%;
+  /* background-color: blue; */
+}
+
+
+@media screen and (min-width: 640px) {
+  .ordersContainer {
+      height: 89vh;
+      margin: 0;
   }
-  
+
+  .orders {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows:35%;
+      background-color: blue;
+      gap: 10px;
+      justify-content: center;
+      align-items: start;
+      padding: 10px;
+      overflow-y: auto;
+  }
+
+  .order {
+      background-color: orange;
+      border-radius: 5px;
+      height: 100%;
+      min-width: 100%;
+  }
+}

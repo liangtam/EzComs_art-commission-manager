@@ -22,11 +22,11 @@ const Orders = () => {
         }
 
         // making a call to the backend
-        dispatch({type: ACTION.LOADING});
+        dispatch({ type: ACTION.LOADING });
         const response = await fetch('http://localhost:4000/api/orders', {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${user.token}`
+                Authorization: `Bearer ${user.token}`
             }
         });
 
@@ -36,14 +36,14 @@ const Orders = () => {
         if (response.ok) {
             setOrders(json);
             console.log('Fetched all forms in orders page! ', json);
-            dispatch({type: ACTION.RESET});
+            dispatch({ type: ACTION.RESET });
         } else {
-            dispatch({type: ACTION.ERROR_GET_ALL})
+            dispatch({ type: ACTION.ERROR_GET_ALL });
             setTimeout(() => {
-                dispatch({type: ACTION.RESET});
+                dispatch({ type: ACTION.RESET });
             }, 3000);
         }
-    }
+    };
 
     const handleOpenPopup = (e, orderId) => {
         e.preventDefault();
@@ -89,27 +89,33 @@ const Orders = () => {
 
     useEffect(() => {
         fetchOrders();
-
-        console.log('fetched orders');
+        // console.log('fetched orders');
     }, []);
 
     return (
         <div className={styles.ordersContainer}>
+            <div className="pageTitle">
+                <h1>Orders</h1>
+            </div>
             {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
             {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
             {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
-            {openPopup && (
-                <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
-                    <h3>Are you sure?</h3>
-                    <p>Are you sure you want to delete this order? This action cannot be undone.</p>
-                </YesNoPopup>
-            )}
-            <div className={styles.orders}>
-                {orders &&
-                    orders.map((order) => {
-                        return <OrderSnippet key={order._id} orderId={order._id} order={order} handleOpenPopup={handleOpenPopup} />;
-                    })}
-            </div>
+                {openPopup && (
+                    <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
+                        <h3>Are you sure?</h3>
+                        <p>Are you sure you want to delete this order? This action cannot be undone.</p>
+                    </YesNoPopup>
+                )}
+                <div className={styles.orders}>
+                    {orders &&
+                        orders.map((order) => {
+                            return (
+                                <div className={styles.order}>
+                                    <OrderSnippet key={order._id} orderId={order._id} order={order} handleOpenPopup={handleOpenPopup} />
+                                </div>
+                            );
+                        })}
+                </div>
         </div>
     );
 };

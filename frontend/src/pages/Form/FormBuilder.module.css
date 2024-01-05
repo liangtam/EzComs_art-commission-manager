@@ -8,18 +8,7 @@
     width: 100vw;
     border-radius: 10px;
 }
-.intro {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    width: 85%;
-    padding: 1rem;
-}
-.intro h1 {
-    font-size: 1.5em;
-    text-align: center;
-    padding-bottom: 1rem;
-}
+
 
 .formBuilderContent {
     width: 85%;
@@ -140,21 +129,7 @@
     align-items: center;
 }
 
-.saveBtn {
-    background-color: var(--ezComs_turquoise);
-}
 
-.saveBtn:hover {
-    background-color: rgb(52, 216, 200);
-}
-.deleteBtn {
-    background-color: rgb(251, 99, 99);
-}
-
-.deleteBtn:hover {
-    background-color: rgb(210, 75, 75);
-
-}
 
 @media screen and (min-width: 768px) {
     .activeStatus {

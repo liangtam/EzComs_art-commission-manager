@@ -107,7 +107,6 @@ const FormDetails = () => {
             optionList: [],
             optionAns: []
         };
-
         setQuestionFieldList([...questionFieldList, newQObj]);
     };
 
@@ -116,7 +115,7 @@ const FormDetails = () => {
         if (!user) {
             return;
         }
-        console.log('here');
+        // console.log('here');
 
         if (formName === '') {
             setError({ error: 'Please provide a name for this form.' });
@@ -129,10 +128,10 @@ const FormDetails = () => {
 
         // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
         if (wasAlreadyActive) {
-            console.log('was already active');
+            // console.log('was already active');
             saveForm();
         } else if (activeStatus === true) {
-            console.log('boop');
+            // console.log('boop');
             if (forms.length > 0) {
                 const activeForm = findActiveForm();
 
@@ -256,7 +255,7 @@ const FormDetails = () => {
             });
 
             if (response.ok) {
-                console.log('Form deleted!');
+                // console.log('Form deleted!');
                 navigate('/forms');
             }
         } catch (error) {
@@ -274,7 +273,7 @@ const FormDetails = () => {
 
     return (
         <div className={styles.formBuilderContainer}>
-            <div className={styles.intro}>
+            <div className="pageTitle">
                 <h1>Edit Form</h1>
             </div>
             <form className={styles.formBuilderContent}>
@@ -344,8 +343,8 @@ const FormDetails = () => {
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
 
                 <div className={styles.formDetailsBottomButtons}>
-                    <button className={`blueButton ${styles.deleteBtn}`}  onClick={(e) => setOpenDeletePopup(true)}>Delete</button>
-                    <button className={`blueButton ${styles.saveBtn}`} onClick={handleSaveClick}>
+                    <button className={`blueButton deleteBtn`}  onClick={(e) => setOpenDeletePopup(true)}>Delete</button>
+                    <button className={`blueButton saveBtn`} onClick={handleSaveClick}>
                         Save
                     </button>
                 </div>

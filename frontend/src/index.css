@@ -116,8 +116,36 @@ button:hover {
     border-top-right-radius: 5px;
 }
 
-.transparentInput:focus {
+.saveBtn, .deleteBtn {
+    font-weight: 400;
+}
+.saveBtn {
+    background-color: var(--ezComs_turquoise);
+}
 
+.saveBtn:hover {
+    background-color: rgb(52, 216, 200);
+}
+.deleteBtn {
+    background-color: rgb(251, 99, 99);
+}
+
+.deleteBtn:hover {
+    background-color: rgb(210, 75, 75);
+
+}
+
+.pageTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 85%;
+    padding: 1rem;
+}
+.pageTitle h1 {
+    font-size: 1.5em;
+    text-align: center;
+    padding-bottom: 1rem;
 }
 
 @media only screen and (max-width: 482px) {

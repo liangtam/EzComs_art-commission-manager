@@ -6,7 +6,6 @@ import YesNoPopup from '../form_components/YesNoPopup';
 
 const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
 
-
     // const handleOpenPopup = (e) => {
     //     e.preventDefault();
     //     setOpenPopup(true);
@@ -33,13 +32,13 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
     // }
 
     return (
-        <div className={styles.orderSnippet}>
+        <div className={styles.orderContainer}>
             {/* {openPopup &&
             <YesNoPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
                 <h3>Are you sure?</h3>
                 <p>Are you sure you want to delete this order? This action cannot be undone.</p>
             </YesNoPopup>} */}
-            <Link className={styles.link} to={`/orders/${orderId}`}>
+            <Link className={styles.orderSnippet} to={`/orders/${orderId}`}>
                 {order && order.orderName &&
                 <div className={styles.orderName}>
                     <h4>{order.orderName}</h4>
@@ -59,7 +58,7 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
                     ID: {order && order._id}
                 </div>
             </Link>
-            <button className={styles.deleteBtn} onClick={(e) => handleOpenPopup(e, orderId)}>Delete</button>
+            <button className="blueButton deleteBtn" onClick={(e) => handleOpenPopup(e, orderId)}>Delete</button>
         </div>
     )
 }
