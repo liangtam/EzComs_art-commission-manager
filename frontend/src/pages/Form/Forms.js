@@ -74,7 +74,7 @@ const Forms = () => {
 
     return (
         <div className={styles.formsContainer}>
-            <div className={styles.title}>
+            <div className="pageTitle">
                 <h1> Forms </h1>
             </div>
             {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}

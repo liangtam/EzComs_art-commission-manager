@@ -192,7 +192,7 @@ const updateOrder = async (req, res) => {
         status: req.body.status,
         artistNotes: req.body.artistNotes,
         editedStatus: req.body.editedStatus,
-        originalUneditedOrder: req.body.originalUneditedOrder
+        originalUneditedOrder: oldOrder.originalUneditedOrder
 
     };
     //const url = req.protocol + '://' + req.get('host');
@@ -367,7 +367,7 @@ const editClientOrder = async (req, res) => {
         wipArts: req.body.wipArts,
         completedArts: req.body.completedArts,
         editedStatus: req.body.editedStatus,
-        originalUneditedOrder: JSON.stringify(req.body.originalUneditedOrder)
+        originalUneditedOrder: oldOrder.originalUneditedOrder
     }
 
     let oldRefImgs = oldOrder.referenceImages;

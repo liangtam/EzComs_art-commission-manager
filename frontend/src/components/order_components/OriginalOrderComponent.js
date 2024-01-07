@@ -12,6 +12,10 @@ const OriginalOrderComponent = ({origOrder, fillouts, referenceImages}) => {
     //         setFillouts(parseFillouts(order.fillouts));
     //     }
     // }, [order]);
+    useEffect(() => {
+        let order = 
+        console.log(origOrder);
+    }, [])
 
     return (
         <div className={origOrderStyles.order_details}>

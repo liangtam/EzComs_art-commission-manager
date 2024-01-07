@@ -1,4 +1,33 @@
 .imgComponent img {
     width : 100%;
-    max-width: 400px;
+}
+
+.imageContent {
+    position: relative;
+    width: 100%;
+    max-width: 250px;
+    /* background-color: red; */
+}
+.imageDeleteBtn {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    opacity: 1;
+    display: none;
+}
+.imageContent img {
+    width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+}
+.imageContent:hover img {
+    opacity: 50%;
+}
+
+.imageContent:hover .imageDeleteBtn {
+    display: flex;
+}
+
+.imageDeleteBtn:hover {
+    opacity: 50%;
 }

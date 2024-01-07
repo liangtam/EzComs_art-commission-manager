@@ -1,62 +1,181 @@
-
-.order_details .fillouts {
-  padding: 5px;
+.orderDetailsContainer {
+    display: flex;
+    font-size: 1em;
+    height: 89.5vh;
+    width: 100vw;
+    padding: 1rem;
+    box-sizing: border-box;
+    justify-content: center;
 }
 
-.images {
-  display: inline-flexbox;
-  justify-content: space-around;
-  flex-basis: 0;
-  flex-grow: 0;
-  flex-shrink: 0;
-  align-items: left;
-  padding: 10px;
-  gap: 20px;
+.orderDetailsContent {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    /* background-color: blue; */
 }
 
-.images img {
-  width: 100%;
-  max-width: 350px;
+.orderDefaultDetails p {
+    padding: 1rem;
+}
+
+.question {
+    padding: 1rem;
+}
+
+.selection {
+    padding: 0.5rem;
+    font-size: 1em;
+    font-family: 'Inter';
+    border-radius: 5px;
 }
 
 .completedArtworks {
-  display: inline;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.wipArts {
-  display: inline;
-  gap: 10px;
+.completedArtworks h4 {
+    padding: 1rem 0;
+}
+
+.wipArts h4 {
+    padding: 1rem 0;
+}
+
+.status h4 {
+    padding: 1rem 0;
+}
+
+.images {
+    display: flex;
+    align-items: left;
+    padding: 10px;
+    gap: 20px;
+}
+
+.refImages img {
+    width: 100%;
+    max-width: 250px;
+}
+
+.uploadedWipArts img {
+    width: 100%;
+    max-width: 250px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    /* background-color: green; */
+    border-radius: 5px;
+    gap: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.buttons button {
+    margin: 0;
+    width: auto;
+    height: auto;
+}
+
+.uploadArt p {
+    padding: 1rem 0;
+}
+
+.fillouts {
+    padding: 1rem 0;
+}
+
+.refImagesTitle p {
+    padding: 1rem 0;
+}
+
+.orderNotes p {
+    padding-top: 1rem;
 }
 
 .id {
-  color: rgb(96, 96, 172);
+    color: rgb(96, 96, 172);
 }
 
 .origOrderIcon {
-  background: none;
-  border: none;
+    background: none;
+    border: none;
 }
 
 .origOrderIcon:hover {
-  cursor: pointer;
-  translate: 0px 1px;
+    cursor: pointer;
+    translate: 0px 1px;
 }
 
 .origOrderIcon img {
-  width: 30px;
+    width: 50px;
 }
 
-.errorMessage {
-  color: rgb(255, 101, 101)
+.reqDetails {
+  display: flex;
+  flex-direction: column;
 }
 
-.successMessage {
-  color: rgb(27, 184, 27);
+.reqDetails p {
+  padding: 1rem 0;
 }
 
-.loadingMessage {
-  color: grey;
+.orderName {
+  padding: 1rem 0;
+}
+
+.refImg {
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .orderDetailsContainer {
+        height: 89vh;
+        padding: 0;
+        margin: 0;
+    }
+    .orderDetailsContainer input {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .orderDetailsContent {
+        width: 95%;
+        display: grid;
+        /* background-color: blue; */
+        padding: 1rem;
+        box-sizing: border-box;
+        grid-template-columns: 1fr 1.5fr;
+        grid-template-rows: none;
+        overflow-y: auto;
+    }
+
+    .leftSide {
+        grid-column: 1;
+    }
+
+    .buttons {
+      justify-content: start;
+    }
+
+    .rightSide {
+        /*be on right half of page*/
+        padding: 1rem;
+        box-sizing: border-box;
+        grid-column: 2;
+        background-color: rgb(244, 244, 244);
+    }
+
+    .refImagesTitle {
+        grid-row: 1;
+    }
 }
 
 /* .completedArtworks img {
@@ -71,6 +190,3 @@
   max-width: 400px;
   max-height: 300px;
 } */
-
-
-

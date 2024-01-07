@@ -54,7 +54,7 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
                     </div>}
 
                 <div className={styles.price}>
-                    Price: {order && order.price}
+                    Price: {order && order.price !== -1 ? order.price : "Not set"}
                 </div>
                 <div className={styles.orderID}>
                     ID: {order && order._id}

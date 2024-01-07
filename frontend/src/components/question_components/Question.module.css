@@ -18,25 +18,6 @@
 
 }
 
-.questionContent input:focus {
-    outline: none;
-    border-bottom: 2px solid var(--ezComs_blue);
-    background-color: rgba(187, 210, 255, 0.2);
-
-}
-
-.removeQBtn {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    text-align: center;
-    background-color: transparent;
-    opacity: 30%;
-    border: none;
-    width: 20px;
-    height: 20px;
-}
-
 .addOption {
     border: none;
     color: white;

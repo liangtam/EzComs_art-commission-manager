@@ -14,6 +14,7 @@
     --ezComs_turquoise: #00e2c7;
     --ezComs_blue: #00adfc;
     --darkgrey: rgb(26, 26, 26);
+    --lightGrey: #f6f6f6;
     --activeGreen: rgb(0, 193, 55);
 }
 
@@ -93,21 +94,33 @@ button:hover {
     background-color: var(--ezComs_blue);
     border: none;
     font-size: 16px;
-    margin: 30px;
+    margin: 1rem;
     padding: 10px 25px 10px 25px;
     border-radius: 10px;
     transition: background-color 0.2s ease;
+    max-width: 300px;
 }
 
 .blueButton:hover {
     cursor: pointer;
     background-color: rgb(0, 145, 229);
 }
-
-.transparentInput {
+.xBtn {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
     background-color: transparent;
+    opacity: 30%;
+    border: none;
+    width: 20px;
+    height: 20px;
+}
+.transparentInput {
+    background-color: rgba(0, 0, 0, 0.03);
     border: none;
     border-bottom: 2px solid grey;
+    box-sizing: border-box;
     padding: 0.3rem 0.5rem;
     padding-top: 0.5rem;
     margin: 0.7rem 0;
@@ -116,7 +129,75 @@ button:hover {
     border-top-right-radius: 5px;
 }
 
-.saveBtn, .deleteBtn {
+.transparentInput:focus {
+    outline: none;
+}
+
+.blueTransparentInput:focus {
+    border-bottom: 2px solid var(--ezComs_blue);
+    background-color: rgba(187, 210, 255, 0.2);
+}
+
+.turquoiseTransparentInput:focus {
+    border-bottom: 2px solid var(--ezComs_turquoise);
+    background-color: rgba(187, 243, 255, 0.2);
+}
+
+.textArea {
+    resize: vertical;
+    width: 100%;
+    min-height: 100px;
+    max-height: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    background-color: rgba(187, 210, 255, 0.3);
+}
+
+.textArea:focus {
+    outline: none;
+    background-color: rgba(187, 210, 255, 0.5);
+
+}
+
+.chooseFilesInput {
+    display: none; /* Hide the default file input */
+}
+/* 
+.customFileInputContainer {
+    display: flex;
+    justify-content: center;
+} */
+.customFileInput {
+    display: flex;
+    width: 40%;
+    padding: 0.5rem;
+    justify-content: center;
+    background-color: var(--lightGrey);
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1em;
+    max-width: 170px;
+
+}
+.dateContainer {
+    width: 60%;
+    max-width: 170px;
+
+}
+.dateInput {
+    font-family: 'Inter', sans-serif;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--lightGrey);
+}
+.saveBtn,
+.deleteBtn {
     font-weight: 400;
 }
 .saveBtn {
@@ -132,7 +213,6 @@ button:hover {
 
 .deleteBtn:hover {
     background-color: rgb(210, 75, 75);
-
 }
 
 .pageTitle {
@@ -145,18 +225,17 @@ button:hover {
 .pageTitle h1 {
     font-size: 1.5em;
     text-align: center;
-    padding-bottom: 1rem;
 }
 
 .line {
     min-width: 100%;
     height: 3px;
     background-color: grey;
-
 }
 
 @media only screen and (max-width: 482px) {
-    .whiteOutlineButton, .filledWhiteTurquoiseButton {
+    .whiteOutlineButton,
+    .filledWhiteTurquoiseButton {
         padding: 10px;
         font-size: 15px;
     }
@@ -183,7 +262,6 @@ body {
 ::-webkit-scrollbar-track {
     background: none;
     padding: 2px;
-
 }
 
 ::-webkit-scrollbar-thumb {
@@ -192,7 +270,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--ezComs_blue) /* color of the thumb on hover */
+    background-color: var(--ezComs_blue); /* color of the thumb on hover */
 }
 
 @media screen and (min-width: 768px) {
@@ -200,6 +278,38 @@ body {
         width: 9px;
     }
 }
+
+@media screen and (min-width: 475px) {
+    .textArea {
+        width: 80%;
+    }
+    
+}
+
+@media screen and (min-width: 768px) {
+    .textArea {
+        width: 75%;
+    }
+    
+}
+
+@media screen and (min-width: 1024px) {
+    .textArea {
+        width: 70%;
+        min-height: 200px;
+        padding: 1rem;
+
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    .textAreaContainer {
+        width: 55%;
+        min-height: 300px;
+    }
+}
+
+
 /* .header {
   height: 20px;
   width: 100%;

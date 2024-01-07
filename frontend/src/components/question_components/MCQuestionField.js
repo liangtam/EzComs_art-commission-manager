@@ -70,10 +70,10 @@ const MCQuestionField = ({ fieldId, labelValue, optList }) => {
     return (
         <div className={styles.questionContainer}>
             <div className={styles.questionContent}>
-            <input className="transparentInput" key="mc_question_field" type="text" placeholder="MC Question" onChange={(e) => handleFieldChange(e, fieldId)} value={labelValue} required={true}></input>
+            <input className="transparentInput blueTransparentInput" key="mc_question_field" type="text" placeholder="MC Question" onChange={(e) => handleFieldChange(e, fieldId)} value={labelValue} required={true}></input>
             <button className={styles.addOption} onClick={(e) => handleOptionClick(e, fieldId)}>Add Option</button>
 
-            <button className={styles.removeQBtn} onClick={(e) => handleRemoveField(e, fieldId)}>
+            <button className="xBtn" onClick={(e) => handleRemoveField(e, fieldId)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="76" height="77" viewBox="0 0 76 77" fill="none">
                     <path
                         d="M38.2756 76.0469C59.0422 76.0469 75.8771 59.212 75.8771 38.4455C75.8771 17.6787 59.0422 0.843994 38.2756 0.843994C17.5089 0.843994 0.674179 17.6787 0.674179 38.4455C0.674179 59.212 17.5089 76.0469 38.2756 76.0469Z"
