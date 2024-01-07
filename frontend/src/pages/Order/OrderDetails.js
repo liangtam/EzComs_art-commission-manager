@@ -8,7 +8,7 @@ import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js'
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
-import origOrderIcon from "../../public/images/orig_order_icon.png";
+import origOrderIcon from '../../public/images/orig_order_icon.png';
 
 const OrderDetails = () => {
     const { id } = useParams();
@@ -116,12 +116,10 @@ const OrderDetails = () => {
 
         if (order.originalUneditedOrder) {
             // origOrder = JSON.stringify(origOrder);
-            console.log("origOrder: ", origOrder);
+            console.log('origOrder: ', origOrder);
         }
 
         newOrder.append('originalUneditedOrder', origOrder);
-
-
 
         console.log('WipArtsToDelete: ', wipArtsToDelete);
         // if (wipArtsToDelete.length) {
@@ -366,12 +364,65 @@ const OrderDetails = () => {
                         <strong>Price: </strong>
                         <input className="transparentInput" type="number" value={price} onChange={(e) => setPrice(e.target.value)}></input>
                     </div>
+                    <div className={styles.status}>
+                        <h4>Status:</h4>
+                        <select className={styles.selection} value={status} name="status" onChange={(e) => setStatus(e.target.value)}>
+                            <option value="Not Started Yet">Not Started Yet</option>
+                            <option value="WIP">Work In Progress</option>
+                            <option value="Paused">Paused</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                    <label className={styles.uploadArt}>
+                        {wipArts.length !== 0 && <p>Upload WIP Artwork</p>}
+                        <input className="chooseFilesInput" type="file" accept=".png, .jpeg, .jpg" name="wipImages" onChange={handleWIPArtChange} multiple></input>
+                        <span className="customFileInput">Choose Files</span>
+                    </label>
+                    
+                    <div className={styles.uploadedWipArts}>
+                        {uploadedWipArts &&
+                            uploadedWipArts.map((uploadedWipArt) => {
+                                return <ImagePreview image={uploadedWipArt} handleDeleteImg={handleDeleteWipPreviewImage}></ImagePreview>;
+                            })}
+                    </div>
+                    <div className={styles.artsContainer}>
+                        <h4>WIP Artwork</h4>
+                        <div className={styles.arts}>
+                            {wipArts &&
+                                wipArts.map((wipArt) => {
+                                    return <ImageComponent image={wipArt} handleDeleteImage={handleDeleteCurrentWipArts} />;
+                                })}
+                        </div>
+                    </div>
+                    <br></br>
+                    <label className={styles.uploadArt}>
+                        <p>Upload Completed Artwork</p>
+                        <input className="chooseFilesInput" type="file" accept=".png, .jpeg, .jpg" name="artistImages" onChange={handleCompletedArtChange} multiple></input>
+                        <span className="customFileInput">Choose Files</span>
+                    </label>
+                    <div className={styles.completedArtworksPreviewUpload}>
+                        {uploadedCompletedArts &&
+                            uploadedCompletedArts.map((artURL) => {
+                                return <ImagePreview image={artURL} handleDeleteImg={handleDeletePreviewCompletedImage}></ImagePreview>;
+                            })}
+                    </div>
+                    <div className={styles.artsContainer}>
+                        {completedArts.length !== 0 && <h4>Completed Artwork</h4>}
+                        <div className={styles.arts}>
+                            {completedArts &&
+                                completedArts.map((completedArt) => {
+                                    return <ImageComponent image={completedArt} handleDeleteImage={handleDeleteCurrentCompletedArts} />;
+                                })}
+                        </div>
+                    </div>
 
                 </div>
 
                 <div className={styles.rightSide}>
-                <div className={styles.reqDetails}>
-                        <p><b>Request Details:</b></p>
+                    <div className={styles.reqDetails}>
+                        <p>
+                            <b>Request Details:</b>
+                        </p>
                         {order && order.requestDetail}
                     </div>
                     <div className={styles.refImagesTitle}>
@@ -390,65 +441,18 @@ const OrderDetails = () => {
                             <b>Order notes:</b>
                         </p>
                         <br></br>
-                        <textarea className="textArea" placeholder="e.g. Client wants this for commercial use. e.g. Client expedited order for urgent use" name="" id="artistNotes" cols="30" rows="10" onChange={handleArtistNotesChange}></textarea>
-                    </div>
-                </div>
-
-                <div className={styles.leftSide}>
-                    <div className={styles.status}>
-                        <h4>Status:</h4>
-                        <select className={styles.selection} value={status} name="status" onChange={(e) => setStatus(e.target.value)}>
-                            <option value="Not Started Yet">Not Started Yet</option>
-                            <option value="WIP">Work In Progress</option>
-                            <option value="Paused">Paused</option>
-                            <option value="Completed">Completed</option>
-                        </select>
+                        <textarea
+                            className="textArea"
+                            placeholder="e.g. Client wants this for commercial use. e.g. Client expedited order for urgent use"
+                            name=""
+                            id="artistNotes"
+                            cols="30"
+                            rows="10"
+                            onChange={handleArtistNotesChange}
+                        ></textarea>
                     </div>
 
-                    <div className={styles.wipArts}>
-                        <h4>WIP Artwork</h4>
-
-                        {wipArts &&
-                            wipArts.map((wipArt) => {
-                                return <ImageComponent image={wipArt} handleDeleteImage={handleDeleteCurrentWipArts} />;
-                            })}
-                    </div>
-                    <br></br>
-                    <label className={styles.uploadArt}>
-                        {wipArts.length !== 0 && <p>Upload WIP Artwork</p>}
-                        <input className="chooseFilesInput" type="file" accept=".png, .jpeg, .jpg" name="wipImages" onChange={handleWIPArtChange} multiple></input>
-                        <span className="customFileInput">Choose Files</span>
-                    </label>
-                    <div className={styles.uploadedWipArts}>
-                        {uploadedWipArts &&
-                            uploadedWipArts.map((uploadedWipArt) => {
-                                return <ImagePreview image={uploadedWipArt} handleDeleteImg={handleDeleteWipPreviewImage}></ImagePreview>;
-                            })}
-                    </div>
-                    <div className={styles.completedArtworks}>
-                        {completedArts.length !== 0 && <h4>Completed Artwork</h4>}
-                        <br></br>
-                        {completedArts &&
-                            completedArts.map((completedArt) => {
-                                return <ImageComponent image={completedArt} handleDeleteImage={handleDeleteCurrentCompletedArts} />;
-                            })}
-                    </div>
-                    <br></br>
-                    <label className={styles.uploadArt}>
-                        <p>Upload Completed Artwork</p>
-                        <input className="chooseFilesInput" type="file" accept=".png, .jpeg, .jpg" name="artistImages" onChange={handleCompletedArtChange} multiple></input>
-                        <span className="customFileInput">Choose Files</span>
-                    </label>
-                    <div className={styles.completedArtworksPreviewUpload}>
-                        {uploadedCompletedArts &&
-                            uploadedCompletedArts.map((artURL) => {
-                                return <ImagePreview image={artURL} handleDeleteImg={handleDeletePreviewCompletedImage}></ImagePreview>;
-                            })}
-                    </div>
-                </div>
-
-                <div className={styles.rightSide}>
-                {order && order.editedStatus && (
+                    {order && order.editedStatus && (
                         <button className={styles.origOrderIcon} onClick={(e) => setShowOrigOrder(!showOrigOrder)}>
                             <img src={origOrderIcon} alt="Show Original Order"></img>
                         </button>
