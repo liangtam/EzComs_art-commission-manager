@@ -350,15 +350,20 @@ const OrderDetails = () => {
                     <div className={styles.status}></div>
                     <div className={styles.fillouts}>
                         <h4>Form fillouts:</h4>
+                        <ul>
                         {fillouts &&
                             fillouts.map((question) => {
                                 return (
                                     <div className={styles.question}>
-                                        <b>{question.questionLabel + ': '}</b>
+                                                                            <li>
+
+                                        <b>{question.questionLabel}</b>
                                         <p>{question.questionAns}</p>
+                                        </li>
                                     </div>
                                 );
                             })}
+                            </ul>
                     </div>
                     <div className={styles.orderDetailsPrice}>
                         <strong>Price: </strong>
@@ -374,7 +379,7 @@ const OrderDetails = () => {
                         </select>
                     </div>
                     <label className={styles.fileInputContainer}>
-                        {wipArts.length !== 0 && <p>Upload WIP Artwork</p>}
+                        <p>Upload WIP Artwork</p>
                         <input className="chooseFilesInput" type="file" accept=".png, .jpeg, .jpg" name="wipImages" onChange={handleWIPArtChange} multiple></input>
                         <span className="customFileInput">Choose Files</span>
                     </label>
@@ -386,7 +391,7 @@ const OrderDetails = () => {
                             })}
                     </div>
                     <div className={styles.artsContainer}>
-                        <h4>WIP Artwork</h4>
+                        {wipArts.length !== 0 && <h4>WIP Artwork</h4>}
                         <div className={styles.arts}>
                             {wipArts &&
                                 wipArts.map((wipArt) => {
@@ -459,7 +464,7 @@ const OrderDetails = () => {
                     )}
                     {showOrigOrder && order && order.originalUneditedOrder && (
                         <div className={styles.origOrder}>
-                            <h3>Unedited Order: </h3>
+                            <p>Unedited Order: </p>
                             <OriginalOrderComponent
                                 origOrder={order.originalUneditedOrder}
                                 fillouts={parseArrayItemsToJSON(order.originalUneditedOrder.fillouts)}

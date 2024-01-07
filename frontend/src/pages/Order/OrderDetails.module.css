@@ -71,6 +71,7 @@
 .refImages img {
     width: 100%;
     max-width: 250px;
+    height: 100%;
 }
 .uploadedWipArts,
 .completedArtworksPreviewUpload {
@@ -90,6 +91,7 @@
     max-width: 550px;
     overflow-x: auto;
     max-height: 500px;
+    gap: 10px;
 }
 .artsContainer h4 {
     padding-bottom: 1rem;
@@ -168,6 +170,9 @@
     flex-direction: column;
 }
 
+.origOrder p {
+    padding-bottom: 1rem;
+}
 .reqDetails p {
     padding: 1rem 0;
 }
@@ -183,10 +188,20 @@
 .fillouts {
     max-width: 100%;
 }
+
+.fillouts ul {
+    list-style: inside;
+}
+
+.fillouts ul li p {
+    padding-left: 1.3rem;
+    box-sizing: border-box;
+}
 .question p {
     word-wrap: break-word;
     width: 100%;
 }
+
 
 @media screen and (min-width: 768px) {
     .orderDetailsContainer {
@@ -196,6 +211,11 @@
     }
     .orderDetailsContainer input {
         width: 70%;
+    }
+
+    .orderDetailsContent::-webkit-scrollbar  {
+        width: 0%; /* width of the entire scrollbar */
+        height: 5px;
     }
 }
 
@@ -233,6 +253,16 @@
         margin: 0;
         gap: 0;
         width: 1.3fr;
+        overflow-y: auto;
+    }
+    .rightSide::-webkit-scrollbar  {
+        width: 0%; /* width of the entire scrollbar */
+        height: 5px;
+    }
+
+    .leftSide::-webkit-scrollbar  {
+        width: 0%; /* width of the entire scrollbar */
+        height: 5px;
     }
 
     .refImagesTitle {
@@ -242,7 +272,7 @@
 
     .refImages {
         flex-direction: row;
-        max-height: 50%;
+        max-height: 55%;
         overflow-x: auto;
         padding: 1rem;
         box-sizing: border-box;
