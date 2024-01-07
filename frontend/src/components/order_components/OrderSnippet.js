@@ -61,7 +61,7 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
                 </div>
             </Link>
             <div className={styles.actions}>
-                    <img src={editIcon} alt="Edit" onClick={(e) => nav(`/orders/${orderId}`)}></img>
+                    <img src={editIcon} alt="Edit" onClick={(e) => nav(`/orders/edit/${orderId}`)}></img>
 
                     <img src={trashIcon} alt="Delete" onClick={(e) => handleOpenPopup(e, orderId)}></img>
                 </div>

@@ -13,11 +13,18 @@
   position: relative;
   overflow: hidden;
   transition: translate 0.3s ease;
+  overflow-y: auto;
+
 
 }
  .orderContainer * {
   color: black;
   font-size: 0.95em;
+  word-wrap: break-word;
+ }
+
+ .orderSnippet {
+  max-width: 90%;
  }
 
  .orderContainer button {

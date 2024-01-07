@@ -320,7 +320,7 @@ const OrderDetails = () => {
                     </div>
                     <div className={styles.id}>
                         {' '}
-                        <strong>ID: </strong> {order && order._id}{' '}
+                        <strong>ID: </strong> {order && order._id}
                     </div>
                     <div className={styles.orderDefaultDetails}>
                         <p>
@@ -373,7 +373,7 @@ const OrderDetails = () => {
                             <option value="Completed">Completed</option>
                         </select>
                     </div>
-                    <label className={styles.uploadArt}>
+                    <label className={styles.fileInputContainer}>
                         {wipArts.length !== 0 && <p>Upload WIP Artwork</p>}
                         <input className="chooseFilesInput" type="file" accept=".png, .jpeg, .jpg" name="wipImages" onChange={handleWIPArtChange} multiple></input>
                         <span className="customFileInput">Choose Files</span>
@@ -395,7 +395,7 @@ const OrderDetails = () => {
                         </div>
                     </div>
                     <br></br>
-                    <label className={styles.uploadArt}>
+                    <label className={styles.fileInputContainer}>
                         <p>Upload Completed Artwork</p>
                         <input className="chooseFilesInput" type="file" accept=".png, .jpeg, .jpg" name="artistImages" onChange={handleCompletedArtChange} multiple></input>
                         <span className="customFileInput">Choose Files</span>

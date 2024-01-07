@@ -5,10 +5,11 @@
     width: 100vw;
     padding: 1rem;
     box-sizing: border-box;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 .orderDetailsContainer * {
-  word-wrap: break-word; 
+    word-wrap: break-word;
 }
 .orderDetailsContent {
     display: flex;
@@ -16,8 +17,8 @@
     width: 90%;
     height: auto;
     overflow-y: auto;
-    /* background-color: blue; */
-    border-radius: 30px;
+    /* background-color: blue;
+    border-radius: 30px; */
 }
 
 .orderDefaultDetails p {
@@ -125,7 +126,7 @@
     height: auto;
 }
 
-.uploadArt p {
+.fileInputContainer p {
     padding: 1rem 0;
 }
 
@@ -180,11 +181,11 @@
 }
 
 .fillouts {
-  max-width: 100%;
+    max-width: 100%;
 }
-.question p{
-  word-wrap: break-word; 
-  width: 100%;
+.question p {
+    word-wrap: break-word;
+    width: 100%;
 }
 
 @media screen and (min-width: 768px) {
@@ -215,7 +216,6 @@
         flex-direction: column;
         width: 0.7fr;
         overflow-x: auto;
-        
     }
 
     .buttons {
