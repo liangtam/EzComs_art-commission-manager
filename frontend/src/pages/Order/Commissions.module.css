@@ -1,0 +1,102 @@
+.commissionsContainer {
+    background-color: blue;
+    height: 89.5vh;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+   
+}
+
+.commissionsContainer p {
+    padding: 0.3rem 0;
+    padding-left: 0.3rem;
+}
+
+.commissionsContent {
+    background-color: orange;
+    width: 90%;
+    height: 100%;
+    border-radius: 10px;
+    overflow-y: auto;
+    position: relative;
+}
+
+.completedOrderContainer {
+    background-color: white;
+    width: 100%;
+}
+
+.completedDateContainer {
+    background-color: rgb(238, 238, 238);
+
+    width: 100%;
+    border-top: 2px solid rgb(198, 198, 198);
+    border-bottom: 2px solid rgb(198, 198, 198);
+}
+
+.completedArtIcon button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+.completedArtIcon img {
+    height: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: end;
+}
+.buttons button {
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: 400;
+    padding: 0.2rem 0.5rem;
+    margin: 0.3rem;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.25fr;
+    grid-auto-rows: auto;
+}
+
+.orderNameContainer {
+    grid-column: 1;
+    min-width: 0;
+
+}
+
+.orderNameContainer p {
+    padding-left: 0.3rem;
+    word-wrap: break-word;
+}
+
+.orderPrice {
+    display: flex;
+    justify-content: end;
+}
+
+.completedArtIcon {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    padding: 0.2rem 0;
+    box-sizing: border-box;
+}
+
+.info *{
+    /* background-color: blue; */
+    border-radius: 5px;
+}
+
+.artPreview {
+    position: absolute;
+    right: 0;
+}
+.artPreview img {
+    border-radius: 5px;
+    max-width: 200px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}

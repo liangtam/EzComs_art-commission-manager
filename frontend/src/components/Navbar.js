@@ -64,7 +64,7 @@ const Navbar = () => {
             {user && (
                 <div className={`${showMenu ? styles.openMenu : ''} ${styles.loggedInDetails} `}>
                     <span id={styles.email}> {user.email}</span>
-                    <button className={`filledWhiteTurquoiseButton ${styles.logoutButton}`} onClick={handleLogout}>
+                    <button className={`filledWhiteButton turquoiseHoverButton ${styles.logoutButton}`} onClick={handleLogout}>
                         Logout
                     </button>
                 </div>

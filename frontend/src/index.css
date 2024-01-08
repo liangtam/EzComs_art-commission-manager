@@ -53,7 +53,7 @@ button:hover {
     cursor: pointer;
 }
 
-.filledWhiteTurquoiseButton {
+.filledWhiteButton {
     text-align: center;
     font-family: Inter;
     font-size: 18px;
@@ -68,9 +68,13 @@ button:hover {
     transition: background-color 0.2s ease;
 }
 
-.filledWhiteTurquoiseButton:hover {
+.turquoiseHoverButton:hover {
     color: white;
     background-color: var(--ezComs_turquoise);
+}
+
+.greyHoverButton:hover {
+    background-color: var(--lightGrey);
 }
 
 .whiteOutlineButton {

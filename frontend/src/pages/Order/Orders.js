@@ -61,7 +61,8 @@ const Orders = () => {
         if (!user) {
             return;
         }
-        console.log(orderId);
+        // console.log(orderId);
+        dispatch({ type: ACTION.LOADING });
         const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
             method: 'DELETE',
             headers: {
@@ -72,12 +73,16 @@ const Orders = () => {
         if (response.ok) {
             console.log('Order deleted!');
             removeFromOrderList(orderId);
-            setOpenPopup(false);
             setSelectedOrderId(null);
+            dispatch({ type: ACTION.RESET });
+
             //fetchOrders();
         } else {
             console.log(`Error deleting order: ${response.statusText}`);
+            dispatch({ type: ACTION.RESET });
         }
+        setOpenPopup(false);
+
     };
 
     const removeFromOrderList = (orderId) => {
@@ -97,13 +102,14 @@ const Orders = () => {
             <div className="pageTitle">
                 <h1>Orders</h1>
             </div>
-            {state.errorMessage && <div className={styles.errorMessage}>{state.errorMessage}</div>}
-            {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
-            {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
+            {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
+            {state.successMessage && <div className="successMessage">{state.successMessage}</div>}
+            {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                 {openPopup && (
                     <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
                         <h3>Are you sure?</h3>
                         <p>Are you sure you want to delete this order? This action cannot be undone.</p>
+                        {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                     </YesNoPopup>
                 )}
                 <div className={styles.orders}>

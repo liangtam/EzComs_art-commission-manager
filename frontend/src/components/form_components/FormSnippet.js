@@ -17,7 +17,7 @@ const FormSnippet = ({ formId, form, handleDelete }) => {
                 </div>
                 <div className={styles.questionsPreview}>
                     <p>
-                        <b>Preview:</b>
+                        <b>Form Preview:</b>
                     </p>
                     <ul>
                         {form.questions.length !== 0 && <li>{form.questions[0].questionLabel}</li>}
