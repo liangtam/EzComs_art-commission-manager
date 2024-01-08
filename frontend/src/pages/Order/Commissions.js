@@ -107,9 +107,24 @@ const Commissions = () => {
             </div>
             <div className={styles.commissionsContent}>
                 <div className={styles.completedOrders}>
-                    {/* <div className={styles.header}>
+                    <div className={styles.header}>
+                        <div className={styles.headerItem}>
                         <p>Date</p>
-                    </div> */}
+
+                        </div>
+                        <div className={styles.headerItem}>
+                        <p>Order Name</p>
+
+                        </div>
+                        <div className={styles.headerItem}>
+                        <p>Date Completed</p>
+
+                        </div>
+                        <div className={styles.headerItem}>
+                        <p>Price</p>
+
+                        </div>
+                    </div>
                     {completedOrders &&
                         completedOrders.map((completedOrder) => {
                             return (
@@ -117,36 +132,36 @@ const Commissions = () => {
                                     <div className={styles.completedDateContainer}>
                                         <p>{completedOrder && completedOrder.dateCompleted}</p>
                                     </div>
-                                    <div className={styles.info}>
                                         <div className={styles.orderNameContainer}>
                                             <p>
                                                 {/* <b>Name: </b> */}
                                                 {completedOrder && completedOrder.orderName}
                                             </p>
                                         </div>
+                                        <div className={styles.dateReqqed}>
+                                            <p>{completedOrder && completedOrder.dateReqqed}</p>
+                                        </div>
                                         <div className={styles.orderPrice}>
                                             <p>{completedOrder && completedOrder.price !== -1 ? '$' + completedOrder.price : 'Not set'}</p>
                                         </div>
-                                        <div className={styles.completedArtIcon}>
-                                            <button
-                                                onMouseEnter={(e) => {
-                                                    setShowArtPreview(true);
-                                                    setSelectedID(completedOrder._id);
-                                                }}
-                                                onClick={(e) => {
-                                                    setShowArtPreview(!showArtPreview);
-                                                    setSelectedID(completedOrder._id);
-                                                }}
-                                                onMouseLeave={(e) => {
-                                                    setShowArtPreview(false);
-                                                    setSelectedID('');
-                                                }}
-                                            >
-                                                <img src={artIcon} alt="Art"></img>
-                                            </button>
-                                        </div>
+                                    <div className={styles.completedArtIcon}>
+                                        <button
+                                            onMouseEnter={(e) => {
+                                                setShowArtPreview(true);
+                                                setSelectedID(completedOrder._id);
+                                            }}
+                                            onClick={(e) => {
+                                                setShowArtPreview(!showArtPreview);
+                                                setSelectedID(completedOrder._id);
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                setShowArtPreview(false);
+                                                setSelectedID('');
+                                            }}
+                                        >
+                                            <img src={artIcon} alt="Art"></img>
+                                        </button>
                                     </div>
-
                                     <div className={styles.buttons}>
                                         <button className="filledWhiteButton greyHoverButton" onClick={(e) => handleViewClick(e, completedOrder._id)}>
                                             View

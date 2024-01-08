@@ -319,7 +319,6 @@ const OrderDetails = () => {
                         <h3>Order name: </h3> <input className="transparentInput" type="text" value={orderName} onChange={(e) => setOrderName(e.target.value)} placeholder="eg. Bob Thumbnail"></input>
                     </div>
                     <div className={styles.id}>
-                        {' '}
                         <strong>ID: </strong> {order && order._id}
                     </div>
                     <div className={styles.orderDefaultDetails}>
@@ -482,7 +481,7 @@ const OrderDetails = () => {
                         <button className="blueButton deleteBtn" onClick={handleOpenPopup}>
                             Delete
                         </button>
-                        <button className="blueButton" onClick={handleEditButton}>
+                        <button className="filledWhiteButton greyHoverButton" onClick={handleEditButton}>
                             Edit
                         </button>
                     </div>
