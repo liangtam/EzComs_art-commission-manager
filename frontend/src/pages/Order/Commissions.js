@@ -7,6 +7,7 @@ import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import artIcon from '../../public/images/image_icon.png';
+import noImageIcon from '../../public/images/ezcoms_noimage_head.png';
 
 const Commissions = () => {
     const [completedOrders, setCompletedOrders] = useState([]);
@@ -94,17 +95,17 @@ const Commissions = () => {
 
     return (
         <div className={styles.commissionsContainer}>
+            {openPopup && (
+                <YesNoPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
+                    <h3>Are you sure?</h3>
+                    <p>Are you sure you want to delete this commission? This action cannot be undone.</p>
+                    {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
+                </YesNoPopup>
+            )}
+            <div className="pageTitle">
+                <h1>Commissions</h1>
+            </div>
             <div className={styles.commissionsContent}>
-                {openPopup && (
-                    <YesNoPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
-                        <h3>Are you sure?</h3>
-                        <p>Are you sure you want to delete this commission? This action cannot be undone.</p>
-                        {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-                    </YesNoPopup>
-                )}
-                <div className="pageTitle">
-                    <h1>Commissions</h1>
-                </div>
                 <div className={styles.completedOrders}>
                     {/* <div className={styles.header}>
                         <p>Date</p>
@@ -124,10 +125,23 @@ const Commissions = () => {
                                             </p>
                                         </div>
                                         <div className={styles.orderPrice}>
-                                            <p>{completedOrder && completedOrder.price !== -1 ? "$" + completedOrder.price : 'Not set'}</p>
+                                            <p>{completedOrder && completedOrder.price !== -1 ? '$' + completedOrder.price : 'Not set'}</p>
                                         </div>
-                                        <div className={styles.completedArtIcon} onMouseEnter={(e) => setShowArtPreview(true)}  onClick={(e) => setShowArtPreview(!showArtPreview)} onMouseLeave={(e) => setShowArtPreview(false)}>
-                                            <button>
+                                        <div className={styles.completedArtIcon}>
+                                            <button
+                                                onMouseEnter={(e) => {
+                                                    setShowArtPreview(true);
+                                                    setSelectedID(completedOrder._id);
+                                                }}
+                                                onClick={(e) => {
+                                                    setShowArtPreview(!showArtPreview);
+                                                    setSelectedID(completedOrder._id);
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    setShowArtPreview(false);
+                                                    setSelectedID('');
+                                                }}
+                                            >
                                                 <img src={artIcon} alt="Art"></img>
                                             </button>
                                         </div>
@@ -142,7 +156,16 @@ const Commissions = () => {
                                             Delete
                                         </button>
                                     </div>
-                                    {showArtPreview && completedOrder && completedOrder.completedArts.length !== 0 && <div className={styles.artPreview}><img src={completedOrder.completedArts[0].imageURL} alt="N/A"></img></div>}
+                                    {showArtPreview && completedOrder && completedOrder._id === selectedID && completedOrder.completedArts.length !== 0 && (
+                                        <div className={styles.artPreview}>
+                                            <img src={completedOrder.completedArts[0].imageURL} alt={noImageIcon}></img>
+                                        </div>
+                                    )}
+                                    {showArtPreview && completedOrder && completedOrder._id === selectedID && completedOrder.completedArts.length === 0 && (
+                                        <div className={styles.artPreview}>
+                                            <img src={noImageIcon} alt="No Image"></img>
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })}

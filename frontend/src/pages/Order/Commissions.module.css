@@ -1,10 +1,13 @@
 .commissionsContainer {
-    background-color: blue;
+    /* background-color: blue; */
     height: 89.5vh;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     display: flex;
-    justify-content: center;
-   
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow-y: auto;   
 }
 
 .commissionsContainer p {
@@ -13,11 +16,10 @@
 }
 
 .commissionsContent {
-    background-color: orange;
+    /* background-color: orange; */
     width: 90%;
     height: 100%;
     border-radius: 10px;
-    overflow-y: auto;
     position: relative;
 }
 
@@ -47,6 +49,8 @@
 .buttons {
     display: flex;
     justify-content: end;
+    width: 100%;
+    border-top: 1px solid rgb(220, 220, 220);
 }
 .buttons button {
     border-radius: 5px;
@@ -58,7 +62,7 @@
 
 .info {
     display: grid;
-    grid-template-columns: 1fr 1fr 0.25fr;
+    grid-template-columns: 1fr 1fr 0.35fr;
     grid-auto-rows: auto;
 }
 
@@ -92,11 +96,19 @@
 }
 
 .artPreview {
-    position: absolute;
+    display: flex;
+    justify-content: end;
     right: 0;
+    /* z-index: 1; */
 }
 .artPreview img {
     border-radius: 5px;
     max-width: 200px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (min-width: 768px) {
+    .commissionsContainer {
+        height: 89vh;
+    }
 }
