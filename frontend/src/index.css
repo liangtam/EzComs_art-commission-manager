@@ -9,6 +9,8 @@
     --inter: 'Inter', sans-serif;
     --bg-color: #f5f5f5;
     --roboto: 'Roboto', sans-serif;
+
+
     --iceblue: rgb(0, 183, 255);
     --bluegrey: rgb(59, 91, 112);
     --ezComs_turquoise: #00e2c7;
@@ -16,6 +18,15 @@
     --darkgrey: rgb(26, 26, 26);
     --lightGrey: #f6f6f6;
     --activeGreen: rgb(0, 193, 55);
+
+    --font-size-0: 0.5rem;
+    --font-size-1: 0.8rem;
+    --font-size-2: 1rem;
+    --font-size-3: 1.25rem;
+    --font-size-4: 1.5rem;
+
+    --font-weight-400: 400;
+    --font-weight-700: 700;
 }
 
 * {
@@ -201,10 +212,7 @@ button:hover {
     border: none;
     background-color: var(--lightGrey);
 }
-.saveBtn,
-.deleteBtn {
-    font-weight: 400;
-}
+
 .saveBtn {
     background-color: var(--ezComs_turquoise);
 }
@@ -236,6 +244,28 @@ button:hover {
     min-width: 100%;
     height: 3px;
     background-color: grey;
+}
+
+.font-size-0 {
+    font-size: var(--font-size-0);
+}
+.font-size-1 {
+    font-size: var(--font-size-1);
+}
+.font-size-2 {
+    font-size: var(--font-size-2);
+}
+
+.font-size-3 {
+    font-size: var(--font-size-3);
+}
+
+.font-weight-400 {
+    font-weight: var(--font-weight-400);
+}
+
+.font-weight-700 {
+    font-weight: var(--font-weight-700);
 }
 
 @media only screen and (max-width: 482px) {

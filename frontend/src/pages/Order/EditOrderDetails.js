@@ -260,10 +260,10 @@ const EditOrderDetails = () => {
                 {state.successMessage && <div className="successMessage">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                 <div className={styles.buttons}>
-                    <button className="blueButton saveBtn" onClick={handleSave}>
+                    <button className="blueButton saveBtn font-weight-400" onClick={handleSave}>
                         Save
                     </button>
-                    <button className="blueButton deleteBtn" onClick={handleOpenPopup}>
+                    <button className="blueButton deleteBtn font-weight-400" onClick={handleOpenPopup}>
                         Delete
                     </button>
                 </div>

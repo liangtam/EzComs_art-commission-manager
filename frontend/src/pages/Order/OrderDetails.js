@@ -475,13 +475,13 @@ const OrderDetails = () => {
                     {state && state.successMessage && <div className="successMessage">{state.successMessage}</div>}
                     {state && state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                     <div className={styles.buttons}>
-                        <button className="blueButton saveBtn" onClick={handleSave}>
+                        <button className="blueButton saveBtn font-weight-400" onClick={handleSave}>
                             Save
                         </button>
-                        <button className="blueButton deleteBtn" onClick={handleOpenPopup}>
+                        <button className="blueButton deleteBtn font-weight-400" onClick={handleOpenPopup}>
                             Delete
                         </button>
-                        <button className="filledWhiteButton greyHoverButton" onClick={handleEditButton}>
+                        <button className="filledWhiteButton greyHoverButton font-weight-400" onClick={handleEditButton}>
                             Edit
                         </button>
                     </div>

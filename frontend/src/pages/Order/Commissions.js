@@ -163,11 +163,11 @@ const Commissions = () => {
                                         </button>
                                     </div>
                                     <div className={styles.buttons}>
-                                        <button className="filledWhiteButton greyHoverButton" onClick={(e) => handleViewClick(e, completedOrder._id)}>
+                                        <button className="filledWhiteButton greyHoverButton font-weight-400" onClick={(e) => handleViewClick(e, completedOrder._id)}>
                                             View
                                         </button>
                                         {/* <button className={styles.editBtn} onClick={handleEditClick}>Edit</button> */}
-                                        <button className="blueButton deleteBtn" onClick={(e) => handleOpenPopup(e, completedOrder._id)}>
+                                        <button className="blueButton deleteBtn font-weight-400" onClick={(e) => handleOpenPopup(e, completedOrder._id)}>
                                             Delete
                                         </button>
                                     </div>
