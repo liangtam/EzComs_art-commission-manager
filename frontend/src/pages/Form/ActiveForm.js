@@ -22,7 +22,7 @@ const ActiveForm = () => {
 
     const fetchActiveForm = async () => {
         try {
-            const response = await fetch('http://localhost:4000/api/forms/active/' + userID, {
+            const response = await fetch('https://ezcoms.onrender.com/api/forms/active/' + userID, {
                 method: 'GET'
             });
 
@@ -49,7 +49,7 @@ const ActiveForm = () => {
     //     if (!user) {
     //         return;
     //     }
-    //     const response = await fetch('http://localhost:4000/api/forms/', {
+    //     const response = await fetch('https://ezcoms.onrender.com/api/forms/', {
     //         headers: {
     //             'Authorization': `Bearer ${user.token}`
     //         }
@@ -180,7 +180,7 @@ const ActiveForm = () => {
         order.append('artistNotes', '');
         order.append('editedStatus', false);
         order.append('user_id', user.userID);
-        fetch('http://localhost:4000/api/orders', {
+        fetch('https://ezcoms.onrender.com/api/orders', {
             method: 'POST',
             body: order
             // headers: {
@@ -195,7 +195,7 @@ const ActiveForm = () => {
                 console.log(error);
             });
 
-        // axios.post('http://localhost:4000/api/orders', order, {
+        // axios.post('https://ezcoms.onrender.com/api/orders', order, {
 
         // }).then((res) => {
         //     console.log(res);

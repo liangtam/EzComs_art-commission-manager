@@ -23,7 +23,7 @@ const Orders = () => {
 
         // making a call to the backend
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('http://localhost:4000/api/orders', {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders', {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -63,7 +63,7 @@ const Orders = () => {
         }
         // console.log(orderId);
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + orderId, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`

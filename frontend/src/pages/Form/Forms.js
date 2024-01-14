@@ -19,7 +19,7 @@ const Forms = () => {
             return;
         }
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('http://localhost:4000/api/forms/', {
+        const response = await fetch('https://ezcoms.onrender.com/api/forms/', {
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
@@ -47,7 +47,7 @@ const Forms = () => {
             return;
         }
         e.preventDefault();
-        const response = await fetch('http://localhost:4000/api/forms/' + selectedID, {
+        const response = await fetch('https://ezcoms.onrender.com/api/forms/' + selectedID, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`

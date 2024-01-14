@@ -14,7 +14,7 @@ const useSignup = () => {
         const userObj = {email, password};
         // console.log(JSON.stringify(userObj))
 
-        const response = await fetch('http://localhost:4000/api/user/signup', {
+        const response = await fetch('https://ezcoms.onrender.com/api/user/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

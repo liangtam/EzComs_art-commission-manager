@@ -28,7 +28,7 @@ const Commissions = () => {
     //const {orders, setOrders} = useContext(OrdersContext);
 
     const findCompletedOrders = async () => {
-        const response = await fetch('http://localhost:4000/api/orders/completed', {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/completed', {
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
@@ -55,7 +55,7 @@ const Commissions = () => {
 
     const handleDeleteOrder = async (e) => {
         // dispatch({type: ACTION.LOADING});
-        const response = await fetch('http://localhost:4000/api/orders/' + selectedID, {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + selectedID, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`

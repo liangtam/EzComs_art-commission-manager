@@ -64,7 +64,7 @@ const EditOrderDetails = () => {
     }, [order]);
 
     const fetchOrder = async () => {
-        const response = await fetch('http://localhost:4000/api/orders/' + id, {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
@@ -105,7 +105,7 @@ const EditOrderDetails = () => {
             newOrder.append('refImgsToDelete[]', JSON.stringify(refImgsToDelete[i]));
         }
 
-        const response = await fetch('http://localhost:4000/api/orders/edit/' + id, {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/edit/' + id, {
             method: 'PATCH',
             body: newOrder,
             headers: {
@@ -176,7 +176,7 @@ const EditOrderDetails = () => {
 
     const handleDeleteOrder = async (e) => {
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('http://localhost:4000/api/orders/' + id, {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
             method: 'DELETE'
         });
 

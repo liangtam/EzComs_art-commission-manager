@@ -53,7 +53,7 @@ const OrderDetails = () => {
         if (!user) {
             return;
         }
-        const response = await fetch('http://localhost:4000/api/orders/' + id, {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
@@ -134,7 +134,7 @@ const OrderDetails = () => {
 
         newOrder.append('user_id', order.user_id);
 
-        const response = await fetch('http://localhost:4000/api/orders/' + id, {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -223,7 +223,7 @@ const OrderDetails = () => {
         }
         e.preventDefault();
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('http://localhost:4000/api/orders/' + id, {
+        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`

@@ -1,4 +1,5 @@
 const express = require('express');
+const serverless = require("serverless-http");
 const cors = require('cors');
 
 // express app
@@ -38,7 +39,3 @@ mongoose.connect(process.env.MONGO_URI)
 .catch((error) => {
     console.log(error);
 });
-
-
-
-

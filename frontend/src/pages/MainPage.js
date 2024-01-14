@@ -31,7 +31,7 @@ function MainPage() {
     //     if (!user) {
     //         return;
     //     }
-    //     const response = await fetch('http://localhost:4000/api/forms/', {
+    //     const response = await fetch('https://ezcoms.onrender.com/api/forms/', {
     //         headers: {
     //             Authorization: `Bearer ${user.token}`
     //         }
@@ -46,7 +46,7 @@ function MainPage() {
     // };
 
     // const fetchAllOrders = async () => {
-    //     const response = await fetch('http://localhost:4000/api/orders', {
+    //     const response = await fetch('https://ezcoms.onrender.com/api/orders', {
     //         headers: {
     //             Authorization: `Bearer ${user.token}`
     //         }

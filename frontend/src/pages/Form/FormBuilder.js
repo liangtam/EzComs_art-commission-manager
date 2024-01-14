@@ -125,7 +125,7 @@ const FormBuilder = () => {
         // console.log('Form: ', form);
         // first arg: where we're sending the post request to
         try {
-            const response = await fetch('http://localhost:4000/api/forms', {
+            const response = await fetch('https://ezcoms.onrender.com/api/forms', {
                 method: 'POST',
                 body: JSON.stringify(form),
                 // to specify that the content type is json
@@ -170,7 +170,7 @@ const FormBuilder = () => {
         activeForm.activeStatus = false;
         //console.log("forms[0]'s status after replaced: ", forms[0].activeStatus, activeForm.activeStatus);
 
-        const response = await fetch('http://localhost:4000/api/forms/' + idOfCurrActiveForm, {
+        const response = await fetch('https://ezcoms.onrender.com/api/forms/' + idOfCurrActiveForm, {
             method: 'PATCH',
             body: JSON.stringify(activeForm),
             headers: {
