@@ -273,10 +273,10 @@ const FormDetails = () => {
 
     return (
         <div className={styles.formBuilderContainer}>
-            <div className="pageTitle">
+            <div className={`${styles.formBuilderTitle} pageTitle flex-col gap-2 mart-3`}>
                 <h1>Edit Form</h1>
             </div>
-            <form className={styles.formBuilderContent}>
+            <form className={`${styles.formBuilderContent} flex-col gap-2 border-box pad-4 mar-3 align-items-center`}>
                 {activeFormReplacementOpenPopup && (
                     <YesNoPopup
                         yesFunction={(e) => {
@@ -296,24 +296,32 @@ const FormDetails = () => {
                     </YesNoPopup>
                 )}
 
-                <div className={`${styles.formName} ${styles.formContent}`}>
+                <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100 marb-3`}>
                     <h4>
-                        Name of form: <input className="transparentInput" type="text" onChange={handleNameChange} value={formName} placeholder="Coolest form"></input>
+                        <p>Name of form: </p>
+                        <input
+                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                            type="text"
+                            onChange={handleNameChange}
+                            value={formName}
+                            placeholder="Coolest form"
+                        ></input>
                     </h4>
                 </div>
                 {form && (
-                    <div className={styles.questions}>
+                    <div className="w-100 flex-col gap-2">
+                        <p className='font-size-2 font-weight-700 mart-3'>Questions: </p>
                         {questionFieldList &&
                             questionFieldList.map((question) => {
                                 if (question.type === 'shortAns') {
                                     return (
-                                        <div className={styles.question}>
+                                        <div className={`${styles.question} w-100`}>
                                             <ShortAnswerQField fieldId={question.id} labelValue={question.questionLabel} key={'saq' + question.id} />
                                         </div>
                                     );
                                 } else if (question.type === 'mc') {
                                     return (
-                                        <div className={styles.question}>
+                                        <div className={`${styles.question} w-100`}>
                                             <MCQuestionField fieldId={question.id} labelValue={question.questionLabel} optList={question.optionList} key={'mcq' + question.id} />
                                         </div>
                                     );
@@ -321,21 +329,19 @@ const FormDetails = () => {
                             })}
                     </div>
                 )}
-                <div className={styles.createQuestions}>
-                    <div className={styles.questionButtons}>
-                        <button className={`${styles.formBuilderBtn}`} onClick={handleShortAnswerClick}>
+                    <div className={`${styles.questionButtons} flex-row gap-3 justify-content-center text-dark-grey w-100`}>
+                        <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
                             Add Short Answer
                         </button>
-                        <button className={`${styles.formBuilderBtn}`} onClick={handleMCClick}>
+                        <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`}  onClick={handleMCClick}>
                             Add Multiple Choice
                         </button>
                     </div>
-                </div>
-                <div className={styles.activeStatus}>
-                    <button className={`${styles.formBuilderBtn} ${styles.activeStatusBtn}`} onClick={toggleActiveStatus}>
+                <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 mar-3 w-100`}>
+                    <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActiveStatus}>
                         Set Active
                     </button>
-                    <div className={`${activeStatus ? styles.active : styles.inactive} ${styles.activeStatus}`}>{activeStatus ? 'Active' : 'Inactive'}</div>
+                    <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} ${styles.activeStatus} outline-button font-size-2 pad-2 padx-3`}>{activeStatus ? 'Active' : 'Inactive'}</div>
                 </div>
 
                 {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
@@ -343,7 +349,9 @@ const FormDetails = () => {
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
 
                 <div className={styles.formDetailsBottomButtons}>
-                    <button className={`blueButton deleteBtn`}  onClick={(e) => setOpenDeletePopup(true)}>Delete</button>
+                    <button className={`blueButton deleteBtn`} onClick={(e) => setOpenDeletePopup(true)}>
+                        Delete
+                    </button>
                     <button className={`blueButton saveBtn`} onClick={handleSaveClick}>
                         Save
                     </button>

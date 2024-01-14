@@ -249,10 +249,36 @@ a {
     margin-top: var(--spacing-3);
 }
 
-.mary-1 {
+.marx-1 {
     margin-left: var(--spacing-1);
     margin-right: var(--spacing-1);
 }
+
+.marx-2 {
+    margin-left: var(--spacing-2);
+    margin-right: var(--spacing-2);
+}
+
+.marx-3 {
+    margin-left: var(--spacing-3);
+    margin-right: var(--spacing-3);
+}
+
+.mary-1 {
+    margin-top: var(--spacing-1);
+    margin-bottom: var(--spacing-1);
+}
+
+.mary-2 {
+    margin-top: var(--spacing-2);
+    margin-bottom: var(--spacing-2);
+}
+
+.mary-3 {
+    margin-top: var(--spacing-3);
+    margin-bottom: var(--spacing-3);
+}
+
 .gap-1 {
     gap: var(--spacing-1);
 }
@@ -431,7 +457,7 @@ button:hover {
 .transparentInput {
     background-color: rgba(0, 0, 0, 0.03);
     border: none;
-    border-bottom: 2px solid grey;
+    border-bottom: 2px solid rgb(173, 173, 173);
     box-sizing: border-box;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;

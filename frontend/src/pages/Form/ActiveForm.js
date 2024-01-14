@@ -221,9 +221,8 @@ const ActiveForm = () => {
                 }
             }
         }
-        console.log("cleared form");
-
-    }
+        console.log('cleared form');
+    };
 
     // First, fetch all the forms
     // useEffect( () => {
@@ -260,18 +259,23 @@ const ActiveForm = () => {
     // use asynchronous data, we need to make sure it actually fetched properly first.
 
     if (noActiveForm) {
-        return <div className='w-100 h-100 flex-row justify-content-center align-items-center'>No active form yet.</div>;
+        return <div className="w-100 h-100 flex-row justify-content-center align-items-center">No active form yet.</div>;
     } else {
         return (
             <form onSubmit={handleSubmit} className={styles.activeFormContainer} encType="multipart/form-data">
                 {/* <div className="pageTitle">{activeForm && <h1>{activeForm.formName}</h1>}</div> */}
                 <div className={styles.activeFormContent}>
-                    <div className={styles.defaultQuestions}>
+                    <div className={`flex-col gap-2`}>
                         <label> Name (or contact name): </label>
-                        <input className="transparentInput" placeholder="Name, or online alias" value={clientName} onChange={handleClientNameChange}></input>
+                        <input
+                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                            placeholder="Name, or online alias"
+                            value={clientName}
+                            onChange={handleClientNameChange}
+                        ></input>
                         <label> Contact (email, or social media handle): </label>
                         <input
-                            className="transparentInput"
+                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
                             type="email"
                             placeholder="someone@example.com, or social media handle"
                             value={clientContact}
@@ -285,9 +289,13 @@ const ActiveForm = () => {
                             questionFieldList.map((question) => {
                                 if (question.type === 'shortAns') {
                                     return (
-                                        <div className={styles.sa}>
+                                        <div className="flex-col gap-2 mary-3">
                                             <label>{question.questionLabel} </label>
-                                            <input className="transparentInput blueTransparentInput" type="text" onChange={(e) => handleAnswerFieldChange(e, question.id)}></input>
+                                            <input
+                                                className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                                                type="text"
+                                                onChange={(e) => handleAnswerFieldChange(e, question.id)}
+                                            ></input>
                                         </div>
                                     );
                                 } else if (question.type === 'mc') {
@@ -325,22 +333,21 @@ const ActiveForm = () => {
                             {/* </div> */}
                         </label>
                         <div className={styles.imagePreviews}>
-                        {referenceImages &&
-                            referenceImages.map((refImgURL) => {
-                                return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
-                            })}
-                    </div>
-                        <label>
+                            {referenceImages &&
+                                referenceImages.map((refImgURL) => {
+                                    return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
+                                })}
+                        </div>
+                        <label className='flex-col gap-2'>
                             <p>Deadline:</p>
                             <div className="dateContainer">
                                 <input className="dateInput" type="date" id="deadline"></input>
                             </div>
-                            <p id={styles.noDeadlineMessage}>Please leave blank if there is no hard deadline.</p>
+                            <p className='font-size-1'>Please leave blank if there is no hard deadline.</p>
                         </label>
                     </div>
-  
                 </div>
-                <button type="submit" className="blueButton" onClick={handleSubmit}>
+                <button type="submit" className="fill-button bg-ezcoms-blue text-light-grey pad-3 mar-3 font-weight-700 font-size-2 radius-3" onClick={handleSubmit}>
                     Submit Order
                 </button>
             </form>
