@@ -28,7 +28,7 @@ const RegistrationForm = () => {
             <div className={`${styles.content} flex-col justify-content-center align-items-center text-light-grey`}>
                 <label className="flex-col justify-content-start gap-2 marb-2 w-100">
                     <p>Email: </p>
-                    <input className="font-size-2 pad-2 radius-2" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input>
+                    <input className="font-size-2 pad-2 radius-2 w-100" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input>
                 </label>
                 <label className="flex-col justify-content-start gap-2 marb-2 w-100">
                     <p>Password: </p> <input className="font-size-2 pad-2 radius-2" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>

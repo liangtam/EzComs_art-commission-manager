@@ -31,7 +31,7 @@ const LoginForm = () => {
                 </h3>
                 <p className='font-size-2'>Welcome back!</p>
             </div>
-            <div className={`${styles.content} flex-col justify-content-center align-items-center text-light-grey`}>
+            <div className={`${styles.content} ${styles.loginContent} flex-col justify-content-center align-items-center text-light-grey`}>
                 <label className='flex-col justify-content-start gap-2 marb-2 w-100'>
                     <p>Email:</p>
                     <input className="font-size-2 pad-2 radius-2 w-100" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input>
@@ -40,6 +40,7 @@ const LoginForm = () => {
                     <p>Password:</p>
                     <input className="font-size-2 pad-2 radius-2 w-100" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
                 </label>
+
                 {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
             {error && <div className="errorMessage">{error}</div>}
