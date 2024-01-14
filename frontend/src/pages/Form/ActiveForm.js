@@ -205,25 +205,25 @@ const ActiveForm = () => {
         // })
     };
 
-    // const clearForm = () => {
-    //     setClientContact('');
-    //     setClientName('');
-    //     setRequestDetail('');
-    //     setReferenceImages([]);
-    //     for (let i = 0; i < questionFieldList.id; i++) {
-    //         if (questionFieldList[i].type == 'mc') {
-    //             var options = document.getElementsByName('option' + questionFieldList[i].id);
-    //             for (let j = 0; j < options.length; i++) {
-    //                 if (options[j].checked) {
-    //                     options[j].checked = false;
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     console.log("cleared form");
+    const clearForm = () => {
+        setClientContact('');
+        setClientName('');
+        setRequestDetail('');
+        setReferenceImages([]);
+        for (let i = 0; i < questionFieldList.id; i++) {
+            if (questionFieldList[i].type == 'mc') {
+                var options = document.getElementsByName('option' + questionFieldList[i].id);
+                for (let j = 0; j < options.length; i++) {
+                    if (options[j].checked) {
+                        options[j].checked = false;
+                        break;
+                    }
+                }
+            }
+        }
+        console.log("cleared form");
 
-    // }
+    }
 
     // First, fetch all the forms
     // useEffect( () => {
@@ -245,22 +245,22 @@ const ActiveForm = () => {
         if (activeForm != null) {
             setQuestionFieldList(activeForm.questions);
             console.log(activeForm.questions);
-            console.log('setQList');
+            // console.log('setQList');
         }
     }, [activeForm]);
 
     useEffect(() => {
-        console.log('Q LIST: ', questionFieldList);
+        // console.log('Q LIST: ', questionFieldList);
     }, [questionFieldList]);
 
     useEffect(() => {
-        console.log('Ref images: ', referenceImages);
+        // console.log('Ref images: ', referenceImages);
     }, [referenceImages]);
     // Notice we need all these three steps because of how usestate and fetches are asynchronous, so anytime we need to
     // use asynchronous data, we need to make sure it actually fetched properly first.
 
     if (noActiveForm) {
-        return <div>No active form yet.</div>;
+        return <div className='w-100 h-100 flex-row justify-content-center align-items-center'>No active form yet.</div>;
     } else {
         return (
             <form onSubmit={handleSubmit} className={styles.activeFormContainer} encType="multipart/form-data">
@@ -341,8 +341,8 @@ const ActiveForm = () => {
   
                 </div>
                 <button type="submit" className="blueButton" onClick={handleSubmit}>
-                        Submit Order
-                    </button>
+                    Submit Order
+                </button>
             </form>
         );
     }

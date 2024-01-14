@@ -69,8 +69,8 @@ const MCQuestionField = ({ fieldId, labelValue, optList }) => {
 
     return (
         <div className={styles.questionContainer}>
-            <div className={styles.questionContent}>
-            <input className="transparentInput blueTransparentInput" key="mc_question_field" type="text" placeholder="MC Question" onChange={(e) => handleFieldChange(e, fieldId)} value={labelValue} required={true}></input>
+            <div className={`${styles.questionContent} flex-row justify-content-start align-items-center gap-2 w-100 marb-3`}>
+            <input className="transparentInput blueTransparentInput font-size-2 pad-2 padl-3 w-100 border-box" key="mc_question_field" type="text" placeholder="MC Question" onChange={(e) => handleFieldChange(e, fieldId)} value={labelValue} required={true}></input>
             <button className={styles.addOption} onClick={(e) => handleOptionClick(e, fieldId)}>Add Option</button>
 
             <button className="xBtn" onClick={(e) => handleRemoveField(e, fieldId)}>

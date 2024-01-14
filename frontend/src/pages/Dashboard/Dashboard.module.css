@@ -6,11 +6,9 @@
     /* background-color: rgb(49, 54, 72); */
     position: relative;
     overflow: hidden;
-    background-color: rgb(243, 246, 248);
 }
 
 .dashboardContent {
-    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -312,15 +310,19 @@
     #ezComsHead img {
         height: 80%;
     }
+
+    #ezComsWave {
+        bottom: -10%;
+    }
 }
 
 @media screen and (max-width: 768px) {
     .dashboardContainer {
-        height: 89.5vh;
+        height: 90vh;
     }
 
     h1 {
-        font-size: 1.2em;
+        font-size: var(--font-size-2);
     }
 
     #dateWidget {

@@ -222,19 +222,25 @@ const FormBuilder = () => {
                     <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
                 </YesNoPopup>
             )}
-            <div className="pageTitle">
+            <div className={`${styles.formBuilderTitle} pageTitle flex-col gap-2 mart-3`}>
                 <h1>Create an order form for your clients</h1>
                 <p>An active form will be accessible by anyone, including your clients. An inactive form is only accessible to you.</p>
             </div>
-            <form className={styles.formBuilderContent}>
-                <div className={styles.formContent}>
-                    <div className={styles.formName}>
-                        <h4>
-                            Name of form: <input className="transparentInput" id="formName_field" type="text" onChange={handleNameFieldChange} placeholder="Coolest form"></input>
-                        </h4>
+            <form className={`${styles.formBuilderContent} flex-col gap-2 border-box pad-4 mar-3 align-items-center`}>
+                <div className={`${styles.formContent} flex-col gap-3 align-items-start w-100 marb-3`}>
+                    <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
+                        <p>Name of form: </p>
+
+                        <input
+                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                            id="formName_field"
+                            type="text"
+                            onChange={handleNameFieldChange}
+                            placeholder="Coolest form"
+                        ></input>
                     </div>
-                    <h5>Default features included in the form:</h5>
-                    <ul>
+                    <h4 className="font-size-2">Default features included in the form:</h4>
+                    <ul className='flex-col gap-2'>
                         <li>Order Name </li>
                         <li>Client Name </li>
                         <li>Client Email </li>
@@ -245,17 +251,17 @@ const FormBuilder = () => {
                 </div>
 
                 {questionFieldList.length >= 1 && (
-                    <div className={styles.questions}>
+                    <div className="w-100 flex-col">
                         {questionFieldList.map((questionField) => {
                             if (questionField.type === 'shortAns') {
                                 return (
-                                    <div className={styles.question}>
+                                    <div className={`${styles.question} w-100`}>
                                         <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />
                                     </div>
                                 );
                             } else if (questionField.type === 'mc') {
                                 return (
-                                    <div className={styles.question}>
+                                    <div className={`${styles.question} w-100`}>
                                         <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />
                                     </div>
                                 );
@@ -264,30 +270,28 @@ const FormBuilder = () => {
                     </div>
                 )}
 
-                <div className={styles.createQuestions}>
-                    <div className={styles.questionButtons}>
-                        <button className={`${styles.formBuilderBtn}`} onClick={handleShortAnswerClick}>
-                            Add Short Answer
-                        </button>
-                        <button className={`${styles.formBuilderBtn}`} onClick={handleMCClick}>
-                            Add Multiple Choice
-                        </button>
-                    </div>
+                <div className={`${styles.questionButtons} flex-row gap-3 justify-content-center text-dark-grey w-100`}>
+                    <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
+                        Add Short Answer
+                    </button>
+                    <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
+                        Add Multiple Choice
+                    </button>
                 </div>
 
-                <div className={styles.activeStatus}>
-                    <button className={`${styles.formBuilderBtn} ${styles.activeStatusBtn}`} onClick={toggleActive}>
+                <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 mar-3 w-100`}>
+                    <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
                         Set Active
                     </button>
-                    <div className={`${activeStatus ? styles.active : styles.inactive} ${styles.activeStatus}`}>{activeStatus ? 'Active' : 'Inactive'}</div>
+                    <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} ${styles.activeStatus} outline-button font-size-2 pad-2 padx-3`}>{activeStatus ? 'Active' : 'Inactive'}</div>
                 </div>
 
                 {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-                <button className="blueButton" type="submit" onClick={handleSaveFormClick}>
+                <button className={`${styles.submitBtn} fill-button bg-ezcoms-blue pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
                     Submit
-                </button>
+            </button>
             </form>
         </div>
     );

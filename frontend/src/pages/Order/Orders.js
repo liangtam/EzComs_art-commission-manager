@@ -102,6 +102,7 @@ const Orders = () => {
             <div className="pageTitle">
                 <h1>Orders</h1>
             </div>
+            {!orders || orders.length === 0 && <div className='font-size-2'>You have no orders.</div>}
             {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
             {state.successMessage && <div className="successMessage">{state.successMessage}</div>}
             {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}

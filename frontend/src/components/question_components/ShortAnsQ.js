@@ -32,8 +32,8 @@ const ShortAnswerQField = ({ fieldId, labelValue }) => {
     };
 
     return (
-        <div className={`${styles.questionContent}`}>
-            <input className="transparentInput blueTransparentInput" key="shortanswer_question_field" type="text" placeholder="Short Answer Question" value={labelValue} onChange={(e) => handleFieldChange(e, fieldId)} required></input>
+        <div className={`${styles.questionContent} flex-row justify-content-start align-items-center gap-2 w-100 marb-3`}>
+            <input className="transparentInput blueTransparentInput font-size-2 pad-2 padl-3 w-100 border-box" key="shortanswer_question_field" type="text" placeholder="Short Answer Question" value={labelValue} onChange={(e) => handleFieldChange(e, fieldId)} required></input>
             <button className="xBtn" onClick={(e) => handleRemoveField(e, fieldId)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="76" height="77" viewBox="0 0 76 77" fill="none">
                     <path

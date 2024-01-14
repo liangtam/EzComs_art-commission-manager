@@ -10,13 +10,11 @@
     --bg-color: #f5f5f5;
     --roboto: 'Roboto', sans-serif;
 
-
-    --iceblue: rgb(0, 183, 255);
-    --bluegrey: rgb(59, 91, 112);
     --ezComs_turquoise: #00e2c7;
     --ezComs_blue: #00adfc;
-    --darkgrey: rgb(26, 26, 26);
     --lightGrey: #f6f6f6;
+    --midgrey: rgb(236, 236, 236);
+    --darkgrey: rgb(26, 26, 26);
     --activeGreen: rgb(0, 193, 55);
 
     --font-size-0: 0.5rem;
@@ -97,6 +95,10 @@ a {
 
 .align-items-center {
     align-items: center;
+}
+
+.border-box {
+    box-sizing: border-box;
 }
 
 .text-align-center {
@@ -333,6 +335,13 @@ a {
     border: 2px solid var(--lightGrey);
 }
 
+.dark-grey-outline-1 {
+    border: 1px solid var(--darkgrey);
+}
+
+.dark-grey-outline-2 {
+    border: 2px solid var(--darkgrey);
+}
 .errorMessage {
     font-size: 16px;
     padding: 10px;
@@ -388,7 +397,9 @@ button:hover {
 .fill-button {
     border: none;
 }
-
+.mid-grey-hover:hover {
+    background-color: var(--midgrey);
+}
 .blueButton {
     color: white;
     font-weight: 550;
@@ -422,10 +433,6 @@ button:hover {
     border: none;
     border-bottom: 2px solid grey;
     box-sizing: border-box;
-    padding: 0.3rem 0.5rem;
-    padding-top: 0.5rem;
-    margin: 0.7rem 0;
-    font-size: 1em;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -531,15 +538,6 @@ button:hover {
     background-color: grey;
 }
 
-
-@media only screen and (max-width: 482px) {
-    .whiteOutlineButton,
-    .filledWhiteTurquoiseButton {
-        padding: 10px;
-        font-size: 15px;
-    }
-}
-
 body {
     /* font-family: roboto; */
     /* font-family: --inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -564,7 +562,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--ezComs_turquoise); /* color of the thumb (the draggable part) */
+    background-color: var(--midgrey); /* color of the thumb (the draggable part) */
     border-radius: 6px; /* roundness of the thumb */
 }
 

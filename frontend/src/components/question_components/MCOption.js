@@ -44,8 +44,8 @@ const MCOptionField = ({ optionFieldId, mcQuestionFieldId, labelValue }) => {
     };
 
     return (
-        <div className={styles.questionContent}>
-            <input className="transparentInput turquoiseTransparentInput" key="mc_option" type="text" placeholder="Option" onChange={(e) => handleOptionFieldChange(e, mcQuestionFieldId)} value={labelValue}></input>
+        <div className={`${styles.questionContent} flex-row align-items-center gap-2 marb-3`}>
+            <input  className="transparentInput turquoiseTransparentInput font-size-2 pad-2 padl-3 w-100 border-box" key="mc_option" type="text" placeholder="Option" onChange={(e) => handleOptionFieldChange(e, mcQuestionFieldId)} value={labelValue}></input>
             <button className="xBtn" onClick={(e) => handleRemoveOptionField(e, mcQuestionFieldId)}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="76" height="77" viewBox="0 0 76 77" fill="none">
                     <path

@@ -4,19 +4,6 @@
     justify-content: start;
     width: 100%;
 }
-.questionContent {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 100%;
-    gap: 10px;
-    /* background-color: blue; */
-}
-.questionContent input {
-
-    width: 70%;
-
-}
 
 .addOption {
     border: none;
@@ -25,17 +12,4 @@
     opacity: 30%;
     border-radius: 5px;
     padding: 5px;
-}
-
-@media screen and (min-width: 1024px) {
-    .questionContent input {
-        width: 70%;
-    }
-}
-
-@media screen and (min-width: 1280px) {
-
-    .questionContent input {
-        width: 50%;
-    }
 }

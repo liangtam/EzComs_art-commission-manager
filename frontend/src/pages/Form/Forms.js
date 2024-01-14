@@ -77,6 +77,7 @@ const Forms = () => {
             <div className="pageTitle">
                 <h1> Forms </h1>
             </div>
+            {!forms || forms.length === 0 && <p className='font-size-2'>You have no forms.</p>}
             {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
             {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
             {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}

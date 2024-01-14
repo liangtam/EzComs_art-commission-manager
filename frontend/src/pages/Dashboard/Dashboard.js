@@ -54,7 +54,7 @@ const Dashboard = () => {
     }, []);
     return (
         <div className={styles.dashboardContainer}>
-            <div className={styles.dashboardContent}>
+            <div className={`${styles.dashboardContent} h-100 w-100`}>
                 <div className={styles.welcomeMessage}>
                     <h1>Welcome back, {user.email}</h1>
                 </div>
