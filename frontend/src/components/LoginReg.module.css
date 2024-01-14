@@ -1,141 +1,23 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+    box-sizing: border-box;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
-
-.container .intro {
-    margin-top: 40px;
+.signInBtn {
+    max-width: 100px;
 }
-
-.container .intro h3 {
-    color: #fff;
-
-    text-align: center;
-    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: Inter;
-    font-size: 40px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-
-.container .intro p {
-    margin: 10px;
-    margin-bottom: 30px;
-    color: white;
-    text-align: center;
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
+    width: 100%;
+}
+.content input {
+    /* background-color: red; */
+    box-sizing: border-box;
 }
 
-.content p {
-    font-size: 13px;
-    transform: translate(0, -0.5em);
-    width: 367px;
-}
-
-.content label {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 16px;
-    padding: 20px 0px 20px 0px;
-}
-.content label input {
-    min-width: 347px;
-    max-width: 456px;
-    height: 47px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
-@media only screen and (max-width: 768px) {
-    .container {
-        height: 100%;
-        /* background: yellow; */
-    }
-
-    .intro {
-        width: 100%;
-    }
-
-    .intro p {
-        font-size: 10px;
-    }
-    
+@media only screen and (min-width: 640px) {
     .content {
-        width: 100%;
-        /* background: purple; */
-    }
-
-    .content label {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        /* background-color: blue; */
-    }
-
-    .content label input {
-        max-width: 100%;
-        min-width: 100%;
-    }
-
-    .content p {
-        width: 100%;
-    }
-}
-
-@media only screen and (max-width: 482px) {
-    .container {
-        width: 100%;
-        height: 100%;
-    }
-
-    .container .intro {
-        display: none;
-        background-color: red;
-        margin: 0;
-    }
-    .content label {
-        gap: 5px;
-        padding: 10px 0px;
-    }
-    .container .intro p {
-        font-size: 16px;
-        margin: 0;
-        background-color: blue;
-    }
-
-    .container .intro h3 {
-        font-size: 22px;
-    }
-
-    .smallBlueButton {
-        margin: 0px;
-    }
-
-    .smallErrorMessage {
-        font-size: 14px;
+        width: 70%;
     }
 }
 

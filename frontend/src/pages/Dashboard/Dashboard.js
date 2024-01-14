@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuthContext, useOrdersContext } from '../hooks/index';
-import ezComsHead from '../public/images/ezComs_placeholder_head.png';
-import ezComsSleepy from '../public/images/ezComs_placeholder_sleepy.png';
-import winterTrees from '../public/images/winterdate_trees_bg.png';
-import activeFormBg from '../public/images/ezcoms_activeform_bg.png';
-import ordersBg from '../public/images/ezcoms_orders_bg.png';
-import commissionsBg from '../public/images/ezcoms_commissions_bg.png';
-import ezComsWave from '../public/images/EzComs_LoginWave.png';
+import { useAuthContext, useOrdersContext } from '../../hooks/index';
+import ezComsHead from '../../public/images/ezComs_placeholder_head.png';
+import ezComsSleepy from '../../public/images/ezComs_placeholder_sleepy.png';
+import winterTrees from '../../public/images/winterdate_trees_bg.png';
+import activeFormBg from '../../public/images/ezcoms_activeform_bg.png';
+import ordersBg from '../../public/images/ezcoms_orders_bg.png';
+import commissionsBg from '../../public/images/ezcoms_commissions_bg.png';
+import ezComsWave from '../../public/images/EzComs_LoginWave.png';
 
 
 import styles from './Dashboard.module.css';

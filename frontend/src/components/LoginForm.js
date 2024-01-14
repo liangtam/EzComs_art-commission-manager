@@ -24,24 +24,26 @@ const LoginForm = () => {
 
 
     return (
-        <form className={styles.container}>
-            <div className={styles.intro}>
+        <form className={`${styles.container} bg-dark-grey flex-col gap-3 align-items-center w-100 pad-4`}>
+            <div className={`${styles.intro} flex-col gap-3 align-items-center text-light-grey w-100`}>
                 <h3>
-                    <b>Login</b>
+                    <b className='font-size-4'>Login</b>
                 </h3>
-                <p>Welcome back!</p>
+                <p className='font-size-2'>Welcome back!</p>
             </div>
-            <div className={styles.content}>
-                <label>
-                    Email: <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input>
+            <div className={`${styles.content} flex-col justify-content-center align-items-center text-light-grey`}>
+                <label className='flex-col justify-content-start gap-2 marb-2 w-100'>
+                    <p>Email:</p>
+                    <input className="font-size-2 pad-2 radius-2 w-100" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input>
                 </label>
-                <label>
-                    Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                <label className='flex-col justify-content-start gap-2 marb-2 w-100'>
+                    <p>Password:</p>
+                    <input className="font-size-2 pad-2 radius-2 w-100" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
                 </label>
                 {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
             {error && <div className="errorMessage">{error}</div>}
-            <button className="blueButton" disabled={isLoading} onClick={handleLogin}>
+            <button className={` ${styles.signInBtn} fill-button font-size-2 bg-ezcoms-blue pady-2 padx-3 radius-2 font-weight-700 text-light-grey w-100`} disabled={isLoading} onClick={handleLogin}>
                 Login
             </button>
         </form>

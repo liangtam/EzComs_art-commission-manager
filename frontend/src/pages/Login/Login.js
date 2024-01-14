@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import styles from './Login.module.css';
-import LoginForm from '../components/LoginForm';
-import RegistrationForm from '../components/RegistrationForm';
-import logo from '../public/images/EzComs_Logo_Black.png';
-import wave from '../public/images/wave.png';
+import LoginForm from '../../components/LoginForm';
+import RegistrationForm from '../../components/RegistrationForm';
+import logo from '../../public/images/EzComs_Logo_Black.png';
+import wave from '../../public/images/wave.png';
 
 const Login = () => {
     const [regFormSelected, setRegFormSelected] = useState(true);
 
     return (
         <div className={styles.landingBody}>
-            <div className={styles.landingContainer}>
-                <div className={styles.landingExerpt}>
-                    <div className={styles.landingTitle}>
+            <div className={`${styles.landingContainer} flex-col align-items-center`}>
+                <div className={`${styles.landingExerpt} flex-col gap-3 align-items-center`}>
+                    <div className={`${styles.landingTitle} flex-row`}>
                         <img src={logo}></img>
-                        <h1>EzComs</h1>
+                        <h1 className='font-size-5'>EzComs</h1>
                     </div>
-                    <div className={styles.landingIntro}>
-                        <h2>Art commissions made ez for artists.</h2>
-                        <ul>
+                    <div className={`${styles.landingIntro} flex-col gap-3 justify-content-center`}>
+                        <h2 className='text-align-center'>Art commissions made ez for artists.</h2>
+                        <ul className='flex-col gap-3 w-100'>
                             <li>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
                                     <path d="M11.6609 22.2878L17.4574 28.0843L30.9826 14.5591" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
@@ -74,12 +74,12 @@ const Login = () => {
                         </ul>
                     </div>
                 </div>
-                <div className={styles.form}>
-                    <div className={styles.buttons}>
-                        <button className={`${regFormSelected ? "button bg-transparent white-outline-2 text-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4" : "button turquoiseHoverButton text-dark-grey bg-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4 border-none"}`} id="newUserBtn" onClick={(e) => setRegFormSelected(true)}>
+                <div className={`${styles.form} flex-col`}>
+                    <div className={`${styles.buttons} flex-row gap-4 justify-content-center pady-3`}>
+                        <button className={`${regFormSelected ? "outline-button bg-transparent white-outline-2 text-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4" : "fill-button turquoiseHoverButton text-dark-grey bg-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4"}`} id="newUserBtn" onClick={(e) => setRegFormSelected(true)}>
                             New User
                         </button>
-                        <button className={!regFormSelected ? "button bg-transparent white-outline-2 text-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4" : "button turquoiseHoverButton text-dark-grey bg-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4 border-none"} id="oldUserBtn" onClick={(e) => setRegFormSelected(false)}>
+                        <button className={!regFormSelected ? "outline-button bg-transparent white-outline-2 text-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4" : "fill-button turquoiseHoverButton text-dark-grey bg-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4"} id="oldUserBtn" onClick={(e) => setRegFormSelected(false)}>
                             Old User
                         </button>
                     </div>

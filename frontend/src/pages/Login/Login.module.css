@@ -1,0 +1,156 @@
+.landingBody {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+.landingContainer {
+    height: 100%;
+    width: 100%;
+
+}
+.landingTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: rebeccapurple; */
+}
+
+.landingTitle img {
+    height: 50px;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: var(--spacing-1);
+}
+
+li svg {
+    min-width: 25px;
+    max-width: 25px;
+    padding-right: var(--spacing-1)
+    /* background-color: red; */
+}
+
+.buttons {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+}
+
+.form {
+    width: 90%;
+}
+
+.landingExerpt {
+    margin: 1rem;
+    margin-top: 2rem;
+    /* background-color: blue; */
+}
+
+
+.blob1 {
+    position: fixed;
+    top: -50px;
+    left: -50px;
+    border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    width: 200px;
+    height: 200px;
+    transition: border-radius 3s ease;
+    animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear, floating 5s infinite ease-in-out alternate;
+    z-index: -1;
+}
+
+.blob2 {
+    z-index: -1;
+    position: fixed;
+    right: calc(-0.08*100vw + 100vw);
+    bottom: 10%;
+    border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    width: 80px;
+    height: 80px;
+    animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear, floating 4s infinite ease-in-out alternate;
+}
+
+.blob3 {
+    z-index: -1;
+    position: fixed;
+    left: calc(-200px + 100vw);
+    bottom: -200px;
+    border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    width: calc(0.2 * 100vw);
+    height: calc(0.2 * 100vw);
+    animation: blob1Animation 10s infinite alternate, fadeIn 3s ease, spinning 35s infinite linear, floating 10s infinite ease-in-out alternate;
+}
+
+@media only screen and (min-width: 768px) {
+    .landingContainer {
+        background-image: url('../../public/images/wave.png');
+        background-size: 55vw 100vh;
+        background-repeat: repeat-y;
+        background-attachment: fixed;
+        animation: scrollWave 100s linear infinite;
+    }
+}
+
+
+@keyframes blob1Animation {
+    0% {
+        border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    }
+    25% {
+        border-radius: 42% 58% 43% 57% / 51% 39% 61% 49%;
+    }
+    50% {
+        border-radius: 32% 68% 35% 65% / 56% 33% 67% 44%;
+    }
+
+    75% {
+        border-radius: 41% 59% 42% 58% / 46% 40% 60% 54%;
+    }
+
+    100% {
+        border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+@keyframes spinning {
+    0% {
+        rotate: 0deg;
+    }
+
+    100% {
+        rotate: 359deg;
+    }
+}
+
+@keyframes scrollWave {
+    0% {
+        background-position-y: calc(-1 * 100vh);
+    }
+
+    100% {
+        background-position-y: 100vh;
+    }
+}
+
+@keyframes floating {
+    to {
+        transform: translateY(10%);
+    }
+}
