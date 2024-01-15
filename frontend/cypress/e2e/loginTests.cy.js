@@ -44,10 +44,8 @@ describe('Login tests', () => {
     it("Login.js - can login", () => {
         cy.fixture("users.json").then((mockUsers) => {
             const validUser = mockUsers.validUsers[0];
-            cy.get('[data-testid="old-user-btn"]').click();
-            cy.get('[data-testid="login-email"]').type(validUser.email);
-            cy.get('[data-testid="login-password"]').type(validUser.password);
-            cy.get('[data-testid="login-btn"]').click();
+
+            cy.login({email: validUser.email, password: validUser.password});
 
             cy.url().should("eq", "http://localhost:3000/");
 
