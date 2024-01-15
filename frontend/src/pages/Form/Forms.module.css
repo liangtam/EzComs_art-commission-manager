@@ -7,17 +7,6 @@
     /* background-color: blue; */
 }
 
-.title {
-    display: flex;
-    align-items: center;
-    width: 70%;
-    height: 10%;
-    border-radius: 30px;
-    /* background-color: red; */
-}
-.title h1 {
-    font-size: 1.5em;
-}
 .forms {
     display: flex;
     flex-direction: column;
@@ -37,6 +26,13 @@
     max-height: 55%;
     margin: 5%;
 }
+
+
+.activeFormImg {
+    opacity: 0.2;
+    max-height: 400px;
+}
+
 @media screen and (min-width: 768px) {
     .formsContainer {
         height: 89vh;

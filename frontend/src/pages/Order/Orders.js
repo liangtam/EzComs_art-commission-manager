@@ -6,15 +6,17 @@ import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useOrdersContext } from '../../hooks';
+import noOrdersImg from '../../public/images/no_orders.png';
 
 const Orders = () => {
     const { orders, setOrders } = useOrdersContext();
     const [openPopup, setOpenPopup] = useState(false);
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [state, dispatch] = useReducer(orderMessageReducer, {});
+    const [initLoading, setInitLoading] = useState(true);
 
     const { user } = useAuthContext();
-    console.log('orders: ', orders);
+    console.log('Orders in orders page: ', orders);
 
     const fetchOrders = async () => {
         if (!user) {
@@ -35,7 +37,7 @@ const Orders = () => {
 
         if (response.ok) {
             setOrders(json);
-            console.log('Fetched all forms in orders page! ', json);
+            // console.log('Fetched all forms in orders page! ', json);
             dispatch({ type: ACTION.RESET });
         } else {
             dispatch({ type: ACTION.ERROR_GET_ALL });
@@ -43,13 +45,14 @@ const Orders = () => {
                 dispatch({ type: ACTION.RESET });
             }, 3000);
         }
+        setInitLoading(false);
     };
 
     const handleOpenPopup = (e, orderId) => {
         e.preventDefault();
         setOpenPopup(true);
         setSelectedOrderId(orderId);
-        console.log('here');
+        // console.log('here');
     };
 
     const closePopup = (e) => {
@@ -71,18 +74,17 @@ const Orders = () => {
         });
 
         if (response.ok) {
-            console.log('Order deleted!');
+            // console.log('Order deleted!');
             removeFromOrderList(orderId);
             setSelectedOrderId(null);
             dispatch({ type: ACTION.RESET });
 
             //fetchOrders();
         } else {
-            console.log(`Error deleting order: ${response.statusText}`);
+            // console.log(`Error deleting order: ${response.statusText}`);
             dispatch({ type: ACTION.RESET });
         }
         setOpenPopup(false);
-
     };
 
     const removeFromOrderList = (orderId) => {
@@ -98,31 +100,37 @@ const Orders = () => {
     }, []);
 
     return (
-        <div className={styles.ordersContainer}>
-            <div className="pageTitle">
+        <div className={`${styles.ordersContainer}`}>
+            <div className="pageTitle mart-3">
                 <h1>Orders</h1>
             </div>
-            {!orders || orders.length === 0 && <div className='font-size-2'>You have no orders.</div>}
-            {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
-            {state.successMessage && <div className="successMessage">{state.successMessage}</div>}
-            {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-                {openPopup && (
-                    <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
-                        <h3>Are you sure?</h3>
-                        <p>Are you sure you want to delete this order? This action cannot be undone.</p>
-                        {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-                    </YesNoPopup>
-                )}
-                <div className={styles.orders}>
-                    {orders &&
-                        orders.map((order) => {
-                            return (
-                                <div className={styles.order}>
-                                    <OrderSnippet key={order._id} orderId={order._id} order={order} handleOpenPopup={handleOpenPopup} />
-                                </div>
-                            );
-                        })}
+            {!initLoading && (!orders || orders.length === 0) && (
+                <div className="flex-col gap-3 justify-content-center align-items-center mart-3">
+                    <p className="font-size-3 mar-3 text-align-center font-weight-700">You have no orders right now.</p>
+                    <img className={`${styles.noOrdersImg} pad-3 border-box`} src={noOrdersImg} />
                 </div>
+            )}
+            {state.errorMessage && <div className="errorMessage bg-light-red">{state.errorMessage}</div>}
+            {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
+            {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
+            {openPopup && (
+                <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
+                    <h3>Are you sure?</h3>
+                    <p>Are you sure you want to delete this order? This action cannot be undone.</p>
+                    {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
+                </YesNoPopup>
+            )}
+            {!initLoading && orders && (
+                <div className={styles.orders}>
+                    {orders.map((order) => {
+                        return (
+                            <div className={styles.order}>
+                                <OrderSnippet key={order._id} orderId={order._id} order={order} handleOpenPopup={handleOpenPopup} />
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
         </div>
     );
 };

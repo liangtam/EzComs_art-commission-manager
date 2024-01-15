@@ -131,6 +131,12 @@
     display: none;
 }
 
+.noCommissionsIcon {
+    opacity: 0.2;
+    max-height: 400px;
+    width: 100%;
+}
+
 @media screen and (min-width: 768px) {
     .commissionsContainer {
         height: 89vh;

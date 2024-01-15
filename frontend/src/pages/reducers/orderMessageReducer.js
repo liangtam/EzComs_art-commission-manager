@@ -12,6 +12,12 @@ const orderMessageReducer = (state, action) => {
                 errorMessage: "Could not load orders.",
                 loadingMessage: ""
             };
+        case 'errorUpload':
+            return {
+                successMessage: "",
+                errorMessage: "Could not submit order.",
+                loadingMessage: ""
+            };
         case 'successUpdate':
             return {
                 successMessage: "Order is updated.",

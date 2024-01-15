@@ -8,11 +8,13 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 import artIcon from '../../public/images/image_icon.png';
 import noImageIcon from '../../public/images/ezcoms_noimage_head.png';
+import noCommissionsIcon from '../../public/images/no_commissions.png';
 
 const Commissions = () => {
     const [completedOrders, setCompletedOrders] = useState([]);
     const [showArtPreview, setShowArtPreview] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
+    const [initLoading, setInitLoading] = useState(true);
 
     const [selectedID, setSelectedID] = useState('');
 
@@ -27,21 +29,28 @@ const Commissions = () => {
 
     //const {orders, setOrders} = useContext(OrdersContext);
 
-    const findCompletedOrders = async () => {
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/completed', {
-            headers: {
-                Authorization: `Bearer ${user.token}`
+    const fetchCompletedOrders = async () => {
+        dispatch({type: ACTION.LOADING});
+        try {
+            const response = await fetch('https://ezcoms.onrender.com/api/orders/completed', {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+
+            const json = await response.json();
+
+            if (response.ok) {
+                console.log('Fetched all completed orders! ', json);
+                setCompletedOrders(json);
+            } else {
+                throw new Error('Could not fetch orders');
             }
-        });
-
-        const json = await response.json();
-
-        if (response.ok) {
-            console.log('Fetched all completed orders! ', json);
-            setCompletedOrders(json);
-        } else {
-            console.log('Could not fetch completed orders :(');
+        } catch (err) {
+            dispatch({ type: ACTION.ERROR_GET_ALL });
         }
+        setInitLoading(false);
+        dispatch({type: ACTION.RESET});
     };
 
     const closePopup = (e) => {
@@ -89,7 +98,7 @@ const Commissions = () => {
 
     useEffect(() => {
         if (user) {
-            findCompletedOrders();
+            fetchCompletedOrders();
         }
     }, []);
 
@@ -105,26 +114,30 @@ const Commissions = () => {
             <div className="pageTitle">
                 <h1>Commissions</h1>
             </div>
+            {!initLoading && (!completedOrders || completedOrders.length === 0) && (
+                <div className="page-container flex-col gap-3 justify-content-center align-items-center">
+                    <p className='font-size-3 font-weight-700'>You have no commissions at the moment.</p>
+                    <img className={`${styles.noCommissionsIcon} pad-3 border-box`} src={noCommissionsIcon} />
+                </div>
+            )}
             <div className={styles.commissionsContent}>
                 <div className={styles.completedOrders}>
-                    <div className={styles.header}>
-                        <div className={styles.headerItem}>
-                        <p>Date</p>
-
+                    {completedOrders && completedOrders.length > 0 && (
+                        <div className={styles.header}>
+                            <div className={styles.headerItem}>
+                                <p>Date</p>
+                            </div>
+                            <div className={styles.headerItem}>
+                                <p>Order Name</p>
+                            </div>
+                            <div className={styles.headerItem}>
+                                <p>Date Completed</p>
+                            </div>
+                            <div className={styles.headerItem}>
+                                <p>Price</p>
+                            </div>
                         </div>
-                        <div className={styles.headerItem}>
-                        <p>Order Name</p>
-
-                        </div>
-                        <div className={styles.headerItem}>
-                        <p>Date Completed</p>
-
-                        </div>
-                        <div className={styles.headerItem}>
-                        <p>Price</p>
-
-                        </div>
-                    </div>
+                    )}
                     {completedOrders &&
                         completedOrders.map((completedOrder) => {
                             return (
@@ -132,18 +145,18 @@ const Commissions = () => {
                                     <div className={styles.completedDateContainer}>
                                         <p>{completedOrder && completedOrder.dateCompleted}</p>
                                     </div>
-                                        <div className={styles.orderNameContainer}>
-                                            <p>
-                                                {/* <b>Name: </b> */}
-                                                {completedOrder && completedOrder.orderName}
-                                            </p>
-                                        </div>
-                                        <div className={styles.dateReqqed}>
-                                            <p>{completedOrder && completedOrder.dateReqqed}</p>
-                                        </div>
-                                        <div className={styles.orderPrice}>
-                                            <p>{completedOrder && completedOrder.price !== -1 ? '$' + completedOrder.price : 'Not set'}</p>
-                                        </div>
+                                    <div className={styles.orderNameContainer}>
+                                        <p>
+                                            {/* <b>Name: </b> */}
+                                            {completedOrder && completedOrder.orderName}
+                                        </p>
+                                    </div>
+                                    <div className={styles.dateReqqed}>
+                                        <p>{completedOrder && completedOrder.dateReqqed}</p>
+                                    </div>
+                                    <div className={styles.orderPrice}>
+                                        <p>{completedOrder && completedOrder.price !== -1 ? '$' + completedOrder.price : 'Not set'}</p>
+                                    </div>
                                     <div className={styles.completedArtIcon}>
                                         <button
                                             onMouseEnter={(e) => {
@@ -185,8 +198,8 @@ const Commissions = () => {
                             );
                         })}
                 </div>
-                {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
-                {state.successMessage && <div className="successMessage">{state.successMessage}</div>}
+                {state.errorMessage && <div className="errorMessage bg-light-red">{state.errorMessage}</div>}
+                {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
             </div>
         </div>

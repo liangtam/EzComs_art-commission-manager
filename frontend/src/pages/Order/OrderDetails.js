@@ -304,11 +304,11 @@ const OrderDetails = () => {
 
     useEffect(() => {
         fetchOrder();
-    }, []);
+    }, [fetchOrder]);
 
     useEffect(() => {
         initializeStates();
-    }, [order]);
+    }, [order, initializeStates]);
 
     return (
         <div className={styles.orderDetailsContainer}>

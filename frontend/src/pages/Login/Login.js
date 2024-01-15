@@ -15,11 +15,11 @@ const Login = () => {
                 <div className={`${styles.landingContainer}`}>
                     <div className={`${styles.landingExerpt} flex-col gap-3 align-items-center z-1`}>
                         <div className={`${styles.landingTitle} flex-row gap-2`}>
-                            <img src={logo}></img>
-                            <h1 className="font-size-5">EzComs</h1>
+                            <img data-testid="login-ezcoms-logo" src={logo}></img>
+                            <h1 className="font-size-5" data-testid="login-ezcoms-title">EzComs</h1>
                         </div>
                         <div className={`${styles.landingIntro} flex-col gap-3 justify-content-center`}>
-                            <h2 className="text-align-center">Art commissions made ez for artists.</h2>
+                            <h2 className="text-align-center" data-testid="ezcoms-intro">Art commissions made ez for artists.</h2>
                             <ul className="flex-col gap-3 w-100">
                                 <li>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
@@ -32,7 +32,7 @@ const Login = () => {
                                             stroke-linejoin="round"
                                         />
                                     </svg>
-                                    <label>Customize and create commission forms</label>
+                                    <label data-testid="ezcoms-intro-1">Customize and create commission forms</label>
                                 </li>
                                 <li>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
@@ -45,7 +45,7 @@ const Login = () => {
                                             stroke-linejoin="round"
                                         />
                                     </svg>
-                                    <label>Track your orders</label>
+                                    <label data-testid="ezcoms-intro-2">Track your orders</label>
                                 </li>
                                 <li>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
@@ -58,7 +58,7 @@ const Login = () => {
                                             stroke-linejoin="round"
                                         />
                                     </svg>
-                                    <label>Upload reference photos and progress art to your workspace</label>
+                                    <label data-testid="ezcoms-intro-3">Upload reference photos and progress art to your workspace</label>
                                 </li>
                                 <li>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">
@@ -71,7 +71,7 @@ const Login = () => {
                                             stroke-linejoin="round"
                                         />
                                     </svg>
-                                    <label>Manage your income</label>
+                                    <label data-testid="ezcoms-intro-4">Manage your income</label>
                                 </li>
                             </ul>
                         </div>

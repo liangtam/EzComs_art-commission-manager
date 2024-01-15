@@ -6,10 +6,13 @@ import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
+import activeFormImg from '../../public/images/ezcoms_activeform_bg.png';
+
 const Forms = () => {
     const { forms, setForms } = useContext(FormsContext);
     const [selectedID, setSelectedID] = useState('');
     const [openDeletePopup, setOpenDeletePopup] = useState(false);
+    const [initLoading, setInitLoading] = useState(true);
     const [state, dispatch] = useReducer(formMessageReducer, {});
 
     const { user } = useAuthContext();
@@ -35,9 +38,11 @@ const Forms = () => {
             dispatch({ type: ACTION.ERROR_GET_ALL });
         }
         setOpenDeletePopup(false);
+        setInitLoading(false);
     };
 
     const handleOpenDeletePopup = (e, selectedID) => {
+        e.preventDefault();
         setOpenDeletePopup(true);
         setSelectedID(selectedID);
     };
@@ -69,7 +74,7 @@ const Forms = () => {
         if (user) {
             fetchAllForms();
         }
-        console.log('fetched');
+        // console.log('fetched');
     }, [user]);
 
     return (
@@ -77,10 +82,15 @@ const Forms = () => {
             <div className="pageTitle">
                 <h1> Forms </h1>
             </div>
-            {!forms || forms.length === 0 && <p className='font-size-2'>You have no forms.</p>}
-            {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
-            {state.successMessage && <div className={styles.successMessage}>{state.successMessage}</div>}
-            {state.loadingMessage && <div className={styles.loadingMessage}>{state.loadingMessage}</div>}
+            {!initLoading && (!forms || forms.length === 0) && (
+                <div className="page-container flex-col gap-3 justify-content-center align-items-center">
+                    <p className='font-size-3 font-weight-700'>You have no forms at the moment.</p>
+                    <img className={`${styles.activeFormImg} pad-3 border-box`} src={activeFormImg} />
+                </div>
+            )}
+            {state.errorMessage && <div className="errorMessage bg-light-red pad-3">{state.errorMessage}</div>}
+            {state.successMessage && <div className="successMessage bg-light-green pad-3">{state.successMessage}</div>}
+            {state.loadingMessage && <div className="loadingMessage pad-3">{state.loadingMessage}</div>}
             <div className={styles.forms}>
                 {openDeletePopup && (
                     <YesNoPopup yesFunction={handleDelete} closePopup={(e) => setOpenDeletePopup(false)}>
@@ -90,7 +100,11 @@ const Forms = () => {
                 )}
                 {forms &&
                     forms.map((form) => {
-                        return <div className={styles.formSnippet}><FormSnippet formId={form._id} form={form} handleDelete={handleOpenDeletePopup} key={form._id} /></div>;
+                        return (
+                            <div className={styles.formSnippet}>
+                                <FormSnippet formId={form._id} form={form} handleDelete={handleOpenDeletePopup} key={form._id} />
+                            </div>
+                        );
                     })}
             </div>
         </div>

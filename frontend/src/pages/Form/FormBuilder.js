@@ -80,7 +80,7 @@ const FormBuilder = () => {
 
         // making sure there is only one active form at a time by ensuring the active form (if any) is in the beginning of the forms array
         if (activeStatus === true && forms.length > 0) {
-            const activeForm = findActiveForm();
+            const activeForm = forms[0];
             if (activeForm.activeStatus === true) {
                 // just a safety guard
                 setOpenPopup(true);
@@ -90,10 +90,10 @@ const FormBuilder = () => {
                 }
             }
         } else {
-            console.log('Boopity');
+            // console.log('Boopity');
 
             if (user) {
-                console.log('Hey');
+                // console.log('Hey');
                 saveForm();
             }
         }
@@ -286,8 +286,8 @@ const FormBuilder = () => {
                     <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} ${styles.activeStatus} outline-button font-size-2 pad-2 padx-3`}>{activeStatus ? 'Active' : 'Inactive'}</div>
                 </div>
 
-                {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
-                {state.successMessage && <div className="successMessage">{state.successMessage}</div>}
+                {state.errorMessage && <div className="errorMessage pad-3 radius-1 bg-light-red">{state.errorMessage}</div>}
+                {state.successMessage && <div className="successMessage pad-3 radius-1 bg-light-green">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                 <button className={`${styles.submitBtn} fill-button bg-ezcoms-blue pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
                     Submit

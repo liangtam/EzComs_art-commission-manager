@@ -1,10 +1,14 @@
 import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useReducer, useState } from 'react';
 import styles from './ActiveForm.module.css';
 
 import ImagePreview from '../../components/ImagePreview';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useParams } from 'react-router-dom';
+
+import activeFormImg from '../../public/images/ezcoms_activeform_bg.png';
+import { orderMessageReducer } from '../reducers/orderMessageReducer';
+import { ACTION } from '../reducers/orderMessageReducer';
 
 const ActiveForm = () => {
     const [activeForm, setActiveForm] = useState(null);
@@ -12,15 +16,19 @@ const ActiveForm = () => {
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
     const [referenceImages, setReferenceImages] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const [noActiveForm, setNoActiveForm] = useState(false);
 
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
+    const [state, dispatch] = useReducer(orderMessageReducer);
+
     const { user } = useAuthContext();
     const { userID } = useParams();
 
     const fetchActiveForm = async () => {
+        setLoading(true);
         try {
             const response = await fetch('https://ezcoms.onrender.com/api/forms/active/' + userID, {
                 method: 'GET'
@@ -43,6 +51,8 @@ const ActiveForm = () => {
         } catch (error) {
             setNoActiveForm(true);
             console.log('An error occurred while fetching active form: ', error);
+        } finally {
+            setLoading(false);
         }
     };
     // const fetchAllForms = async () => {
@@ -133,6 +143,7 @@ const ActiveForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        dispatch({ type: ACTION.LOADING });
         let questionListCopy = [...questionFieldList];
 
         // go through all the multiple choice questions to see what option was selected for them
@@ -180,29 +191,26 @@ const ActiveForm = () => {
         order.append('artistNotes', '');
         order.append('editedStatus', false);
         order.append('user_id', user.userID);
-        fetch('https://ezcoms.onrender.com/api/orders', {
-            method: 'POST',
-            body: order
-            // headers: {
-            //     'Authorization': `Bearer ${user.token}`,
-            // }
-        })
-            .then((res) => {
-                console.log(res);
-                //clearForm();
-            })
-            .catch((error) => {
-                console.log(error);
+        try {
+            const response = await fetch('https://ezcoms.onrender.com/api/orders', {
+                method: 'POST',
+                body: order
             });
+            if (response.ok) {
+                dispatch({ type: ACTION.SUCCESS_UPLOAD });
+                clearForm();
+            } else {
+                throw new Error();
+            }
+        } catch (err) {
+            dispatch({ type: ACTION.ERROR_UPLOAD });
 
-        // axios.post('https://ezcoms.onrender.com/api/orders', order, {
-
-        // }).then((res) => {
-        //     console.log(res);
-        //     //clearForm();
-        // }).catch((error) => {
-        //     console.log(error);
-        // })
+            console.log(err);
+        }
+        
+        setTimeout(() => {
+            dispatch({ type: ACTION.RESET });
+        }, 3000);
     };
 
     const clearForm = () => {
@@ -210,18 +218,15 @@ const ActiveForm = () => {
         setClientName('');
         setRequestDetail('');
         setReferenceImages([]);
-        for (let i = 0; i < questionFieldList.id; i++) {
-            if (questionFieldList[i].type == 'mc') {
-                var options = document.getElementsByName('option' + questionFieldList[i].id);
-                for (let j = 0; j < options.length; i++) {
-                    if (options[j].checked) {
-                        options[j].checked = false;
-                        break;
-                    }
-                }
-            }
-        }
-        console.log('cleared form');
+        const options = document.querySelectorAll('input[type="radio"]');
+        options.forEach((option) => {
+            option.checked = false;
+        });
+        const textInputs = document.querySelectorAll('input[type="text"]');
+        textInputs.forEach((textInput) => {
+            textInput.value = '';
+        });
+        // console.log('cleared form');
     };
 
     // First, fetch all the forms
@@ -258,12 +263,16 @@ const ActiveForm = () => {
     // Notice we need all these three steps because of how usestate and fetches are asynchronous, so anytime we need to
     // use asynchronous data, we need to make sure it actually fetched properly first.
 
-    if (noActiveForm) {
-        return <div className="w-100 h-100 flex-row justify-content-center align-items-center">No active form yet.</div>;
-    } else {
-        return (
-            <form onSubmit={handleSubmit} className={styles.activeFormContainer} encType="multipart/form-data">
-                {/* <div className="pageTitle">{activeForm && <h1>{activeForm.formName}</h1>}</div> */}
+    return (
+        <form onSubmit={handleSubmit} className={styles.activeFormContainer} encType="multipart/form-data">
+            {loading && <div className="page-container flex-row justify-content-center align-items-center font-size-3">Loading...</div>}
+            {!loading && !activeForm && (
+                <div className="page-container flex-col gap-3 justify-content-center align-items-center">
+                    <h1>No Active Form.</h1>
+                    <img className={`${styles.activeFormImg} pad-3 border-box`} src={activeFormImg} />
+                </div>
+            )}
+            {!loading && activeForm && (
                 <div className={styles.activeFormContent}>
                     <div className={`flex-col gap-2`}>
                         <label> Name (or contact name): </label>
@@ -272,6 +281,7 @@ const ActiveForm = () => {
                             placeholder="Name, or online alias"
                             value={clientName}
                             onChange={handleClientNameChange}
+                            required={true}
                         ></input>
                         <label> Contact (email, or social media handle): </label>
                         <input
@@ -280,6 +290,7 @@ const ActiveForm = () => {
                             placeholder="someone@example.com, or social media handle"
                             value={clientContact}
                             onChange={handleClientContactChange}
+                            required={true}
                         ></input>
                     </div>
                     <b>Questions</b>
@@ -295,6 +306,7 @@ const ActiveForm = () => {
                                                 className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
                                                 type="text"
                                                 onChange={(e) => handleAnswerFieldChange(e, question.id)}
+                                                required={true}
                                             ></input>
                                         </div>
                                     );
@@ -322,7 +334,7 @@ const ActiveForm = () => {
                         <label>
                             <p>Order details:</p>
                             <div className={styles.textAreaContainer}>
-                                <textarea className="textArea" type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange}></textarea>
+                                <textarea className="textArea" type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange} required></textarea>
                             </div>
                         </label>
                         <label>
@@ -338,21 +350,32 @@ const ActiveForm = () => {
                                     return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
                                 })}
                         </div>
-                        <label className='flex-col gap-2'>
+                        <label className="flex-col gap-2">
                             <p>Deadline:</p>
                             <div className="dateContainer">
                                 <input className="dateInput" type="date" id="deadline"></input>
                             </div>
-                            <p className='font-size-1'>Please leave blank if there is no hard deadline.</p>
+                            <p className="font-size-1">Please leave blank if there is no hard deadline.</p>
                         </label>
                     </div>
                 </div>
-                <button type="submit" className="fill-button bg-ezcoms-blue text-light-grey pad-3 mar-3 font-weight-700 font-size-2 radius-3" onClick={handleSubmit}>
+            )}
+            {state && state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
+            {state && state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
+            {state && state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
+
+            {!loading && activeForm && (
+                <button
+                    disabled={state && state.loadingMessage}
+                    type="submit"
+                    className="fill-button bg-ezcoms-blue text-light-grey pad-3 mar-3 font-weight-700 font-size-2 radius-3"
+                    onClick={handleSubmit}
+                >
                     Submit Order
                 </button>
-            </form>
-        );
-    }
+            )}
+        </form>
+    );
 };
 
 export default ActiveForm;

@@ -12,6 +12,7 @@ import OrderDetails from './Order/OrderDetails';
 import EditOrderDetails from './Order/EditOrderDetails';
 import Commissions from './Order/Commissions';
 import Login from './Login/Login';
+import NotFoundPage from './404/NotFoundPage';
 
 
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
@@ -95,10 +96,12 @@ function MainPage() {
                                     {!user && (
                                         <>
                                             <Route exact path="/" element={<Login />} />
-                                            <Route exact path="/login" element={<Login />} />
                                         </>
                                     )}
+                                    <Route exact path="/login" element={<Login />} />
+
                                     <Route exact path="/form/:userID" element={<ActiveForm />} />
+                                    <Route path="/*" element={<NotFoundPage/>}></Route>
                                 </Routes>
                             </div>
                         </QuestionFieldsContext.Provider>

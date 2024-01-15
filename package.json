@@ -11,5 +11,8 @@
     "nodemon": "^2.0.20",
     "react-router-dom": "^6.21.1",
     "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "cypress": "^13.6.2"
   }
 }

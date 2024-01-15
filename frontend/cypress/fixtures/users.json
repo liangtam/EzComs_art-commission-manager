@@ -1,0 +1,6 @@
+{
+    "validUsers": [
+        { "email": "validUser1@email.com", "password": "Validpw1!"},
+        { "email": "validUser2@email.com", "password": "Validpw2!"}
+    ]
+}

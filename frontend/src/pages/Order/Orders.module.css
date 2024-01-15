@@ -1,15 +1,10 @@
 /* Home/Orders page*/
 .ordersContainer {
+  height: 93.4vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 89.5vh;
-  width: 100%;
-}
-.ordersContainer h1 {
-  font-size: 1.5em;
-  text-align: center;
-  padding-bottom: 1rem;
 }
 
 .orders {
@@ -36,12 +31,16 @@
   /* background-color: blue; */
 }
 
+.noOrdersImg {
+  max-height: 400px;
+  opacity: 0.6;
+}
+
 
 
 @media screen and (min-width: 640px) {
   .ordersContainer {
       height: 89vh;
-      margin: 0;
   }
 
   .orders {

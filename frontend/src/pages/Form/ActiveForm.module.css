@@ -1,5 +1,5 @@
 .activeFormContainer {
-    height: 89.5vh;
+    height: 93.4vh;
     width: 100vw;
     /* background-color: blue; */
     display: flex;
@@ -100,6 +100,12 @@
 
 .option p {
     padding: 0 0.5rem
+}
+
+.activeFormImg {
+    opacity: 0.2;
+    max-height: 400px;
+    width: 100%;
 }
 
 @media screen and (min-width: 640px) {
