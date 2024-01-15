@@ -86,6 +86,7 @@ const Login = () => {
                                 }`}
                                 id="newUserBtn"
                                 onClick={(e) => setRegFormSelected(true)}
+                                data-testid="new-user-btn"
                             >
                                 New User
                             </button>
@@ -97,6 +98,7 @@ const Login = () => {
                                 }
                                 id="oldUserBtn"
                                 onClick={(e) => setRegFormSelected(false)}
+                                data-testid="old-user-btn"
                             >
                                 Old User
                             </button>

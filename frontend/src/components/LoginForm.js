@@ -34,17 +34,17 @@ const LoginForm = () => {
             <div className={`${styles.content} ${styles.loginContent} flex-col justify-content-center align-items-center text-light-grey`}>
                 <label className='flex-col justify-content-start gap-2 marb-2 w-100'>
                     <p>Email:</p>
-                    <input className="font-size-2 pad-2 radius-2 w-100" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input>
+                    <input data-testid="login-email" className="font-size-2 pad-2 radius-2 w-100" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input>
                 </label>
                 <label className='flex-col justify-content-start gap-2 marb-2 w-100'>
                     <p>Password:</p>
-                    <input className="font-size-2 pad-2 radius-2 w-100" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+                    <input data-testid="login-password" className="font-size-2 pad-2 radius-2 w-100" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
                 </label>
 
                 {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
             {error && <div className="errorMessage">{error}</div>}
-            <button className={` ${styles.signInBtn} fill-button font-size-2 bg-ezcoms-blue pady-2 padx-3 radius-2 font-weight-700 text-light-grey w-100`} disabled={isLoading} onClick={handleLogin}>
+            <button data-testid="login-btn" className={` ${styles.signInBtn} fill-button font-size-2 bg-ezcoms-blue pady-2 padx-3 radius-2 font-weight-700 text-light-grey w-100`} disabled={isLoading} onClick={handleLogin}>
                 Login
             </button>
         </form>

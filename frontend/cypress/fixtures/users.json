@@ -2,5 +2,11 @@
     "validUsers": [
         { "email": "validUser1@email.com", "password": "Validpw1!"},
         { "email": "validUser2@email.com", "password": "Validpw2!"}
+    ],
+    "invalidUsers": [
+        {"email": "notAnEmail", "password":"Validpw1!"},
+        {"email": "validEmail@email.com", "password": "invalidpw"},
+        {"email": "", "password": "Validpw1!"},
+        {"email": "validEmail@email.com", "password": ""}
     ]
 }
