@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import Dashboard from './Dashboard/Dashboard';
-import Orders from './Order/Orders';
-import FormBuilder from './Form/FormBuilder';
-import Forms from './Form/Forms';
 import Navbar from '../components/Navbar';
 import ActiveForm from './Form/ActiveForm';
 import FormDetails from './Form/FormDetails';
@@ -13,7 +9,7 @@ import EditOrderDetails from './Order/EditOrderDetails';
 import Commissions from './Order/Commissions';
 import Login from './Login/Login';
 import NotFoundPage from './404/NotFoundPage';
-
+import {Dashboard, Orders, FormBuilder, Forms} from "./index.js";
 
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from '../context/FormsContext';
