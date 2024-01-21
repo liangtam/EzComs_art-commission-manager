@@ -7,23 +7,21 @@ import styles from './FormSnippet.module.css';
 const FormSnippet = ({ formId, form, handleDelete }) => {
     const nav = useNavigate();
     return (
-        <div className={styles.formSnippet}>
-            <Link className={styles.link} to={`/forms/${formId}`}>
-                <div className={styles.formStats}>
+        <div className={`${styles.formSnippet} flex-col pad-2 h-100 radius-1`}>
+            <Link className={`${styles.link} flex-col gap-2 text-dark-grey`} to={`/forms/${formId}`}>
+                <div className={`${styles.formStats} flex-col gap-2 pad-3`}>
                     <div className={styles.title}>
                         <h4>{form.formName && form.formName}</h4>
                     </div>
-                    <div className={styles.numOfQuestions}>Number of questions: {form.questions && form.questions.length}</div>
+                    <p className='font-size-1'>Number of questions: {form.questions && form.questions.length}</p>
                 </div>
                 <div className={styles.questionsPreview}>
-                    <p>
-                        <b>Form Preview:</b>
-                    </p>
+                    <h4>Form preview:</h4>
                     <ul>
                         {form.questions.length !== 0 && <li>{form.questions[0].questionLabel}</li>}
                         {form.questions[1] !== undefined && <li>{form.questions[1].questionLabel}</li>}
                     </ul>
-                    <p>{form.questions.length >= 3 && 'Read more'}</p>
+                    {form.questions.length >= 3 && <p className='dark-grey-outline-1 pad-2 radius-3 font-size-1 w-fit'>Read more</p>}
                 </div>
             </Link>
             <div className={styles.bottom}>

@@ -30,3 +30,7 @@ Cypress.Commands.add("login", ({email, password}) => {
     cy.get('[data-testid="login-password"]').type(password);
     cy.get('[data-testid="login-btn"]').click();
 })
+
+Cypress.Commands.add("getMockUsers", () => {
+    
+})

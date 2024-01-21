@@ -7,6 +7,8 @@ import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 import activeFormImg from '../../public/images/ezcoms_activeform_bg.png';
+import addIcon from '../../public/images/add_icon.png';
+import { Link } from 'react-router-dom';
 
 const Forms = () => {
     const { forms, setForms } = useContext(FormsContext);
@@ -22,21 +24,28 @@ const Forms = () => {
             return;
         }
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('https://ezcoms.onrender.com/api/forms/', {
-            headers: {
-                Authorization: `Bearer ${user.token}`
+        try {
+            const response = await fetch('https://ezcoms.onrender.com/api/forms/', {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+
+            const json = await response.json();
+
+            if (response.ok) {
+                setForms(json);
+                console.log('forms in all forms pg: ', forms);
+                dispatch({ type: ACTION.RESET });
+            } else {
+                throw new Error('Bad response fetching all forms.');
             }
-        });
-
-        const json = await response.json();
-
-        if (response.ok) {
-            setForms(json);
-            console.log('forms in all forms pg: ', forms);
-            dispatch({ type: ACTION.RESET });
-        } else {
+        } catch (err) {
             dispatch({ type: ACTION.ERROR_GET_ALL });
         }
+        setTimeout(() => {
+            dispatch({ type: ACTION.RESET });
+        }, 3000);
         setOpenDeletePopup(false);
         setInitLoading(false);
     };
@@ -52,21 +61,25 @@ const Forms = () => {
             return;
         }
         e.preventDefault();
-        const response = await fetch('https://ezcoms.onrender.com/api/forms/' + selectedID, {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${user.token}`
-            }
-        });
+        try {
+            const response = await fetch('https://ezcoms.onrender.com/api/forms/' + selectedID, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
 
-        if (response.ok) {
-            console.log('Form deleted!');
-            await fetchAllForms();
-            dispatch({ type: ACTION.SUCCESS_DELETE });
-            setTimeout(() => {
-                dispatch({ type: ACTION.RESET });
-            }, 3000);
+            if (response.ok) {
+                console.log('Form deleted!');
+                await fetchAllForms();
+                dispatch({ type: ACTION.SUCCESS_DELETE });
+            } else {
+                throw new Error('Bad response');
+            }
+        } catch (err) {
+            dispatch({ type: ACTION.ERROR_DELETE });
         }
+
         setOpenDeletePopup(false);
     };
 
@@ -74,38 +87,46 @@ const Forms = () => {
         if (user) {
             fetchAllForms();
         }
-        // console.log('fetched');
     }, [user]);
 
     return (
-        <div className={styles.formsContainer}>
-            <div className="pageTitle">
-                <h1> Forms </h1>
-            </div>
-            {!initLoading && (!forms || forms.length === 0) && (
-                <div className="page-container flex-col gap-3 justify-content-center align-items-center">
-                    <p className='font-size-3 font-weight-700'>You have no forms at the moment.</p>
-                    <img className={`${styles.activeFormImg} pad-3 border-box`} src={activeFormImg} />
+        <div className="page-container flex-col h-100 w-100 justify-content-center align-items-center">
+            <div className="content-container flex-col gap-2 h-100 overflow-y-auto ">
+                <div className="flex-col justify-content-start align-items-start w-100 ">
+                    <h1 className="font-size-4 mart-4"> Forms </h1>
+                    <div className="w-100 bg-mid-grey h-1 mary-3"></div>
                 </div>
-            )}
-            {state.errorMessage && <div className="errorMessage bg-light-red pad-3">{state.errorMessage}</div>}
-            {state.successMessage && <div className="successMessage bg-light-green pad-3">{state.successMessage}</div>}
-            {state.loadingMessage && <div className="loadingMessage pad-3">{state.loadingMessage}</div>}
-            <div className={styles.forms}>
-                {openDeletePopup && (
-                    <YesNoPopup yesFunction={handleDelete} closePopup={(e) => setOpenDeletePopup(false)}>
-                        <h3>Are you sure?</h3>
-                        <p>Are you sure you want to delete this form? This action cannot be undone.</p>
-                    </YesNoPopup>
+                {!initLoading && (!forms || forms.length === 0) && (
+                    <div className="page-container flex-col gap-3 justify-content-center align-items-center">
+                        <p className="font-size-3 font-weight-700">You have no forms at the moment.</p>
+                        <img className={`${styles.activeFormImg} pad-3 border-box`} src={activeFormImg} />
+                    </div>
                 )}
-                {forms &&
-                    forms.map((form) => {
-                        return (
-                            <div className={styles.formSnippet}>
-                                <FormSnippet formId={form._id} form={form} handleDelete={handleOpenDeletePopup} key={form._id} />
-                            </div>
-                        );
-                    })}
+                {state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
+                {state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
+                {state.loadingMessage && <div className="loadingMessage pad-3">{state.loadingMessage}</div>}
+                <div className={`${styles.forms}  w-100 h-100 gap-4 border-box `}>
+                    {openDeletePopup && (
+                        <YesNoPopup yesFunction={handleDelete} closePopup={(e) => setOpenDeletePopup(false)}>
+                            <h3>Are you sure?</h3>
+                            <p>Are you sure you want to delete this form? This action cannot be undone.</p>
+                        </YesNoPopup>
+                    )}
+                    {forms &&
+                        forms.map((form) => {
+                            return (
+                                <div className={styles.formSnippet}>
+                                    <FormSnippet formId={form._id} form={form} handleDelete={handleOpenDeletePopup} key={form._id} />
+                                </div>
+                            );
+                        })}
+                </div>
+                <div className={`${styles.formsButtons} flex-row pad-3 border-box`}>
+                    {/* <button className='outline-button bg-transparent greyHoverButton pad-3 radius-4 font-size-2'>Create new form</button> */}
+                    <Link to="/form-builder">
+                        <img className={`icon-size bg-light-grey soft-white-glow radius-4`} src={addIcon}></img>
+                    </Link>
+                </div>
             </div>
         </div>
     );

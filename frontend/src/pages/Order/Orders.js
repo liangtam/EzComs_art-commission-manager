@@ -25,21 +25,25 @@ const Orders = () => {
 
         // making a call to the backend
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('https://ezcoms.onrender.com/api/orders', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${user.token}`
+        try {
+            const response = await fetch('https://ezcoms.onrender.com/api/orders', {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+
+            // to parse the json from the above response into smt we can work w/
+            const json = await response.json();
+
+            if (response.ok) {
+                setOrders(json);
+                // console.log('Fetched all forms in orders page! ', json);
+                dispatch({ type: ACTION.RESET });
+            } else {
+                throw new Error('Bad response');
             }
-        });
-
-        // to parse the json from the above response into smt we can work w/
-        const json = await response.json();
-
-        if (response.ok) {
-            setOrders(json);
-            // console.log('Fetched all forms in orders page! ', json);
-            dispatch({ type: ACTION.RESET });
-        } else {
+        } catch (err) {
             dispatch({ type: ACTION.ERROR_GET_ALL });
             setTimeout(() => {
                 dispatch({ type: ACTION.RESET });
@@ -52,7 +56,6 @@ const Orders = () => {
         e.preventDefault();
         setOpenPopup(true);
         setSelectedOrderId(orderId);
-        // console.log('here');
     };
 
     const closePopup = (e) => {
@@ -64,7 +67,6 @@ const Orders = () => {
         if (!user) {
             return;
         }
-        // console.log(orderId);
         dispatch({ type: ACTION.LOADING });
         const response = await fetch('https://ezcoms.onrender.com/api/orders/' + orderId, {
             method: 'DELETE',
@@ -104,13 +106,13 @@ const Orders = () => {
             <div className="pageTitle mart-3">
                 <h1>Orders</h1>
             </div>
-            {!initLoading && (!orders || orders.length === 0) && (
+            {!initLoading && !state.errorMessage && (!orders || orders.length === 0) && (
                 <div className="flex-col gap-3 justify-content-center align-items-center mart-3">
                     <p className="font-size-3 mar-3 text-align-center font-weight-700">You have no orders right now.</p>
                     <img className={`${styles.noOrdersImg} pad-3 border-box`} src={noOrdersImg} />
                 </div>
             )}
-            {state.errorMessage && <div className="errorMessage bg-light-red">{state.errorMessage}</div>}
+            {!initLoading && state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
             {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
             {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
             {openPopup && (
