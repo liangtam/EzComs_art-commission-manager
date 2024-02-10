@@ -6,7 +6,7 @@ import ImageComponent from '../../components/ImageComponent';
 import OriginalOrderComponent from '../../components/order_components/OriginalOrderComponent';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/context/useAuthContext.js';
 
 import origOrderIcon from '../../public/images/orig_order_icon.png';
 
@@ -18,7 +18,7 @@ const OrderDetails = () => {
 
     const [orderName, setOrderName] = useState('');
     const [fillouts, setFillouts] = useState([]);
-    const [status, setStatus] = useState(null);
+    const [status, setStatus] = useState("");
     const [artistNotes, setArtistNotes] = useState('');
     const [price, setPrice] = useState('');
     const [completedArts, setCompletedArts] = useState([]);
@@ -40,20 +40,14 @@ const OrderDetails = () => {
         loadingMessage: ''
     });
 
-    // useEffect(() => {
-    //     console.log(status)
-    // }, [status])
-
-    useEffect(() => {
-        console.log('Wip arts to delete: ', wipArtsToDelete);
-        console.log('Completed arts to delete: ', completedArtsToDelete);
-    }, [wipArtsToDelete, completedArtsToDelete]);
+    // console.log('Wip arts to delete: ', wipArtsToDelete);
+    // console.log('Completed arts to delete: ', completedArtsToDelete);
 
     const fetchOrder = async () => {
         if (!user) {
             return;
         }
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
+        const response = await fetch('http://localhost:4000/api/orders/' + id, {
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
@@ -122,9 +116,7 @@ const OrderDetails = () => {
         newOrder.append('originalUneditedOrder', origOrder);
 
         console.log('WipArtsToDelete: ', wipArtsToDelete);
-        // if (wipArtsToDelete.length) {
 
-        // }
         for (let i = 0; i < wipArtsToDelete.length; i++) {
             newOrder.append('wipArtsToDelete[]', JSON.stringify(wipArtsToDelete[i]));
         }
@@ -134,7 +126,7 @@ const OrderDetails = () => {
 
         newOrder.append('user_id', order.user_id);
 
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
+        const response = await fetch('http://localhost:4000/api/orders/' + id, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -223,7 +215,7 @@ const OrderDetails = () => {
         }
         e.preventDefault();
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
+        const response = await fetch('http://localhost:4000/api/orders/' + id, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -233,7 +225,6 @@ const OrderDetails = () => {
         if (response.ok) {
             console.log('Order deleted!');
             navigate('/orders/');
-            //fetchOrders();
         } else {
             console.log('Error :( ', response.statusText);
 
@@ -268,7 +259,6 @@ const OrderDetails = () => {
 
         // Checking the radio button with the order's status
         setStatus(order.status);
-        console.log('Status: ', JSON.stringify(order.status));
         // const statusRadios = Array.from(document.getElementsByName("statusSelection"));
         // console.log("Fetched order's status: ", order.status);
         // for (let i = 0; i < statusRadios.length; i++) {
@@ -304,19 +294,19 @@ const OrderDetails = () => {
 
     useEffect(() => {
         fetchOrder();
-    }, [fetchOrder]);
+    }, []);
 
     useEffect(() => {
         initializeStates();
-    }, [order, initializeStates]);
+    }, [order]);
 
     return (
         <div className={styles.orderDetailsContainer}>
             <div className={styles.orderDetailsContent}>
                 {/* <button className={styles.backBtn} onClick={(e) => navigate('/orders/')}>Back</button> */}
-                <div className={styles.leftSide}>
-                    <div className={styles.orderName}>
-                        <h3>Order name: </h3> <input className="transparentInput" type="text" value={orderName} onChange={(e) => setOrderName(e.target.value)} placeholder="eg. Bob Thumbnail"></input>
+                <div className={`${styles.leftSide} radius-2 mid-grey-outline-1 pad-4 border-box`}>
+                    <div className="flex-col gap-2 mary-3">
+                        <h3>Order name: </h3> <input className="transparentInput pad-3 font-size-2" type="text" value={orderName} onChange={(e) => setOrderName(e.target.value)} placeholder="eg. Bob Thumbnail"></input>
                     </div>
                     <div className={styles.id}>
                         <strong>ID: </strong> {order && order._id}
@@ -350,23 +340,22 @@ const OrderDetails = () => {
                     <div className={styles.fillouts}>
                         <h4>Form fillouts:</h4>
                         <ul>
-                        {fillouts &&
-                            fillouts.map((question) => {
-                                return (
-                                    <div className={styles.question}>
-                                                                            <li>
-
-                                        <b>{question.questionLabel}</b>
-                                        <p>{question.questionAns}</p>
-                                        </li>
-                                    </div>
-                                );
-                            })}
-                            </ul>
+                            {fillouts &&
+                                fillouts.map((question) => {
+                                    return (
+                                        <div className={styles.question} key={question.id}>
+                                            <li>
+                                                <b>{question.questionLabel}</b>
+                                                <p>{question.questionAns}</p>
+                                            </li>
+                                        </div>
+                                    );
+                                })}
+                        </ul>
                     </div>
                     <div className={styles.orderDetailsPrice}>
                         <strong>Price: </strong>
-                        <input className="transparentInput" type="number" value={price} onChange={(e) => setPrice(e.target.value)}></input>
+                        <input className="transparentInput pad-3 font-size-2" type="number" value={price} onChange={(e) => setPrice(e.target.value)}></input>
                     </div>
                     <div className={styles.status}>
                         <h4>Status:</h4>
@@ -382,7 +371,7 @@ const OrderDetails = () => {
                         <input className="chooseFilesInput" type="file" accept=".png, .jpeg, .jpg" name="wipImages" onChange={handleWIPArtChange} multiple></input>
                         <span className="customFileInput">Choose Files</span>
                     </label>
-                    
+
                     <div className={styles.uploadedWipArts}>
                         {uploadedWipArts &&
                             uploadedWipArts.map((uploadedWipArt) => {
@@ -419,9 +408,7 @@ const OrderDetails = () => {
                                 })}
                         </div>
                     </div>
-
                 </div>
-
                 <div className={styles.rightSide}>
                     <div className={styles.reqDetails}>
                         <p>
@@ -475,14 +462,14 @@ const OrderDetails = () => {
                     {state && state.successMessage && <div className="successMessage">{state.successMessage}</div>}
                     {state && state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                     <div className={styles.buttons}>
-                        <button className="blueButton saveBtn font-weight-400" onClick={handleSave}>
+                        <button className="fill-button pad-3 radius-4 font-weight-400" onClick={handleSave}>
                             Save
                         </button>
-                        <button className="blueButton deleteBtn font-weight-400" onClick={handleOpenPopup}>
-                            Delete
-                        </button>
-                        <button className="filledWhiteButton greyHoverButton font-weight-400" onClick={handleEditButton}>
+                        <button className="fill-button pad-3 radius-4  greyHoverButton font-weight-400" onClick={handleEditButton}>
                             Edit
+                        </button>
+                        <button className="fill-button pad-3 radius-4  deleteBtn font-weight-400 text-light-grey" onClick={handleOpenPopup}>
+                            Delete
                         </button>
                     </div>
                 </div>

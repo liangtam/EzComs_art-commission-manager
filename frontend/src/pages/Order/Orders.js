@@ -4,7 +4,7 @@ import { OrdersContext } from '../../context/OrdersContext';
 import styles from './Orders.module.css';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/context/useAuthContext';
 import { useOrdersContext } from '../../hooks';
 import noOrdersImg from '../../public/images/no_orders.png';
 
@@ -26,7 +26,7 @@ const Orders = () => {
         // making a call to the backend
         dispatch({ type: ACTION.LOADING });
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/orders', {
+            const response = await fetch('http://localhost:4000/api/orders', {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${user.token}`
@@ -68,7 +68,7 @@ const Orders = () => {
             return;
         }
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + orderId, {
+        const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`

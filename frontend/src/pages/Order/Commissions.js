@@ -4,7 +4,7 @@ import { useState, useEffect, useContext, useReducer } from 'react';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import { OrdersContext } from '../../context/OrdersContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/context/useAuthContext.js';
 import { useNavigate } from 'react-router-dom';
 import artIcon from '../../public/images/image_icon.png';
 import noImageIcon from '../../public/images/ezcoms_noimage_head.png';
@@ -32,7 +32,7 @@ const Commissions = () => {
     const fetchCompletedOrders = async () => {
         dispatch({type: ACTION.LOADING});
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/orders/completed', {
+            const response = await fetch('http://localhost:4000/api/orders/completed', {
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 }
@@ -64,7 +64,7 @@ const Commissions = () => {
 
     const handleDeleteOrder = async (e) => {
         // dispatch({type: ACTION.LOADING});
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + selectedID, {
+        const response = await fetch('http://localhost:4000/api/orders/' + selectedID, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`

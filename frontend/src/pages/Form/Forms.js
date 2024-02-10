@@ -4,7 +4,7 @@ import { FormsContext } from '../../context/FormsContext';
 import styles from './Forms.module.css';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/context/useAuthContext';
 
 import activeFormImg from '../../public/images/ezcoms_activeform_bg.png';
 import addIcon from '../../public/images/add_icon.png';
@@ -25,7 +25,7 @@ const Forms = () => {
         }
         dispatch({ type: ACTION.LOADING });
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/forms/', {
+            const response = await fetch('http://localhost:4000/api/forms/', {
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 }
@@ -62,7 +62,7 @@ const Forms = () => {
         }
         e.preventDefault();
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/forms/' + selectedID, {
+            const response = await fetch('http://localhost:4000/api/forms/' + selectedID, {
                 method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${user.token}`

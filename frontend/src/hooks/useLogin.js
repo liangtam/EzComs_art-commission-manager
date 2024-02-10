@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuthContext } from './useAuthContext';
+import { useAuthContext } from './context/useAuthContext';
 
 const useLogin = () => {
     const [error, setError] = useState(null);
@@ -15,7 +15,7 @@ const useLogin = () => {
         // console.log(JSON.stringify(userObj))
 
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/user/login', {
+            const response = await fetch('http://localhost:4000/api/user/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

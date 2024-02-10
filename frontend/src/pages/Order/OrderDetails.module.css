@@ -248,10 +248,7 @@
         box-sizing: border-box;
         grid-column: 2;
         grid-auto-rows: auto;
-        background-color: rgb(244, 244, 244);
 
-        margin: 0;
-        gap: 0;
         width: 1.3fr;
         overflow-y: auto;
     }

@@ -68,6 +68,10 @@ a {
     overflow-y: auto;
 }
 
+.overflow-x-auto {
+    overflow-x: auto;
+}
+
 .z-1 {
     z-index: 1;
 }
@@ -257,6 +261,11 @@ h-auto {
 .padx-3 {
     padding-right: var(--spacing-3);
     padding-left: var(--spacing-3);
+}
+
+.padx-4 {
+    padding-right: var(--spacing-4);
+    padding-left: var(--spacing-4);
 }
 
 .padt-1 {
@@ -456,6 +465,11 @@ h-auto {
 .dark-grey-outline-2 {
     border: 2px solid var(--darkgrey);
 }
+
+.mid-grey-outline-1 {
+    border: 1px solid var(--midgrey);
+
+}
 .errorMessage {
     color: rgb(255, 134, 134);
 }
@@ -468,8 +482,12 @@ h-auto {
     color: grey;
 }
 
-button:hover {
+button:hover:not(:disabled) {
     cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.5;
 }
 
 .filledWhiteButton {

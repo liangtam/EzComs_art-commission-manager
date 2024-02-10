@@ -17,7 +17,6 @@ const Storage = multer.diskStorage({
         cb(null, './images');
     },
     filename: (req, file, cb) => {
-        //console.log(file)
         // first arg: error, second: name of file. we added date to differentiate b/w files with same names
         cb(null, Date.now() + path.extname(file.originalname));
     }

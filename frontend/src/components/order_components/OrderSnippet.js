@@ -20,7 +20,7 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
     
     // const handleDeleteOrder = async (e) => {
     //     e.preventDefault();
-    //     const response = await fetch('https://ezcoms.onrender.com/api/orders/' + orderId, {
+    //     const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
     //         method: 'DELETE'
     //     })
 

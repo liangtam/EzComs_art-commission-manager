@@ -3,7 +3,7 @@ import { useContext, useEffect, useReducer, useState } from 'react';
 import styles from './ActiveForm.module.css';
 
 import ImagePreview from '../../components/ImagePreview';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/context/useAuthContext';
 import { useParams } from 'react-router-dom';
 
 import activeFormImg from '../../public/images/ezcoms_activeform_bg.png';
@@ -18,8 +18,6 @@ const ActiveForm = () => {
     const [referenceImages, setReferenceImages] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const [noActiveForm, setNoActiveForm] = useState(false);
-
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
     const [state, dispatch] = useReducer(orderMessageReducer);
@@ -30,7 +28,7 @@ const ActiveForm = () => {
     const fetchActiveForm = async () => {
         setLoading(true);
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/forms/active/' + userID, {
+            const response = await fetch('http://localhost:4000/api/forms/active/' + userID, {
                 method: 'GET'
             });
 
@@ -40,16 +38,12 @@ const ActiveForm = () => {
                 console.log('Response json: ', responseJson);
 
                 if (responseJson.length === 0) {
-                    setNoActiveForm(true);
                     return;
                 }
                 setActiveForm(responseJson[0]);
-                setNoActiveForm(false);
             } else {
-                setNoActiveForm(true);
             }
         } catch (error) {
-            setNoActiveForm(true);
             console.log('An error occurred while fetching active form: ', error);
         } finally {
             setLoading(false);
@@ -59,7 +53,7 @@ const ActiveForm = () => {
     //     if (!user) {
     //         return;
     //     }
-    //     const response = await fetch('https://ezcoms.onrender.com/api/forms/', {
+    //     const response = await fetch('http://localhost:4000/api/forms/', {
     //         headers: {
     //             'Authorization': `Bearer ${user.token}`
     //         }
@@ -167,7 +161,6 @@ const ActiveForm = () => {
         if (userDeadline === '') {
             userDeadline = '9999-12-31';
         }
-        // console.log("userdeadline: ", userDeadline, typeof userDeadline)
 
         const order = new FormData();
 
@@ -190,9 +183,9 @@ const ActiveForm = () => {
         order.append('status', 'Not Started Yet');
         order.append('artistNotes', '');
         order.append('editedStatus', false);
-        order.append('user_id', user.userID);
+        order.append('user_id', userID);
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/orders', {
+            const response = await fetch('http://localhost:4000/api/orders', {
                 method: 'POST',
                 body: order
             });
@@ -200,7 +193,7 @@ const ActiveForm = () => {
                 dispatch({ type: ACTION.SUCCESS_UPLOAD });
                 clearForm();
             } else {
-                throw new Error();
+                throw new Error(response.statusText);
             }
         } catch (err) {
             dispatch({ type: ACTION.ERROR_UPLOAD });
@@ -344,7 +337,7 @@ const ActiveForm = () => {
                             <span className="customFileInput">Choose Files</span>
                             {/* </div> */}
                         </label>
-                        <div className={styles.imagePreviews}>
+                        <div className={`${styles.imagePreviews} flex-row gap-2 overflow-x-auto`}>
                             {referenceImages &&
                                 referenceImages.map((refImgURL) => {
                                     return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
@@ -366,7 +359,7 @@ const ActiveForm = () => {
 
             {!loading && activeForm && (
                 <button
-                    disabled={state && state.loadingMessage}
+                    disabled={loading || (state && state.loadingMessage)}
                     type="submit"
                     className="fill-button bg-ezcoms-blue text-light-grey pad-3 mar-3 font-weight-700 font-size-2 radius-3"
                     onClick={handleSubmit}

@@ -1,12 +1,10 @@
 .activeFormContainer {
-    height: 93.4vh;
+    height: 89vh;
     width: 100vw;
     /* background-color: blue; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(243, 246, 248);
-
 }
 
 .activeFormContainer input {
@@ -18,7 +16,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     padding: 1rem;
     margin: 1rem;
@@ -94,8 +91,7 @@
 }
 
 .imagePreviews {
-    display: flex;
-    gap: 10px;
+    height: 120px
 }
 
 .option p {

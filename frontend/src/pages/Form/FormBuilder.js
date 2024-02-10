@@ -7,7 +7,7 @@ import { FormsContext } from '../../context/FormsContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import styles from './FormBuilder.module.css';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/context/useAuthContext';
 
 const FormBuilder = () => {
     const [formName, setName] = useState('');
@@ -125,7 +125,7 @@ const FormBuilder = () => {
         // console.log('Form: ', form);
         // first arg: where we're sending the post request to
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/forms', {
+            const response = await fetch('http://localhost:4000/api/forms', {
                 method: 'POST',
                 body: JSON.stringify(form),
                 // to specify that the content type is json
@@ -170,7 +170,7 @@ const FormBuilder = () => {
         activeForm.activeStatus = false;
         //console.log("forms[0]'s status after replaced: ", forms[0].activeStatus, activeForm.activeStatus);
 
-        const response = await fetch('https://ezcoms.onrender.com/api/forms/' + idOfCurrActiveForm, {
+        const response = await fetch('http://localhost:4000/api/forms/' + idOfCurrActiveForm, {
             method: 'PATCH',
             body: JSON.stringify(activeForm),
             headers: {
@@ -222,11 +222,12 @@ const FormBuilder = () => {
                     <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
                 </YesNoPopup>
             )}
-            <div className={`${styles.formBuilderTitle} pageTitle flex-col gap-2 mart-3`}>
-                <h1>Create an order form for your clients</h1>
-                <p>An active form will be accessible by anyone, including your clients. An inactive form is only accessible to you.</p>
-            </div>
-            <form className={`${styles.formBuilderContent} flex-col gap-2 border-box pad-4 mar-3 align-items-center`}>
+            <form className={`content-container flex-col gap-2 border-box align-items-center`}>
+            <div className="flex-col justify-content-start align-items-start w-100 gap-2">
+                    <h1 className="font-size-4 mart-4">Create an order form for your clients </h1>
+                    <p>Any active form is public and accessible by anyone to fillout.</p>
+                    <div className="w-100 bg-mid-grey h-1 mary-3"></div>
+                </div>
                 <div className={`${styles.formContent} flex-col gap-3 align-items-start w-100 marb-3`}>
                     <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
                         <p>Name of form: </p>
@@ -289,7 +290,7 @@ const FormBuilder = () => {
                 {state.errorMessage && <div className="errorMessage pad-3 radius-1 bg-light-red">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage pad-3 radius-1 bg-light-green">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-                <button className={`${styles.submitBtn} fill-button bg-ezcoms-blue pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
+                <button className={`${styles.submitBtn} fill-button bg-dark-grey pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
                     Submit
             </button>
             </form>

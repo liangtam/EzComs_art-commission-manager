@@ -5,7 +5,7 @@ import ImageComponent from '../../components/ImageComponent';
 import ImagePreview from '../../components/ImagePreview';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { useAuthContext } from '../../hooks/useAuthContext.js';
+import { useAuthContext } from '../../hooks/context/useAuthContext.js';
 
 // This is for actually editing the client's order details
 const EditOrderDetails = () => {
@@ -64,7 +64,7 @@ const EditOrderDetails = () => {
     }, [order]);
 
     const fetchOrder = async () => {
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
+        const response = await fetch('http://localhost:4000/api/orders/' + id, {
             headers: {
                 Authorization: `Bearer ${user.token}`
             }
@@ -105,7 +105,7 @@ const EditOrderDetails = () => {
             newOrder.append('refImgsToDelete[]', JSON.stringify(refImgsToDelete[i]));
         }
 
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/edit/' + id, {
+        const response = await fetch('http://localhost:4000/api/orders/edit/' + id, {
             method: 'PATCH',
             body: newOrder,
             headers: {
@@ -176,7 +176,7 @@ const EditOrderDetails = () => {
 
     const handleDeleteOrder = async (e) => {
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('https://ezcoms.onrender.com/api/orders/' + id, {
+        const response = await fetch('http://localhost:4000/api/orders/' + id, {
             method: 'DELETE'
         });
 

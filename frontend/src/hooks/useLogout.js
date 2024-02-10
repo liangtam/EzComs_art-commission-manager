@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ACTION } from '../context/AuthContext';
-import { useAuthContext } from './useAuthContext';
+import { useAuthContext } from './context/useAuthContext';
 import { FormsContext } from '../context/FormsContext';
 import { OrdersContext } from '../context/OrdersContext';
 

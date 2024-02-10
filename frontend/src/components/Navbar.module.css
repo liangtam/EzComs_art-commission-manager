@@ -93,6 +93,11 @@ nav .active {
     /* background-color: blue; */
 }
 
+.signInBtn {
+    margin-right: 8%;
+    transition: background 0.3s ease;
+}
+
 
 .navbar_links a:hover{
     /* color: white; */

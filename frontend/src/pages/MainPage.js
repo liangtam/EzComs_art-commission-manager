@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 
 import Navbar from '../components/Navbar';
-import ActiveForm from './Form/ActiveForm';
-import FormDetails from './Form/FormDetails';
-import OrderDetails from './Order/OrderDetails';
 import EditOrderDetails from './Order/EditOrderDetails';
 import Commissions from './Order/Commissions';
 import Login from './Login/Login';
 import NotFoundPage from './404/NotFoundPage';
-import {Dashboard, Orders, FormBuilder, Forms} from "./index.js";
+import {Dashboard, Orders, FormBuilder, Forms, ActiveForm, FormDetails, OrderDetails} from "./index.js";
 
 import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from '../context/FormsContext';
 import { OrdersContext } from '../context/OrdersContext';
 
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useAuthContext } from '../hooks/context/useAuthContext.js';
 import { OrdersContextProvider } from '../context/OrdersContext';
 import { useOrdersContext } from '../hooks';
 
@@ -24,46 +21,15 @@ function MainPage() {
     // the current list of questions of the CURRENT form the user is on
     const [questionFieldList, setQuestionFieldList] = useState([]);
     const { user } = useAuthContext();
+    const wrapNavbar = (component) => {
+        return (
+          <>
+            <Navbar />
+            {component}
+          </>
+        );
+      };
 
-    // const fetchAllForms = async () => {
-    //     if (!user) {
-    //         return;
-    //     }
-    //     const response = await fetch('https://ezcoms.onrender.com/api/forms/', {
-    //         headers: {
-    //             Authorization: `Bearer ${user.token}`
-    //         }
-    //     });
-
-    //     const json = await response.json();
-
-    //     if (response.ok) {
-    //         setForms(json);
-    //         console.log('Fetched all forms in main page! ', json);
-    //     }
-    // };
-
-    // const fetchAllOrders = async () => {
-    //     const response = await fetch('https://ezcoms.onrender.com/api/orders', {
-    //         headers: {
-    //             Authorization: `Bearer ${user.token}`
-    //         }
-    //     });
-
-    //     const json = await response.json();
-
-    //     if (response.ok) {
-    //         setOrders(json);
-    //         console.log('Fetched all orders in main page! ', json);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     if (user) {
-    //         fetchAllForms();
-    //         fetchAllOrders();
-    //     }
-    // }, [user]);
 
     return (
         <div className="App">
@@ -71,24 +37,25 @@ function MainPage() {
                 <FormsContext.Provider value={{ forms, setForms }}>
                     <OrdersContextProvider>
                         <QuestionFieldsContext.Provider value={{ setQuestionFieldList, questionFieldList }}>
-                            {user && <Navbar />}
                             <div className="pages">
                                 <Routes>
                                     {user && (
                                         <>
-                                            <Route exact path="/" element={<Dashboard />} />
-                                            <Route exact path="/forms" element={<Forms />} />
+                                            <Route exact path="/" element={wrapNavbar(<Dashboard />)} />
+                                            <Route exact path="/forms" element={wrapNavbar(<Forms />)} />
 
-                                            <Route exact path="/form-builder" element={<FormBuilder />} />
-                                            <Route exact path="/forms/:id" element={<FormDetails />} />
-                                            <Route exact path="/orders" element={<Orders />} />
+                                            <Route exact path="/form-builder" element={wrapNavbar(<FormBuilder />)} />
+                                            <Route exact path="/forms/:id" element={wrapNavbar(<FormDetails />)} />
+                                            <Route exact path="/orders" element={wrapNavbar(<Orders />)} />
 
-                                            <Route exact path="/orders/:id" element={<OrderDetails />} />
-                                            <Route exact path="/orders/edit/:id" element={<EditOrderDetails />} />
+                                            <Route exact path="/orders/:id" element={wrapNavbar(<OrderDetails />)} />
+                                            <Route exact path="/orders/edit/:id" element={wrapNavbar(<EditOrderDetails />)} />
+                                            <Route path="/*" element={wrapNavbar(<NotFoundPage/>)}></Route>
+
                                         </>
                                     )}
 
-                                    <Route exact path="/commissions" element={user ? <Commissions /> : <Navigate to="/login"></Navigate>} />
+                                    <Route exact path="/commissions" element={user ? wrapNavbar(<Commissions />) : <Navigate to="/login"></Navigate>} />
                                     {!user && (
                                         <>
                                             <Route exact path="/" element={<Login />} />
@@ -96,8 +63,9 @@ function MainPage() {
                                     )}
                                     <Route exact path="/login" element={<Login />} />
 
-                                    <Route exact path="/form/:userID" element={<ActiveForm />} />
-                                    <Route path="/*" element={<NotFoundPage/>}></Route>
+                                    <Route exact path="/form/:userID" element={wrapNavbar(<ActiveForm />)} />
+                                    <Route path="/*" element={wrapNavbar(<NotFoundPage/>)}></Route>
+
                                 </Routes>
                             </div>
                         </QuestionFieldsContext.Provider>

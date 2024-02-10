@@ -17,6 +17,16 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+app.use((err, req, res, next) => {
+    if (err instanceof multer.MulterError) {
+        // Handle Multer errors (e.g., file size exceeded)
+        return res.status(400).json({ error: err.message });
+    }
+    // Handle other errors
+    return res.status(500).json({ error: 'Internal Server Error' });
+});
+
+
 // middle ware. express.static(root, [options]). It lets us serve static files such as images, CSS files, etc.
 app.use('/images', express.static('images'));
 // routes

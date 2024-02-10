@@ -7,7 +7,7 @@ import { FormsContext } from '../../context/FormsContext';
 import styles from './FormBuilder.module.css';
 import MCQuestionField from '../../components/question_components/MCQuestionField';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/context/useAuthContext';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 
 const FormDetails = () => {
@@ -34,7 +34,7 @@ const FormDetails = () => {
             return;
         }
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/forms/' + id, {
+            const response = await fetch('http://localhost:4000/api/forms/' + id, {
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 }
@@ -174,7 +174,7 @@ const FormDetails = () => {
 
         let updatedForm = { formName, questions: questions, activeStatus, user_id: user._id };
 
-        const response = await fetch('https://ezcoms.onrender.com/api/forms/' + id, {
+        const response = await fetch('http://localhost:4000/api/forms/' + id, {
             method: 'PATCH',
             body: JSON.stringify(updatedForm),
             headers: {
@@ -209,7 +209,7 @@ const FormDetails = () => {
         activeForm.activeStatus = false;
         console.log("forms[0]'s status after replaced: ", forms[0].activeStatus, activeForm.activeStatus);
 
-        const response = await fetch('https://ezcoms.onrender.com/api/forms/' + idOfCurrActiveForm, {
+        const response = await fetch('http://localhost:4000/api/forms/' + idOfCurrActiveForm, {
             method: 'PATCH',
             body: JSON.stringify(activeForm),
             headers: {
@@ -246,7 +246,7 @@ const FormDetails = () => {
         }
         console.log('here, ', id);
         try {
-            const response = await fetch('https://ezcoms.onrender.com/api/forms/' + id, {
+            const response = await fetch('http://localhost:4000/api/forms/' + id, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
