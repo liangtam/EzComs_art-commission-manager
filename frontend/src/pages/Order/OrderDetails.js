@@ -6,7 +6,7 @@ import ImageComponent from '../../components/ImageComponent';
 import OriginalOrderComponent from '../../components/order_components/OriginalOrderComponent';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { useAuthContext } from '../../hooks/context/useAuthContext.js';
+import { useAuthContext } from '../../hooks/useAuthContext.js';
 
 import origOrderIcon from '../../public/images/orig_order_icon.png';
 

@@ -2,7 +2,7 @@
     box-sizing: border-box;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
-    background-color: var(--darkgrey);
+    background-color: var(--grey800);
 }
 .signInBtn {
     max-width: 100px;

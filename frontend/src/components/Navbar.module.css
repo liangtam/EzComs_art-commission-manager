@@ -7,7 +7,6 @@
     height: 11vh;
     width: 100vw;
     flex-shrink: 0;
-    background: var(--darkgrey);
     left: 0;
     position: sticky;
     top: 0;
@@ -46,7 +45,7 @@ nav .active {
 }
 
 .website_title img {
-    height: 45px;
+    height: 42px;
 }
 
 .nav_links {

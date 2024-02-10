@@ -16,7 +16,7 @@ const RegistrationForm = () => {
     };
 
     return (
-        <form className={`${styles.container} bg-dark-grey flex-col gap-3 align-items-center w-100 pad-4`}>
+        <form className={`${styles.container} bg-grey-800 flex-col gap-3 align-items-center w-100 pad-4`}>
             <div className={`${styles.intro} flex-col gap-3 align-items-center text-light-grey w-100`}>
                 <h3>
                     <b className="font-size-4" data-testid="signup-title">

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useAuthContext } from './context/useAuthContext';
+import { useAuthContext } from './useAuthContext';
 
-const useLogin = () => {
+export const useLogin = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -47,4 +47,3 @@ const useLogin = () => {
     return { login, isLoading, error };
 };
 
-export { useLogin };

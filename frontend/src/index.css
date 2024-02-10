@@ -12,9 +12,12 @@
 
     --ezComs_turquoise: #00e2c7;
     --ezComs_blue: #00adfc;
-    --lightGrey: #f6f6f6;
+    --grey50: #f6f6f6;
+    --grey100: #e6e6e6;
+    --grey200: #cfcfcf;
     --midgrey: rgb(236, 236, 236);
-    --darkgrey: rgb(26, 26, 26);
+    --grey700: #34333E;
+    --grey800: rgb(26, 26, 26);
 
     --activeGreen: rgb(0, 193, 55);
     --lightRed: rgb(255, 231, 231);
@@ -127,16 +130,20 @@ h-auto {
     background-color: transparent;
 }
 
-.bg-light-grey {
-    background-color: var(--lightGrey);
+.bg-grey-50 {
+    background-color: var(--grey50);
 }
 
 .bg-mid-grey {
     background-color: var(--midgrey);
 }
 
-.bg-dark-grey {
-    background-color: var(--darkgrey);
+.bg-grey-700 {
+    background-color: var(--grey700);
+}
+
+.bg-grey-800 {
+    background-color: var(--grey800);
 }
 
 .bg-ezcoms-blue {
@@ -191,13 +198,13 @@ h-auto {
     text-align: center;
 }
 .text-light-grey {
-    color: var(--lightGrey);
+    color: var(--grey50);
 }
 .text-mid-grey {
     color: var(--midgrey);
 }
 .text-dark-grey {
-    color: var(--darkgrey);
+    color: var(--grey800);
 }
 
 .text-ezcoms-turquoise {
@@ -451,19 +458,19 @@ h-auto {
 }
 
 .white-outline-1 {
-    border: 1px solid var(--lightGrey);
+    border: 1px solid var(--grey50);
 }
 
 .white-outline-2 {
-    border: 2px solid var(--lightGrey);
+    border: 2px solid var(--grey50);
 }
 
 .dark-grey-outline-1 {
-    border: 1px solid var(--darkgrey);
+    border: 1px solid var(--grey800);
 }
 
 .dark-grey-outline-2 {
-    border: 2px solid var(--darkgrey);
+    border: 2px solid var(--grey800);
 }
 
 .mid-grey-outline-1 {
@@ -511,7 +518,7 @@ button:disabled {
 }
 
 .greyHoverButton:hover {
-    background-color: var(--lightGrey);
+    background-color: var(--grey50);
 }
 
 .outline-button, .fill-button {
@@ -611,7 +618,7 @@ button:disabled {
     width: 40%;
     padding: 0.5rem;
     justify-content: center;
-    background-color: var(--lightGrey);
+    background-color: var(--grey50);
     text-align: center;
     cursor: pointer;
     border-radius: 4px;
@@ -629,7 +636,7 @@ button:disabled {
     padding: 0.5rem;
     border-radius: 5px;
     border: none;
-    background-color: var(--lightGrey);
+    background-color: var(--grey50);
 }
 
 .saveBtn {

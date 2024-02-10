@@ -7,7 +7,8 @@ import { FormsContext } from '../../context/FormsContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import styles from './FormBuilder.module.css';
-import { useAuthContext } from '../../hooks/context/useAuthContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import Box from '../../components/box/Box';
 
 const FormBuilder = () => {
     const [formName, setName] = useState('');
@@ -223,7 +224,7 @@ const FormBuilder = () => {
                 </YesNoPopup>
             )}
             <form className={`content-container flex-col gap-2 border-box align-items-center`}>
-            <div className="flex-col justify-content-start align-items-start w-100 gap-2">
+                <div className="flex-col justify-content-start align-items-start w-100 gap-2">
                     <h1 className="font-size-4 mart-4">Create an order form for your clients </h1>
                     <p>Any active form is public and accessible by anyone to fillout.</p>
                     <div className="w-100 bg-mid-grey h-1 mary-3"></div>
@@ -240,8 +241,16 @@ const FormBuilder = () => {
                             placeholder="Coolest form"
                         ></input>
                     </div>
+                    <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 mar-3 w-100`}>
+                        <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
+                            Set Active
+                        </button>
+                        <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} ${styles.activeStatus} outline-button font-size-2 pad-2 padx-3`}>
+                            {activeStatus ? 'Active' : 'Inactive'}
+                        </div>
+                    </div>
                     <h4 className="font-size-2">Default features included in the form:</h4>
-                    <ul className='flex-col gap-2'>
+                    <ul className="flex-col gap-2">
                         <li>Order Name </li>
                         <li>Client Name </li>
                         <li>Client Email </li>
@@ -270,29 +279,23 @@ const FormBuilder = () => {
                         })}
                     </div>
                 )}
-
-                <div className={`${styles.questionButtons} flex-row gap-3 justify-content-center text-dark-grey w-100`}>
-                    <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
-                        Add Short Answer
-                    </button>
-                    <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
-                        Add Multiple Choice
-                    </button>
-                </div>
-
-                <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 mar-3 w-100`}>
-                    <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
-                        Set Active
-                    </button>
-                    <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} ${styles.activeStatus} outline-button font-size-2 pad-2 padx-3`}>{activeStatus ? 'Active' : 'Inactive'}</div>
-                </div>
+                <Box pad={4}>
+                    <div className={`${styles.questionButtons} flex-row gap-3 justify-content-center text-dark-grey w-100`}>
+                        <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
+                            Add Short Answer
+                        </button>
+                        <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
+                            Add Multiple Choice
+                        </button>
+                    </div>
+                </Box>
 
                 {state.errorMessage && <div className="errorMessage pad-3 radius-1 bg-light-red">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage pad-3 radius-1 bg-light-green">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-                <button className={`${styles.submitBtn} fill-button bg-dark-grey pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
+                <button className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
                     Submit
-            </button>
+                </button>
             </form>
         </div>
     );

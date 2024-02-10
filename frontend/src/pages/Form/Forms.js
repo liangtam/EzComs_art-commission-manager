@@ -4,7 +4,7 @@ import { FormsContext } from '../../context/FormsContext';
 import styles from './Forms.module.css';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { useAuthContext } from '../../hooks/context/useAuthContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 import activeFormImg from '../../public/images/ezcoms_activeform_bg.png';
 import addIcon from '../../public/images/add_icon.png';
@@ -124,7 +124,7 @@ const Forms = () => {
                 <div className={`${styles.formsButtons} flex-row pad-3 border-box`}>
                     {/* <button className='outline-button bg-transparent greyHoverButton pad-3 radius-4 font-size-2'>Create new form</button> */}
                     <Link to="/form-builder">
-                        <img className={`icon-size bg-light-grey soft-white-glow radius-4`} src={addIcon}></img>
+                        <img className={`icon-size bg-grey-50 soft-white-glow radius-4`} src={addIcon}></img>
                     </Link>
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { useState, useEffect, useContext, useReducer } from 'react';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import { OrdersContext } from '../../context/OrdersContext';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
-import { useAuthContext } from '../../hooks/context/useAuthContext.js';
+import { useAuthContext } from '../../hooks/useAuthContext.js';
 import { useNavigate } from 'react-router-dom';
 import artIcon from '../../public/images/image_icon.png';
 import noImageIcon from '../../public/images/ezcoms_noimage_head.png';

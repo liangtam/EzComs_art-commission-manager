@@ -8,7 +8,7 @@ const YesNoPopup = ({children, yesFunction, closePopup}) => {
                 { children }
                 <div className={`${styles.confirmationButtons} flex-row align-items-center justify-content-center`}>
                     <button className={`${styles.yesBtn} fill-button pad-3 radius-1`}onClick={yesFunction}>Yes</button>
-                    <button className={`${styles.cancelBtn} fill-button bg-dark-grey text-light-grey pad-3 radius-1`} onClick={closePopup}>Cancel</button>
+                    <button className={`${styles.cancelBtn} fill-button bg-grey-800 text-light-grey pad-3 radius-1`} onClick={closePopup}>Cancel</button>
                 </div>
             </div>
         </div>

@@ -105,7 +105,7 @@ li svg {
         animation: scrollWave 100s linear infinite;
     }
     .landingBody {
-        background-color: var(--darkgrey);
+        background-color: var(--grey800);
     }
     .landingContainer {
         width: 95%;
@@ -122,7 +122,7 @@ li svg {
         background: none;
         width: 55%;
         padding-bottom: var(--spacing-4);
-        border-bottom: 2px solid var(--lightGrey);
+        border-bottom: 2px solid var(--grey50);
     }
 
 }

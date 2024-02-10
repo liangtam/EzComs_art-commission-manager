@@ -82,7 +82,7 @@ const Login = () => {
                                 className={`${
                                     regFormSelected
                                         ? 'outline-button bg-transparent white-outline-2 text-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4'
-                                        : 'fill-button turquoiseHoverButton text-dark-grey bg-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4'
+                                        : 'fill-button turquoiseHoverButton text-dark-grey bg-grey-50 font-weight-700 font-size-2 pady-2 padx-3 radius-4'
                                 }`}
                                 id="newUserBtn"
                                 onClick={(e) => setRegFormSelected(true)}
@@ -94,7 +94,7 @@ const Login = () => {
                                 className={
                                     !regFormSelected
                                         ? 'outline-button bg-transparent white-outline-2 text-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4'
-                                        : 'fill-button turquoiseHoverButton text-dark-grey bg-light-grey font-weight-700 font-size-2 pady-2 padx-3 radius-4'
+                                        : 'fill-button turquoiseHoverButton text-dark-grey bg-grey-50 font-weight-700 font-size-2 pady-2 padx-3 radius-4'
                                 }
                                 id="oldUserBtn"
                                 onClick={(e) => setRegFormSelected(false)}

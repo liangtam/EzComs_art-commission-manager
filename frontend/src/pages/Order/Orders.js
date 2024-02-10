@@ -4,7 +4,7 @@ import { OrdersContext } from '../../context/OrdersContext';
 import styles from './Orders.module.css';
 import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
-import { useAuthContext } from '../../hooks/context/useAuthContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import { useOrdersContext } from '../../hooks';
 import noOrdersImg from '../../public/images/no_orders.png';
 

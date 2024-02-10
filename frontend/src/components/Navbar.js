@@ -1,9 +1,9 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useLogout } from '../hooks/useLogout';
+import { useLogout } from '../hooks';
 import styles from './Navbar.module.css';
 import image from '../public/images/EzComs_Logo_White.png';
 import menuImage from '../public/images/navbar_menu.png';
-import { useAuthContext } from '../hooks/context/useAuthContext';
+import { useAuthContext } from '../hooks/useAuthContext';
 import { useState } from 'react';
 
 const Navbar = () => {
@@ -20,7 +20,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`${styles.nav_container} flex-row`}>
+        <nav className={`${styles.nav_container} flex-row bg-grey-700`}>
             <div className={styles.menuContent}>
                 <div className={styles.website_title}>
                     <Link to={user ? '/' : '/login'} onClick={(e) => setShowMenu(false)}>
@@ -67,7 +67,7 @@ const Navbar = () => {
                 </div>
             )}
             {/* {!user && (
-                <Link className={`${styles.signInBtn} font-size-2 filled-button bg-light-grey pady-2 padx-3 radius-3 turquoiseHoverButton `} to="/login">
+                <Link className={`${styles.signInBtn} font-size-2 filled-button bg-grey-50 pady-2 padx-3 radius-3 turquoiseHoverButton `} to="/login">
                     <h4>Sign In</h4>
                 </Link>
             )} */}

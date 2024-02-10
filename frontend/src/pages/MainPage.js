@@ -12,7 +12,7 @@ import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
 import { FormsContext } from '../context/FormsContext';
 import { OrdersContext } from '../context/OrdersContext';
 
-import { useAuthContext } from '../hooks/context/useAuthContext.js';
+import { useAuthContext } from '../hooks/useAuthContext.js';
 import { OrdersContextProvider } from '../context/OrdersContext';
 import { useOrdersContext } from '../hooks';
 
