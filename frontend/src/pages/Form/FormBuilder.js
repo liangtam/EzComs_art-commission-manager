@@ -228,6 +228,9 @@ const FormBuilder = () => {
                     <p>Any active form is public and accessible by anyone to fillout.</p>
                     <div className="w-100 bg-mid-grey h-1 mary-3"></div>
                 </div>
+                {state.errorMessage && <div className="errorMessage pad-3 marb-2 radius-1 bg-light-red w-100">{state.errorMessage}</div>}
+                {state.successMessage && <div className="successMessage pad-3 marb-2  radius-1 bg-light-green w-100">{state.successMessage}</div>}
+                {state.loadingMessage && <div className="loadingMessage pad-3 marb-2 ">{state.loadingMessage}</div>}
 
                 <div className={`${styles.nameAndToggle} w-100`}>
                     <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
@@ -303,10 +306,6 @@ const FormBuilder = () => {
                     </Box>
                     
                 </div>
-
-                {state.errorMessage && <div className="errorMessage pad-3 radius-1 bg-light-red">{state.errorMessage}</div>}
-                {state.successMessage && <div className="successMessage pad-3 radius-1 bg-light-green">{state.successMessage}</div>}
-                {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                 <button className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
                     Submit
                 </button>
