@@ -1,11 +1,11 @@
 import styles from './Box.module.css';
 
-const Box = ({classNames, children, pad}) => {
+const Box = ({ classNames, children, pad = 4, width, borderColor}) => {
     return (
-        <div className={`${styles.box} radius-2 pad-${pad} ${classNames}`}>
+        <div className={`${styles.box} radius-2 pad-${pad} ${classNames}`} styles={{ width: `${width}`, borderColor: `${borderColor}` }}>
             {children}
         </div>
-    )
-}
+    );
+};
 
 export default Box;

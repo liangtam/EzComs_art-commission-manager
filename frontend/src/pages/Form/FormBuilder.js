@@ -229,34 +229,29 @@ const FormBuilder = () => {
                     <p>Any active form is public and accessible by anyone to fillout.</p>
                     <div className="w-100 bg-mid-grey h-1 mary-3"></div>
                 </div>
-                <div className={`${styles.formContent} flex-col gap-3 align-items-start w-100 marb-3`}>
-                    <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
-                        <p>Name of form: </p>
 
-                        <input
-                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
-                            id="formName_field"
-                            type="text"
-                            onChange={handleNameFieldChange}
-                            placeholder="Coolest form"
-                        ></input>
-                    </div>
-                    <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 mar-3 w-100`}>
-                        <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
-                            Set Active
-                        </button>
-                        <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} ${styles.activeStatus} outline-button font-size-2 pad-2 padx-3`}>
-                            {activeStatus ? 'Active' : 'Inactive'}
+                <div className={`${styles.formContent} flex-col gap-3 align-items-start w-100 marb-3`}>
+                    <div className={`${styles.nameAndToggle} w-100`}>
+                        <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
+                            <p>Name of form: </p>
+
+                            <input
+                                className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                                id="formName_field"
+                                type="text"
+                                onChange={handleNameFieldChange}
+                                placeholder="Coolest form"
+                            ></input>
+                        </div>
+                        <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 w-100`}>
+                            <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
+                                Set Active
+                            </button>
+                            <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} outline-button font-size-2 pad-2 padx-3`}>
+                                {activeStatus ? 'Active' : 'Inactive'}
+                            </div>
                         </div>
                     </div>
-                    <h4 className="font-size-2">Default features included in the form:</h4>
-                    <ul className="flex-col gap-2">
-                        <li>Order Name </li>
-                        <li>Client Name </li>
-                        <li>Client Email </li>
-                        <li>Order Details </li>
-                        <li>Deadline (optional) </li>
-                    </ul>
                     {/* <h2>------------------------------------------------------------</h2> */}
                 </div>
 
@@ -279,16 +274,30 @@ const FormBuilder = () => {
                         })}
                     </div>
                 )}
-                <Box pad={4}>
-                    <div className={`${styles.questionButtons} flex-row gap-3 justify-content-center text-dark-grey w-100`}>
-                        <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
-                            Add Short Answer
-                        </button>
-                        <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
-                            Add Multiple Choice
-                        </button>
-                    </div>
-                </Box>
+                <div className="flex-col gap-2">
+                    <Box>
+                        <div className="flex-col gap-2">
+                            <h4 className="font-size-2">Default features included in the form:</h4>
+                            <ul className="flex-col gap-2">
+                                <li>Order Name </li>
+                                <li>Client Name </li>
+                                <li>Client Email </li>
+                                <li>Order Details </li>
+                                <li>Deadline (optional) </li>
+                            </ul>
+                        </div>
+                    </Box>
+                    <Box>
+                        <div className={`${styles.questionButtons} gap-3 justify-content-center text-dark-grey w-100`}>
+                            <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
+                                Add Short Answer
+                            </button>
+                            <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
+                                Add Multiple Choice
+                            </button>
+                        </div>
+                    </Box>
+                </div>
 
                 {state.errorMessage && <div className="errorMessage pad-3 radius-1 bg-light-red">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage pad-3 radius-1 bg-light-green">{state.successMessage}</div>}
