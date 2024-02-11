@@ -230,73 +230,73 @@ const FormBuilder = () => {
                     <div className="w-100 bg-mid-grey h-1 mary-3"></div>
                 </div>
 
-                <div className={`${styles.formContent} flex-col gap-3 align-items-start w-100 marb-3`}>
-                    <div className={`${styles.nameAndToggle} w-100`}>
-                        <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
-                            <p>Name of form: </p>
+                <div className={`${styles.nameAndToggle} w-100`}>
+                    <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
+                        <p>Name of form: </p>
 
-                            <input
-                                className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
-                                id="formName_field"
-                                type="text"
-                                onChange={handleNameFieldChange}
-                                placeholder="Coolest form"
-                            ></input>
-                        </div>
-                        <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 w-100`}>
-                            <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
-                                Set Active
-                            </button>
-                            <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} outline-button font-size-2 pad-2 padx-3`}>
-                                {activeStatus ? 'Active' : 'Inactive'}
-                            </div>
-                        </div>
+                        <input
+                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                            id="formName_field"
+                            type="text"
+                            onChange={handleNameFieldChange}
+                            placeholder="Coolest form"
+                        ></input>
                     </div>
-                    {/* <h2>------------------------------------------------------------</h2> */}
+                    <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 w-100`}>
+                        <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
+                            Set Active
+                        </button>
+                        <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} outline-button font-size-2 pad-2 padx-3`}>{activeStatus ? 'Active' : 'Inactive'}</div>
+                    </div>
                 </div>
-
-                {questionFieldList.length >= 1 && (
-                    <div className="w-100 flex-col">
-                        {questionFieldList.map((questionField) => {
-                            if (questionField.type === 'shortAns') {
-                                return (
-                                    <div className={`${styles.question} w-100`}>
-                                        <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />
-                                    </div>
-                                );
-                            } else if (questionField.type === 'mc') {
-                                return (
-                                    <div className={`${styles.question} w-100`}>
-                                        <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />
-                                    </div>
-                                );
-                            }
-                        })}
+                {/* <h2>------------------------------------------------------------</h2> */}
+                <div className={`${styles.formContent} mary-3 w-100 gap-4`}>
+                    <div className="flex-col gap-2">
+                        <Box>
+                            <div className="flex-col gap-2">
+                                <h4 className="font-size-2">Default features included in the form:</h4>
+                                <ul className="flex-col gap-2">
+                                    <li>Order Name </li>
+                                    <li>Client Name </li>
+                                    <li>Client Email </li>
+                                    <li>Order Details </li>
+                                    <li>Deadline (optional) </li>
+                                </ul>
+                            </div>
+                        </Box>
+                        <Box>
+                            <div className={`${styles.questionButtons} gap-3 justify-content-center text-dark-grey w-100`}>
+                                <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
+                                    Add Short Answer
+                                </button>
+                                <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
+                                    Add Multiple Choice
+                                </button>
+                            </div>
+                        </Box>
                     </div>
-                )}
-                <div className="flex-col gap-2">
-                    <Box>
-                        <div className="flex-col gap-2">
-                            <h4 className="font-size-2">Default features included in the form:</h4>
-                            <ul className="flex-col gap-2">
-                                <li>Order Name </li>
-                                <li>Client Name </li>
-                                <li>Client Email </li>
-                                <li>Order Details </li>
-                                <li>Deadline (optional) </li>
-                            </ul>
+                    <Box width='100%' classNames='marl-4'>
+                    {questionFieldList.length >= 1 && (
+                        <div className="w-100 flex-col">
+                            {questionFieldList.map((questionField) => {
+                                if (questionField.type === 'shortAns') {
+                                    return (
+                                        <div className={`${styles.question} w-100`}>
+                                            <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />
+                                        </div>
+                                    );
+                                } else if (questionField.type === 'mc') {
+                                    return (
+                                        <div className={`${styles.question} w-100`}>
+                                            <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />
+                                        </div>
+                                    );
+                                }
+                            })}
                         </div>
+                    )}
                     </Box>
-                    <Box>
-                        <div className={`${styles.questionButtons} gap-3 justify-content-center text-dark-grey w-100`}>
-                            <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
-                                Add Short Answer
-                            </button>
-                            <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
-                                Add Multiple Choice
-                            </button>
-                        </div>
-                    </Box>
+                    
                 </div>
 
                 {state.errorMessage && <div className="errorMessage pad-3 radius-1 bg-light-red">{state.errorMessage}</div>}

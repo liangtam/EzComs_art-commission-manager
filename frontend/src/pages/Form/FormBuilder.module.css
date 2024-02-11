@@ -20,13 +20,6 @@
     list-style-position: inside;
 }
 
-.formContent h5 {
-    font-size: 0.9em;
-    padding: 1rem 0;
-    text-align: center;
-    /* background-color: blue; */
-}
-
 .active {
     color: var(--activeGreen);
 }
@@ -57,6 +50,10 @@
     
     .formBuilderContainer {
         height: 89vh;
+    }
+
+    .formContent {
+        display: flex;
     }
 
     .nameAndToggle {
