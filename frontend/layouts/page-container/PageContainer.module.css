@@ -1,0 +1,14 @@
+.pageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 90vh;
+    width: 100vw;
+}
+
+@media screen and (min-width: 768px) {
+    .pageContainer {
+        height: 89vh;
+    }
+}

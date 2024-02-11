@@ -253,7 +253,7 @@ const FormBuilder = () => {
                 </div>
                 {/* <h2>------------------------------------------------------------</h2> */}
                 <div className={`${styles.formContent} mary-3 w-100 gap-4`}>
-                    <div className="flex-col gap-2 marb-3">
+                    <div className={`${styles.sidePanel} flex-col gap-2 marb-3`}>
                         <Box width='100%' minWidth='250px' classNames="border-box">
                             <div className="flex-col gap-2">
                                 <h4 className="font-size-2 w-100">Default features:</h4>

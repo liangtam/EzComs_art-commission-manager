@@ -81,6 +81,10 @@
         border-radius: 5px;
     }
 
+    .sidePanel {
+        flex-direction: column-reverse;
+    }
+
 }
 @media screen and (min-width: 1024px) {
 
