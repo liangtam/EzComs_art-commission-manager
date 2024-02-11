@@ -20,7 +20,7 @@ const RegistrationForm = () => {
             <div className={`${styles.intro} flex-col gap-3 align-items-center text-light-grey w-100`}>
                 <h3>
                     <b className="font-size-4" data-testid="signup-title">
-                        <span className="text-ezcoms-turquoise">Sign Up </span>Now
+                        <span className="text-turquoise-500">Sign Up </span>Now
                     </b>
                 </h3>
                 <p className="font-size-2" data-testid="signup-intro">Guess what. It's just as Ez.</p>
@@ -37,7 +37,7 @@ const RegistrationForm = () => {
                 {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
             {error && <div className={`errorMessage ${styles.smallErrorMessage}`}>{error}</div>}
-            <button className={` ${styles.signInBtn} fill-button font-size-2 bg-ezcoms-blue pady-2 padx-3 radius-2 font-weight-700 text-light-grey w-100`} disabled={isLoading} onClick={handleSignUp}>
+            <button className={` ${styles.signInBtn} fill-button font-size-2 bg-blue-500 pady-2 padx-3 radius-2 font-weight-700 text-light-grey w-100`} disabled={isLoading} onClick={handleSignUp}>
                 Sign Up
             </button>
         </form>

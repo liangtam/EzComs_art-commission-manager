@@ -44,7 +44,7 @@ const LoginForm = () => {
                 {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
             {error && <div className="errorMessage">{error}</div>}
-            <button data-testid="login-btn" className={` ${styles.signInBtn} fill-button font-size-2 bg-ezcoms-blue pady-2 padx-3 radius-2 font-weight-700 text-light-grey w-100`} disabled={isLoading} onClick={handleLogin}>
+            <button data-testid="login-btn" className={` ${styles.signInBtn} fill-button font-size-2 bg-blue-500 pady-2 padx-3 radius-2 font-weight-700 text-light-grey w-100`} disabled={isLoading} onClick={handleLogin}>
                 Login
             </button>
         </form>

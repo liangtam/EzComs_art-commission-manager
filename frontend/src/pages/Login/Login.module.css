@@ -39,7 +39,7 @@ li svg {
 .buttons {
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
-    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    background: linear-gradient(var(--blue500), var(--turquoise500));
 }
 
 .form {
@@ -62,7 +62,7 @@ li svg {
     top: -50px;
     left: -50px;
     border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
-    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    background: linear-gradient(var(--blue500), var(--turquoise500));
     width: 200px;
     height: 200px;
     transition: border-radius 3s ease;
@@ -74,7 +74,7 @@ li svg {
     right: calc(-0.08*100vw + 100vw);
     bottom: 10%;
     border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
-    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    background: linear-gradient(var(--blue500), var(--turquoise500));
     width: 80px;
     height: 80px;
     animation: blob1Animation 6s infinite alternate, fadeIn 3s ease, spinning 25s infinite linear, floating 4s infinite ease-in-out alternate;
@@ -85,7 +85,7 @@ li svg {
     left: calc(-200px + 100vw);
     bottom: -200px;
     border-radius: 52% 48% 50% 50% / 45% 47% 53% 55%;
-    background: linear-gradient(var(--ezComs_blue), var(--ezComs_turquoise));
+    background: linear-gradient(var(--blue500), var(--turquoise500));
     width: calc(0.2 * 100vw);
     height: calc(0.2 * 100vw);
     animation: blob1Animation 10s infinite alternate, fadeIn 3s ease, spinning 35s infinite linear, floating 10s infinite ease-in-out alternate;

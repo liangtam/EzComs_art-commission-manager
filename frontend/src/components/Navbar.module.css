@@ -68,8 +68,8 @@ nav .active {
 }
 
 .nav_links a:hover{
-    color: var(--ezComs_turquoise);
-    /* border-bottom: 2px solid var(--ezComs_turquoise); */
+    color: var(--turquoise500);
+    /* border-bottom: 2px solid var(--turquoise500); */
 
 }
 

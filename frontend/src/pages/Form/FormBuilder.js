@@ -74,7 +74,6 @@ const FormBuilder = () => {
     */
     const handleSaveFormClick = (e) => {
         if (!user) {
-            // console.log('Hoi');
             return;
         }
         e.preventDefault();
@@ -213,11 +212,11 @@ const FormBuilder = () => {
         <div className={styles.formBuilderContainer}>
             {openPopup && (
                 <YesNoPopup
-                    yesFunction={(e) => {
+                    yesFunction={() => {
                         replaceActiveForm();
                         saveForm();
                     }}
-                    closePopup={(e) => setOpenPopup(false)}
+                    closePopup={() => setOpenPopup(false)}
                 >
                     <h3>Another Form Is Currently Active</h3>
                     <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
@@ -251,11 +250,11 @@ const FormBuilder = () => {
                 </div>
                 {/* <h2>------------------------------------------------------------</h2> */}
                 <div className={`${styles.formContent} mary-3 w-100 gap-4`}>
-                    <div className="flex-col gap-2">
-                        <Box>
+                    <div className="flex-col gap-2 marb-3">
+                        <Box width='100%' minWidth='250px' classNames="border-box">
                             <div className="flex-col gap-2">
-                                <h4 className="font-size-2">Default features included in the form:</h4>
-                                <ul className="flex-col gap-2">
+                                <h4 className="font-size-2 w-100">Default features:</h4>
+                                <ul className={`${styles.defaultFeats} flex-col gap-2`}>
                                     <li>Order Name </li>
                                     <li>Client Name </li>
                                     <li>Client Email </li>
@@ -264,7 +263,8 @@ const FormBuilder = () => {
                                 </ul>
                             </div>
                         </Box>
-                        <Box>
+                        <Box width='100%' minWidth='250px' classNames="border-box">
+                            <h4 className='marb-3'>Customize</h4>
                             <div className={`${styles.questionButtons} gap-3 justify-content-center text-dark-grey w-100`}>
                                 <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
                                     Add Short Answer
@@ -275,8 +275,8 @@ const FormBuilder = () => {
                             </div>
                         </Box>
                     </div>
-                    <Box width='100%' classNames='marl-4'>
-                    {questionFieldList.length >= 1 && (
+                    <Box width='100%' classNames='marl-4 border-box'>
+                    {questionFieldList.length >= 1 ?  (
                         <div className="w-100 flex-col">
                             {questionFieldList.map((questionField) => {
                                 if (questionField.type === 'shortAns') {
@@ -293,6 +293,11 @@ const FormBuilder = () => {
                                     );
                                 }
                             })}
+                        </div>
+                    ) : (
+                        <div className='flex-col gap-2 w-100 align-items-center text-grey-300'>
+                            <h4>This form has no questions.</h4>
+                            <p>Add some questions from the customize panel.</p>
                         </div>
                     )}
                     </Box>

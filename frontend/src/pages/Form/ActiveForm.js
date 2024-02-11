@@ -361,7 +361,7 @@ const ActiveForm = () => {
                 <button
                     disabled={loading || (state && state.loadingMessage)}
                     type="submit"
-                    className="fill-button bg-ezcoms-blue text-light-grey pad-3 mar-3 font-weight-700 font-size-2 radius-3"
+                    className="fill-button bg-blue-500 text-light-grey pad-3 mar-3 font-weight-700 font-size-2 radius-3"
                     onClick={handleSubmit}
                 >
                     Submit Order

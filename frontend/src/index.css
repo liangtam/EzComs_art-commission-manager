@@ -10,11 +10,16 @@
     --bg-color: #f5f5f5;
     --roboto: 'Roboto', sans-serif;
 
-    --ezComs_turquoise: #00e2c7;
-    --ezComs_blue: #00adfc;
+    --turquoise500: #00e2c7;
+    --blue200: #addff7;
+    --blue300: #86d3f7;
+    --blue400: #4bc1f8;
+
+    --blue500: #00adfc;
     --grey50: #f6f6f6;
     --grey100: #e6e6e6;
     --grey200: #cfcfcf;
+    --grey300: #b4b4b4;
     --midgrey: rgb(236, 236, 236);
     --grey700: #34333E;
     --grey800: rgb(26, 26, 26);
@@ -54,6 +59,10 @@
 
 a {
     text-decoration: none;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
 }
 
 .content-container {
@@ -137,7 +146,18 @@ h-auto {
 .bg-mid-grey {
     background-color: var(--midgrey);
 }
-
+.bg-grey-50 {
+    background-color: var(--grey50);
+}
+.bg-grey-100 {
+    background-color: var(--grey100);
+}
+.bg-grey-200 {
+    background-color: var(--grey200);
+}
+.bg-grey-300 {
+    background-color: var(--grey300);
+}
 .bg-grey-700 {
     background-color: var(--grey700);
 }
@@ -145,13 +165,21 @@ h-auto {
 .bg-grey-800 {
     background-color: var(--grey800);
 }
-
-.bg-ezcoms-blue {
-    background-color: var(--ezComs_blue);
+.bg-blue-200 {
+    background-color: var(--blue200);
+}
+.bg-blue-300 {
+    background-color: var(--blue300);
+}
+.bg-blue-400 {
+    background-color: var(--blue400);
+}
+.bg-blue-500 {
+    background-color: var(--blue500);
 }
 
-.bg-ezcoms-turquoise {
-    background-color: var(--ezComs_turquoise);
+.bg-turquoise-500 {
+    background-color: var(--turquoise500);
 }
 
 .bg-light-red {
@@ -203,16 +231,19 @@ h-auto {
 .text-mid-grey {
     color: var(--midgrey);
 }
+.text-grey-300 {
+    color: var(--grey300)
+}
 .text-dark-grey {
     color: var(--grey800);
 }
 
-.text-ezcoms-turquoise {
-    color: var(--ezComs_turquoise);
+.text-turquoise-500 {
+    color: var(--turquoise500);
 }
 
-.text-ezcoms-blue {
-    color: var(--ezComs_blue);
+.text-blue-500 {
+    color: var(--blue500);
 }
 
 .pad-1 {
@@ -514,7 +545,7 @@ button:disabled {
 
 .turquoiseHoverButton:hover {
     color: white;
-    background-color: var(--ezComs_turquoise);
+    background-color: var(--turquoise500);
 }
 
 .greyHoverButton:hover {
@@ -537,7 +568,7 @@ button:disabled {
 .blueButton {
     color: white;
     font-weight: 550;
-    background-color: var(--ezComs_blue);
+    background-color: var(--blue500);
     border: none;
     font-size: 16px;
     margin: 1rem;
@@ -576,12 +607,12 @@ button:disabled {
 }
 
 .blueTransparentInput:focus {
-    border-bottom: 2px solid var(--ezComs_blue);
+    border-bottom: 2px solid var(--blue500);
     background-color: rgba(187, 210, 255, 0.2);
 }
 
 .turquoiseTransparentInput:focus {
-    border-bottom: 2px solid var(--ezComs_turquoise);
+    border-bottom: 2px solid var(--turquoise500);
     background-color: rgba(187, 243, 255, 0.2);
 }
 
@@ -640,7 +671,7 @@ button:disabled {
 }
 
 .saveBtn {
-    background-color: var(--ezComs_turquoise);
+    background-color: var(--turquoise500);
 }
 
 .saveBtn:hover {
@@ -710,7 +741,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--ezComs_blue); /* color of the thumb on hover */
+    background-color: var(--blue500); /* color of the thumb on hover */
 }
 
 @media screen and (min-width: 768px) {
