@@ -191,7 +191,7 @@ const ActiveForm = () => {
             });
             if (response.ok) {
                 dispatch({ type: ACTION.SUCCESS_UPLOAD });
-                clearForm();
+                // clearForm();
             } else {
                 throw new Error(response.statusText);
             }

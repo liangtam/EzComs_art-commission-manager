@@ -14,8 +14,11 @@ const redirectToOrders = (req, res) => {
 
 // get orders
 const getOrders = async (req, res) => {
+    const offset = parseInt(req.query.offset, 10) || 0;
+    const limit = parseInt(req.query.limit, 10) || 20;
+
     const user_id = req.user._id;
-    const orders = await Order.find({user_id: user_id}).sort({deadline: 1});
+    const orders = await Order.find({user_id: user_id}).sort({deadline: 1}).skip(offset * limit).limit(limit);
     console.log("getOrders: ", orders);
 
     res.status(200).json(orders);
