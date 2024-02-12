@@ -14,9 +14,11 @@ const Orders = () => {
     const [selectedOrderId, setSelectedOrderId] = useState(null);
     const [state, dispatch] = useReducer(orderMessageReducer, {});
     const [initLoading, setInitLoading] = useState(true);
+    const [offset, setOffset] = useState(0);
 
     const { user } = useAuthContext();
     console.log('Orders in orders page: ', orders);
+    console.log("Offset: ", offset)
 
     const fetchOrders = async () => {
         if (!user) {
@@ -68,7 +70,7 @@ const Orders = () => {
             return;
         }
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
+        const response = await fetch(`http://localhost:4000/api/orders/` + orderId, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -93,13 +95,24 @@ const Orders = () => {
         let orderListCopy = orders.filter((order) => order._id !== orderId);
         setOrders(orderListCopy);
     };
+    const handleScroll = () => {
+        if (Math.abs(document.documentElement.scrollHeight - document.documentElement.scrollTop - document.documentElement.clientHeight) < 1) {
+            setOffset((prevOffset) => prevOffset + 1);
+        }
+    };
 
     // the empty array is dependency array. when it's empty, it means this only fires once
-
     useEffect(() => {
         fetchOrders();
         // console.log('fetched orders');
     }, []);
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, [])
 
     return (
         <div className={`${styles.ordersContainer}`}>
@@ -116,7 +129,7 @@ const Orders = () => {
             {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
             {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
             {openPopup && (
-                <YesNoPopup closePopup={closePopup} yesFunction={(e, orderId) => handleDeleteOrder(e, selectedOrderId)}>
+                <YesNoPopup closePopup={closePopup} yesFunction={(e) => handleDeleteOrder(e, selectedOrderId)}>
                     <h3>Are you sure?</h3>
                     <p>Are you sure you want to delete this order? This action cannot be undone.</p>
                     {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
