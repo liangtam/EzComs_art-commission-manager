@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './LoginReg.module.css';
-import { useSignup } from '../hooks/useSignup';
+import { useSignup } from '../../../hooks/useSignup';
 
 const RegistrationForm = () => {
     const [email, setEmail] = useState('');

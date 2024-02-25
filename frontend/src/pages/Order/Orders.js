@@ -18,28 +18,31 @@ const Orders = () => {
 
     const { user } = useAuthContext();
     console.log('Orders in orders page: ', orders);
-    console.log("Offset: ", offset)
+    console.log('Offset: ', offset);
 
     const fetchOrders = async () => {
         if (!user) {
             return;
         }
 
+        const currentScrollPos = window.scrollY;
+
         // making a call to the backend
         dispatch({ type: ACTION.LOADING });
         try {
-            const response = await fetch('http://localhost:4000/api/orders', {
+            const response = await fetch(`http://localhost:4000/api/orders?offset=${offset}`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 }
             });
 
-            // to parse the json from the above response into smt we can work w/
-            const json = await response.json();
-
             if (response.ok) {
+                // to parse the json from the above response into smt we can work w/
+                const json = await response.json();
+                console.log("Json: ", json)
                 setOrders(json);
+                window.scrollTo(0, currentScrollPos);
                 // console.log('Fetched all forms in orders page! ', json);
                 dispatch({ type: ACTION.RESET });
             } else {
@@ -70,7 +73,7 @@ const Orders = () => {
             return;
         }
         dispatch({ type: ACTION.LOADING });
-        const response = await fetch(`http://localhost:4000/api/orders/` + orderId, {
+        const response = await fetch('http://localhost:4000/api/orders/' + orderId, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${user.token}`
@@ -105,14 +108,14 @@ const Orders = () => {
     useEffect(() => {
         fetchOrders();
         // console.log('fetched orders');
-    }, []);
+    }, [offset]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
-        }
-    }, [])
+        };
+    }, []);
 
     return (
         <div className={`${styles.ordersContainer}`}>

@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import Navbar from '../components/Navbar';
-import EditOrderDetails from './Order/EditOrderDetails';
-import Commissions from './Order/Commissions';
-import Login from './Login/Login';
-import NotFoundPage from './404/NotFoundPage';
-import {Dashboard, Orders, FormBuilder, Forms, ActiveForm, FormDetails, OrderDetails} from "./index.js";
+import {Navbar} from '../components';
+import {Dashboard, Orders, FormBuilder, Forms, ActiveForm, FormDetails, OrderDetails, NotFoundPage, Login, Commissions, EditOrderDetails} from "./index.js";
 
-import { QuestionFieldsContext } from '../context/QuestionFieldsContext';
-import { FormsContext } from '../context/FormsContext';
-import { OrdersContext } from '../context/OrdersContext';
+import { QuestionFieldsContext, FormsContext, OrdersContextProvider} from '../context';
 
-import { useAuthContext } from '../hooks/useAuthContext.js';
-import { OrdersContextProvider } from '../context/OrdersContext';
-import { useOrdersContext } from '../hooks';
+import { useAuthContext } from '../hooks';
 
 function MainPage() {
     const [forms, setForms] = useState([]);

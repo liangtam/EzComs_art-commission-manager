@@ -1,10 +1,10 @@
 // only artist account can see this
-import ShortAnswerQField from '../../components/question_components/ShortAnsQ';
-import MCQuestionField from '../../components/question_components/MCQuestionField';
+import ShortAnswerQField from '../../components/questions/short-ans-question/ShortAnsQ';
+import MCQuestionField from '../../components/questions/mc-question/MCQuestionField';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
 import { FormsContext } from '../../context/FormsContext';
-import YesNoPopup from '../../components/form_components/YesNoPopup';
+import YesNoPopup from '../../components/yes-no-popup/YesNoPopup';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import styles from './FormBuilder.module.css';
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -12,7 +12,7 @@ import Box from '../../components/box/Box';
 
 const FormBuilder = () => {
     const [formName, setName] = useState('');
-    const { forms, setForms } = useContext(FormsContext);
+    const { forms } = useContext(FormsContext);
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
     //const [questionFieldList, setQuestionFieldList] = useState([]);
     const [activeStatus, setActiveStatus] = useState(false);
@@ -209,7 +209,7 @@ const FormBuilder = () => {
     }, []);
 
     return (
-        <div className={styles.formBuilderContainer}>
+        <PageContainer>
             {openPopup && (
                 <YesNoPopup
                     yesFunction={() => {
@@ -310,7 +310,7 @@ const FormBuilder = () => {
                     Submit
                 </button>
             </form>
-        </div>
+            </PageContainer>
     );
 };
 

@@ -1,20 +1,21 @@
 import { useState, useEffect, useContext, useReducer } from 'react';
-import ShortAnswerQField from '../../components/question_components/ShortAnsQ';
+import ShortAnswerQField from '../../components/questions/short-ans-question/ShortAnsQ';
 import { useNavigate, useParams } from 'react-router-dom';
 import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
 import { FormsContext } from '../../context/FormsContext';
 
 import styles from './FormBuilder.module.css';
-import MCQuestionField from '../../components/question_components/MCQuestionField';
-import YesNoPopup from '../../components/form_components/YesNoPopup';
+import MCQuestionField from '../../components/questions/mc-question/MCQuestionField';
+import YesNoPopup from '../../components/yes-no-popup/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
+import Box from '../../components/box/Box';
 
 const FormDetails = () => {
     const { id } = useParams();
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
-    const { forms, setForms } = useContext(FormsContext);
+    const { forms } = useContext(FormsContext);
 
     const navigate = useNavigate();
 
@@ -71,7 +72,7 @@ const FormDetails = () => {
         setFormName(e.target.value);
     };
 
-    const toggleActiveStatus = (e) => {
+    const toggleActive = (e) => {
         e.preventDefault();
         setActiveStatus(!activeStatus);
     };
@@ -273,10 +274,11 @@ const FormDetails = () => {
 
     return (
         <div className={styles.formBuilderContainer}>
-            <div className={`${styles.formBuilderTitle} pageTitle flex-col gap-2 mart-3`}>
-                <h1>Edit Form</h1>
+
+            <form className={`content-container flex-col gap-2 border-box align-items-center`}>
+            <div className="flex-col justify-content-start align-items-start w-100 gap-2">
+                <h1 className="font-size-4 mart-4">Edit Form</h1>
             </div>
-            <form className={`${styles.formBuilderContent} flex-col gap-2 border-box pad-4 mar-3 align-items-center`}>
                 {activeFormReplacementOpenPopup && (
                     <YesNoPopup
                         yesFunction={(e) => {
@@ -296,52 +298,78 @@ const FormDetails = () => {
                     </YesNoPopup>
                 )}
 
-                <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100 marb-3`}>
-                    <h4>
+                <div className={`${styles.nameAndToggle} w-100`}>
+                    <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
                         <p>Name of form: </p>
+
                         <input
                             className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                            id="formName_field"
                             type="text"
                             onChange={handleNameChange}
-                            value={formName}
                             placeholder="Coolest form"
                         ></input>
-                    </h4>
+                    </div>
+                    <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 w-100`}>
+                        <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
+                            Set Active
+                        </button>
+                        <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} outline-button font-size-2 pad-2 padx-3`}>{activeStatus ? 'Active' : 'Inactive'}</div>
+                    </div>
                 </div>
-                {form && (
-                    <div className="w-100 flex-col gap-2">
-                        <p className='font-size-2 font-weight-700 mart-3'>Questions: </p>
-                        {questionFieldList &&
-                            questionFieldList.map((question) => {
-                                if (question.type === 'shortAns') {
+                <div className={`${styles.formContent} mary-3 w-100 gap-4`}>
+                    <div className={`${styles.sidePanel} flex-col gap-2 marb-3`}>
+                        <Box width='100%' minWidth='250px' classNames="border-box">
+                            <div className="flex-col gap-2">
+                                <h4 className="font-size-2 w-100">Default features:</h4>
+                                <ul className={`${styles.defaultFeats} flex-col gap-2`}>
+                                    <li>Order Name </li>
+                                    <li>Client Name </li>
+                                    <li>Client Email </li>
+                                    <li>Order Details </li>
+                                    <li>Deadline (optional) </li>
+                                </ul>
+                            </div>
+                        </Box>
+                        <Box width='100%' minWidth='250px' classNames="border-box">
+                            <h4 className='marb-3'>Customize</h4>
+                            <div className={`${styles.questionButtons} gap-3 justify-content-center text-dark-grey w-100`}>
+                                <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
+                                    Add Short Answer
+                                </button>
+                                <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
+                                    Add Multiple Choice
+                                </button>
+                            </div>
+                        </Box>
+                    </div>
+                    <Box width='100%' classNames='marl-4 border-box'>
+                    {questionFieldList.length >= 1 ?  (
+                        <div className="w-100 flex-col">
+                            {questionFieldList.map((questionField) => {
+                                if (questionField.type === 'shortAns') {
                                     return (
                                         <div className={`${styles.question} w-100`}>
-                                            <ShortAnswerQField fieldId={question.id} labelValue={question.questionLabel} key={'saq' + question.id} />
+                                            <ShortAnswerQField fieldId={questionField.id} labelValue={questionField.questionLabel} key={'saq' + questionField.id} />
                                         </div>
                                     );
-                                } else if (question.type === 'mc') {
+                                } else if (questionField.type === 'mc') {
                                     return (
                                         <div className={`${styles.question} w-100`}>
-                                            <MCQuestionField fieldId={question.id} labelValue={question.questionLabel} optList={question.optionList} key={'mcq' + question.id} />
+                                            <MCQuestionField fieldId={questionField.id} labelValue={questionField.questionLabel} optList={questionField.optionList} key={'mcq' + questionField.id} />
                                         </div>
                                     );
                                 }
                             })}
-                    </div>
-                )}
-                    <div className={`${styles.questionButtons} flex-row gap-3 justify-content-center text-dark-grey w-100`}>
-                        <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
-                            Add Short Answer
-                        </button>
-                        <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`}  onClick={handleMCClick}>
-                            Add Multiple Choice
-                        </button>
-                    </div>
-                <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 mar-3 w-100`}>
-                    <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActiveStatus}>
-                        Set Active
-                    </button>
-                    <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} ${styles.activeStatus} outline-button font-size-2 pad-2 padx-3`}>{activeStatus ? 'Active' : 'Inactive'}</div>
+                        </div>
+                    ) : (
+                        <div className='flex-col gap-2 w-100 align-items-center text-grey-300'>
+                            <h4>This form has no questions.</h4>
+                            <p>Add some questions from the customize panel.</p>
+                        </div>
+                    )}
+                    </Box>
+                    
                 </div>
 
                 {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './LoginReg.module.css';
-import { useLogin } from '../hooks/useLogin';
+import { useLogin } from '../../../hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {

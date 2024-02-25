@@ -1,9 +1,9 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useLogout } from '../hooks';
+import { useLogout } from '../../hooks';
 import styles from './Navbar.module.css';
 import image from '../public/images/EzComs_Logo_White.png';
 import menuImage from '../public/images/navbar_menu.png';
-import { useAuthContext } from '../hooks/useAuthContext';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import { useState } from 'react';
 
 const Navbar = () => {
