@@ -1,10 +1,10 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLogout } from '../../hooks';
-import styles from './Navbar.module.css';
-import image from '../public/images/EzComs_Logo_White.png';
-import menuImage from '../public/images/navbar_menu.png';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useState } from 'react';
+import styles from './Navbar.module.css';
+import image from '../../assets/images/EzComs_Logo_White.png';
+import menuImage from '../../assets/images/navbar_menu.png';
 
 const Navbar = () => {
     const { logout } = useLogout();
@@ -75,5 +75,7 @@ const Navbar = () => {
         </nav>
     );
 };
+
+Navbar.displayName = "Navbar";
 
 export default Navbar;

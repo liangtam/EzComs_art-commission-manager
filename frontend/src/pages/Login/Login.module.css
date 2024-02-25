@@ -98,7 +98,7 @@ li svg {
 }
 @media only screen and (min-width: 768px) {
     .wave {
-        background-image: url('../../public/images/wave.png');
+        background-image: url('../../assets/images/wave.png');
         background-size: 55vw 100vh;
         background-repeat: repeat-y;
         background-attachment: fixed;

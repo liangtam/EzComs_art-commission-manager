@@ -1,13 +1,12 @@
 import { useContext, useEffect, useState, useReducer } from 'react';
-import FormSnippet from '../../components/form_components/FormSnippet';
-import { FormsContext } from '../../context/FormsContext';
+import { FormSnippet, YesNoPopup } from '../../components/';
+import { FormsContext } from '../../context/';
 import styles from './Forms.module.css';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
-import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
-import activeFormImg from '../../public/images/ezcoms_activeform_bg.png';
-import addIcon from '../../public/images/add_icon.png';
+import activeFormImg from '../../assets/images/ezcoms_activeform_bg.png';
+import addIcon from '../../assets/images/add_icon.png';
 import { Link } from 'react-router-dom';
 
 const Forms = () => {

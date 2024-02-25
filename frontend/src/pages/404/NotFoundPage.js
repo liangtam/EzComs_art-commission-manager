@@ -1,4 +1,4 @@
-import ezcoms404 from '../../public/images/ezcoms_404.png';
+import ezcoms404 from '../../assets/images/ezcoms_404.png';
 import styles from './styles.module.css';
 const NotFoundPage = () => {
     return (

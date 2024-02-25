@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import {Navbar} from '../components';
-import {Dashboard, Orders, FormBuilder, Forms, ActiveForm, FormDetails, OrderDetails, NotFoundPage, Login, Commissions, EditOrderDetails} from "./index.js";
+import { Navbar } from '../components';
+import { Dashboard, Orders, FormBuilder, Forms, ActiveForm, FormDetails, OrderDetails, NotFoundPage, Login, Commissions, EditOrderDetails } from './index.js';
 
-import { QuestionFieldsContext, FormsContext, OrdersContextProvider} from '../context';
+import { QuestionFieldsContext, FormsContext, OrdersContextProvider } from '../context';
 
 import { useAuthContext } from '../hooks';
 
@@ -15,13 +15,12 @@ function MainPage() {
     const { user } = useAuthContext();
     const wrapNavbar = (component) => {
         return (
-          <>
-            <Navbar />
-            {component}
-          </>
+            <>
+                <Navbar />
+                {component}
+            </>
         );
-      };
-
+    };
 
     return (
         <div className="App">
@@ -42,8 +41,7 @@ function MainPage() {
 
                                             <Route exact path="/orders/:id" element={wrapNavbar(<OrderDetails />)} />
                                             <Route exact path="/orders/edit/:id" element={wrapNavbar(<EditOrderDetails />)} />
-                                            <Route path="/*" element={wrapNavbar(<NotFoundPage/>)}></Route>
-
+                                            <Route path="/*" element={wrapNavbar(<NotFoundPage />)}></Route>
                                         </>
                                     )}
 
@@ -56,8 +54,7 @@ function MainPage() {
                                     <Route exact path="/login" element={<Login />} />
 
                                     <Route exact path="/form/:userID" element={wrapNavbar(<ActiveForm />)} />
-                                    <Route path="/*" element={wrapNavbar(<NotFoundPage/>)}></Route>
-
+                                    <Route path="/*" element={wrapNavbar(<NotFoundPage />)}></Route>
                                 </Routes>
                             </div>
                         </QuestionFieldsContext.Provider>

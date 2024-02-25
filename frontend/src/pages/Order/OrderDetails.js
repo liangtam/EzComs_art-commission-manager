@@ -1,14 +1,11 @@
 import styles from './OrderDetails.module.css';
 import { useState, useEffect, useReducer } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import ImagePreview from '../../components/ImagePreview';
-import ImageComponent from '../../components/ImageComponent';
-import OriginalOrderComponent from '../../components/order_components/OriginalOrderComponent';
+import {ImagePreview, ImageComponent, OriginalOrderComponent, YesNoPopup} from '../../components/';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
-import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
 
-import origOrderIcon from '../../public/images/orig_order_icon.png';
+import origOrderIcon from '../../assets/images/orig_order_icon.png';
 
 const OrderDetails = () => {
     const { id } = useParams();

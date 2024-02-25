@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import styles from './Login.module.css';
-import LoginForm from '../../components/LoginForm';
-import RegistrationForm from '../../components/RegistrationForm';
-import logo from '../../public/images/EzComs_Logo_Black.png';
-import wave from '../../public/images/wave.png';
+import {RegistrationForm, LoginForm} from '../../components/';
+import logo from '../../assets/images/EzComs_Logo_Black.png';
 
 const Login = () => {
     const [regFormSelected, setRegFormSelected] = useState(true);

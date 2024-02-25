@@ -1,10 +1,7 @@
 import styles from './OrderSnippet.module.css'
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState } from 'react';
-import { OrdersContext } from '../../context/OrdersContext';
-import YesNoPopup from '../form_components/YesNoPopup';
-import trashIcon from '../../public/images/delete_trash.png';
-import editIcon from '../../public/images/edit_icon.png';
+import trashIcon from '../../assets/images/delete_trash.png';
+import editIcon from '../../assets/images/edit_icon.png';
 
 const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
     const nav = useNavigate();

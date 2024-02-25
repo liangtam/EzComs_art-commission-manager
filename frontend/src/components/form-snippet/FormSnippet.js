@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
-import trashIcon from '../../public/images/delete_trash.png';
-import editIcon from '../../public/images/edit_icon.png';
+import trashIcon from '../../assets/images/delete_trash.png';
+import editIcon from '../../assets/images/edit_icon.png';
 
 import styles from './FormSnippet.module.css';
 

@@ -1,14 +1,12 @@
 import styles from './Commissions.module.css';
-import CommissionSnippet from '../../components/order_components/CommissionSnippet';
-import { useState, useEffect, useContext, useReducer } from 'react';
+import {YesNoPopup, CommissionSnippet} from '../../components/';
+import { useState, useEffect, useReducer } from 'react';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
-import { OrdersContext } from '../../context/OrdersContext';
-import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
 import { useNavigate } from 'react-router-dom';
-import artIcon from '../../public/images/image_icon.png';
-import noImageIcon from '../../public/images/ezcoms_noimage_head.png';
-import noCommissionsIcon from '../../public/images/no_commissions.png';
+import artIcon from '../../assets/images/image_icon.png';
+import noImageIcon from '../../assets/images/ezcoms_noimage_head.png';
+import noCommissionsIcon from '../../assets/images/no_commissions.png';
 
 const Commissions = () => {
     const [completedOrders, setCompletedOrders] = useState([]);

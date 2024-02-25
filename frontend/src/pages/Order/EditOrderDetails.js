@@ -1,10 +1,8 @@
 import styles from './OrderDetails.module.css';
 import { useState, useEffect, useReducer } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import ImageComponent from '../../components/ImageComponent';
-import ImagePreview from '../../components/ImagePreview';
+import {ImageComponent, ImagePreview, YesNoPopup} from '../../components/';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
-import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
 
 // This is for actually editing the client's order details

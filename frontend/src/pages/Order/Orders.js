@@ -1,12 +1,11 @@
 import { useEffect, useState, useContext, useReducer } from 'react';
-import OrderSnippet from '../../components/order_components/OrderSnippet';
+import {OrderSnippet, YesNoPopup} from '../../components';
 import { OrdersContext } from '../../context/OrdersContext';
 import styles from './Orders.module.css';
-import YesNoPopup from '../../components/form_components/YesNoPopup';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useOrdersContext } from '../../hooks';
-import noOrdersImg from '../../public/images/no_orders.png';
+import noOrdersImg from '../../assets/images/no_orders.png';
 
 const Orders = () => {
     const { orders, setOrders } = useOrdersContext();

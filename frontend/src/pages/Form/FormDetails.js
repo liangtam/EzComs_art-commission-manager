@@ -274,7 +274,6 @@ const FormDetails = () => {
 
     return (
         <div className={styles.formBuilderContainer}>
-
             <form className={`content-container flex-col gap-2 border-box align-items-center`}>
             <div className="flex-col justify-content-start align-items-start w-100 gap-2">
                 <h1 className="font-size-4 mart-4">Edit Form</h1>

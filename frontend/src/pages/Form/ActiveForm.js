@@ -2,11 +2,11 @@ import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import styles from './ActiveForm.module.css';
 
-import ImagePreview from '../../components/ImagePreview';
+import {ImagePreview} from '../../components/';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useParams } from 'react-router-dom';
 
-import activeFormImg from '../../public/images/ezcoms_activeform_bg.png';
+import activeFormImg from '../../assets/images/ezcoms_activeform_bg.png';
 import { orderMessageReducer } from '../reducers/orderMessageReducer';
 import { ACTION } from '../reducers/orderMessageReducer';
 
