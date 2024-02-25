@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from './YesNoPopup.module.css';
 
 const YesNoPopup = ({children, yesFunction, closePopup}) => {

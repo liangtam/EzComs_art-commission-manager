@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styles from './LoginReg.module.css';
+import styles from '../styles.module.css';
 import { useLogin } from '../../../hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
 

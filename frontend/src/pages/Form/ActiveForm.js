@@ -1,4 +1,4 @@
-import { QuestionFieldsContext } from '../../context/QuestionFieldsContext';
+import { QuestionFieldsContext } from '../../context/';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import styles from './ActiveForm.module.css';
 

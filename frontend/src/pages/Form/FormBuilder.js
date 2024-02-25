@@ -1,11 +1,11 @@
 // only artist account can see this
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { QuestionFieldsContext, FormsContext } from '../../context/';
-import {YesNoPopup, MCQuestionField, ShortAnswerQField, Box} from '../../components/';
+import { YesNoPopup, MCQuestionField, ShortAnswerQField, Box } from '../../components/';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import styles from './FormBuilder.module.css';
 import { useAuthContext } from '../../hooks/useAuthContext';
-import PageContainer from '../../layouts/page-container/PageContainer';
+import { PageContainer } from '../../layouts';
 
 const FormBuilder = () => {
     const [formName, setName] = useState('');
@@ -206,7 +206,7 @@ const FormBuilder = () => {
     }, []);
 
     return (
-        <div>
+        <PageContainer>
             {openPopup && (
                 <YesNoPopup
                     yesFunction={() => {
@@ -251,7 +251,7 @@ const FormBuilder = () => {
                 {/* <h2>------------------------------------------------------------</h2> */}
                 <div className={`${styles.formContent} mary-3 w-100 gap-4`}>
                     <div className={`${styles.sidePanel} flex-col gap-2 marb-3`}>
-                        <Box width='100%' minWidth='250px' classNames="border-box">
+                        <Box width="100%" minWidth="250px" classNames="border-box">
                             <div className="flex-col gap-2">
                                 <h4 className="font-size-2 w-100">Default features:</h4>
                                 <ul className={`${styles.defaultFeats} flex-col gap-2`}>
@@ -263,8 +263,8 @@ const FormBuilder = () => {
                                 </ul>
                             </div>
                         </Box>
-                        <Box width='100%' minWidth='250px' classNames="border-box">
-                            <h4 className='marb-3'>Customize</h4>
+                        <Box width="100%" minWidth="250px" classNames="border-box">
+                            <h4 className="marb-3">Customize</h4>
                             <div className={`${styles.questionButtons} gap-3 justify-content-center text-dark-grey w-100`}>
                                 <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
                                     Add Short Answer
@@ -275,39 +275,38 @@ const FormBuilder = () => {
                             </div>
                         </Box>
                     </div>
-                    <Box width='100%' classNames='marl-4 border-box'>
-                    {questionFieldList.length >= 1 ?  (
-                        <div className="w-100 flex-col">
-                            {questionFieldList.map((questionField) => {
-                                if (questionField.type === 'shortAns') {
-                                    return (
-                                        <div className={`${styles.question} w-100`}>
-                                            <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />
-                                        </div>
-                                    );
-                                } else if (questionField.type === 'mc') {
-                                    return (
-                                        <div className={`${styles.question} w-100`}>
-                                            <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />
-                                        </div>
-                                    );
-                                }
-                            })}
-                        </div>
-                    ) : (
-                        <div className='flex-col gap-2 w-100 align-items-center text-grey-300'>
-                            <h4>This form has no questions.</h4>
-                            <p>Add some questions from the customize panel.</p>
-                        </div>
-                    )}
+                    <Box width="100%" classNames="marl-4 border-box">
+                        {questionFieldList.length >= 1 ? (
+                            <div className="w-100 flex-col">
+                                {questionFieldList.map((questionField) => {
+                                    if (questionField.type === 'shortAns') {
+                                        return (
+                                            <div className={`${styles.question} w-100`}>
+                                                <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />
+                                            </div>
+                                        );
+                                    } else if (questionField.type === 'mc') {
+                                        return (
+                                            <div className={`${styles.question} w-100`}>
+                                                <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />
+                                            </div>
+                                        );
+                                    }
+                                })}
+                            </div>
+                        ) : (
+                            <div className="flex-col gap-2 w-100 align-items-center text-grey-300">
+                                <h4>This form has no questions.</h4>
+                                <p>Add some questions from the customize panel.</p>
+                            </div>
+                        )}
                     </Box>
-                    
                 </div>
                 <button className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
                     Submit
                 </button>
             </form>
-            </div>
+        </PageContainer>
     );
 };
 

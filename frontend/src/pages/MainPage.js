@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { Navbar } from '../components';
+import  Navbar  from '../components/nav-bar/Navbar';
 import { Dashboard, Orders, FormBuilder, Forms, ActiveForm, FormDetails, OrderDetails, NotFoundPage, Login, Commissions, EditOrderDetails } from './index.js';
 
 import { QuestionFieldsContext, FormsContext, OrdersContextProvider } from '../context';
