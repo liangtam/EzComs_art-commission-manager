@@ -10,3 +10,4 @@ export { default as OrderSnippet } from './order-snippet/OrderSnippet';
 export { default as OriginalOrderComponent } from './original-order/OriginalOrderComponent';
 export * from './questions';
 export { default as YesNoPopup } from './yes-no-popup/YesNoPopup';
+export { default as Line } from './line/Line';

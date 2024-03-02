@@ -8,7 +8,7 @@ const FormSnippet = ({ formId, form, handleDelete }) => {
     const nav = useNavigate();
     return (
         <div className={`${styles.formSnippet} flex-col pad-2 h-100 radius-1`}>
-            <Link className={`${styles.link} flex-col gap-2 text-dark-grey`} to={`/forms/${formId}`}>
+            <Link className={`${styles.link} flex-col gap-2 text-grey-800`} to={`/forms/${formId}`}>
                 <div className={`${styles.formStats} flex-col gap-2 pad-3`}>
                     <div className={styles.title}>
                         <h4>{form.formName && form.formName}</h4>

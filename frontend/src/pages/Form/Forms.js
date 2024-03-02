@@ -93,7 +93,7 @@ const Forms = () => {
             <div className="content-container flex-col gap-2 h-100 overflow-y-auto ">
                 <div className="flex-col justify-content-start align-items-start w-100 ">
                     <h1 className="font-size-4 mart-4"> Forms </h1>
-                    <div className="w-100 bg-mid-grey h-1 mary-3"></div>
+                    <div className="w-100 bg-grey-100 h-1 mary-3"></div>
                 </div>
                 {!initLoading && (!forms || forms.length === 0) && (
                     <div className="page-container flex-col gap-3 justify-content-center align-items-center">

@@ -465,7 +465,7 @@ const OrderDetails = () => {
                         <button className="fill-button pad-3 radius-4  greyHoverButton font-weight-400" onClick={handleEditButton}>
                             Edit
                         </button>
-                        <button className="fill-button pad-3 radius-4  deleteBtn font-weight-400 text-light-grey" onClick={handleOpenPopup}>
+                        <button className="fill-button pad-3 radius-4  deleteBtn font-weight-400 text-grey-50" onClick={handleOpenPopup}>
                             Delete
                         </button>
                     </div>

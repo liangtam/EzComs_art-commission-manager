@@ -17,7 +17,7 @@ const RegistrationForm = () => {
 
     return (
         <form className={`${styles.container} bg-grey-800 flex-col gap-3 align-items-center w-100 pad-4`}>
-            <div className={`${styles.intro} flex-col gap-3 align-items-center text-light-grey w-100`}>
+            <div className={`${styles.intro} flex-col gap-3 align-items-center text-grey-50 w-100`}>
                 <h3>
                     <b className="font-size-4" data-testid="signup-title">
                         <span className="text-turquoise-500">Sign Up </span>Now
@@ -25,7 +25,7 @@ const RegistrationForm = () => {
                 </h3>
                 <p className="font-size-2" data-testid="signup-intro">Guess what. It's just as Ez.</p>
             </div>
-            <div className={`${styles.content} flex-col justify-content-center align-items-center text-light-grey`}>
+            <div className={`${styles.content} flex-col justify-content-center align-items-center text-grey-50`}>
                 <label className="flex-col justify-content-start gap-2 marb-2 w-100">
                     <p data-testid="signup-email-label">Email: </p>
                     <input className="font-size-2 pad-2 radius-2 w-100" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="amazingyou@example.com"></input>
@@ -37,7 +37,7 @@ const RegistrationForm = () => {
                 {/* <label>Confirm password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input></label> */}
             </div>
             {error && <div className={`errorMessage ${styles.smallErrorMessage}`}>{error}</div>}
-            <button className={` ${styles.signInBtn} fill-button font-size-2 bg-blue-500 pady-2 padx-3 radius-2 font-weight-700 text-light-grey w-100`} disabled={isLoading} onClick={handleSignUp}>
+            <button className={` ${styles.signInBtn} fill-button font-size-2 bg-blue-500 pady-2 padx-3 radius-2 font-weight-700 text-grey-50 w-100`} disabled={isLoading} onClick={handleSignUp}>
                 Sign Up
             </button>
         </form>

@@ -1,7 +1,7 @@
 // only artist account can see this
 import { useContext, useEffect, useReducer, useState } from 'react';
 import { QuestionFieldsContext, FormsContext } from '../../context/';
-import { YesNoPopup, MCQuestionField, ShortAnswerQField, Box } from '../../components/';
+import { YesNoPopup, MCQuestionField, ShortAnswerQField, Box, Line } from '../../components/';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import styles from './FormBuilder.module.css';
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -223,7 +223,7 @@ const FormBuilder = () => {
                 <div className="flex-col justify-content-start align-items-start w-100 gap-2">
                     <h1 className="font-size-4 mart-4">Create an order form for your clients </h1>
                     <p>Any active form is public and accessible by anyone to fillout.</p>
-                    <div className="w-100 bg-mid-grey h-1 mary-3"></div>
+                    <Line/>
                 </div>
                 {state.errorMessage && <div className="errorMessage pad-3 marb-2 radius-1 bg-light-red w-100">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage pad-3 marb-2  radius-1 bg-light-green w-100">{state.successMessage}</div>}
@@ -265,7 +265,7 @@ const FormBuilder = () => {
                         </Box>
                         <Box width="100%" minWidth="250px" classNames="border-box">
                             <h4 className="marb-3">Customize</h4>
-                            <div className={`${styles.questionButtons} gap-3 justify-content-center text-dark-grey w-100`}>
+                            <div className={`${styles.questionButtons} gap-3 justify-content-center text-grey-800 w-100`}>
                                 <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
                                     Add Short Answer
                                 </button>
@@ -302,7 +302,7 @@ const FormBuilder = () => {
                         )}
                     </Box>
                 </div>
-                <button className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-light-grey mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
+                <button className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-grey-50 mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
                     Submit
                 </button>
             </form>

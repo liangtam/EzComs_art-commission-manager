@@ -51,7 +51,7 @@ const Commissions = () => {
         dispatch({type: ACTION.RESET});
     };
 
-    const closePopup = (e) => {
+    const closePopup = () => {
         setOpenPopup(false);
     };
 
@@ -114,7 +114,7 @@ const Commissions = () => {
             </div>
             {!initLoading && (!completedOrders || completedOrders.length === 0) && (
                 <div className="page-container flex-col gap-3 justify-content-center align-items-center">
-                    <p className='font-size-3 font-weight-700'>You have no commissions at the moment.</p>
+                    <p className='font-size-3 font-weight-700 text-grey-300'>You have no commissions at the moment.</p>
                     <img className={`${styles.noCommissionsIcon} pad-3 border-box`} src={noCommissionsIcon} />
                 </div>
             )}
@@ -157,15 +157,15 @@ const Commissions = () => {
                                     </div>
                                     <div className={styles.completedArtIcon}>
                                         <button
-                                            onMouseEnter={(e) => {
+                                            onMouseEnter={() => {
                                                 setShowArtPreview(true);
                                                 setSelectedID(completedOrder._id);
                                             }}
-                                            onClick={(e) => {
+                                            onClick={() => {
                                                 setShowArtPreview(!showArtPreview);
                                                 setSelectedID(completedOrder._id);
                                             }}
-                                            onMouseLeave={(e) => {
+                                            onMouseLeave={() => {
                                                 setShowArtPreview(false);
                                                 setSelectedID('');
                                             }}

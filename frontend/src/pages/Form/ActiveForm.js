@@ -2,13 +2,14 @@ import { QuestionFieldsContext } from '../../context/';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import styles from './ActiveForm.module.css';
 
-import {ImagePreview} from '../../components/';
+import { ImagePreview } from '../../components/';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useParams } from 'react-router-dom';
 
 import activeFormImg from '../../assets/images/ezcoms_activeform_bg.png';
 import { orderMessageReducer } from '../reducers/orderMessageReducer';
 import { ACTION } from '../reducers/orderMessageReducer';
+import { PageContainer } from '../../layouts';
 
 const ActiveForm = () => {
     const [activeForm, setActiveForm] = useState(null);
@@ -200,7 +201,7 @@ const ActiveForm = () => {
 
             console.log(err);
         }
-        
+
         setTimeout(() => {
             dispatch({ type: ACTION.RESET });
         }, 3000);
@@ -257,117 +258,119 @@ const ActiveForm = () => {
     // use asynchronous data, we need to make sure it actually fetched properly first.
 
     return (
-        <form onSubmit={handleSubmit} className={styles.activeFormContainer} encType="multipart/form-data">
-            {loading && <div className="page-container flex-row justify-content-center align-items-center font-size-3">Loading...</div>}
-            {!loading && !activeForm && (
-                <div className="page-container flex-col gap-3 justify-content-center align-items-center">
-                    <h1>No Active Form.</h1>
-                    <img className={`${styles.activeFormImg} pad-3 border-box`} src={activeFormImg} />
-                </div>
-            )}
-            {!loading && activeForm && (
-                <div className={styles.activeFormContent}>
-                    <div className={`flex-col gap-2`}>
-                        <label> Name (or contact name): </label>
-                        <input
-                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
-                            placeholder="Name, or online alias"
-                            value={clientName}
-                            onChange={handleClientNameChange}
-                            required={true}
-                        ></input>
-                        <label> Contact (email, or social media handle): </label>
-                        <input
-                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
-                            type="email"
-                            placeholder="someone@example.com, or social media handle"
-                            value={clientContact}
-                            onChange={handleClientContactChange}
-                            required={true}
-                        ></input>
+        <PageContainer>
+            <form onSubmit={handleSubmit} className={styles.activeFormContainer} encType="multipart/form-data">
+                {loading && <div className="page-container flex-row justify-content-center align-items-center font-size-3">Loading...</div>}
+                {!loading && !activeForm && (
+                    <div className="page-container flex-col gap-3 justify-content-center align-items-center">
+                        <h1>No Active Form.</h1>
+                        <img className={`${styles.activeFormImg} pad-3 border-box`} src={activeFormImg} />
                     </div>
-                    <b>Questions</b>
-                    <div className={styles.customQuestions}>
-                        {questionFieldList &&
-                            questionFieldList.length >= 1 &&
-                            questionFieldList.map((question) => {
-                                if (question.type === 'shortAns') {
-                                    return (
-                                        <div className="flex-col gap-2 mary-3">
-                                            <label>{question.questionLabel} </label>
-                                            <input
-                                                className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
-                                                type="text"
-                                                onChange={(e) => handleAnswerFieldChange(e, question.id)}
-                                                required={true}
-                                            ></input>
-                                        </div>
-                                    );
-                                } else if (question.type === 'mc') {
-                                    return (
-                                        <div className={styles.mc}>
-                                            <label className={styles.qLabel}>{question.questionLabel}: </label>
-                                            <div className={styles.options}>
-                                                {question.optionList.length >= 1 &&
-                                                    question.optionList.map((option) => {
-                                                        return (
-                                                            <label className={styles.option}>
-                                                                <input type="radio" name={'option' + question.id} value={option.optionLabel}></input>
-                                                                <p>{option.optionLabel}</p>
-                                                            </label>
-                                                        );
-                                                    })}
+                )}
+                {!loading && activeForm && (
+                    <div className={styles.activeFormContent}>
+                        <div className={`flex-col gap-2`}>
+                            <label> Name (or contact name): </label>
+                            <input
+                                className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                                placeholder="Name, or online alias"
+                                value={clientName}
+                                onChange={handleClientNameChange}
+                                required={true}
+                            ></input>
+                            <label> Contact (email, or social media handle): </label>
+                            <input
+                                className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                                type="email"
+                                placeholder="someone@example.com, or social media handle"
+                                value={clientContact}
+                                onChange={handleClientContactChange}
+                                required={true}
+                            ></input>
+                        </div>
+                        <b>Questions</b>
+                        <div className={styles.customQuestions}>
+                            {questionFieldList &&
+                                questionFieldList.length >= 1 &&
+                                questionFieldList.map((question) => {
+                                    if (question.type === 'shortAns') {
+                                        return (
+                                            <div className="flex-col gap-2 mary-3">
+                                                <label>{question.questionLabel} </label>
+                                                <input
+                                                    className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                                                    type="text"
+                                                    onChange={(e) => handleAnswerFieldChange(e, question.id)}
+                                                    required={true}
+                                                ></input>
                                             </div>
-                                        </div>
-                                    );
-                                }
-                            })}
-                    </div>
-                    <div className={styles.reqDetails}>
-                        <label>
-                            <p>Order details:</p>
-                            <div className={styles.textAreaContainer}>
-                                <textarea className="textArea" type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange} required></textarea>
-                            </div>
-                        </label>
-                        <label>
-                            <p>References:</p>
-                            <input className="chooseFilesInput" type="file" name="referenceImages" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
-                            {/* <div className="customFileInputContainer"> */}
-                            <span className="customFileInput">Choose Files</span>
-                            {/* </div> */}
-                        </label>
-                        <div className={`${styles.imagePreviews} flex-row gap-2 overflow-x-auto`}>
-                            {referenceImages &&
-                                referenceImages.map((refImgURL) => {
-                                    return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
+                                        );
+                                    } else if (question.type === 'mc') {
+                                        return (
+                                            <div className={styles.mc}>
+                                                <label className={styles.qLabel}>{question.questionLabel}: </label>
+                                                <div className={styles.options}>
+                                                    {question.optionList.length >= 1 &&
+                                                        question.optionList.map((option) => {
+                                                            return (
+                                                                <label className={styles.option}>
+                                                                    <input type="radio" name={'option' + question.id} value={option.optionLabel}></input>
+                                                                    <p>{option.optionLabel}</p>
+                                                                </label>
+                                                            );
+                                                        })}
+                                                </div>
+                                            </div>
+                                        );
+                                    }
                                 })}
                         </div>
-                        <label className="flex-col gap-2">
-                            <p>Deadline:</p>
-                            <div className="dateContainer">
-                                <input className="dateInput" type="date" id="deadline"></input>
+                        <div className={styles.reqDetails}>
+                            <label>
+                                <p>Order details:</p>
+                                <div className={styles.textAreaContainer}>
+                                    <textarea className="textArea" type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange} required></textarea>
+                                </div>
+                            </label>
+                            <label>
+                                <p>References:</p>
+                                <input className="chooseFilesInput" type="file" name="referenceImages" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
+                                {/* <div className="customFileInputContainer"> */}
+                                <span className="customFileInput">Choose Files</span>
+                                {/* </div> */}
+                            </label>
+                            <div className={`${styles.imagePreviews} flex-row gap-2 overflow-x-auto`}>
+                                {referenceImages &&
+                                    referenceImages.map((refImgURL) => {
+                                        return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
+                                    })}
                             </div>
-                            <p className="font-size-1">Please leave blank if there is no hard deadline.</p>
-                        </label>
+                            <label className="flex-col gap-2">
+                                <p>Deadline:</p>
+                                <div className="dateContainer">
+                                    <input className="dateInput" type="date" id="deadline"></input>
+                                </div>
+                                <p className="font-size-1">Please leave blank if there is no hard deadline.</p>
+                            </label>
+                        </div>
                     </div>
-                </div>
-            )}
-            {state && state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-            {state && state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
-            {state && state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
+                )}
+                {state && state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
+                {state && state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
+                {state && state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
 
-            {!loading && activeForm && (
-                <button
-                    disabled={loading || (state && state.loadingMessage)}
-                    type="submit"
-                    className="fill-button bg-blue-500 text-light-grey pad-3 mar-3 font-weight-700 font-size-2 radius-3"
-                    onClick={handleSubmit}
-                >
-                    Submit Order
-                </button>
-            )}
-        </form>
+                {!loading && activeForm && (
+                    <button
+                        disabled={loading || (state && state.loadingMessage)}
+                        type="submit"
+                        className="fill-button bg-blue-500 text-grey-50 pad-3 mar-3 font-weight-700 font-size-2 radius-3"
+                        onClick={handleSubmit}
+                    >
+                        Submit Order
+                    </button>
+                )}
+            </form>
+        </PageContainer>
     );
 };
 

@@ -51,7 +51,7 @@
 } */
 .completedArtIcon {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     /* background-color: blue; */
     grid-column: 3;
 }
@@ -68,7 +68,7 @@
 
 .buttons {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     width: 100%;
     border-top: 1px solid rgb(220, 220, 220);
     grid-row: 3;
@@ -96,14 +96,14 @@
 
 .orderPrice {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     grid-column: 2;
 }
 
 .completedArtIcon {
     display: flex;
-    align-items: start;
-    justify-content: end;
+    align-items: flex-start;
+    justify-content: flex-end;
     padding: 0.2rem 0;
     box-sizing: border-box;
     grid-column: 3;
@@ -116,7 +116,7 @@
 
 .artPreview {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     right: 0;
     grid-column: 1/7;
     /* z-index: 1; */
@@ -156,7 +156,7 @@
 
     .headerItem {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
     }
 
     .completedOrders {
@@ -176,7 +176,7 @@
     }
     .dateReqqed {
         display: flex;
-        justify-content: end;
+        justify-content: flex-end;
     }
 
     .completedDateContainer {

@@ -13,6 +13,14 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    totalIncome: {
+        type: Number,
+        required: true
+    },
+    monthlyIncome: {
+        type: Number,
+        required: true
     }
 });
 

@@ -10,6 +10,7 @@ import YesNoPopup from '../../components/yes-no-popup/YesNoPopup';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import Box from '../../components/box/Box';
+import { PageContainer } from '../../layouts';
 
 const FormDetails = () => {
     const { id } = useParams();
@@ -273,11 +274,13 @@ const FormDetails = () => {
     }, [questionFieldList]);
 
     return (
-        <div className={styles.formBuilderContainer}>
+        <PageContainer>
             <form className={`content-container flex-col gap-2 border-box align-items-center`}>
-            <div className="flex-col justify-content-start align-items-start w-100 gap-2">
-                <h1 className="font-size-4 mart-4">Edit Form</h1>
-            </div>
+                <div className="flex-col justify-content-start align-items-start w-100 gap-2">
+                    <h1 className="font-size-4 mart-4">Edit Form</h1>
+                    <div className="w-100 bg-grey-100 h-1 mary-3"></div>
+
+                </div>
                 {activeFormReplacementOpenPopup && (
                     <YesNoPopup
                         yesFunction={(e) => {
@@ -318,7 +321,7 @@ const FormDetails = () => {
                 </div>
                 <div className={`${styles.formContent} mary-3 w-100 gap-4`}>
                     <div className={`${styles.sidePanel} flex-col gap-2 marb-3`}>
-                        <Box width='100%' minWidth='250px' classNames="border-box">
+                        <Box width="100%" minWidth="250px" classNames="border-box">
                             <div className="flex-col gap-2">
                                 <h4 className="font-size-2 w-100">Default features:</h4>
                                 <ul className={`${styles.defaultFeats} flex-col gap-2`}>
@@ -330,9 +333,9 @@ const FormDetails = () => {
                                 </ul>
                             </div>
                         </Box>
-                        <Box width='100%' minWidth='250px' classNames="border-box">
-                            <h4 className='marb-3'>Customize</h4>
-                            <div className={`${styles.questionButtons} gap-3 justify-content-center text-dark-grey w-100`}>
+                        <Box width="100%" minWidth="250px" classNames="border-box">
+                            <h4 className="marb-3">Customize</h4>
+                            <div className={`${styles.questionButtons} gap-3 justify-content-center text-grey-800 w-100`}>
                                 <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
                                     Add Short Answer
                                 </button>
@@ -342,33 +345,37 @@ const FormDetails = () => {
                             </div>
                         </Box>
                     </div>
-                    <Box width='100%' classNames='marl-4 border-box'>
-                    {questionFieldList.length >= 1 ?  (
-                        <div className="w-100 flex-col">
-                            {questionFieldList.map((questionField) => {
-                                if (questionField.type === 'shortAns') {
-                                    return (
-                                        <div className={`${styles.question} w-100`}>
-                                            <ShortAnswerQField fieldId={questionField.id} labelValue={questionField.questionLabel} key={'saq' + questionField.id} />
-                                        </div>
-                                    );
-                                } else if (questionField.type === 'mc') {
-                                    return (
-                                        <div className={`${styles.question} w-100`}>
-                                            <MCQuestionField fieldId={questionField.id} labelValue={questionField.questionLabel} optList={questionField.optionList} key={'mcq' + questionField.id} />
-                                        </div>
-                                    );
-                                }
-                            })}
-                        </div>
-                    ) : (
-                        <div className='flex-col gap-2 w-100 align-items-center text-grey-300'>
-                            <h4>This form has no questions.</h4>
-                            <p>Add some questions from the customize panel.</p>
-                        </div>
-                    )}
+                    <Box width="100%" classNames="marl-4 border-box">
+                        {questionFieldList.length >= 1 ? (
+                            <div className="w-100 flex-col">
+                                {questionFieldList.map((questionField) => {
+                                    if (questionField.type === 'shortAns') {
+                                        return (
+                                            <div className={`${styles.question} w-100`}>
+                                                <ShortAnswerQField fieldId={questionField.id} labelValue={questionField.questionLabel} key={'saq' + questionField.id} />
+                                            </div>
+                                        );
+                                    } else if (questionField.type === 'mc') {
+                                        return (
+                                            <div className={`${styles.question} w-100`}>
+                                                <MCQuestionField
+                                                    fieldId={questionField.id}
+                                                    labelValue={questionField.questionLabel}
+                                                    optList={questionField.optionList}
+                                                    key={'mcq' + questionField.id}
+                                                />
+                                            </div>
+                                        );
+                                    }
+                                })}
+                            </div>
+                        ) : (
+                            <div className="flex-col gap-2 w-100 align-items-center text-grey-300">
+                                <h4>This form has no questions.</h4>
+                                <p>Add some questions from the customize panel.</p>
+                            </div>
+                        )}
                     </Box>
-                    
                 </div>
 
                 {state.errorMessage && <div className="errorMessage">{state.errorMessage}</div>}
@@ -376,7 +383,7 @@ const FormDetails = () => {
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
 
                 <div className={styles.formDetailsBottomButtons}>
-                    <button className={`blueButton deleteBtn`} onClick={(e) => setOpenDeletePopup(true)}>
+                    <button className={`blueButton deleteBtn`} onClick={() => setOpenDeletePopup(true)}>
                         Delete
                     </button>
                     <button className={`blueButton saveBtn`} onClick={handleSaveClick}>
@@ -384,7 +391,7 @@ const FormDetails = () => {
                     </button>
                 </div>
             </form>
-        </div>
+        </PageContainer>
     );
 };
 

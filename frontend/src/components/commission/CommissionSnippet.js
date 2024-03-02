@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './CommissionSnippet.module.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 
 const CommissionSnippet = ({completedOrder, completedOrderId, handleOpenPopup}) => {
@@ -15,14 +15,6 @@ const CommissionSnippet = ({completedOrder, completedOrderId, handleOpenPopup}) 
 
     return (
         <div className={styles.container}>
-            <div className={styles.headers}>
-                <h4>Name</h4>
-                <h4>Client</h4>
-                <h4>Contact</h4>
-                <h4>Completion Date</h4>
-                <h4>Price</h4>
-                <h4>Image</h4>
-            </div>
             <div className={styles.commissionSnippet}>
                 <div className={styles.orderName}>
                     <h4>{completedOrder && completedOrder.orderName}</h4>
