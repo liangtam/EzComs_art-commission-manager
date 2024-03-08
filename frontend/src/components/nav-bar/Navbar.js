@@ -26,11 +26,11 @@ const Navbar = () => {
                     <Link to={user ? '/' : '/login'} onClick={(e) => setShowMenu(false)}>
                         <img src={image}></img>
                     </Link>
-                    <Link to={user ? '/' : '/login'} onClick={(e) => setShowMenu(false)}>
+                    {/* <Link to={user ? '/' : '/login'} onClick={(e) => setShowMenu(false)}>
                         <h1>
                             <strong>EzComs</strong>
                         </h1>
-                    </Link>
+                    </Link> */}
                 </div>
                 {user && (
                     <div className={styles.menuImage}>

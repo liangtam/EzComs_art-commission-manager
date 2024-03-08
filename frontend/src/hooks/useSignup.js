@@ -7,12 +7,11 @@ export const useSignup = () => {
 
     const {dispatch, ACTION} = useAuthContext();
 
-    const signUp = async (email, password) => {
+    const signUp = async (username, email, password) => {
         setIsLoading(true);
         setError(null);
 
-        const userObj = {email, password};
-        // console.log(JSON.stringify(userObj))
+        const userObj = {username, email, password, monthlyIncome : 0, totalIncome: 0};
 
         const response = await fetch('http://localhost:4000/api/user/signup', {
             method: 'POST',

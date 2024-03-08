@@ -5,6 +5,11 @@ const validator = require('validator');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
     email: {
         type: String,
         required: true,
@@ -26,11 +31,15 @@ const userSchema = new Schema({
 
 // static sign up method
 // can't be an arrow function since we're using the "this" keyword
-userSchema.statics.signUp = async function(email, password) {
+userSchema.statics.signUp = async function(username, email, password) {
 
     // validation
-    if (!email || !password) {
+    if (!email || !password || !username) {
         throw Error('All fields must be filled.');
+    }
+
+    if (!validator.isAlphanumeric(username)) {
+        throw Error('Username must be alphanumeric.')
     }
 
     if (!validator.isEmail(email)) {
@@ -42,16 +51,21 @@ userSchema.statics.signUp = async function(email, password) {
     }
 
     const emailExists = await this.findOne({email});
+    const usernameExists = await this.findOne({username});
+
 
     if (emailExists) {
         throw Error('Email already in use.');
     }
 
+    if (usernameExists) {
+        throw Error('Username unavailable.');
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({email, password: hash});
-    // console.log("Sign up: ", user);
+    const user = await this.create({username, email, password: hash});
 
     return user;
 }
@@ -70,12 +84,10 @@ userSchema.statics.login = async function(email, password) {
     }
 
     const match = await bcrypt.compare(password, user.password);
-    //console.log("here", match);
     
     if (!match) {
         throw Error('Incorrect password.');
     }
-    // console.log("Login: ", user);
 
     return user;
 }
