@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext, useReducer } from 'react';
 import {OrderSnippet, YesNoPopup} from '../../components';
-import { OrdersContext } from '../../context/OrdersContext';
 import styles from './Orders.module.css';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -39,7 +38,7 @@ const Orders = () => {
             if (response.ok) {
                 // to parse the json from the above response into smt we can work w/
                 const json = await response.json();
-                console.log("Json: ", json)
+                // console.log("Json: ", json)
                 setOrders(json);
                 window.scrollTo(0, currentScrollPos);
                 // console.log('Fetched all forms in orders page! ', json);

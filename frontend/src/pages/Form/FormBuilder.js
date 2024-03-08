@@ -223,7 +223,7 @@ const FormBuilder = () => {
                 <div className="flex-col justify-content-start align-items-start w-100 gap-2">
                     <h1 className="font-size-4 mart-4">Create an order form for your clients </h1>
                     <p>Any active form is public and accessible by anyone to fillout.</p>
-                    <Line/>
+                    <Line />
                 </div>
                 {state.errorMessage && <div className="errorMessage pad-3 marb-2 radius-1 bg-light-red w-100">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage pad-3 marb-2  radius-1 bg-light-green w-100">{state.successMessage}</div>}
@@ -275,7 +275,7 @@ const FormBuilder = () => {
                             </div>
                         </Box>
                     </div>
-                    <Box width="100%" classNames="marl-4 border-box">
+                    <Box width="100%" classNames="marl-4 border-box flex-col align-items-center" styles={{ height: 'minContent' }}>
                         {questionFieldList.length >= 1 ? (
                             <div className="w-100 flex-col">
                                 {questionFieldList.map((questionField) => {
@@ -300,11 +300,15 @@ const FormBuilder = () => {
                                 <p>Add some questions from the customize panel.</p>
                             </div>
                         )}
+                        <button
+                            className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-grey-50 mar-3 w-100`}
+                            type="submit"
+                            onClick={handleSaveFormClick}
+                        >
+                            Submit
+                        </button>
                     </Box>
                 </div>
-                <button className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-grey-50 mar-3 w-100`} type="submit" onClick={handleSaveFormClick}>
-                    Submit
-                </button>
             </form>
         </PageContainer>
     );
