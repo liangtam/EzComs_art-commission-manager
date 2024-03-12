@@ -1,5 +1,5 @@
 import styles from './Commissions.module.css';
-import { YesNoPopup, CommissionSnippet, Line, IncomeSummary } from '../../components/';
+import { YesNoPopup, CommissionSnippet, Line, IncomeSummary, NoDataPlaceholder } from '../../components/';
 import { useState, useEffect, useReducer } from 'react';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import artIcon from '../../assets/images/image_icon.png';
 import noImageIcon from '../../assets/images/ezcoms_noimage_head.png';
 import noCommissionsIcon from '../../assets/images/no_commissions.png';
+import { PageContainer } from '../../layouts/index.js';
 
 const Commissions = () => {
     const [completedOrders, setCompletedOrders] = useState([]);
@@ -51,26 +52,20 @@ const Commissions = () => {
     };
 
     const fetchIncomeData = async () => {
-        //console.log('HERRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEE')
         try {
             const response = await fetch(`http://localhost:4000/api/user/income/${user.userID}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 }
             });
-            console.log('HERRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEE')
-
 
             if (response.ok) {
-
                 const incomeDataJson = await response.json();
                 setIncomeData(incomeDataJson);
-                console.log('h: ', incomeData)
+                console.log('h: ', incomeData);
             }
 
             if (!response.ok) {
-                console.log('HERRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEE')
-
                 throw new Error('Bad response. Could not fetch income.');
             }
         } catch (error) {
@@ -135,7 +130,7 @@ const Commissions = () => {
     }, [user]);
 
     return (
-        <div className={styles.commissionsContainer}>
+        <PageContainer>
             {openPopup && (
                 <YesNoPopup closePopup={closePopup} yesFunction={handleDeleteOrder}>
                     <h3>Are you sure?</h3>
@@ -143,18 +138,24 @@ const Commissions = () => {
                     {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                 </YesNoPopup>
             )}
-            <div className="pageTitle">
+            <div className="pageTitle mart-3">
                 <h1>Commissions</h1>
                 <Line />
             </div>
-            {incomeData && <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'h'}/>}
-            {!initLoading && (!completedOrders || completedOrders.length === 0) && (
-                <div className="page-container flex-col gap-3 justify-content-center align-items-center">
-                    <p className="font-size-3 font-weight-700 text-grey-300">You have no commissions at the moment.</p>
-                    <img className={`${styles.noCommissionsIcon} pad-3 border-box`} src={noCommissionsIcon} />
-                </div>
-            )}
             <div className={styles.commissionsContent}>
+                {incomeData && (
+                    <div className="flex-row gap-3 w-100">
+                        <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'h'} />
+                        <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'hf'} />
+                    </div>
+                )}
+                {!initLoading && (!completedOrders || completedOrders.length === 0) && (
+                    <div className="flex-col">
+                        <Line/>
+                        <NoDataPlaceholder message="You have no commissions at the moment." src={noCommissionsIcon} className='mart-3'/>
+                    </div>
+                )}
+
                 <div className={styles.completedOrders}>
                     {completedOrders && completedOrders.length > 0 && (
                         <div className={styles.header}>
@@ -236,7 +237,7 @@ const Commissions = () => {
                 {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
             </div>
-        </div>
+        </PageContainer>
     );
 };
 

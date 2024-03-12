@@ -5,6 +5,7 @@ import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useOrdersContext } from '../../hooks';
 import noOrdersImg from '../../assets/images/no_orders.png';
+import { PageContainer } from '../../layouts';
 
 const Orders = () => {
     const { orders, setOrders } = useOrdersContext();
@@ -116,7 +117,7 @@ const Orders = () => {
     }, []);
 
     return (
-        <div className={`${styles.ordersContainer}`}>
+        <PageContainer>
             <div className="pageTitle mart-3">
                 <h1>Orders</h1>
                 <Line/>
@@ -145,7 +146,7 @@ const Orders = () => {
                     })}
                 </div>
             )}
-        </div>
+        </PageContainer>
     );
 };
 
