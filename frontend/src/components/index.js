@@ -1,6 +1,7 @@
 export { default as AlertPopup } from './alert-popup/AlertPopup';
 export { default as Box } from './box/Box';
 export { default as CommissionSnippet } from './commission/CommissionSnippet';
+export { default as IncomeSummary } from './income-summary/IncomeSummary';
 export { default as FormSnippet } from './form-snippet/FormSnippet';
 export * from './forms';
 export { default as ImageComponent } from './image/ImageComponent';
@@ -11,4 +12,4 @@ export { default as OriginalOrderComponent } from './original-order/OriginalOrde
 export * from './questions';
 export { default as YesNoPopup } from './yes-no-popup/YesNoPopup';
 export { default as Line } from './line/Line';
-export { default as NoDataPlaceholder} from './no-data/NoDataPlaceholder';
+export { default as NoDataPlaceholder } from './no-data/NoDataPlaceholder';

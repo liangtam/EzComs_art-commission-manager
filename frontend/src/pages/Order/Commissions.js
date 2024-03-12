@@ -1,5 +1,5 @@
 import styles from './Commissions.module.css';
-import {YesNoPopup, CommissionSnippet, Line} from '../../components/';
+import { YesNoPopup, CommissionSnippet, Line, IncomeSummary } from '../../components/';
 import { useState, useEffect, useReducer } from 'react';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
@@ -13,6 +13,7 @@ const Commissions = () => {
     const [showArtPreview, setShowArtPreview] = useState(false);
     const [openPopup, setOpenPopup] = useState(false);
     const [initLoading, setInitLoading] = useState(true);
+    const [incomeData, setIncomeData] = useState(null);
 
     const [selectedID, setSelectedID] = useState('');
 
@@ -25,10 +26,8 @@ const Commissions = () => {
     const { user } = useAuthContext();
     const navigate = useNavigate();
 
-    //const {orders, setOrders} = useContext(OrdersContext);
-
     const fetchCompletedOrders = async () => {
-        dispatch({type: ACTION.LOADING});
+        dispatch({ type: ACTION.LOADING });
         try {
             const response = await fetch('http://localhost:4000/api/orders/completed', {
                 headers: {
@@ -48,7 +47,36 @@ const Commissions = () => {
             dispatch({ type: ACTION.ERROR_GET_ALL });
         }
         setInitLoading(false);
-        dispatch({type: ACTION.RESET});
+        dispatch({ type: ACTION.RESET });
+    };
+
+    const fetchIncomeData = async () => {
+        //console.log('HERRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEE')
+        try {
+            const response = await fetch(`http://localhost:4000/api/user/income/${user.userID}`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+            console.log('HERRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEE')
+
+
+            if (response.ok) {
+
+                const incomeDataJson = await response.json();
+                setIncomeData(incomeDataJson);
+                console.log('h: ', incomeData)
+            }
+
+            if (!response.ok) {
+                console.log('HERRRRRRRRRRRRRRRRRRRRRREEEEEEEEEEEEEEEEEE')
+
+                throw new Error('Bad response. Could not fetch income.');
+            }
+        } catch (error) {
+            console.log('Income data error: ', error);
+            dispatch({ type: ACTION.ERROR_GENERAL });
+        }
     };
 
     const closePopup = () => {
@@ -61,7 +89,7 @@ const Commissions = () => {
     };
 
     const handleDeleteOrder = async (e) => {
-        // dispatch({type: ACTION.LOADING});
+        dispatch({ type: ACTION.LOADING });
         const response = await fetch('http://localhost:4000/api/orders/' + selectedID, {
             method: 'DELETE',
             headers: {
@@ -100,6 +128,12 @@ const Commissions = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (user) {
+            fetchIncomeData();
+        }
+    }, [user]);
+
     return (
         <div className={styles.commissionsContainer}>
             {openPopup && (
@@ -111,11 +145,12 @@ const Commissions = () => {
             )}
             <div className="pageTitle">
                 <h1>Commissions</h1>
-                <Line/>
+                <Line />
             </div>
+            {incomeData && <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'h'}/>}
             {!initLoading && (!completedOrders || completedOrders.length === 0) && (
                 <div className="page-container flex-col gap-3 justify-content-center align-items-center">
-                    <p className='font-size-3 font-weight-700 text-grey-300'>You have no commissions at the moment.</p>
+                    <p className="font-size-3 font-weight-700 text-grey-300">You have no commissions at the moment.</p>
                     <img className={`${styles.noCommissionsIcon} pad-3 border-box`} src={noCommissionsIcon} />
                 </div>
             )}

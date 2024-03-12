@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Login.module.css';
 import { RegistrationForm, LoginForm } from '../../components';
 import logo from '../../assets/images/EzComs_Logo_Black.png';
 import Checkmark from '../../components/checkmark/Checkmark';
+import { useAuthContext } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [regFormSelected, setRegFormSelected] = useState(false);
+    const { user } = useAuthContext();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            navigate('/');
+        }
+    }, [user]);
 
     return (
         <div className={`${styles.landingBody} `}>

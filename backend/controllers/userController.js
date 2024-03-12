@@ -61,22 +61,44 @@ const updateMonthlyIncome = async (req, res) => {
 };
 
 const updateTotalIncome = async (req, res) => {
-    const { email, totalIncome } = req.body;
-  
-    try {
-      // $set sets monthlyIncome val with new val
-      // new: true ensures method reutrns the updated document instead of orig one
-      const user = await User.findOneAndUpdate(
-        { email: email },
-        { $set: { totalIncome: totalIncome } },
-        { new: true }
-      );
-      res
-        .status(200)
-        .json({ username: user.username, email: user.email, userID: user._id });
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
-  };
+  const { email, totalIncome } = req.body;
 
-module.exports = { loginUser, signUpUser, updateMonthlyIncome, updateTotalIncome };
+  try {
+    // $set sets monthlyIncome val with new val
+    // new: true ensures method reutrns the updated document instead of orig one
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      { $set: { totalIncome: totalIncome } },
+      { new: true }
+    );
+    res
+      .status(200)
+      .json({ username: user.username, email: user.email, userID: user._id });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getIncomeData = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id).select(
+      "monthlyIncome totalIncome -_id"
+    );
+    res.status(200).json({
+      monthlyIncome: user.monthlyIncome,
+      totalIncome: user.totalIncome,
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  loginUser,
+  signUpUser,
+  updateMonthlyIncome,
+  updateTotalIncome,
+  getIncomeData
+};
