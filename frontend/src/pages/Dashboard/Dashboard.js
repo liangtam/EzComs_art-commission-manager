@@ -7,10 +7,10 @@ import winterTrees from '../../assets/images/winterdate_trees_bg.png';
 import activeFormBg from '../../assets/images/ezcoms_activeform_bg.png';
 import ordersBg from '../../assets/images/ezcoms_orders_bg.png';
 import commissionsBg from '../../assets/images/ezcoms_commissions_bg.png';
-import ezComsWave from '../../assets/images/EzComs_LoginWave.png';
-
+// import ezComsWave from '../../assets/images/EzComs_LoginWave.png';
 
 import styles from './Dashboard.module.css';
+import { Line } from '../../components';
 
 const Dashboard = () => {
     const { user } = useAuthContext();
@@ -56,7 +56,8 @@ const Dashboard = () => {
         <div className={styles.dashboardContainer}>
             <div className={`${styles.dashboardContent} h-100 w-100`}>
                 <div className={styles.welcomeMessage}>
-                    <h1>Welcome back, {user.email}</h1>
+                    <h1>Welcome back, {user.username}</h1>
+                    <Line/>
                 </div>
                 <div className={styles.gridContent}>
                     <div className={styles.widget} id={styles.dateWidget}>
@@ -64,7 +65,10 @@ const Dashboard = () => {
                             <h1>{`${monthAbbreviations[currDate.getMonth()]} ${currDate.getDate()}`}</h1>
                             <h1>{`${currDate.getFullYear()}`}</h1>
                         </div>
-                        <h1 className={styles.time}>{`${currDate.getHours().toString().padStart(2, '0')} : ${currDate.getMinutes().toString().padStart(2, '0')} : ${currDate.getSeconds().toString().padStart(2, '0')}`}</h1>
+                        <h1 className={styles.time}>{`${currDate.getHours().toString().padStart(2, '0')} : ${currDate.getMinutes().toString().padStart(2, '0')} : ${currDate
+                            .getSeconds()
+                            .toString()
+                            .padStart(2, '0')}`}</h1>
                         <img src={winterTrees}></img>
                     </div>
                     {(orders.length === 0 || (orders.length !== 0 && orders[0].status === 'Completed')) && (
@@ -87,8 +91,8 @@ const Dashboard = () => {
                                         <b>Order name:</b> {orders[0].orderName}
                                     </li>
                                     <li>
-                                        <b>Deadline:</b> {orders[0].deadline !== "9999-12-31" && orders[0].deadline}
-                                        {orders[0].deadline === "9999-12-31" && "--------"}
+                                        <b>Deadline:</b> {orders[0].deadline !== '9999-12-31' && orders[0].deadline}
+                                        {orders[0].deadline === '9999-12-31' && '--------'}
                                     </li>
                                     <li>
                                         <b>Date ordered:</b> {orders[0].dateReqqed}
@@ -103,22 +107,22 @@ const Dashboard = () => {
 
                     <Link to={`/form/${user.userID}`} className={`${styles.widget} ${styles.smallerWidget}`} id={styles.activeFormWidget}>
                         <h1>Active Form</h1>
-                        <img src={activeFormBg}></img>
+                        <img src={activeFormBg} alt="active-form-icon"></img>
                     </Link>
                     <Link to="/orders" className={`${styles.widget} ${styles.smallerWidget}`} id={styles.ordersWidget}>
                         <h1>Orders</h1>
-                        <img src={ordersBg}></img>
+                        <img src={ordersBg} alt="orders-icon"></img>
                     </Link>
                     <Link to="/commissions" className={styles.widget} id={styles.commissionsWidget}>
                         <h1>Commissions</h1>
-                        <img src={commissionsBg}></img>
-                    </Link> 
+                        <img src={commissionsBg} alt="commissions-icon"></img>
+                    </Link>
                     <div id={styles.ezComsHead}>
-                        <img src={ezComsHead}></img>
+                        <img src={ezComsHead} alt="ezcoms-head"></img>
                     </div>
                 </div>
             </div>
-            <img id={styles.ezComsWave} src={ezComsWave}></img>
+            {/* <img id={styles.ezComsWave} src={ezComsWave}></img> */}
         </div>
     );
 };

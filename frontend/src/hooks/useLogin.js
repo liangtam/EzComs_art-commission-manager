@@ -33,7 +33,7 @@ export const useLogin = () => {
 
             if (response.ok) {
                 // saving user to local storage
-                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('user', JSON.stringify({username: user.username, ...user}));
 
                 // update to auth context
                 dispatch({ type: ACTION.LOGIN, payload: user });

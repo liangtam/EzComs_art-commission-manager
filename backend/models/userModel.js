@@ -38,9 +38,9 @@ userSchema.statics.signUp = async function(username, email, password) {
         throw Error('All fields must be filled.');
     }
 
-    if (!validator.isAlphanumeric(username)) {
-        throw Error('Username must be alphanumeric.')
-    }
+    // if (!validator.isAlphanumericLocales(username)) {
+    //     throw Error('Username must be alphanumeric.')
+    // }
 
     if (!validator.isEmail(email)) {
         throw Error('Email is not valid.');
@@ -65,7 +65,7 @@ userSchema.statics.signUp = async function(username, email, password) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({username, email, password: hash});
+    const user = await this.create({username, email, password: hash, totalIncome: 0, monthlyIncome: 0});
 
     return user;
 }

@@ -10,9 +10,9 @@ const RegistrationForm = () => {
 
     const handleSignUp = async (e) => {
         e.preventDefault();
-        console.log(email, password);
+        console.log(username, email, password);
 
-        await signUp(email, password);
+        await signUp(username, email, password);
         console.log('regForm: ', error);
     };
 

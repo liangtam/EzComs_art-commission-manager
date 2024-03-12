@@ -11,14 +11,14 @@ export const useSignup = () => {
         setIsLoading(true);
         setError(null);
 
-        const userObj = {username, email, password, monthlyIncome : 0, totalIncome: 0};
+        const partialUserObj = {username, email, password};
 
         const response = await fetch('http://localhost:4000/api/user/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(userObj)
+            body: JSON.stringify(partialUserObj)
         })
 
         const user = await response.json();

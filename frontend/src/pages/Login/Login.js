@@ -5,7 +5,7 @@ import logo from '../../assets/images/EzComs_Logo_Black.png';
 import Checkmark from '../../components/checkmark/Checkmark';
 
 const Login = () => {
-    const [regFormSelected, setRegFormSelected] = useState(true);
+    const [regFormSelected, setRegFormSelected] = useState(false);
 
     return (
         <div className={`${styles.landingBody} `}>
@@ -52,7 +52,7 @@ const Login = () => {
                                             : 'fill-button turquoiseHoverButton text-grey-800 bg-grey-50 font-weight-700 font-size-2 pady-2 padx-3 radius-4'
                                     }`}
                                     id="newUserBtn"
-                                    onClick={(e) => setRegFormSelected(true)}
+                                    onClick={() => setRegFormSelected(true)}
                                     data-testid="new-user-btn"
                                 >
                                     New User
@@ -64,7 +64,7 @@ const Login = () => {
                                             : 'fill-button turquoiseHoverButton text-grey-800 bg-grey-50 font-weight-700 font-size-2 pady-2 padx-3 radius-4'
                                     }
                                     id="oldUserBtn"
-                                    onClick={(e) => setRegFormSelected(false)}
+                                    onClick={() => setRegFormSelected(false)}
                                     data-testid="old-user-btn"
                                 >
                                     Old User
