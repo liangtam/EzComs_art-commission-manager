@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, useReducer } from 'react';
-import {OrderSnippet, YesNoPopup} from '../../components';
+import {Line, NoDataPlaceholder, OrderSnippet, YesNoPopup} from '../../components';
 import styles from './Orders.module.css';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -61,7 +61,7 @@ const Orders = () => {
         setSelectedOrderId(orderId);
     };
 
-    const closePopup = (e) => {
+    const closePopup = () => {
         setOpenPopup(false);
     };
 
@@ -119,12 +119,10 @@ const Orders = () => {
         <div className={`${styles.ordersContainer}`}>
             <div className="pageTitle mart-3">
                 <h1>Orders</h1>
+                <Line/>
             </div>
             {!initLoading && !state.errorMessage && (!orders || orders.length === 0) && (
-                <div className="flex-col gap-3 justify-content-center align-items-center mart-3">
-                    <p className="font-size-3 mar-3 text-align-center font-weight-700">You have no orders right now.</p>
-                    <img className={`${styles.noOrdersImg} pad-3 border-box`} src={noOrdersImg} />
-                </div>
+                <NoDataPlaceholder message='You have no orders right now.' src={noOrdersImg}/>
             )}
             {!initLoading && state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
             {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}

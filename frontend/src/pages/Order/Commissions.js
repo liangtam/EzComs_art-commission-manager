@@ -1,5 +1,5 @@
 import styles from './Commissions.module.css';
-import {YesNoPopup, CommissionSnippet} from '../../components/';
+import {YesNoPopup, CommissionSnippet, Line} from '../../components/';
 import { useState, useEffect, useReducer } from 'react';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
@@ -111,6 +111,7 @@ const Commissions = () => {
             )}
             <div className="pageTitle">
                 <h1>Commissions</h1>
+                <Line/>
             </div>
             {!initLoading && (!completedOrders || completedOrders.length === 0) && (
                 <div className="page-container flex-col gap-3 justify-content-center align-items-center">

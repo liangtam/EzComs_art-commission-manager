@@ -2,7 +2,7 @@ import { QuestionFieldsContext } from '../../context/';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import styles from './ActiveForm.module.css';
 
-import { ImagePreview } from '../../components/';
+import { ImagePreview, NoDataPlaceholder } from '../../components/';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { useParams } from 'react-router-dom';
 
@@ -262,10 +262,7 @@ const ActiveForm = () => {
             <form onSubmit={handleSubmit} className={styles.activeFormContainer} encType="multipart/form-data">
                 {loading && <div className="page-container flex-row justify-content-center align-items-center font-size-3">Loading...</div>}
                 {!loading && !activeForm && (
-                    <div className="page-container flex-col gap-3 justify-content-center align-items-center">
-                        <h1>No Active Form.</h1>
-                        <img className={`${styles.activeFormImg} pad-3 border-box`} src={activeFormImg} />
-                    </div>
+                    <NoDataPlaceholder message="No active form." src={activeFormImg}/>
                 )}
                 {!loading && activeForm && (
                     <div className={styles.activeFormContent}>

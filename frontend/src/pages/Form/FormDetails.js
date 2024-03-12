@@ -283,11 +283,11 @@ const FormDetails = () => {
                 </div>
                 {activeFormReplacementOpenPopup && (
                     <YesNoPopup
-                        yesFunction={(e) => {
+                        yesFunction={() => {
                             replaceActiveForm();
                             saveForm();
                         }}
-                        closePopup={(e) => setActiveFormReplacementOpenPopup(false)}
+                        closePopup={() => setActiveFormReplacementOpenPopup(false)}
                     >
                         <h3>Another Form Is Currently Active</h3>
                         <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>

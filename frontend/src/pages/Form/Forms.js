@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useReducer } from 'react';
-import { FormSnippet, Line, YesNoPopup } from '../../components/';
+import { FormSnippet, Line, NoDataPlaceholder, YesNoPopup } from '../../components/';
 import { FormsContext } from '../../context/';
 import styles from './Forms.module.css';
 import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
@@ -93,14 +93,9 @@ const Forms = () => {
             <div className="content-container flex-col gap-2 h-100 overflow-y-auto ">
                 <div className="flex-col justify-content-start align-items-start w-100 ">
                     <h1 className="font-size-4 mart-4"> Forms </h1>
-                    <Line/>
+                    <Line />
                 </div>
-                {!initLoading && (!forms || forms.length === 0) && (
-                    <div className="page-container flex-col gap-3 justify-content-center align-items-center">
-                        <p className="font-size-3 font-weight-700">You have no forms at the moment.</p>
-                        <img className={`${styles.activeFormImg} pad-3 border-box`} src={activeFormImg} />
-                    </div>
-                )}
+                {!initLoading && (!forms || forms.length === 0) && <NoDataPlaceholder message="You have no forms right now." src={activeFormImg} />}
                 {state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage pad-3">{state.loadingMessage}</div>}

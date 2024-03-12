@@ -11,3 +11,4 @@ export { default as OriginalOrderComponent } from './original-order/OriginalOrde
 export * from './questions';
 export { default as YesNoPopup } from './yes-no-popup/YesNoPopup';
 export { default as Line } from './line/Line';
+export { default as NoDataPlaceholder} from './no-data/NoDataPlaceholder';
