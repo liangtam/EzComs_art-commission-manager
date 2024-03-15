@@ -139,7 +139,7 @@ const Commissions = () => {
                 </YesNoPopup>
             )}
             <div className="pageTitle mart-3">
-                <h1>Commissions</h1>
+                <h1>Summary</h1>
                 <Line />
             </div>
             <div className={styles.commissionsContent}>
@@ -149,16 +149,21 @@ const Commissions = () => {
                         <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'hf'} />
                     </div>
                 )}
+                <Line />
+
                 {!initLoading && (!completedOrders || completedOrders.length === 0) && (
                     <div className="flex-col">
-                        <Line/>
-                        <NoDataPlaceholder message="You have no commissions at the moment." src={noCommissionsIcon} className='mart-3'/>
+                        <NoDataPlaceholder message="You have no commissions at the moment." src={noCommissionsIcon} className="mart-3" />
                     </div>
                 )}
 
                 <div className={styles.completedOrders}>
+                    <div className="pageTitle mart-3">
+                        <h1>Commissions</h1>
+                        <Line />
+                    </div>
                     {completedOrders && completedOrders.length > 0 && (
-                        <div className={styles.header}>
+                        <div className={`${styles.header} pady-1`}>
                             <div className={styles.headerItem}>
                                 <p>Date</p>
                             </div>
@@ -177,7 +182,7 @@ const Commissions = () => {
                         completedOrders.map((completedOrder) => {
                             return (
                                 <div className={styles.completedOrderContainer}>
-                                    <div className={styles.completedDateContainer}>
+                                    <div className={`${styles.completedDateContainer}`}>
                                         <p>{completedOrder && completedOrder.dateCompleted}</p>
                                     </div>
                                     <div className={styles.orderNameContainer}>
@@ -210,7 +215,7 @@ const Commissions = () => {
                                             <img src={artIcon} alt="Art"></img>
                                         </button>
                                     </div>
-                                    <div className={styles.buttons}>
+                                    <div className={`${styles.buttons}`}>
                                         <button className="filledWhiteButton greyHoverButton font-weight-400" onClick={(e) => handleViewClick(e, completedOrder._id)}>
                                             View
                                         </button>

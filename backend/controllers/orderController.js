@@ -1,5 +1,7 @@
 const express = require('express');
 const Order = require('../models/orderModel');
+const User = require('../models/userModel');
+
 const mongoose = require('mongoose');
 const multer = require('multer');
 const path = require ('path');
@@ -195,7 +197,8 @@ const updateOrder = async (req, res) => {
         status: req.body.status,
         artistNotes: req.body.artistNotes,
         editedStatus: req.body.editedStatus,
-        originalUneditedOrder: oldOrder.originalUneditedOrder
+        originalUneditedOrder: oldOrder.originalUneditedOrder,
+        user_id: oldOrder.user_id
 
     };
     //const url = req.protocol + '://' + req.get('host');
@@ -334,7 +337,6 @@ const updateOrder = async (req, res) => {
 
     /** Saving the order now! **/
     const order = await Order.findOneAndUpdate({_id: id}, newOrder);
-
 
     if (!order) {
         return res.status(404).json({error: 'No such order.'});

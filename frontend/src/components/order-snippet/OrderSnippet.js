@@ -37,7 +37,7 @@ const OrderSnippet = ({orderId, order, handleOpenPopup}) => {
                 <h3>Are you sure?</h3>
                 <p>Are you sure you want to delete this order? This action cannot be undone.</p>
             </YesNoPopup>} */}
-            <Link className={styles.orderSnippet} to={`/orders/${orderId}`}>
+            <Link className='flex-col padx-3' to={`/orders/${orderId}`}>
                 {order && order.orderName &&
                 <div className={styles.orderName}>
                     <h4>{order.orderName}</h4>
