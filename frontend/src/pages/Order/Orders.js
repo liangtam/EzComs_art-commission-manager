@@ -24,8 +24,6 @@ const Orders = () => {
             return;
         }
 
-        const currentScrollPos = window.scrollY;
-
         // making a call to the backend
         dispatch({ type: ACTION.LOADING });
         try {
@@ -39,9 +37,8 @@ const Orders = () => {
             if (response.ok) {
                 // to parse the json from the above response into smt we can work w/
                 const json = await response.json();
-                // console.log("Json: ", json)
-                setOrders(json);
-                window.scrollTo(0, currentScrollPos);
+                console.log("Json: ", json)
+                setOrders((prev) => [...prev, ...json]);
                 // console.log('Fetched all forms in orders page! ', json);
                 dispatch({ type: ACTION.RESET });
             } else {
