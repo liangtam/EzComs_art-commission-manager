@@ -98,7 +98,7 @@ const postOrder = async (req, res) => {
         }
 
         //console.log("Post order, req.files: " + req.files);
-        console.log("Post order, ref images: " + referenceImages);
+        // console.log("Post order, ref images: " + referenceImages);
 
         // Setting our order's reference images to the ones we just uploaded
         order.referenceImages = referenceImages;
@@ -106,13 +106,18 @@ const postOrder = async (req, res) => {
 
         // Saving the order to backend
         order.save()
-        .then((result) => {
+        .then(async (result) => {
             console.log("Order saved! ", order);
             res.status(200).json({
                 success: true,
                 mssg: "Order added!",
                 data: result
             })
+            const user = await User.findById(order.userId);
+            if (user) {
+                user.numOfOrders += 1;
+                await user.save()
+            }
         })
         .catch((error) => {
             console.log(`Error saving order: ${error}`);

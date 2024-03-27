@@ -3,6 +3,7 @@ const serverless = require("serverless-http");
 const cors = require('cors');
 
 // express app
+const schedule = require('node-schedule');
 const app = express();
 const bodyParser = require("body-parser");
 app.use(cors());
@@ -10,7 +11,9 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 const ordersRoutes = require('./routes/orders');
 const formRoutes = require('./routes/form');
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user');
+const { resetMonthlyUserData } = require('./utils/monthlyOrderReset');
+const monthlyResetJob = schedule.scheduleJob('0 0 1 * *', resetMonthlyUserData);
 
 // middleware - code that executes b/w us sending a req on the server and us sending a response
 app.use(express.json());
