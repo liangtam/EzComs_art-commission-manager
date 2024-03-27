@@ -21,23 +21,28 @@ const userSchema = new Schema({
     },
     totalIncome: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     monthlyIncome: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     numOfOrders: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     numOfCommissions: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     monthlyNumOfCommissions: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     }
 });
 
@@ -77,7 +82,7 @@ userSchema.statics.signUp = async function(username, email, password) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await this.create({username, email, password: hash, totalIncome: 0, monthlyIncome: 0, numOfOrders: 0, numOfCommissions: 0, monthlyNumOfCommissions: 0});
+    const user = await this.create({username, email, password: hash});
 
     return user;
 }
