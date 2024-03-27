@@ -43,6 +43,11 @@ const userSchema = new Schema({
         type: Number,
         required: true,
         default: 0
+    },
+    totalOrdersPrice: {
+        type: Number,
+        required: true,
+        default: 0
     }
 });
 

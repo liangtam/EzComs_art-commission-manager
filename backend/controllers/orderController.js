@@ -19,7 +19,7 @@ const getOrders = async (req, res) => {
   const limit = parseInt(req.query.limit, 10) || 20;
 
   const user_id = req.user._id;
-  const orders = await Order.find({ user_id: user_id })
+  const orders = await Order.find({ userId: user_id })
     .sort({ deadline: 1 })
     .skip(offset * limit)
     .limit(limit);
@@ -33,7 +33,7 @@ const getCompletedOrders = async (req, res) => {
   const user_id = req.user._id;
   const completedOrders = await Order.find({
     status: "Completed",
-    user_id,
+    userId: user_id,
   }).sort({ createdAt: -1 });
 
   res.status(200).json(completedOrders);
@@ -118,7 +118,15 @@ const postOrder = async (req, res) => {
         mssg: "Order added!",
         data: result,
       });
-      await User.updateOne({ _id: order.userId }, { $inc: { numOfOrders: 1 } });
+      await User.updateOne(
+        { _id: order.userId },
+        {
+          $inc: {
+            numOfOrders: 1,
+            totalOrdersPrice: typeof order.price === Number ? order.price : 0,
+          },
+        }
+      );
     })
     .catch((error) => {
       console.log(`Error saving order: ${error}`);
@@ -202,7 +210,7 @@ const updateOrder = async (req, res) => {
     artistNotes: req.body.artistNotes,
     editedStatus: req.body.editedStatus,
     originalUneditedOrder: oldOrder.originalUneditedOrder,
-    user_id: oldOrder.user_id,
+    userId: oldOrder.userId,
   };
   //const url = req.protocol + '://' + req.get('host');
 
@@ -360,6 +368,13 @@ const updateOrder = async (req, res) => {
 
   if (!order) {
     return res.status(404).json({ error: "No such order." });
+  } else {
+    if (typeof oldOrder.price !== Number && typeof order.price === Number) {
+      await User.updateOne(
+        { _id: order.userId },
+        { $inc: { totalOrdersPrice: order.price } }
+      );
+    }
   }
 
   res.status(200).json(order);
@@ -424,16 +439,16 @@ const editClientOrder = async (req, res) => {
       console.log(`Error: ${error}`);
     }
   }
-  console.log("Ref imgs to delete: ", refImgsToDelete);
-  console.log("Ref imgs to delete item example: ", refImgsToDelete[0]);
+//   console.log("Ref imgs to delete: ", refImgsToDelete);
+//   console.log("Ref imgs to delete item example: ", refImgsToDelete[0]);
 
   let updatedRefImgs = oldRefImgs.filter(
     (img) => !refImgsToDelete.includes(JSON.stringify(img))
   ); // get rid of all deleted imgs
-  console.log("UpdatedRefImgs: ", updatedRefImgs);
+//   console.log("UpdatedRefImgs: ", updatedRefImgs);
 
   let newRefImgs = Array.from(req.files);
-  console.log("Req files", req.files);
+//   console.log("Req files", req.files);
   //const hostURL = req.protocol + '://' + req.get('host');
 
   let newRefImgsToSave = [];
@@ -482,12 +497,19 @@ const editClientOrder = async (req, res) => {
 
   const order = await Order.findByIdAndUpdate({ _id: id }, newOrder);
 
+
   if (!order) {
-    res.status(400).json({ error: "Error: Could not edit order!" });
-    console.log("Could not edit order.");
+    return res.status(404).json({ error: "Could not edit client order." });
+  } else {
+    if (typeof oldOrder.price !== Number && typeof order.price === Number) {
+      await User.updateOne(
+        { _id: order.userId },
+        { $inc: { totalOrdersPrice: order.price } }
+      );
+    }
   }
 
-  res.status(200).json({ message: "Successfully edited order!" });
+  res.status(200).json({ message: "Successfully edited client order!" });
 };
 
 module.exports = {
