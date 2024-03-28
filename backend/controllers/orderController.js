@@ -8,9 +8,142 @@ const path = require("path");
 const fs = require("fs");
 const cloudinary = require("../utils/cloudinary");
 
-//redirect to orders page
-const redirectToOrders = (req, res) => {
-  res.redirect("/orders");
+const deleteCommissionDataFromUser = async (orderDeleted) => {
+  const currDate = new Date();
+  const currMonth = currDate.getMonth() + 1;
+  if (orderDeleted.status === "Completed") {
+    await User.updateOne(
+      { _id: orderDeleted.userId },
+      {
+        $dec: {
+          totalIncome:
+            typeof orderDeleted.price === Number ? orderDeleted.price : 0,
+          numOfCommissions: 1,
+        },
+      }
+    );
+    if (parseInt(orderDeleted.dateCompleted.split("-")[1], 10) === currMonth) {
+      await User.updateOne(
+        { _id: orderDeleted.userId },
+        {
+          $dec: {
+            monthlyIncome:
+              typeof orderDeleted.price === Number ? orderDeleted.price : 0,
+            monthlyNumOfCommissions: 1,
+          },
+        }
+      );
+    }
+  }
+};
+
+const addUserCommissionData = async (commission) => {
+  const currDate = new Date();
+  const currMonth = currDate.getMonth() + 1;
+  if (commission.status === "Completed") {
+    await User.updateOne(
+      { _id: commission.userId },
+      {
+        $inc: {
+          totalIncome:
+            typeof commission.price === Number ? commission.price : 0,
+          numOfCommissions: 1,
+        },
+      }
+    );
+    if (parseInt(commission.dateCompleted.split("-")[1], 10) === currMonth) {
+      await User.updateOne(
+        { _id: commission.userId },
+        {
+          $inc: {
+            monthlyIncome:
+              typeof commission.price === Number ? commission.price : 0,
+            monthlyNumOfCommissions: 1,
+          },
+        }
+      );
+    }
+  }
+};
+
+const replaceUserCommissionData = async (
+  oldCommissionData,
+  newCommissionData
+) => {
+  const currDate = new Date();
+  const currMonth = currDate.getMonth() + 1;
+  await User.updateOne(
+    { _id: newCommissionData.userId },
+    {
+      $inc: {
+        totalIncome:
+          typeof newCommissionData.price === Number
+            ? newCommissionData.price
+            : 0,
+      },
+      $dec: {
+        totalIncome:
+          typeof oldCommissionData.price === Number
+            ? oldCommissionData.price
+            : 0,
+      },
+    }
+  );
+  const newCommissionDataMonth = parseInt(
+    newCommissionData.dateCompleted.split("-")[1],
+    10
+  );
+  const oldCommissionDataMonth = parseInt(
+    oldCommissionData.dateCompleted.split("-")[1],
+    10
+  );
+  if (
+    newCommissionDataMonth === currMonth &&
+    oldCommissionDataMonth !== currMonth
+  ) {
+    await User.updateOne(
+      { _id: newCommissionData.userId },
+      {
+        $inc: {
+          monthlyIncome:
+            typeof newCommissionData.price === Number
+              ? newCommissionData.price
+              : 0,
+          monthlyNumOfCommissions: 1,
+        },
+      }
+    );
+  } else if (
+    newCommissionDataMonth === currMonth &&
+    oldCommissionDataMonth === currMonth
+  ) {
+    await User.updateOne(
+      { _id: newCommissionData.userId },
+      {
+        $inc: {
+          monthlyIncome:
+            typeof newCommissionData.price === Number
+              ? newCommissionData.price
+              : 0,
+        },
+      }
+    );
+  }
+};
+
+const deleteOrderDataFromUser = async (orderDeleted) => {
+  if (orderDeleted.status !== "Completed") {
+    await User.updateOne(
+      { _id: orderDeleted.userId },
+      {
+        $dec: {
+          totalOrdersPrice:
+            typeof orderDeleted.price === Number ? orderDeleted.price : 0,
+          numOfOrders: 1,
+        },
+      }
+    );
+  }
 };
 
 // get orders
@@ -172,14 +305,21 @@ const deleteOrder = async (req, res) => {
   //     })
   // }
 
-  const orderDelete = await Order.findOneAndDelete({ _id: id });
+  const orderDeleted = await Order.findOneAndDelete({ _id: id });
 
-  if (!orderDelete) {
+  if (!orderDeleted) {
     return res.status(404).json({ error: "Cannot delete order." });
+  } else {
+    if (orderDeleted.status === "Completed") {
+      await deleteCommissionDataFromUser(orderDeleted);
+    } else {
+      await deleteOrderDataFromUser(orderDeleted);
+    }
   }
 
-  res.status(200).json(orderDelete);
+  res.status(200).json(orderDeleted);
 };
+
 // This is to update an order for the convenience of the artist's workspace while working on the commission
 //     You can only add order notes, WIP arts, completed arts, and change the status of the order
 const updateOrder = async (req, res) => {
@@ -374,6 +514,27 @@ const updateOrder = async (req, res) => {
         { _id: order.userId },
         { $inc: { totalOrdersPrice: order.price } }
       );
+    } else if (
+      typeof oldOrder.price === Number &&
+      typeof order.price === Number
+    ) {
+      await User.updateOne(
+        { _id: order.userId },
+        { $inc: { totalOrdersPrice: order.price } },
+        {
+          $dec: {
+            totalOrdersPrice: oldOrder.price,
+          },
+        }
+      );
+    }
+
+    if (oldOrder.status !== "Completed" && order.status === "Completed") {
+      await deleteOrderDataFromUser(oldOrder);
+    } else if (
+      oldOrder.status === "Completed" &&
+      order.status === "Completed"
+    ) {
     }
   }
 
@@ -439,16 +600,16 @@ const editClientOrder = async (req, res) => {
       console.log(`Error: ${error}`);
     }
   }
-//   console.log("Ref imgs to delete: ", refImgsToDelete);
-//   console.log("Ref imgs to delete item example: ", refImgsToDelete[0]);
+  //   console.log("Ref imgs to delete: ", refImgsToDelete);
+  //   console.log("Ref imgs to delete item example: ", refImgsToDelete[0]);
 
   let updatedRefImgs = oldRefImgs.filter(
     (img) => !refImgsToDelete.includes(JSON.stringify(img))
   ); // get rid of all deleted imgs
-//   console.log("UpdatedRefImgs: ", updatedRefImgs);
+  //   console.log("UpdatedRefImgs: ", updatedRefImgs);
 
   let newRefImgs = Array.from(req.files);
-//   console.log("Req files", req.files);
+  //   console.log("Req files", req.files);
   //const hostURL = req.protocol + '://' + req.get('host');
 
   let newRefImgsToSave = [];
@@ -496,7 +657,6 @@ const editClientOrder = async (req, res) => {
   //console.log("Edited status now: ", newOrder.editedStatus);
 
   const order = await Order.findByIdAndUpdate({ _id: id }, newOrder);
-
 
   if (!order) {
     return res.status(404).json({ error: "Could not edit client order." });
