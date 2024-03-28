@@ -2,6 +2,8 @@ export { default as AlertPopup } from './alert-popup/AlertPopup';
 export { default as Box } from './box/Box';
 export { default as CommissionSnippet } from './commission/CommissionSnippet';
 export { default as IncomeSummary } from './income-summary/IncomeSummary';
+export { default as OrdersSummary } from './orders-summary/OrdersSummary';
+export { default as CommissionSummary } from './commission-summary/CommissionSummary';
 export { default as FormSnippet } from './form-snippet/FormSnippet';
 export * from './forms';
 export { default as ImageComponent } from './image/ImageComponent';

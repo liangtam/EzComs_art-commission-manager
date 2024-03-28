@@ -1,4 +1,4 @@
-const OrderSummary = ({numOfOrders, totalOrdersPrice}) => {
+const OrdersSummary = ({numOfOrders, totalOrdersPrice}) => {
     return (
         <div className="flex-col gap-2 radius-2 pad-4 marb-3 w-50" style={{ boxShadow: '0px 3px 8px 0px rgba(0, 0, 0, 0.2)' }}>
         <div className="flex-col">
@@ -14,4 +14,4 @@ const OrderSummary = ({numOfOrders, totalOrdersPrice}) => {
     )
 }
 
-export default OrderSummary
+export default OrdersSummary
