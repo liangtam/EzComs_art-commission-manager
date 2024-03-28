@@ -66,6 +66,23 @@ const addUserCommissionData = async (commission) => {
   }
 };
 
+const addUserOrderData = async (order) => {
+  try {
+    await User.updateOne(
+      { _id: order.userId },
+      {
+        $inc: {
+          totalOrdersPrice:
+            typeof commission.price === Number ? commission.price : 0,
+          numOfOrders: 1,
+        },
+      }
+    );
+  } catch (err) {
+    throw new Error("Could not add order data to user");
+  }
+};
+
 const replaceUserCommissionData = async (
   oldCommissionData,
   newCommissionData
@@ -509,32 +526,20 @@ const updateOrder = async (req, res) => {
   if (!order) {
     return res.status(404).json({ error: "No such order." });
   } else {
-    if (typeof oldOrder.price !== Number && typeof order.price === Number) {
-      await User.updateOne(
-        { _id: order.userId },
-        { $inc: { totalOrdersPrice: order.price } }
-      );
-    } else if (
-      typeof oldOrder.price === Number &&
-      typeof order.price === Number
-    ) {
-      await User.updateOne(
-        { _id: order.userId },
-        { $inc: { totalOrdersPrice: order.price } },
-        {
-          $dec: {
-            totalOrdersPrice: oldOrder.price,
-          },
-        }
-      );
-    }
-
     if (oldOrder.status !== "Completed" && order.status === "Completed") {
       await deleteOrderDataFromUser(oldOrder);
+      await addUserCommissionData(order);
     } else if (
       oldOrder.status === "Completed" &&
       order.status === "Completed"
     ) {
+      await replaceUserCommissionData(oldOrder, order);
+    } else if (
+      oldOrder.status === "Completed" &&
+      order.status !== "Completed"
+    ) {
+      await deleteCommissionDataFromUser(oldOrder);
+      await addUserOrderData(order);
     }
   }
 
@@ -659,13 +664,22 @@ const editClientOrder = async (req, res) => {
   const order = await Order.findByIdAndUpdate({ _id: id }, newOrder);
 
   if (!order) {
-    return res.status(404).json({ error: "Could not edit client order." });
+    return res.status(404).json({ error: "No such order." });
   } else {
-    if (typeof oldOrder.price !== Number && typeof order.price === Number) {
-      await User.updateOne(
-        { _id: order.userId },
-        { $inc: { totalOrdersPrice: order.price } }
-      );
+    if (oldOrder.status !== "Completed" && order.status === "Completed") {
+      await deleteOrderDataFromUser(oldOrder);
+      await addUserCommissionData(order);
+    } else if (
+      oldOrder.status === "Completed" &&
+      order.status === "Completed"
+    ) {
+      await replaceUserCommissionData(oldOrder, order);
+    } else if (
+      oldOrder.status === "Completed" &&
+      order.status !== "Completed"
+    ) {
+      await deleteCommissionDataFromUser(oldOrder);
+      await addUserOrderData(order);
     }
   }
 
