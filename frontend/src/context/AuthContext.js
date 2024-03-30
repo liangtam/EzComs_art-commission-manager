@@ -26,11 +26,12 @@ const AuthContextProvider = ({ children }) => {
         async function getUser() {
             const user = await JSON.parse(localStorage.getItem('user')); // the local storage item is a json string
             if (user) {
-                const decodedToken = jwtDecode.decode(user.token);
+                const decodedToken = jwtDecode(user.token);
                 const currDate = Date.now();
                 if (decodedToken.exp * 1000 < currDate) {
                     dispatch({ type: ACTION.LOGOUT });
                     localStorage.removeItem('user');
+                    console.log("Token expired")
                 } else {
                     dispatch({ type: ACTION.LOGIN, payload: user });
                 }

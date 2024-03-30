@@ -268,15 +268,7 @@ const postOrder = async (req, res) => {
         mssg: "Order added!",
         data: result,
       });
-      await User.updateOne(
-        { _id: order.userId },
-        {
-          $inc: {
-            numOfOrders: 1,
-            totalOrdersPrice: typeof order.price === Number ? order.price : 0,
-          },
-        }
-      );
+      await addUserOrderData(order)
     })
     .catch((error) => {
       console.log(`Error saving order: ${error}`);
