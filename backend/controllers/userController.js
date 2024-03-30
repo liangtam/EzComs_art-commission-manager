@@ -115,7 +115,7 @@ const getOrdersData = async (req, res) => {
   const { id } = req.params;
   try {
     const user = await User.findById(id).select(
-      "numOfOrders monthlyNumOfCommissions -_id"
+      "numOfOrders totalOrdersPrice -_id"
     );
     res.status(200).json({
       numOfOrders: user.numOfOrders,

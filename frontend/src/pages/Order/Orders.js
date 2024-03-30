@@ -14,6 +14,7 @@ const Orders = () => {
     const [state, dispatch] = useReducer(orderMessageReducer, {});
     const [initLoading, setInitLoading] = useState(true);
     const [offset, setOffset] = useState(0);
+    const [ordersData, setOrdersData] = useState(null);
 
     const { user } = useAuthContext();
     console.log('Orders in orders page: ', orders);
@@ -52,6 +53,25 @@ const Orders = () => {
         }
         setInitLoading(false);
     };
+
+    const fetchOrderData = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/user/orders-data/${user.userID}`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+            if (response.ok) {
+                const ordersJSONData = await response.json();
+                setOrdersData(ordersJSONData);
+                console.log(ordersJSONData)
+            } else {
+                throw new Error(response.statusText)
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const handleOpenPopup = (e, orderId) => {
         e.preventDefault();
@@ -107,6 +127,13 @@ const Orders = () => {
     }, [offset]);
 
     useEffect(() => {
+        if (user) {
+            fetchOrderData();
+            console.log('here')
+        }
+    }, [user])
+
+    useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -119,7 +146,7 @@ const Orders = () => {
                 <h1>Orders</h1>
                 <Line/>
             </div>
-            <OrdersSummary/>
+            { ordersData && <OrdersSummary numOfOrders={ordersData.numOfOrders} totalOrdersPrice={ordersData.totalOrdersPrice}/>}
             {!initLoading && !state.errorMessage && (!orders || orders.length === 0) && (
                 <NoDataPlaceholder message='You have no orders right now.' src={noOrdersImg}/>
             )}
