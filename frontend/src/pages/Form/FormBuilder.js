@@ -304,6 +304,7 @@ const FormBuilder = () => {
                             className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-grey-50 mar-3 w-100`}
                             type="submit"
                             onClick={handleSaveFormClick}
+                            disabled={questionFieldList.length === 0}
                         >
                             Submit
                         </button>
