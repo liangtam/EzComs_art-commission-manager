@@ -10,6 +10,8 @@ const {
   updateMonthlyIncome,
   updateTotalIncome,
   getIncomeData,
+  getCommissionData,
+  getOrdersData,
 } = require("../controllers/userController");
 
 // login route
@@ -23,5 +25,9 @@ router.patch("/monthlyincome", updateMonthlyIncome);
 router.patch("/totalincome", updateTotalIncome);
 
 router.get("/income/:id", requireAuth, getIncomeData);
+
+router.get("/commission-data/:id", requireAuth, getCommissionData);
+
+router.get("/orders-data/:id", requireAuth, getOrdersData);
 
 module.exports = router;

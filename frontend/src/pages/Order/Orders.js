@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, useReducer } from 'react';
-import {Line, NoDataPlaceholder, OrderSnippet, YesNoPopup} from '../../components';
+import {Line, NoDataPlaceholder, OrderSnippet, OrdersSummary, YesNoPopup} from '../../components';
 import styles from './Orders.module.css';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer';
 import { useAuthContext } from '../../hooks/useAuthContext';
@@ -119,6 +119,7 @@ const Orders = () => {
                 <h1>Orders</h1>
                 <Line/>
             </div>
+            <OrdersSummary/>
             {!initLoading && !state.errorMessage && (!orders || orders.length === 0) && (
                 <NoDataPlaceholder message='You have no orders right now.' src={noOrdersImg}/>
             )}

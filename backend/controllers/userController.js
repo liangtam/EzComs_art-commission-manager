@@ -95,10 +95,44 @@ const getIncomeData = async (req, res) => {
   }
 };
 
+const getCommissionData = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id).select(
+      "numOfCommissions monthlyNumOfCommissions -_id"
+    );
+    res.status(200).json({
+      numOfCommissions: user.numOfCommissions,
+      monthlyNumOfCommissions: user.monthlyNumOfCommissions,
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getOrdersData = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById(id).select(
+      "numOfOrders monthlyNumOfCommissions -_id"
+    );
+    res.status(200).json({
+      numOfOrders: user.numOfOrders,
+      totalOrdersPrice: user.totalOrdersPrice,
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   loginUser,
   signUpUser,
   updateMonthlyIncome,
   updateTotalIncome,
-  getIncomeData
+  getIncomeData,
+  getCommissionData,
+  getOrdersData
 };
