@@ -8,6 +8,8 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import activeFormImg from '../../assets/images/ezcoms_activeform_bg.png';
 import addIcon from '../../assets/images/add_icon.png';
 import { Link } from 'react-router-dom';
+import { PageContainer } from '../../layouts';
+import PageContent from '../../layouts/page-container/PageContent';
 
 const Forms = () => {
     const { forms, setForms } = useContext(FormsContext);
@@ -89,8 +91,8 @@ const Forms = () => {
     }, [user]);
 
     return (
-        <div className="page-container flex-col h-100 w-100 justify-content-center align-items-center">
-            <div className="content-container flex-col gap-2 h-100 overflow-y-auto ">
+        <PageContainer>
+            <PageContent>
                 <div className="flex-col justify-content-start align-items-start w-100 ">
                     <h1 className="font-size-4 mart-4"> Forms </h1>
                     <Line />
@@ -99,7 +101,7 @@ const Forms = () => {
                 {state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage pad-3">{state.loadingMessage}</div>}
-                <div className={`${styles.forms}  w-100 h-100 gap-4 border-box `}>
+                <div className={`${styles.forms}  w-100 h-auto gap-4 border-box `}>
                     {openDeletePopup && (
                         <YesNoPopup yesFunction={handleDelete} closePopup={(e) => setOpenDeletePopup(false)}>
                             <h3>Are you sure?</h3>
@@ -121,8 +123,8 @@ const Forms = () => {
                         <img className={`icon-size bg-grey-50 soft-white-glow radius-4`} src={addIcon}></img>
                     </Link>
                 </div>
-            </div>
-        </div>
+            </PageContent>
+        </PageContainer>
     );
 };
 

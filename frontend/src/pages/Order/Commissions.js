@@ -139,14 +139,14 @@ const Commissions = () => {
                     {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                 </YesNoPopup>
             )}
-            <div className="pageTitle mart-3">
-                <h1>Summary</h1>
-                <Line />
-            </div>
             <PageContent>
+                <div className="pageTitle mart-3">
+                    <h1>Summary</h1>
+                    <Line />
+                </div>
                 {incomeData && (
                     <div className="flex-row gap-3 w-100">
-                        <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome}/>
+                        <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} />
                         <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'hf'} />
                     </div>
                 )}
@@ -158,12 +158,13 @@ const Commissions = () => {
                     </div>
                 )}
 
-                <div className={styles.completedOrders}>
-                    <div className="pageTitle mart-3">
-                        <h1>Commissions</h1>
-                        <Line />
-                    </div>
-                    {completedOrders && completedOrders.length > 0 && (
+                {completedOrders && completedOrders.length > 0 && (
+                    <div className={styles.completedOrders}>
+                        <div className="pageTitle mart-3">
+                            <h1>Commissions</h1>
+                            <Line />
+                        </div>
+
                         <div className={`${styles.header} pady-1`}>
                             <div className={styles.headerItem}>
                                 <p>Date</p>
@@ -178,9 +179,8 @@ const Commissions = () => {
                                 <p>Price</p>
                             </div>
                         </div>
-                    )}
-                    {completedOrders &&
-                        completedOrders.map((completedOrder) => {
+
+                        {completedOrders.map((completedOrder) => {
                             return (
                                 <div className={styles.completedOrderContainer}>
                                     <div className={`${styles.completedDateContainer}`}>
@@ -238,11 +238,12 @@ const Commissions = () => {
                                 </div>
                             );
                         })}
-                </div>
+                    </div>
+                )}
                 {state.errorMessage && <div className="errorMessage bg-light-red">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-                </PageContent>
+            </PageContent>
         </PageContainer>
     );
 };

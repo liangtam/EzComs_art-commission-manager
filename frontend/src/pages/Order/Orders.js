@@ -178,7 +178,7 @@ const Orders = () => {
                         {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                     </YesNoPopup>
                 )}
-                {!initLoading && orders && (
+                {!initLoading && orders && orders.length > 0 && (
                     <div className={styles.orders}>
                         {orders.map((order) => {
                             return (

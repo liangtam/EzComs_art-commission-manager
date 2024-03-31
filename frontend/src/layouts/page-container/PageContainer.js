@@ -1,5 +1,4 @@
 import styles from './PageContainer.module.css';
-import PageContent from './PageContent';
 
 const PageContainer = ({children}) => {
 

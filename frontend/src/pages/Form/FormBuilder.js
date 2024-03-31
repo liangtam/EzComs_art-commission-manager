@@ -6,6 +6,7 @@ import { formMessageReducer, ACTION } from '../reducers/formMessageReducer';
 import styles from './FormBuilder.module.css';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { PageContainer } from '../../layouts';
+import PageContent from '../../layouts/page-container/PageContent';
 
 const FormBuilder = () => {
     const [formName, setName] = useState('');
@@ -219,98 +220,102 @@ const FormBuilder = () => {
                     <p>Setting this form as active will make your current active form inactive. Would you like to set this form to be active instead of the current active form?</p>
                 </YesNoPopup>
             )}
-            <form className={`content-container flex-col gap-2 border-box align-items-center`}>
-                <div className="flex-col justify-content-start align-items-start w-100 gap-2">
-                    <h1 className="font-size-4 mart-4">Create an order form for your clients </h1>
-                    <p>Any active form is public and accessible by anyone to fillout.</p>
-                    <Line />
-                </div>
-                {state.errorMessage && <div className="errorMessage pad-3 marb-2 radius-1 bg-light-red w-100">{state.errorMessage}</div>}
-                {state.successMessage && <div className="successMessage pad-3 marb-2  radius-1 bg-light-green w-100">{state.successMessage}</div>}
-                {state.loadingMessage && <div className="loadingMessage pad-3 marb-2 ">{state.loadingMessage}</div>}
+            <PageContent>
+                <form className='flex-col gap-2 border-box align-items-center'>
+                    <div className="flex-col justify-content-start align-items-start w-100 gap-2">
+                        <h1 className="font-size-4 mart-4">Create an order form for your clients </h1>
+                        <p>Any active form is public and accessible by anyone to fillout.</p>
+                        <Line />
+                    </div>
+                    {state.errorMessage && <div className="errorMessage pad-3 marb-2 radius-1 bg-light-red w-100">{state.errorMessage}</div>}
+                    {state.successMessage && <div className="successMessage pad-3 marb-2  radius-1 bg-light-green w-100">{state.successMessage}</div>}
+                    {state.loadingMessage && <div className="loadingMessage pad-3 marb-2 ">{state.loadingMessage}</div>}
 
-                <div className={`${styles.nameAndToggle} w-100`}>
-                    <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
-                        <p>Name of form: </p>
+                    <div className={`${styles.nameAndToggle} w-100`}>
+                        <div className={`${styles.formName} flex-col gap-2 font-size-2 w-100`}>
+                            <p>Name of form: </p>
 
-                        <input
-                            className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
-                            id="formName_field"
-                            type="text"
-                            onChange={handleNameFieldChange}
-                            placeholder="Coolest form"
-                        ></input>
-                    </div>
-                    <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 w-100`}>
-                        <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
-                            Set Active
-                        </button>
-                        <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} outline-button font-size-2 pad-2 padx-3`}>{activeStatus ? 'Active' : 'Inactive'}</div>
-                    </div>
-                </div>
-                {/* <h2>------------------------------------------------------------</h2> */}
-                <div className={`${styles.formContent} mary-3 w-100 gap-4`}>
-                    <div className={`${styles.sidePanel} flex-col gap-2 marb-3`}>
-                        <Box width="100%" minWidth="250px" classNames="border-box">
-                            <div className="flex-col gap-2">
-                                <h4 className="font-size-2 w-100">Default features:</h4>
-                                <ul className={`${styles.defaultFeats} flex-col gap-2`}>
-                                    <li>Order Name </li>
-                                    <li>Client Name </li>
-                                    <li>Client Email </li>
-                                    <li>Order Details </li>
-                                    <li>Deadline (optional) </li>
-                                </ul>
+                            <input
+                                className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
+                                id="formName_field"
+                                type="text"
+                                onChange={handleNameFieldChange}
+                                placeholder="Coolest form"
+                            ></input>
+                        </div>
+                        <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 w-100`}>
+                            <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
+                                Set Active
+                            </button>
+                            <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} outline-button font-size-2 pad-2 padx-3`}>
+                                {activeStatus ? 'Active' : 'Inactive'}
                             </div>
+                        </div>
+                    </div>
+                    {/* <h2>------------------------------------------------------------</h2> */}
+                    <div className={`${styles.formContent} mary-3 w-100 gap-4`}>
+                        <div className={`${styles.sidePanel} flex-col gap-2 marb-3`}>
+                            <Box width="100%" minWidth="250px" classNames="border-box">
+                                <div className="flex-col gap-2">
+                                    <h4 className="font-size-2 w-100">Default features:</h4>
+                                    <ul className={`${styles.defaultFeats} flex-col gap-2`}>
+                                        <li>Order Name </li>
+                                        <li>Client Name </li>
+                                        <li>Client Email </li>
+                                        <li>Order Details </li>
+                                        <li>Deadline (optional) </li>
+                                    </ul>
+                                </div>
+                            </Box>
+                            <Box width="100%" minWidth="250px" classNames="border-box">
+                                <h4 className="marb-3">Customize</h4>
+                                <div className={`${styles.questionButtons} gap-3 justify-content-center text-grey-800 w-100`}>
+                                    <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
+                                        Add Short Answer
+                                    </button>
+                                    <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
+                                        Add Multiple Choice
+                                    </button>
+                                </div>
+                            </Box>
+                        </div>
+                        <Box width="100%" classNames="marl-4 border-box flex-col align-items-center" styles={{ height: 'minContent' }}>
+                            {questionFieldList.length >= 1 ? (
+                                <div className="w-100 flex-col">
+                                    {questionFieldList.map((questionField) => {
+                                        if (questionField.type === 'shortAns') {
+                                            return (
+                                                <div className={`${styles.question} w-100`}>
+                                                    <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />
+                                                </div>
+                                            );
+                                        } else if (questionField.type === 'mc') {
+                                            return (
+                                                <div className={`${styles.question} w-100`}>
+                                                    <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />
+                                                </div>
+                                            );
+                                        }
+                                    })}
+                                </div>
+                            ) : (
+                                <div className="flex-col gap-2 w-100 align-items-center text-grey-300">
+                                    <h4>This form has no questions.</h4>
+                                    <p>Add some questions from the customize panel.</p>
+                                </div>
+                            )}
+                            <button
+                                className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-grey-50 mar-3 w-100`}
+                                type="submit"
+                                onClick={handleSaveFormClick}
+                                disabled={questionFieldList.length === 0}
+                            >
+                                Submit
+                            </button>
                         </Box>
-                        <Box width="100%" minWidth="250px" classNames="border-box">
-                            <h4 className="marb-3">Customize</h4>
-                            <div className={`${styles.questionButtons} gap-3 justify-content-center text-grey-800 w-100`}>
-                                <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleShortAnswerClick}>
-                                    Add Short Answer
-                                </button>
-                                <button className={`outline-button bg-transparent dark-grey-outline-1 mid-grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={handleMCClick}>
-                                    Add Multiple Choice
-                                </button>
-                            </div>
-                        </Box>
                     </div>
-                    <Box width="100%" classNames="marl-4 border-box flex-col align-items-center" styles={{ height: 'minContent' }}>
-                        {questionFieldList.length >= 1 ? (
-                            <div className="w-100 flex-col">
-                                {questionFieldList.map((questionField) => {
-                                    if (questionField.type === 'shortAns') {
-                                        return (
-                                            <div className={`${styles.question} w-100`}>
-                                                <ShortAnswerQField fieldId={questionField.id} key={'saq' + questionField.id} />
-                                            </div>
-                                        );
-                                    } else if (questionField.type === 'mc') {
-                                        return (
-                                            <div className={`${styles.question} w-100`}>
-                                                <MCQuestionField fieldId={questionField.id} optList={questionField.optionList} key={'mcq' + questionField.id} />
-                                            </div>
-                                        );
-                                    }
-                                })}
-                            </div>
-                        ) : (
-                            <div className="flex-col gap-2 w-100 align-items-center text-grey-300">
-                                <h4>This form has no questions.</h4>
-                                <p>Add some questions from the customize panel.</p>
-                            </div>
-                        )}
-                        <button
-                            className={`${styles.submitBtn} fill-button bg-grey-800 pad-3 font-size-2 radius-1 font-weight-700 text-grey-50 mar-3 w-100`}
-                            type="submit"
-                            onClick={handleSaveFormClick}
-                            disabled={questionFieldList.length === 0}
-                        >
-                            Submit
-                        </button>
-                    </Box>
-                </div>
-            </form>
+                </form>
+            </PageContent>
         </PageContainer>
     );
 };
