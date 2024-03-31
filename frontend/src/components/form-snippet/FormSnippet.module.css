@@ -4,6 +4,13 @@
     justify-content: center;
     transition: opacithsl(0, 0%, 0%)s ease;
     max-height: 270px;
+    transition: translate 0.3s ease;
+    box-shadow: 1px 1px 2px 0px rgb(147, 147, 147, 0.3);
+
+}
+
+.formSnippet:hover {
+    translate: 0px -2px;
 }
 
 .link {
@@ -87,9 +94,6 @@
         bottom: 5%;
     }
 
-    .formSnippet:hover {
-        opacity: 85%;
-    }
 
     .formSnippet:hover img {
         display: inline;
