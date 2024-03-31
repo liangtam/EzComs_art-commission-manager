@@ -1,5 +1,11 @@
 const orderMessageReducer = (state, action) => {
     switch (action.type) {
+        case 'errorCustom':
+            return {
+                successMessage: '',
+                errorMessage: action.payload,
+                loadingMessage: ''
+            };
         case 'errorGeneral':
             return {
                 successMessage: '',
@@ -66,6 +72,7 @@ const orderMessageReducer = (state, action) => {
 };
 
 const ACTION = {
+    ERROR_CUSTOM: 'errorCustom',
     ERROR_GENERAL: 'errorGeneral',
     ERROR_UPDATE: 'errorUpdate',
     ERROR_DELETE: 'errorDelete',

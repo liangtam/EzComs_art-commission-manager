@@ -7,6 +7,11 @@
     width: 100vw;
 }
 
+.pageContent {
+    width: 75%;
+    height: 100%;
+}
+
 @media screen and (min-width: 768px) {
     .pageContainer {
         height: 89vh;

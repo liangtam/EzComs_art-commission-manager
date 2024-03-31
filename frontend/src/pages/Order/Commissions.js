@@ -8,6 +8,7 @@ import artIcon from '../../assets/images/image_icon.png';
 import noImageIcon from '../../assets/images/ezcoms_noimage_head.png';
 import noCommissionsIcon from '../../assets/images/no_commissions.png';
 import { PageContainer } from '../../layouts/index.js';
+import PageContent from '../../layouts/page-container/PageContent.js';
 
 const Commissions = () => {
     const [completedOrders, setCompletedOrders] = useState([]);
@@ -142,10 +143,10 @@ const Commissions = () => {
                 <h1>Summary</h1>
                 <Line />
             </div>
-            <div className={styles.commissionsContent}>
+            <PageContent>
                 {incomeData && (
                     <div className="flex-row gap-3 w-100">
-                        <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'h'} />
+                        <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome}/>
                         <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'hf'} />
                     </div>
                 )}
@@ -241,7 +242,7 @@ const Commissions = () => {
                 {state.errorMessage && <div className="errorMessage bg-light-red">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-            </div>
+                </PageContent>
         </PageContainer>
     );
 };
