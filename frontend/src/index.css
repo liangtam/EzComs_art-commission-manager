@@ -11,6 +11,7 @@
     --roboto: 'Roboto', sans-serif;
 
     --turquoise500: #00e2c7;
+    --turquoise600: #00cfb7;
     --blue200: #addff7;
     --blue300: #86d3f7;
     --blue400: #4bc1f8;
@@ -250,8 +251,16 @@ a {
     color: var(--turquoise500);
 }
 
+.text-turquoise-600 {
+    color: var(--turquoise600);
+}
+
 .text-blue-500 {
     color: var(--blue500);
+}
+
+.text-blue-600 {
+    color: var(--blue600);
 }
 
 .pad-1 {

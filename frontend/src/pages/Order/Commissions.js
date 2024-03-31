@@ -1,5 +1,5 @@
 import styles from './Commissions.module.css';
-import { YesNoPopup, CommissionSnippet, Line, IncomeSummary, NoDataPlaceholder } from '../../components/';
+import { YesNoPopup, CommissionSnippet, Line, IncomeSummary, NoDataPlaceholder, CommissionSummary } from '../../components/';
 import { useState, useEffect, useReducer } from 'react';
 import { orderMessageReducer, ACTION } from '../reducers/orderMessageReducer.js';
 import { useAuthContext } from '../../hooks/useAuthContext.js';
@@ -16,6 +16,7 @@ const Commissions = () => {
     const [openPopup, setOpenPopup] = useState(false);
     const [initLoading, setInitLoading] = useState(true);
     const [incomeData, setIncomeData] = useState(null);
+    const [commissionData, setCommissionData] = useState(null);
 
     const [selectedID, setSelectedID] = useState('');
 
@@ -52,6 +53,25 @@ const Commissions = () => {
         dispatch({ type: ACTION.RESET });
     };
 
+    const fetchCommissionsData = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/user/commission-data/${user.userID}`, {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+
+            if (response.ok) {
+                const commissionDataJson = await response.json();
+                setCommissionData(commissionDataJson);
+            } else {
+                throw new Error(response.statusText);
+            }
+        } catch (err) {
+            dispatch({ type: ACTION.ERROR_CUSTOM, payload: err.message });
+        }
+    };
+
     const fetchIncomeData = async () => {
         try {
             const response = await fetch(`http://localhost:4000/api/user/income/${user.userID}`, {
@@ -73,6 +93,11 @@ const Commissions = () => {
             console.log('Income data error: ', error);
             dispatch({ type: ACTION.ERROR_GENERAL });
         }
+    };
+
+    const fetchUserCommissionData = async () => {
+        await fetchCommissionsData();
+        await fetchIncomeData();
     };
 
     const closePopup = () => {
@@ -126,7 +151,7 @@ const Commissions = () => {
 
     useEffect(() => {
         if (user) {
-            fetchIncomeData();
+            fetchUserCommissionData();
         }
     }, [user]);
 
@@ -146,8 +171,8 @@ const Commissions = () => {
                 </div>
                 {incomeData && (
                     <div className="flex-row gap-3 w-100">
-                        <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} />
-                        <IncomeSummary monthlyIncome={incomeData.monthlyIncome} totalIncome={incomeData.totalIncome} key={'hf'} />
+                        <IncomeSummary data={incomeData} />
+                        <CommissionSummary data={commissionData} />
                     </div>
                 )}
                 <Line />

@@ -173,7 +173,7 @@ const getOrders = async (req, res) => {
     .sort({ deadline: 1 })
     .skip(offset * limit)
     .limit(limit);
-  console.log("getOrders: ", orders);
+  // console.log("getOrders: ", orders);
 
   res.status(200).json(orders);
 };
