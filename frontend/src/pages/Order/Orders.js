@@ -18,7 +18,7 @@ const Orders = () => {
     const [ordersData, setOrdersData] = useState(null);
 
     const { user } = useAuthContext();
-    
+
     console.log('Orders in orders page: ', orders);
     console.log('Offset: ', offset);
 
@@ -57,8 +57,8 @@ const Orders = () => {
             }
         } catch (err) {
             dispatch({ type: ACTION.ERROR_CUSTOM, payload: err.message });
-            resetMessages();
         }
+        dispatch({ type: ACTION.RESET });
     };
 
     const fetchOrderData = async () => {
@@ -89,6 +89,7 @@ const Orders = () => {
         await fetchOrderData();
         await fetchOrders();
         setInitLoading(false);
+        console.log('heeeeeeeeeeee');
     };
 
     const handleOpenPopup = (e, orderId) => {
@@ -136,13 +137,13 @@ const Orders = () => {
 
     // the empty array is dependency array. when it's empty, it means this only fires once
     useEffect(() => {
-        console.log("fetchOrders")
+        console.log('fetchOrders');
         fetchOrders();
     }, [offset]);
 
     useEffect(() => {
         if (user) {
-            console.log("fetchInitData")
+            console.log('fetchInitData');
             fetchInitialData();
         }
     }, [user]);
@@ -179,7 +180,7 @@ const Orders = () => {
                     </YesNoPopup>
                 )}
                 {!initLoading && orders && orders.length > 0 && (
-                    <div className={styles.orders}>
+                    <div className={`${styles.orders} w-100`}>
                         {orders.map((order) => {
                             return (
                                 <div className={styles.order}>

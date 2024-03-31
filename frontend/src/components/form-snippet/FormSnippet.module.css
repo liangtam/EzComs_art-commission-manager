@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: center;
     transition: opacithsl(0, 0%, 0%)s ease;
+    max-height: 270px;
 }
 
 .link {

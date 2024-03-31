@@ -101,7 +101,7 @@ const Forms = () => {
                 {state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage pad-3">{state.loadingMessage}</div>}
-                <div className={`${styles.forms}  w-100 h-auto gap-4 border-box `}>
+                {forms && forms.length > 0 && <div className={`${styles.forms}  w-100 h-100 gap-4 border-box `}>
                     {openDeletePopup && (
                         <YesNoPopup yesFunction={handleDelete} closePopup={(e) => setOpenDeletePopup(false)}>
                             <h3>Are you sure?</h3>
@@ -116,7 +116,7 @@ const Forms = () => {
                                 </div>
                             );
                         })}
-                </div>
+                </div>}
                 <div className={`${styles.formsButtons} flex-row pad-3 border-box`}>
                     {/* <button className='outline-button bg-transparent greyHoverButton pad-3 radius-4 font-size-2'>Create new form</button> */}
                     <Link to="/form-builder">

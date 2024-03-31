@@ -81,7 +81,7 @@ const orderSchema = new Schema({
         type: Object,
         required: false
     },
-    userId: {
+    userID: {
         type: String,
         required: true
     }

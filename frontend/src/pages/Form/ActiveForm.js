@@ -43,9 +43,10 @@ const ActiveForm = () => {
                 }
                 setActiveForm(responseJson[0]);
             } else {
+                throw new Error(response.statusText)
             }
         } catch (error) {
-            console.log('An error occurred while fetching active form: ', error);
+            dispatch({type: ACTION.ERROR_CUSTOM, payload: error.message})
         } finally {
             setLoading(false);
         }
@@ -184,7 +185,7 @@ const ActiveForm = () => {
         order.append('status', 'Not Started Yet');
         order.append('artistNotes', '');
         order.append('editedStatus', false);
-        order.append('user_id', userID);
+        order.append('userID', userID);
         try {
             const response = await fetch('http://localhost:4000/api/orders', {
                 method: 'POST',
@@ -197,7 +198,7 @@ const ActiveForm = () => {
                 throw new Error(response.statusText);
             }
         } catch (err) {
-            dispatch({ type: ACTION.ERROR_UPLOAD });
+            dispatch({ type: ACTION.ERROR_CUSTOM, payload: err.message});
 
             console.log(err);
         }

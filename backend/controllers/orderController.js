@@ -13,23 +13,23 @@ const deleteCommissionDataFromUser = async (orderDeleted) => {
   const currMonth = currDate.getMonth() + 1;
   if (orderDeleted.status === "Completed") {
     await User.updateOne(
-      { _id: orderDeleted.userId },
+      { _id: orderDeleted.userID },
       {
-        $dec: {
+        $inc: {
           totalIncome:
-            typeof orderDeleted.price === Number ? orderDeleted.price : 0,
-          numOfCommissions: 1,
+            typeof orderDeleted.price === Number ? -orderDeleted.price : 0,
+          numOfCommissions: -1,
         },
       }
     );
     if (parseInt(orderDeleted.dateCompleted.split("-")[1], 10) === currMonth) {
       await User.updateOne(
-        { _id: orderDeleted.userId },
+        { _id: orderDeleted.userID },
         {
-          $dec: {
+          $inc: {
             monthlyIncome:
-              typeof orderDeleted.price === Number ? orderDeleted.price : 0,
-            monthlyNumOfCommissions: 1,
+              typeof orderDeleted.price === Number ? -orderDeleted.price : 0,
+            monthlyNumOfCommissions: -1,
           },
         }
       );
@@ -42,7 +42,7 @@ const addUserCommissionData = async (commission) => {
   const currMonth = currDate.getMonth() + 1;
   if (commission.status === "Completed") {
     await User.updateOne(
-      { _id: commission.userId },
+      { _id: commission.userID },
       {
         $inc: {
           totalIncome:
@@ -53,7 +53,7 @@ const addUserCommissionData = async (commission) => {
     );
     if (parseInt(commission.dateCompleted.split("-")[1], 10) === currMonth) {
       await User.updateOne(
-        { _id: commission.userId },
+        { _id: commission.userID },
         {
           $inc: {
             monthlyIncome:
@@ -69,17 +69,17 @@ const addUserCommissionData = async (commission) => {
 const addUserOrderData = async (order) => {
   try {
     await User.updateOne(
-      { _id: order.userId },
+      { _id: order.userID },
       {
         $inc: {
           totalOrdersPrice:
-            typeof commission.price === Number ? commission.price : 0,
+            typeof order.price === Number ? order.price : 0,
           numOfOrders: 1,
         },
       }
     );
   } catch (err) {
-    throw new Error("Could not add order data to user");
+    throw new Error(err.message);
   }
 };
 
@@ -90,7 +90,7 @@ const replaceUserCommissionData = async (
   const currDate = new Date();
   const currMonth = currDate.getMonth() + 1;
   await User.updateOne(
-    { _id: newCommissionData.userId },
+    { _id: newCommissionData.userID },
     {
       $inc: {
         totalIncome:
@@ -98,10 +98,10 @@ const replaceUserCommissionData = async (
             ? newCommissionData.price
             : 0,
       },
-      $dec: {
+      $inc: {
         totalIncome:
           typeof oldCommissionData.price === Number
-            ? oldCommissionData.price
+            ? -oldCommissionData.price
             : 0,
       },
     }
@@ -119,7 +119,7 @@ const replaceUserCommissionData = async (
     oldCommissionDataMonth !== currMonth
   ) {
     await User.updateOne(
-      { _id: newCommissionData.userId },
+      { _id: newCommissionData.userID },
       {
         $inc: {
           monthlyIncome:
@@ -135,7 +135,7 @@ const replaceUserCommissionData = async (
     oldCommissionDataMonth === currMonth
   ) {
     await User.updateOne(
-      { _id: newCommissionData.userId },
+      { _id: newCommissionData.userID },
       {
         $inc: {
           monthlyIncome:
@@ -151,12 +151,12 @@ const replaceUserCommissionData = async (
 const deleteOrderDataFromUser = async (orderDeleted) => {
   if (orderDeleted.status !== "Completed") {
     await User.updateOne(
-      { _id: orderDeleted.userId },
+      { _id: orderDeleted.userID },
       {
-        $dec: {
+        $inc: {
           totalOrdersPrice:
-            typeof orderDeleted.price === Number ? orderDeleted.price : 0,
-          numOfOrders: 1,
+            typeof orderDeleted.price === Number ? -orderDeleted.price : 0,
+          numOfOrders: -1,
         },
       }
     );
@@ -169,7 +169,7 @@ const getOrders = async (req, res) => {
   const limit = parseInt(req.query.limit, 10) || 20;
 
   const user_id = req.user._id;
-  const orders = await Order.find({ userId: user_id })
+  const orders = await Order.find({ userID: user_id })
     .sort({ deadline: 1 })
     .skip(offset * limit)
     .limit(limit);
@@ -183,7 +183,7 @@ const getCompletedOrders = async (req, res) => {
   const user_id = req.user._id;
   const completedOrders = await Order.find({
     status: "Completed",
-    userId: user_id,
+    userID: user_id,
   }).sort({ createdAt: -1 });
 
   res.status(200).json(completedOrders);
@@ -359,7 +359,7 @@ const updateOrder = async (req, res) => {
     artistNotes: req.body.artistNotes,
     editedStatus: req.body.editedStatus,
     originalUneditedOrder: oldOrder.originalUneditedOrder,
-    userId: oldOrder.userId,
+    userID: oldOrder.userID,
   };
   //const url = req.protocol + '://' + req.get('host');
 
