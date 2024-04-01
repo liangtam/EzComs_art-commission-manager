@@ -50,6 +50,7 @@ const Orders = () => {
                     dispatch({ type: ACTION.RESET });
                     return;
                 }
+                console.log("ordersJson: ", ordersJson)
                 setOrders((prev) => [...prev, ...ordersJson]);
                 // console.log('Fetched all forms in orders page! ', json);
             } else {
@@ -87,7 +88,6 @@ const Orders = () => {
     const fetchInitialData = async () => {
         setInitLoading(true);
         await fetchOrderData();
-        await fetchOrders();
         setInitLoading(false);
         console.log('heeeeeeeeeeee');
     };
