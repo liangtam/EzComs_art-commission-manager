@@ -95,13 +95,13 @@ const Forms = () => {
             <PageContent>
                 <div className="flex-col justify-content-start align-items-start w-100 ">
                     <h1 className="font-size-4 mart-4"> Forms </h1>
-                    <Line />
+                    <Line/>
                 </div>
                 {!initLoading && (!forms || forms.length === 0) && <NoDataPlaceholder message="You have no forms right now." src={activeFormImg} />}
                 {state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage pad-3">{state.loadingMessage}</div>}
-                {forms && forms.length > 0 && <div className={`${styles.forms} w-100 h-100 gap-4 border-box bg-blue-500`}>
+                {forms && forms.length > 0 && <div className={`${styles.forms} w-100 h-100 gap-4 border-box padt-1`}>
                     {openDeletePopup && (
                         <YesNoPopup yesFunction={handleDelete} closePopup={(e) => setOpenDeletePopup(false)}>
                             <h3>Are you sure?</h3>

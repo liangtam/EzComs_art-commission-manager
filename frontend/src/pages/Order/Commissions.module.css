@@ -12,6 +12,12 @@
 
 }
 
+.commissionsData {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    flex-direction: column;
+}
 .commissionsContainer p {
     padding: 0.3rem 0;
     padding-left: 0.3rem;
@@ -137,9 +143,15 @@
     width: 100%;
 }
 
+
 @media screen and (min-width: 768px) {
     .commissionsContainer {
         height: 89vh;
+    }
+    .commissionsData {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: center;
     }
 }
 

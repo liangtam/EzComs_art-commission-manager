@@ -165,11 +165,11 @@ const Orders = () => {
 
     return (
         <PageContainer>
-            <div className="pageTitle mart-3">
-                <h1>Orders</h1>
-                <Line />
-            </div>
             <PageContent>
+                <div className="pageTitle mart-3">
+                    <h1>Orders</h1>
+                    <Line />
+                </div>
                 {!initLoading && ordersData && (
                     <div className="flex-col">
                         <OrdersSummary data={ordersData} className="w-50" />

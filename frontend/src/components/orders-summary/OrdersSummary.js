@@ -2,7 +2,7 @@ import Line from "../line/Line"
 
 const OrdersSummary = ({data}) => {
     return (
-        <div className="flex-col gap-2 radius-2 pad-4 marb-3" style={{ boxShadow: '0px 3px 8px 0px rgba(0, 0, 0, 0.2)', width: '35%'}}>
+        <div className="flex-col gap-2 radius-2 pad-4 marb-3 " style={{ boxShadow: '0px 3px 8px 0px rgba(0, 0, 0, 0.2)', maxWidth: '300px',}}>
         <div className="flex-col">
             <p>Number of orders:</p>
             <p className="font-size-5 text-turquoise-600">{data.numOfOrders}</p>

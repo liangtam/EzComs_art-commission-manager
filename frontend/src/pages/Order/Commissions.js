@@ -165,12 +165,12 @@ const Commissions = () => {
                 </YesNoPopup>
             )}
             <PageContent>
-                <div className="pageTitle mart-3">
+                <div className="pageTitle mart-3 w-100">
                     <h1>Summary</h1>
                     <Line />
                 </div>
                 {incomeData && (
-                    <div className="flex-row gap-3 w-100">
+                    <div className={styles.commissionsData}>
                         <IncomeSummary data={incomeData} />
                         <CommissionSummary data={commissionData} />
                     </div>

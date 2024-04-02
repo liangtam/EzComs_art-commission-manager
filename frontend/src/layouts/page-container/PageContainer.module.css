@@ -3,9 +3,10 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 89vh;
+    height: 93.5vh;
     width: 100vw;
-    /* background-color: blue; */
+    /* background-color: blue;
+    border-radius: 10px; */
     overflow: auto;
 }
 
@@ -16,10 +17,13 @@
 .pageContent {
     width: 75%;
     height: auto;
+    /* background-color: red;
+    border-radius: 20px; */
+
 }
 
-/* @media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
     .pageContainer {
         height: 89vh;
     }
-} */
+}

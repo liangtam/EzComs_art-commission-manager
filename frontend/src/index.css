@@ -706,8 +706,8 @@ button:disabled {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 75%;
     padding: 1rem;
+    width: 100%;
 }
 .pageTitle h1 {
     font-size: 1.5em;
