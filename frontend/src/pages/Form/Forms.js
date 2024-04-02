@@ -101,7 +101,7 @@ const Forms = () => {
                 {state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
                 {state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage pad-3">{state.loadingMessage}</div>}
-                {forms && forms.length > 0 && <div className={`${styles.forms}  w-100 h-100 gap-4 border-box `}>
+                {forms && forms.length > 0 && <div className={`${styles.forms} w-100 h-100 gap-4 border-box bg-blue-500`}>
                     {openDeletePopup && (
                         <YesNoPopup yesFunction={handleDelete} closePopup={(e) => setOpenDeletePopup(false)}>
                             <h3>Are you sure?</h3>

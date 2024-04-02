@@ -8,10 +8,6 @@ const resetMonthlyUserData = async () => {
         $set: {
           monthlyNumOfCommissions: 0,
           monthlyIncome: 0,
-          monthlyNumOfCommissions: 0,
-          numOfOrders: 0,
-          numOfCommissions: 0,
-          totalIncome: 0,
         },
       }
     );

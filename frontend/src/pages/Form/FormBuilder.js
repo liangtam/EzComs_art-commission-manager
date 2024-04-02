@@ -168,21 +168,28 @@ const FormBuilder = () => {
         activeForm.activeStatus = false;
         //console.log("forms[0]'s status after replaced: ", forms[0].activeStatus, activeForm.activeStatus);
 
-        const response = await fetch('http://localhost:4000/api/forms/' + idOfCurrActiveForm, {
-            method: 'PATCH',
-            body: JSON.stringify(activeForm),
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${user.token}`
+        try {
+            const response = await fetch('http://localhost:4000/api/forms/' + idOfCurrActiveForm, {
+                method: 'PATCH',
+                body: JSON.stringify(activeForm),
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user.token}`
+                }
+            });
+
+            // const json = await response.json();
+
+            // if (response.ok) {
+            //     console.log('Made the original active form inactive!', json);
+            // } else {
+            //     console.log('Error replacing active form :(');
+            // }
+            if (!response.ok) {
+                throw new Error(response.statusText)
             }
-        });
-
-        const json = await response.json();
-
-        if (response.ok) {
-            console.log('Made the original active form inactive!', json);
-        } else {
-            console.log('Error replacing active form :(');
+        } catch (err) {
+            dispatch({type: ACTION.ERROR_CUSTOM, payload: err.message})
         }
     };
 
@@ -199,7 +206,7 @@ const FormBuilder = () => {
 
     useEffect(() => {
         //console.log("Question Fields List: " + questionFieldsList);
-        console.log(questionFieldList);
+        // console.log(questionFieldList);
     }, [questionFieldList]);
 
     useEffect(() => {
@@ -221,7 +228,7 @@ const FormBuilder = () => {
                 </YesNoPopup>
             )}
             <PageContent>
-                <form className='flex-col gap-2 border-box align-items-center'>
+                <form className="flex-col gap-2 border-box align-items-center">
                     <div className="flex-col justify-content-start align-items-start w-100 gap-2">
                         <h1 className="font-size-4 mart-4">Create an order form for your clients </h1>
                         <p>Any active form is public and accessible by anyone to fillout.</p>

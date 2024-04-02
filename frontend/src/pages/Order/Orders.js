@@ -16,6 +16,7 @@ const Orders = () => {
     const [initLoading, setInitLoading] = useState(true);
     const [offset, setOffset] = useState(0);
     const [ordersData, setOrdersData] = useState(null);
+    const [noMoreOrdersToFetch, setNoMoreOrdersToFetch] = useState(false);
 
     const { user } = useAuthContext();
 
@@ -47,11 +48,17 @@ const Orders = () => {
                 const ordersJson = await response.json();
                 if (Array.isArray(ordersJson) && ordersJson.length === 0) {
                     window.removeEventListener('scroll', handleScroll);
+                    setNoMoreOrdersToFetch(true);
                     dispatch({ type: ACTION.RESET });
                     return;
                 }
-                console.log("ordersJson: ", ordersJson)
-                setOrders((prev) => [...prev, ...ordersJson]);
+                console.log('ordersJson: ', ordersJson);
+                setOrders((prev) => {
+                    if (prev === ordersJson) {
+                        return prev;
+                    }
+                    return [...prev, ...ordersJson];
+                });
                 // console.log('Fetched all forms in orders page! ', json);
             } else {
                 throw new Error('Bad response. Could not fetch orders.');
@@ -150,6 +157,7 @@ const Orders = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
+        console.log('mounted');
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
