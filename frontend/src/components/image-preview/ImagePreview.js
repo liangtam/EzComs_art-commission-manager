@@ -10,7 +10,6 @@ const ImagePreview = ({ image, handleDeleteImg }) => {
     }
 
     return (
-        <div className={styles.imageContainer}>
             <div className={styles.imageContent}>
                 <img className={styles.img} src={imageURL}></img>
 
@@ -30,7 +29,6 @@ const ImagePreview = ({ image, handleDeleteImg }) => {
                     </svg>
                 </button>
             </div>
-        </div>
     );
 };
 

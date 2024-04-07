@@ -43,10 +43,10 @@ const ActiveForm = () => {
                 }
                 setActiveForm(responseJson[0]);
             } else {
-                throw new Error(response.statusText)
+                throw new Error(response.statusText);
             }
         } catch (error) {
-            dispatch({type: ACTION.ERROR_CUSTOM, payload: error.message})
+            dispatch({ type: ACTION.ERROR_CUSTOM, payload: error.message });
         } finally {
             setLoading(false);
         }
@@ -198,7 +198,7 @@ const ActiveForm = () => {
                 throw new Error(response.statusText);
             }
         } catch (err) {
-            dispatch({ type: ACTION.ERROR_CUSTOM, payload: err.message});
+            dispatch({ type: ACTION.ERROR_CUSTOM, payload: err.message });
 
             console.log(err);
         }
@@ -262,9 +262,7 @@ const ActiveForm = () => {
         <PageContainer>
             <form onSubmit={handleSubmit} className={styles.activeFormContainer} encType="multipart/form-data">
                 {loading && <div className="page-container flex-row justify-content-center align-items-center font-size-3">Loading...</div>}
-                {!loading && !activeForm && (
-                    <NoDataPlaceholder message="No active form." src={activeFormImg}/>
-                )}
+                {!loading && !activeForm && <NoDataPlaceholder message="No active form." src={activeFormImg} />}
                 {!loading && activeForm && (
                     <div className={styles.activeFormContent}>
                         <div className={`flex-col gap-2`}>
@@ -323,33 +321,39 @@ const ActiveForm = () => {
                                     }
                                 })}
                         </div>
-                        <div className={styles.reqDetails}>
-                            <label>
+                        <div className='flex-col gap-3'>
+                            <div className='flex-col gap-2'>
                                 <p>Order details:</p>
                                 <div className={styles.textAreaContainer}>
                                     <textarea className="textArea" type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange} required></textarea>
                                 </div>
-                            </label>
-                            <label>
+                            </div>
+                            <label className='flex-col gap-2'>
                                 <p>References:</p>
                                 <input className="chooseFilesInput" type="file" name="referenceImages" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
                                 {/* <div className="customFileInputContainer"> */}
                                 <span className="customFileInput">Choose Files</span>
                                 {/* </div> */}
                             </label>
-                            <div className={`${styles.imagePreviews} flex-row gap-2 overflow-x-auto`}>
+                            <div className={`${styles.imagePreviews}`}>
                                 {referenceImages &&
                                     referenceImages.map((refImgURL) => {
                                         return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
                                     })}
                             </div>
-                            <label className="flex-col gap-2">
+                            <div className="flex-col gap-2">
                                 <p>Deadline:</p>
                                 <div className="dateContainer">
                                     <input className="dateInput" type="date" id="deadline"></input>
                                 </div>
                                 <p className="font-size-1">Please leave blank if there is no hard deadline.</p>
-                            </label>
+                            </div>
+                            <div className="flex-col gap-2">
+                                <p>Price:</p>
+                                <div className="priceContainer">
+                                    <input className="priceInput" type="number" id="price"></input>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
