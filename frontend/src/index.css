@@ -619,6 +619,10 @@ button:disabled {
     border-top-right-radius: 5px;
 }
 
+.transparentInput::placeholder {
+    opacity: 0.5; /*Change the opacity between 0 and 1*/
+}
+
 .transparentInput:focus {
     outline: none;
 }
@@ -640,11 +644,9 @@ button:disabled {
     max-height: 100%;
     font-family: 'Inter', sans-serif;
     font-size: 1em;
-    border: none;
     border-radius: 5px;
     box-sizing: border-box;
     padding: 0.5rem;
-    background-color: rgba(187, 210, 255, 0.3);
 }
 
 .textArea:focus {

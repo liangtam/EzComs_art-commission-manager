@@ -298,7 +298,8 @@ const ActiveForm = () => {
                                                     type="text"
                                                     onChange={(e) => handleAnswerFieldChange(e, question.id)}
                                                     required={true}
-                                                ></input>
+                                                    placeholder='Answer'
+                                                />
                                             </div>
                                         );
                                     } else if (question.type === 'mc') {
@@ -324,9 +325,7 @@ const ActiveForm = () => {
                         <div className='flex-col gap-3'>
                             <div className='flex-col gap-2'>
                                 <p>Order details:</p>
-                                <div className={styles.textAreaContainer}>
                                     <textarea className="textArea" type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange} required></textarea>
-                                </div>
                             </div>
                             <label className='flex-col gap-2'>
                                 <p>References:</p>
@@ -351,8 +350,9 @@ const ActiveForm = () => {
                             <div className="flex-col gap-2">
                                 <p>Price:</p>
                                 <div className="priceContainer">
-                                    <input className="priceInput" type="number" id="price"></input>
+                                    <input className="priceInput pad-1" style={{borderRadius:'5px', maxWidth: '100px'}} type="number" id="price"></input>
                                 </div>
+                                <p className="font-size-1">Note: This should be a price agreed upon between the artist and you. The artist can change this price if it is incorrect.</p>
                             </div>
                         </div>
                     </div>
