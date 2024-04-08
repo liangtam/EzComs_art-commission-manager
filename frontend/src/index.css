@@ -24,13 +24,15 @@
     --grey200: #cfcfcf;
     --grey300: #b4b4b4;
     --grey400: #999999;
-    --grey700: #34333E;
+    --grey700: #34333e;
     --grey800: rgb(26, 26, 26);
 
-    --activeGreen: rgb(0, 193, 55);
-    --lightRed: rgb(255, 231, 231);
-    --lightGreen: rgb(222, 255, 232);
+    --red100: rgb(255, 231, 231);
+    --red400: rgb(255, 134, 134);
 
+    --green100: rgb(236, 255, 242);
+    --green400: rgb(69, 203, 111);
+    --green500: rgb(0, 193, 55);
 
     --font-size-0: 0.5rem;
     --font-size-1: 0.75rem;
@@ -53,7 +55,6 @@
 * {
     margin: 0;
     padding: 0;
-    
 }
 .app {
     height: 100vh;
@@ -95,7 +96,7 @@ a {
     width: 80%;
 }
 .w-100 {
-    width: 100%
+    width: 100%;
 }
 
 .h-100 {
@@ -185,12 +186,12 @@ a {
     background-color: var(--turquoise500);
 }
 
-.bg-light-red {
-    background-color: var(--lightRed);
+.bg-red-100 {
+    background-color: var(--red100);
 }
 
-.bg-light-green {
-    background-color: var(--lightGreen);
+.bg-green-100 {
+    background-color: var(--green100);
 }
 
 .align-items-start {
@@ -238,10 +239,10 @@ a {
     color: var(--grey-200);
 }
 .text-grey-300 {
-    color: var(--grey300)
+    color: var(--grey300);
 }
 .text-grey-400 {
-    color: var(--grey400)
+    color: var(--grey400);
 }
 .text-grey-800 {
     color: var(--grey800);
@@ -263,16 +264,24 @@ a {
     color: var(--blue600);
 }
 
+.text-red-400 {
+    color: var(--red400);
+}
+
+.text-green-400 {
+    color: var(--green400);
+}
+
 .pad-1 {
     padding: var(--spacing-1);
 }
 
 .pad-2 {
-    padding: var(--spacing-2)
+    padding: var(--spacing-2);
 }
 
 .pad-3 {
-    padding: var(--spacing-3)
+    padding: var(--spacing-3);
 }
 
 .pad-4 {
@@ -280,27 +289,27 @@ a {
 }
 
 .padr-1 {
-    padding-right: var(--spacing-1)
+    padding-right: var(--spacing-1);
 }
 
 .padr-2 {
-    padding-right: var(--spacing-2)
+    padding-right: var(--spacing-2);
 }
 
 .padr-3 {
-    padding-right: var(--spacing-3)
+    padding-right: var(--spacing-3);
 }
 
 .padl-1 {
-    padding-left: var(--spacing-1)
+    padding-left: var(--spacing-1);
 }
 
 .padl-2 {
-    padding-left: var(--spacing-2)
+    padding-left: var(--spacing-2);
 }
 
 .padl-3 {
-    padding-left: var(--spacing-3)
+    padding-left: var(--spacing-3);
 }
 
 .padx-1 {
@@ -349,7 +358,7 @@ a {
 
 .pady-1 {
     padding-top: var(--spacing-1);
-    padding-bottom: var(--spacing-1)
+    padding-bottom: var(--spacing-1);
 }
 
 .pady-2 {
@@ -386,6 +395,10 @@ a {
     margin-bottom: var(--spacing-3);
 }
 
+.marb-4 {
+    margin-bottom: var(--spacing-4);
+}
+
 .mart-1 {
     margin-top: var(--spacing-1);
 }
@@ -399,7 +412,7 @@ a {
 }
 
 .mart-4 {
-    margin-top: var(--spacing-4)
+    margin-top: var(--spacing-4);
 }
 .marx-1 {
     margin-left: var(--spacing-1);
@@ -431,6 +444,11 @@ a {
     margin-bottom: var(--spacing-3);
 }
 
+.mary-4 {
+    margin-top: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+}
+
 .gap-1 {
     gap: var(--spacing-1);
 }
@@ -447,7 +465,8 @@ a {
     gap: var(--spacing-4);
 }
 
-.flex-row, .flex-col {
+.flex-row,
+.flex-col {
     display: flex;
 }
 
@@ -523,7 +542,6 @@ a {
 
 .mid-grey-outline-1 {
     border: 1px solid var(--midgrey);
-
 }
 .errorMessage {
     color: rgb(255, 134, 134);
@@ -569,7 +587,8 @@ button:disabled {
     background-color: var(--grey50);
 }
 
-.outline-button, .fill-button {
+.outline-button,
+.fill-button {
     text-align: center;
     font-family: Inter;
     font-style: normal;
@@ -652,7 +671,6 @@ button:disabled {
 .textArea:focus {
     outline: none;
     background-color: rgba(187, 210, 255, 0.5);
-
 }
 
 .chooseFilesInput {
@@ -674,12 +692,10 @@ button:disabled {
     border-radius: 4px;
     font-size: 1em;
     max-width: 170px;
-
 }
 .dateContainer {
     width: 60%;
     max-width: 170px;
-
 }
 .dateInput {
     font-family: 'Inter', sans-serif;
@@ -777,14 +793,12 @@ body {
     .textArea {
         width: 80%;
     }
-    
 }
 
 @media screen and (min-width: 768px) {
     .textArea {
         width: 75%;
     }
-    
 }
 
 @media screen and (min-width: 1024px) {
@@ -792,7 +806,6 @@ body {
         width: 70%;
         min-height: 200px;
         padding: 1rem;
-
     }
 }
 
@@ -802,7 +815,6 @@ body {
         min-height: 300px;
     }
 }
-
 
 /* .header {
   height: 20px;

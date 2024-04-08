@@ -2,14 +2,14 @@ import { QuestionFieldsContext } from '../../context/';
 import { useContext, useEffect, useReducer, useState } from 'react';
 import styles from './ActiveForm.module.css';
 
-import { ImagePreview, NoDataPlaceholder } from '../../components/';
-import { useAuthContext } from '../../hooks/useAuthContext';
+import { ImagePreview, Line, NoDataPlaceholder } from '../../components/';
 import { useParams } from 'react-router-dom';
 
 import activeFormImg from '../../assets/images/ezcoms_activeform_bg.png';
 import { orderMessageReducer } from '../reducers/orderMessageReducer';
 import { ACTION } from '../reducers/orderMessageReducer';
 import { PageContainer } from '../../layouts';
+import AlertMessage from '../../components/alert-message/AlertMessage';
 
 const ActiveForm = () => {
     const [activeForm, setActiveForm] = useState(null);
@@ -17,13 +17,15 @@ const ActiveForm = () => {
     const [clientContact, setClientContact] = useState('');
     const [requestDetail, setRequestDetail] = useState('');
     const [referenceImages, setReferenceImages] = useState([]);
+    const [price, setPrice] = useState(-1);
     const [loading, setLoading] = useState(true);
 
     const { questionFieldList, setQuestionFieldList } = useContext(QuestionFieldsContext);
 
     const [state, dispatch] = useReducer(orderMessageReducer);
 
-    const { user } = useAuthContext();
+    console.log(price);
+
     const { userID } = useParams();
 
     const fetchActiveForm = async () => {
@@ -177,7 +179,6 @@ const ActiveForm = () => {
         for (let i = 0; i < referenceImages.length; i++) {
             order.append('referenceImages[]', referenceImages[i]);
         }
-        order.append('price', -1);
         order.append('dateReqqed', currDate);
         order.append('datePaid', 'To be set');
         order.append('dateCompleted', 'To be set');
@@ -186,6 +187,7 @@ const ActiveForm = () => {
         order.append('artistNotes', '');
         order.append('editedStatus', false);
         order.append('userID', userID);
+        order.append('price', price);
         try {
             const response = await fetch('http://localhost:4000/api/orders', {
                 method: 'POST',
@@ -200,7 +202,7 @@ const ActiveForm = () => {
         } catch (err) {
             dispatch({ type: ACTION.ERROR_CUSTOM, payload: err.message });
 
-            console.log(err);
+            console.log('HHH', err);
         }
 
         setTimeout(() => {
@@ -265,7 +267,11 @@ const ActiveForm = () => {
                 {!loading && !activeForm && <NoDataPlaceholder message="No active form." src={activeFormImg} />}
                 {!loading && activeForm && (
                     <div className={styles.activeFormContent}>
-                        <div className={`flex-col gap-2`}>
+                        <div className="flex-col justify-content-start align-items-start w-100 gap-2">
+                            <h1 className="font-size-4">New order </h1>
+                            <Line/>
+                        </div>
+                        <div className={`flex-col gap-2 mart-3`}>
                             <label> Name (or contact name): </label>
                             <input
                                 className="transparentInput blueTransparentInput pad-2 padl-3 border-box w-100 font-size-2"
@@ -335,7 +341,7 @@ const ActiveForm = () => {
                                 {/* </div> */}
                             </label>
                             {referenceImages && referenceImages.length > 0 && (
-                                <div className='flex-row gap-3 h-100 w-100 padb-2 overflow-x-auto'>
+                                <div className="flex-row gap-3 h-100 w-100 padb-2 overflow-x-auto">
                                     {referenceImages.map((refImgURL) => {
                                         return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
                                     })}
@@ -351,22 +357,25 @@ const ActiveForm = () => {
                             <div className="flex-col gap-2">
                                 <p>Price:</p>
                                 <div className="priceContainer">
-                                    <input className="priceInput pad-1" style={{ borderRadius: '5px', maxWidth: '100px' }} type="number" id="price"></input>
+                                    <input className="priceInput pad-1" style={{ borderRadius: '5px', maxWidth: '100px' }} type="number" id="price" onChange={(e) => setPrice(e.target.value)}></input>
                                 </div>
-                                <p className="font-size-1">Note: This should be a price agreed upon between the artist and you. The artist can change this price if it is incorrect.</p>
+                                <p className="font-size-1">
+                                    Please leave blank if it has not been decided. Note: This should be a price agreed upon between the artist and you. The artist can change this price if it is
+                                    incorrect.
+                                </p>
                             </div>
                         </div>
                     </div>
                 )}
                 {state && state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
-                {state && state.successMessage && <div className="successMessage bg-light-green pad-3 radius-1">{state.successMessage}</div>}
-                {state && state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
+                {state && state.successMessage && <AlertMessage alertType="success" message={state.successMessage} />}
+                {state && state.errorMessage && <AlertMessage alertType="error" message={state.errorMessage} />}
 
                 {!loading && activeForm && (
                     <button
                         disabled={loading || (state && state.loadingMessage)}
                         type="submit"
-                        className="fill-button bg-blue-500 text-grey-50 pad-3 mar-3 font-weight-700 font-size-2 radius-3"
+                        className="fill-button bg-blue-500 text-grey-50 pad-3 mary-4 font-weight-700 font-size-2 radius-3"
                         onClick={handleSubmit}
                     >
                         Submit Order

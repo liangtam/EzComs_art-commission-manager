@@ -15,3 +15,4 @@ export * from './questions';
 export { default as YesNoPopup } from './yes-no-popup/YesNoPopup';
 export { default as Line } from './line/Line';
 export { default as NoDataPlaceholder } from './no-data/NoDataPlaceholder';
+export { default as AlertMessage } from './alert-message/AlertMessage';

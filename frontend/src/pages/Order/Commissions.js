@@ -265,8 +265,8 @@ const Commissions = () => {
                         })}
                     </div>
                 )}
-                {state.errorMessage && <div className="errorMessage bg-light-red">{state.errorMessage}</div>}
-                {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
+                {state.errorMessage && <div className="errorMessage bg-red-100">{state.errorMessage}</div>}
+                {state.successMessage && <div className="successMessage bg-green-100">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
             </PageContent>
         </PageContainer>

@@ -234,8 +234,8 @@ const FormBuilder = () => {
                         <p>Any active form is public and accessible by anyone to fillout.</p>
                         <Line />
                     </div>
-                    {state.errorMessage && <div className="errorMessage pad-3 marb-2 radius-1 bg-light-red w-100">{state.errorMessage}</div>}
-                    {state.successMessage && <div className="successMessage pad-3 marb-2  radius-1 bg-light-green w-100">{state.successMessage}</div>}
+                    {state.errorMessage && <div className="errorMessage pad-3 marb-2 radius-1 bg-red-100 w-100">{state.errorMessage}</div>}
+                    {state.successMessage && <div className="successMessage pad-3 marb-2  radius-1 bg-green-100 w-100">{state.successMessage}</div>}
                     {state.loadingMessage && <div className="loadingMessage pad-3 marb-2 ">{state.loadingMessage}</div>}
 
                     <div className={`${styles.nameAndToggle} w-100`}>

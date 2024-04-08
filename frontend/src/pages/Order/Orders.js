@@ -177,8 +177,8 @@ const Orders = () => {
                     </div>
                 )}
                 {!initLoading && !state.errorMessage && (!orders || orders.length === 0) && <NoDataPlaceholder message="You have no orders right now." src={noOrdersImg} />}
-                {!initLoading && state.errorMessage && <div className="errorMessage bg-light-red pad-3 radius-1">{state.errorMessage}</div>}
-                {state.successMessage && <div className="successMessage bg-light-green">{state.successMessage}</div>}
+                {!initLoading && state.errorMessage && <div className="errorMessage bg-red-100 pad-3 radius-1">{state.errorMessage}</div>}
+                {state.successMessage && <div className="successMessage bg-green-100">{state.successMessage}</div>}
                 {state.loadingMessage && <div className="loadingMessage">{state.loadingMessage}</div>}
                 {openPopup && (
                     <YesNoPopup closePopup={closePopup} yesFunction={(e) => handleDeleteOrder(e, selectedOrderId)}>
