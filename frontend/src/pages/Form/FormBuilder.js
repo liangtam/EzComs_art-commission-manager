@@ -252,9 +252,9 @@ const FormBuilder = () => {
                         </div>
                         <div className={`${styles.activeStatus} flex-row justify-content-center gap-2 w-100`}>
                             <button className={`${styles.activeStatusBtn} outline-button bg-transparent dark-grey-outline-1 grey-hover font-size-2 radius-3 pad-2 padx-3`} onClick={toggleActive}>
-                                Set Active
+                                {activeStatus ? 'Set Inactive' : 'Set Active'}
                             </button>
-                            <div className={`${activeStatus ? `${styles.active} font-weight-700` : styles.inactive} outline-button font-size-2 pad-2 padx-3`}>
+                            <div className={`${activeStatus ? 'text-green-500 font-weight-700' : ''} outline-button font-size-2 pad-2 padx-3`}>
                                 {activeStatus ? 'Active' : 'Inactive'}
                             </div>
                         </div>

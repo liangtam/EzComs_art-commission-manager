@@ -60,11 +60,6 @@
    
 }
 
-.bottom .activeStatus {
-    color: var(--activeGreen);
-    padding: 3px 10px;
-}
-
 .bottom .actions img {
     opacity: 50%;
     height: 1.2em;

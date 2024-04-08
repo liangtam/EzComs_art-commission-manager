@@ -272,6 +272,10 @@ a {
     color: var(--green400);
 }
 
+.text-green-500 {
+    color: var(--green500);
+}
+
 .pad-1 {
     padding: var(--spacing-1);
 }

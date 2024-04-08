@@ -26,7 +26,7 @@ const FormSnippet = ({ formId, form, handleDelete }) => {
             </Link>
             <div className={styles.bottom}>
                 {form.activeStatus && (
-                    <div className={styles.activeStatus}>
+                    <div className='text-green-500 pad-2'>
                         <b>Active</b>
                     </div>
                 )}
