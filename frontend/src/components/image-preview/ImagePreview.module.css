@@ -10,6 +10,7 @@
     height: fit-content;
     object-fit: contain;
     max-height: 120px;
+    flex-shrink: 0;
     /* background-color: red; */
 }
 .imageDeleteBtn {

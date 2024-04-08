@@ -75,13 +75,6 @@
     padding: 1rem 0;
 }
 
-.imagePreviews {
-    display: flex;
-    gap: 1rem;
-    max-height: 120px;
-    height: 100%;
-}
-
 .option p {
     padding: 0 0.5rem
 }

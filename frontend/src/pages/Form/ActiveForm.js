@@ -298,7 +298,7 @@ const ActiveForm = () => {
                                                     type="text"
                                                     onChange={(e) => handleAnswerFieldChange(e, question.id)}
                                                     required={true}
-                                                    placeholder='Answer'
+                                                    placeholder="Answer"
                                                 />
                                             </div>
                                         );
@@ -322,24 +322,25 @@ const ActiveForm = () => {
                                     }
                                 })}
                         </div>
-                        <div className='flex-col gap-3'>
-                            <div className='flex-col gap-2'>
+                        <div className="flex-col gap-3">
+                            <div className="flex-col gap-2">
                                 <p>Order details:</p>
-                                    <textarea className="textArea" type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange} required></textarea>
+                                <textarea className="textArea" type="text" placeholder="Request details" value={requestDetail} onChange={handleRequestDetailChange} required></textarea>
                             </div>
-                            <label className='flex-col gap-2'>
+                            <label className="flex-col gap-2">
                                 <p>References:</p>
                                 <input className="chooseFilesInput" type="file" name="referenceImages" onChange={handleImages} accept=".png, .jpeg, .jpg" multiple></input>
                                 {/* <div className="customFileInputContainer"> */}
                                 <span className="customFileInput">Choose Files</span>
                                 {/* </div> */}
                             </label>
-                            <div className={`${styles.imagePreviews}`}>
-                                {referenceImages &&
-                                    referenceImages.map((refImgURL) => {
+                            {referenceImages && referenceImages.length > 0 && (
+                                <div className='flex-row gap-3 h-100 w-100 padb-2 overflow-x-auto'>
+                                    {referenceImages.map((refImgURL) => {
                                         return <ImagePreview image={refImgURL} handleDeleteImg={handleDeleteImg} />;
                                     })}
-                            </div>
+                                </div>
+                            )}
                             <div className="flex-col gap-2">
                                 <p>Deadline:</p>
                                 <div className="dateContainer">
@@ -350,7 +351,7 @@ const ActiveForm = () => {
                             <div className="flex-col gap-2">
                                 <p>Price:</p>
                                 <div className="priceContainer">
-                                    <input className="priceInput pad-1" style={{borderRadius:'5px', maxWidth: '100px'}} type="number" id="price"></input>
+                                    <input className="priceInput pad-1" style={{ borderRadius: '5px', maxWidth: '100px' }} type="number" id="price"></input>
                                 </div>
                                 <p className="font-size-1">Note: This should be a price agreed upon between the artist and you. The artist can change this price if it is incorrect.</p>
                             </div>
